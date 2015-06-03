@@ -1,0 +1,67 @@
+3/06/2015
+
+Tout d'abord, nous avons défini les compétences de chaque personnes du groupe par rapport à notre projet.
+Nous avons tous, au moins une base avec ce que l'on a appris cette année
+
+-> Compétences des personnes du groupe
+Nicolas : Java - Gestion de projet - UML - Graphisme(Qt)
+Matthieu : Java - Java - Photoshop - Graphique - Android - Parsing JSon - Math
+Reatha : Photoshop - math
+Marwan : Java - Graphique(Swing)
+Antoine : Math
+Germain : Java - Projet - Esprit de groupe - Math - After Effect
+
+Ensuite, on a commencé à parler des fonctionnalités que l'on pouvait ajouter, en rapport avec quel concept en programmation et comment le rendre possible dans le jeu
+
+-> but du jeu : un robot se déplace selon les commandes, à faire en fonction des concepts de programmation pour apprendre à programmer.
+idée : 1 monde (plusieurs niveaux) -> 1 concept de programmation
+
+Architecture du programme -> généralités :
+Application 				-> graphiquec 			->	Noyau
+(lancement du programme) 	   (gère le visuel)		<-	(fonctionnalités du programme)
+
+-> fonctionnalités de base : avancer, tourner, sauter, allumer lumière, changer de couleur
+-> fonctionnalités que l’on pourrait rajouter : “se laver” (le robot récupère sa couleur précédente : nuage + pluie ?) / Interragir avec le monde à part les lumières
+
+IDÉES EN VRAC :
+
+-> concept de programmation :
+- if/else -> exécution des instructions en fonction de la couleur du robot (si le robot est violet, seules les commandes violettes sont exécutées)
+- boucles (for/while) ->  jeu de base
+- fonctions/procédures ->  jeu de base
+- pointeur/seg fault -> si avance “dans le vide”, le robot meurt (accès à une case inexistante)
+- type -> (robot fille, robot garçon)
+- variable -> 
+- tableau ->
+- opérations -> les cases contiennent des numéros de 1 à 5 et des opérateurs (+ et -).  La case bleue contient un résultat que le joueur doit retrouver en passant sur les cases.
+- parallélisation -> un robot “clone” qui peut exécuter son propre processus si le robot initial est bloqué. Par exemple : le robot initial est bloqué par un obstacle (une porte), le clone, par son processus, va exécuter une séquence d’actions pour débloquer le robot initial (ouvrir la porte), disparaît quand il finit le processus et redonne la main au robot initial.
+
+Mode hardcore : niveaux tirés aléatoirement parmi ceux qui existent ou générés aléatoirement. Un seul essai par niveau. Si le joueur échoue, il recommence depuis le tout début.
+
+Éditeur de niveaux ? Cubes/caisses déplaçables ?
+
+IDÉE D’ORGANISATION (encore en vrac) :
+
+GRAPHISME
+
+Interface graphique
+- boutons commandes
+- blocs main/procedures
+- page d’accueil
+- changement de monde/niveaux
+
+Monde
+- Elements du monde, ex : cubes
+- Obstacles
+
+Robot
+- Différentes vue du Robot en fonction de l'orientation
+- Animations
+
+Editeur de niveaux
+
+Réfléxion sur la bibliothèque graphique -> JSFML / LWJGL / Une autre ?
+
+Remarque : Utilisation du parsing JSon
+-> Sauvegarde / chargement
+-> Gestion des niveaux
