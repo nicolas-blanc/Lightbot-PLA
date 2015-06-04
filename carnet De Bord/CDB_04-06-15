@@ -1,0 +1,22 @@
+Jeudi 04 juin 2015
+
+Structure du programme
+Parties importantes
+Robot -> Contient les information par rapport au robot
+Monde -> description du monde : contient les cases / le monde
+Actions -> Fonctionnnalité possible du robot / Actions faisable ex : Avancer-Sauter-Allumer-Tourner
+Graphique -> modules qui gèrent toute la partie graphique
+Gestion des instructions -> listes des inctructions faitent quand l'utilisateur lance son programme
+Editeur -> Gestion de l'éditeur de niveau
+
+Sauvegarde -> Progression
+		   -> Profil
+		   -> Mondes crées
+		   -> HighScores
+
+Système -> Actions
+		-> Robot
+		-> Monde
+		-> Procédure
+
+

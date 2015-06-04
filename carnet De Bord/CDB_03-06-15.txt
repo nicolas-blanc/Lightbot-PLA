@@ -5,7 +5,7 @@ Nous avons tous, au moins une base avec ce que l'on a appris cette année
 
 -> Compétences des personnes du groupe
 Nicolas : Java - Gestion de projet - UML - Graphisme(Qt)
-Matthieu : Java - Java - Photoshop - Graphique - Android - Parsing JSon - Math
+Matthieu : Java - Photoshop - Graphique - Android - Parsing JSon - Math
 Reatha : Photoshop - math
 Marwan : Java - Graphique(Swing)
 Antoine : Math
