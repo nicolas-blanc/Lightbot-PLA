@@ -8,5 +8,8 @@ package lightbot.system.world;
  *
  */
 public class Grid {
+	
+	// définir la "boussole" de la grille !!!!
+	
 	private Cell level[][];
 }
