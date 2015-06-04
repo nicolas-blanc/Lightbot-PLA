@@ -5,93 +5,95 @@ import java.util.List;
 
 import lightbot.system.action._Action;
 
-
 public class Procedure {
-	
+
 	private String name;
 	private int maxInstructions;
 	private List<_Action> actionList;
-	
+
 	/**
 	 * Procedure constructor with a name and the max number of instructions
+	 * 
 	 * @param name
 	 * @param maxInstructions
 	 */
-	public Procedure(String name, int maxInstructions){
+	public Procedure(String name, int maxInstructions) {
 		this.name = name;
 		this.maxInstructions = maxInstructions;
-		
+
 		this.actionList = new ArrayList<_Action>(maxInstructions);
 	}
-	
+
 	public String getName() {
 		return this.name;
 	}
-	
-	public int getInstructionLimit() {
+
+	public int getActionLimit() {
 		return this.maxInstructions;
 	}
-		
+
+	public int actionCount() {
+		return this.actionList.size();
+	}
+
 	/**
 	 * Adds an action in the procedure
+	 * 
 	 * @param action
 	 * @return
 	 */
-	public boolean addAction(_Action action){
-		if(isFull()){
+	public boolean addAction(_Action action) {
+		if (isFull()) {
 			return false;
-		}
-		else{
+		} else {
 			this.actionList.add(action);
 			return true;
 		}
 	}
-	
+
 	/**
 	 * Adds an action at insertIndex in the procedure
+	 * 
 	 * @param action
 	 * @param insertIndex
 	 * @return
 	 */
-	public boolean addAction(_Action action, int insertIndex){
-		if(insertIndex < 0 || insertIndex > this.actionList.size() || isFull()){
+	public boolean addAction(_Action action, int insertIndex) {
+		if (insertIndex < 0 || insertIndex > this.actionList.size() || isFull()) {
 			return false;
-		}
-		else{
+		} else {
 			this.actionList.add(insertIndex, action);
 			return true;
 		}
 	}
-	
+
 	/**
 	 * Deletes an action from the procedure
+	 * 
 	 * @param actionIndex
 	 * @return
 	 */
-	public boolean deleteAction(int actionIndex){
-		if(actionIndex < 0 || actionIndex > this.actionList.size()){
+	public boolean deleteAction(int actionIndex) {
+		if (actionIndex < 0 || actionIndex > this.actionList.size()) {
 			return false;
-		}
-		else{
+		} else {
 			this.actionList.remove(actionIndex);
 			return true;
 		}
 	}
-	
+
 	/**
 	 * Deletes all the actions contained in the list
 	 */
-	public void deleteAllActions(){
+	public void deleteAllActions() {
 		this.actionList.clear();
 	}
-	
+
 	/**
 	 * Checks if the list is full
 	 */
-	private boolean isFull(){
-		return this.actionList.size()==maxInstructions;
+	private boolean isFull() {
+		return this.actionList.size() == maxInstructions;
 	}
-	
-	
-	
+
 }
