@@ -8,9 +8,9 @@ import lightbot.system.action._Action;
 
 public class Procedure {
 	
-	String name;
-	int maxInstructions;
-	List<_Action> actionList;
+	private String name;
+	private int maxInstructions;
+	private List<_Action> actionList;
 	
 	/**
 	 * Procedure constructor with a name and the max number of instructions
@@ -18,8 +18,18 @@ public class Procedure {
 	 * @param maxInstructions
 	 */
 	public Procedure(String name, int maxInstructions){
-		this.actionList = new ArrayList(maxInstructions);
 		this.name = name;
+		this.maxInstructions = maxInstructions;
+		
+		this.actionList = new ArrayList<_Action>(maxInstructions);
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public int getInstructionLimit() {
+		return this.maxInstructions;
 	}
 		
 	/**
