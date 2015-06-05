@@ -1,11 +1,15 @@
-package lightbot;
+package lightbot.tests;
 
 import java.io.IOException;
 import java.nio.file.Paths;
 
 import lightbot.graphics.Button;
-import lightbot.graphics.GridDisplay;
-import lightbot.graphics.GridDisplay.PosCell;
+import lightbot.graphics.CellPosition;
+import lightbot.graphics.Display;
+import lightbot.graphics.Editor;
+import lightbot.graphics.Game;
+import lightbot.graphics.Textures;
+import lightbot.system.Colour;
 
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.RenderWindow;
@@ -20,17 +24,22 @@ import org.jsfml.window.event.TextEvent;
 
 public class Main {
 	
-	static RenderWindow window;
+	public static RenderWindow window;
 	
 	public static void clicked(MouseButtonEvent mouse){
 		
 	}
 
 	public static void main(String[] args) {
+		Textures.initTextures();
+		
 		Button button;
 		Sprite buttonSprite;
-		GridDisplay gridD;
 		Texture buttonTexture;
+		
+		Display display;
+		
+		boolean light = false;
 		
 		int[][] mat = {
 			{3, 3, 1, 1},
@@ -46,7 +55,10 @@ public class Main {
 		//Limit the framerate
 		window.setFramerateLimit(30);
 		
-		/*buttonTexture = new Texture();
+		//display = new Editor(8, 8, 320, 100);
+		display = new Game(mat, 320, 100);
+		
+		buttonTexture = new Texture();
 		try {
 		    //Try to load the texture from file "cube.png" and "cell.png"
 		    buttonTexture.loadFromFile(Paths.get("ressources/button.png"));
@@ -56,28 +68,20 @@ public class Main {
 		}
 		
 		buttonSprite = new Sprite(buttonTexture);
-		buttonSprite.scale(new Vector2f((float)0.5, (float)0.5));
+		buttonSprite.scale(new Vector2f((float)0.2, (float)0.2));
 		buttonSprite.setOrigin(Vector2f.div(new Vector2f(buttonTexture.getSize()), 2));
-		buttonSprite.setPosition(200, 400);
+		buttonSprite.setPosition(50, 425);
 		
-		button = new Button(buttonSprite);*/
-		
-		gridD = new GridDisplay(window, 8, 8, 320, 100);
-		gridD.initSprite();
-		gridD.initCanva();
-		
-		/*for(int l = 0; l<4; l++)
-			for(int c = 0; c<4; c++)
-				gridD.addLevel(l, c, mat[l][c]);*/
+		button = new Button(buttonSprite);
 
 		//Main loop
 		while (window.isOpen()) {
 		    //Draw everything
 		    window.clear(Color.WHITE);
 		    
-		    gridD.printCanva();
-		    gridD.printCubeList();
-		    //window.draw(buttonSprite);
+		    display.display();
+		    
+		    window.draw(buttonSprite);
 		    window.display();
 
 		  //Handle events
@@ -99,24 +103,36 @@ public class Main {
 			             
 			         case MOUSE_BUTTON_PRESSED:
 			        	 MouseButtonEvent mouse = event.asMouseButtonEvent();
-			        	 PosCell pos = gridD.isInside(mouse.position);
+			        	 
+			        	 CellPosition pos = display.isInside(mouse.position);
 			        	 if(mouse.button == Mouse.Button.LEFT){
-			        		 /*if(button.isInside(mouse.position))
-			        			System.out.println("Button clicked");
-			        		 else */if(pos.isFound()){
+			        		 if(button.isInside(mouse.position)){
+			        			System.out.println("Button blue clicked");
+			        			light = !light;
+			        		 }
+			        		 else if(pos.isFound()){
 			        			System.out.println("Add cube on : \t\tLine : " + pos.getLine() + ", column : " + pos.getColumn() + ", level : " + pos.getLevel());
-			        			gridD.addCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
+			        			if(light){
+			        				if(pos.getLevel() > -1){
+			        					display.getGrid().removeCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
+			        					display.getGrid().addCube(pos.getLine(), pos.getColumn(), pos.getLevel(), Colour.GREEN);
+			        				}
+			        				else
+			        					display.getGrid().addCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, Colour.GREEN);
+			        			}
+			        			else
+			        				display.getGrid().addCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, Colour.WHITE);
 			        		 }
 			        	 }
 			        	 else if(mouse.button == Mouse.Button.RIGHT){
-			        		 /*if(button.isInside(mouse.position))
-			        			System.out.println("Button clicked");
-			        		 else */if(pos.isFound() && pos.getLevel() > -1){
+			        		 if(pos.isFound() && pos.getLevel() > -1){
 			        			System.out.println("Remove cube on : \tLine : " + pos.getLine() + ", column : " + pos.getColumn() + ", level : " + pos.getLevel());
-			        			gridD.removeCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
+			        			display.getGrid().removeCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
 			        		 }
 			        	 }
 			        	 break;
+					default:
+						break;
 			     }
 		    }
 		}
