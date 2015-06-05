@@ -12,6 +12,7 @@ public class Grid {
 	private Cell[][] grid;
 
 	public Grid(int size) {
+		this.size = size;
 		grid = new Cell[size][size];
 		for(int i=0; i<size; i++){
 			for(int j=0; j<size; j++){
@@ -65,10 +66,13 @@ public class Grid {
 			}
 			return this.grid[currentX][currentY-1];
 		case EAST:
+			System.out.println(currentY);
+			System.out.println(size);
 			if (currentY == size-1){
 				throw new OutOfGridException();
+			}else{
+				return this.grid[currentX][currentY+1];
 			}
-			return this.grid[currentX][currentY+1];
 		default:
 			throw new OutOfGridException();
 		}
@@ -82,4 +86,14 @@ public class Grid {
 			System.out.println();
 		}
 	}
+	
+	public int getSize(){
+		return this.size;
+	}
+	
+	/* TODO !
+	 * levelToZero -> met à zéro les hauteurs restantes à -1
+	 */
+	
+	
 }
