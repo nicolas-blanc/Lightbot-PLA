@@ -38,10 +38,8 @@ public class TestReatha {
 		
 		// class Robot tests
 		Robot robot = new Robot(1,9,Colour.WHITE,Direction.EAST);
-		System.out.println(Forward.canMove(robot, grid1));
 		Forward.execute(grid1,robot);
-		System.out.println(robot.getPositionX());
-		System.out.println(robot.getPositionY());
+		System.out.println("Position du robot : " + "(" + robot.getPositionX() + ", " + robot.getPositionY() + ")");
 	}
 
 }
