@@ -16,7 +16,7 @@ public class Robot {
 		this.posX = 0;
 		this.posY = 0;
 		colour = Colour.WHITE;
-		direction = Direction.UP;
+		direction = Direction.NORTH;
 	}
 	
 	/**
