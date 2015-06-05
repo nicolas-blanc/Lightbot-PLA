@@ -41,7 +41,7 @@ public class Forward implements _Action {
 	 * @param robot
 	 * @param grid
 	 * @param direction
-	 * @return
+	 * @return returns false if the robot can't move, true if it can
 	 */
 	private static boolean canMove(Robot robot, Grid grid){
 		

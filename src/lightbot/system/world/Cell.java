@@ -9,25 +9,34 @@ public class Cell {
 	private Colour colour;
 	private int posX;
 	private int posY;
-	
+	private boolean lightable;
+	private boolean lightOn;
 	/**
 	 * Default constructor for a Cell
 	 */
 	public Cell(){
 		this.height = -1;
 		this.colour = Colour.WHITE;
+		this.lightable = false;
+		this.lightOn = false;
 	}
 	
 	/**
 	 * Constructor for a Cell with level and colour
 	 * @param level
-	 * @param col
+	 * @param colour
+	 * @param 
 	 */
-	public Cell(int level, Colour colour, int posX, int posY){
+	public Cell(int level, Colour colour, int posX, int posY, boolean lightable){
 		this.height = level;
 		this.colour = colour;
 		this.posX = posX;
 		this.posY = posY;
+		this.lightable = lightable;
+		this.lightOn = false;
+		if(lightable == true){
+			this.setColour(Colour.GREEN);
+		}
 	}
 	
 	public void setHeight(int level){
@@ -44,6 +53,17 @@ public class Cell {
 	
 	public void setPosY(int posY){
 		this.posY = posY;
+	}
+
+	public void setLight(boolean lightOn){
+		this.lightOn = lightOn;
+	}
+
+	public void setLightable(boolean lightable){
+		this.lightable = lightable;
+		if(lightable == true){
+			this.setColour(Colour.GREEN);
+		}
 	}
 	
 	public int getHeight(){
@@ -62,6 +82,13 @@ public class Cell {
 		return this.posY;
 	}
 	
+	public boolean getLightOn(){
+		return this.lightOn;
+	}	
+
+	public boolean getLightable(){
+		return this.lightable;
+	}
 }
 
 
