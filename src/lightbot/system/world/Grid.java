@@ -66,8 +66,6 @@ public class Grid {
 			}
 			return this.grid[currentX][currentY-1];
 		case EAST:
-			System.out.println(currentY);
-			System.out.println(size);
 			if (currentY == size-1){
 				throw new OutOfGridException();
 			}else{
