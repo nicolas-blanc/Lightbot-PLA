@@ -7,12 +7,14 @@ public class Cell {
 	
 	private int height;
 	private Colour colour;
+	private int posX;
+	private int posY;
 	
 	/**
 	 * Default constructor for a Cell
 	 */
 	public Cell(){
-		this.height = 1;
+		this.height = -1;
 		this.colour = Colour.WHITE;
 	}
 	
@@ -21,9 +23,11 @@ public class Cell {
 	 * @param level
 	 * @param col
 	 */
-	public Cell(int level, Colour colour){
+	public Cell(int level, Colour colour, int posX, int posY){
 		this.height = level;
 		this.colour = colour;
+		this.posX = posX;
+		this.posY = posY;
 	}
 	
 	public void setHeight(int level){
@@ -34,12 +38,28 @@ public class Cell {
 		this.colour = colour;
 	}
 	
+	public void setPosX(int posX){
+		this.posX = posX;
+	}
+	
+	public void setPosY(int posY){
+		this.posY = posY;
+	}
+	
 	public int getHeight(){
 		return this.height;
 	}
 	
 	public Colour getColour(){
 		return this.colour;
+	}
+	
+	public int getposX(){
+		return this.posX;
+	}
+	
+	public int getposY(){
+		return this.posY;
 	}
 	
 }
