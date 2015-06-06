@@ -1,0 +1,56 @@
+04/06/15 -- 05/06/15
+
+Séparation des taches entre les personnes
+Matthieu -> Travaille sur la génération graphique du monde et de l'éditeur
+Marwan -> Interface générale de l'application
+Marwan / Antoine / Reatha -> Travaille sur le système du prototype et la base du jeu
+Nicolas / Germain -> Réfléxion sur un algorithme de génération de monde aléatoire -> système procédurale
+
+Structure du programme
+Parties importantes
+Robot -> Contient les information par rapport au robot
+Monde -> description du monde : contient les cases / le monde
+Actions -> Fonctionnnalité possible du robot / Actions faisable ex : Avancer-Sauter-Allumer-Tourner
+Graphique -> modules qui gèrent toute la partie graphique
+Gestion des instructions -> listes des inctructions faitent quand l'utilisateur lance son programme
+Editeur -> Gestion de l'éditeur de niveau
+
+Sauvegarde -> Progression
+		   -> Profil
+		   -> Mondes crées
+		   -> HighScores
+
+Système -> Actions
+		-> Robot
+		-> Monde
+		-> Procédure
+		
+Diagramme de classe inclus au 06/06/2015
+
+Matthieu :
+- Rajout des boutons cliquables
+- Map : pseudo-fonctionnel
+- algorithme de création de la map
+- éditeur : ajout d’un cube sur la map
+- cellule cliquable
+- gestion des couleurs
+- redécoupage de la BuildDisplay
+
+Nicolas / Germain :
+- Algorithme de génération de Grid -> A refaire
+- Algorithme de génération de Grid en fonction d’une suite d’instruction
+
+Reatha / Antoine / Marwan
+- Systeme général
+	- ajout enum Colour
+	- ajout enum Direction (North, South, East, West)
+	- méthode de la classe Robot -> ok
+- Action
+	- changement de la structure -> légèrement faux
+	- enum TurnDirection (Left, Right)
+	- fonctionnalité avancer -> ok
+	- Saut -> ok
+	- Light -> En cours de programmation
+Monde
+	- Ajout d’une exception
+	- ok pour l’instant
