@@ -11,6 +11,10 @@ public class Grid {
 	private int size;
 	private Cell[][] grid;
 
+	/**
+	 * Constructor with the size
+	 * @param size
+	 */
 	public Grid(int size) {
 		this.size = size;
 		grid = new Cell[size][size];
@@ -21,6 +25,11 @@ public class Grid {
 		}
 	}
 	
+	/**
+	 * Constructs a grid from another existing grid
+	 * @param gridToCopy
+	 * @param size
+	 */
 	public Grid(Grid gridToCopy, int size){
 		this(size);
 		for(int i=0; i<size; i++){
@@ -31,51 +40,68 @@ public class Grid {
 		}
 	}
 
-	public Cell getCell(int x, int y) {
-		return this.grid[x][y];
+	/**
+	 * getCell
+	 * @param l : line
+	 * @param c : column
+	 * @return the (l,c) cell of the grid
+	 */
+	public Cell getCell(int l, int c) {
+		return this.grid[l][c];
 	}
 	
-	public void setCell(int x, int y, int level){
-		this.grid[x][y].setHeight(level);
+	/**
+	 * setCell
+	 * sets the level of the (l,c) cell
+	 * @param l : line
+	 * @param c : column
+	 * @param level
+	 */
+	public void setCell(int l, int c, int level){
+		this.grid[l][c].setHeight(level);
 	}
 
 	/**
-	 * 
-	 * @param currentX
-	 * @param currentY
-	 * @param direction
-	 * @return
+	 * getNextCell
+	 * @param currentL : current l position (line) of the robot
+	 * @param currentC : current c position (column) of the robot
+	 * @param direction : the current direction of the robot
+	 * @return the next cell, according to the current position and the direction of the robot
 	 * @throws OutOfGridException
 	 */
-	public Cell getNextCell(int currentX, int currentY, Direction direction) throws OutOfGridException {
+	public Cell getNextCell(int currentL, int currentC, Direction direction) throws OutOfGridException {
 
 		switch (direction) {
 		case NORTH:
-			if (currentX == 0) {
+			if (currentL == 0) {
 				throw new OutOfGridException();
 			}
-			return this.grid[currentX-1][currentY];
+			return this.grid[currentL-1][currentC];
 		case SOUTH:
-			if (currentX == size-1){
+			if (currentL == size-1){
 				throw new OutOfGridException();
 			}
-			return this.grid[currentX+1][currentY];
+			return this.grid[currentL+1][currentC];
 		case WEST:
-			if (currentY == 0){
+			if (currentC == 0){
 				throw new OutOfGridException();
 			}
-			return this.grid[currentX][currentY-1];
+			return this.grid[currentL][currentC-1];
 		case EAST:
-			if (currentY == size-1){
+			if (currentC == size-1){
 				throw new OutOfGridException();
 			}else{
-				return this.grid[currentX][currentY+1];
+				return this.grid[currentL][currentC+1];
 			}
 		default:
 			throw new OutOfGridException();
 		}
 	}
 	
+	/**
+	 * printGrid
+	 * Prints a grid
+	 */
 	public void printGrid(){
 		for(int i=0; i<grid.length; i++){
 			for(int j=0; j<grid[i].length; j++){
@@ -85,13 +111,28 @@ public class Grid {
 		}
 	}
 	
+	/**
+	 * getSize
+	 * @return the size of a size*size grid
+	 */
 	public int getSize(){
 		return this.size;
 	}
-	
-	/* TODO !
-	 * levelToZero -> met à zéro les hauteurs restantes à -1
+
+	/**
+	 * levelToZero : replaces every '-1' by '0' in the grid
 	 */
+	public void levelToZero(){
+		size = getSize();
+		
+		for(int i=0; i<size; i++){
+			for(int j=0; j<size; j++){
+				if(this.getCell(i,j).getHeight() == -1){
+					this.getCell(i,j).setHeight(0);
+				}
+			}
+		}
+	}
 	
 	
 }

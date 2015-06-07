@@ -7,8 +7,15 @@ import lightbot.system.world.Grid;
 
 public class Light implements _Action {
 	
-	// case allumable : verte
-	// case allumée : jaunes
+	// lightable cell (cell that can be enlightened) : green
+	// enlightened cell : yellow
+	
+	/**
+	 * execute : switches on the light and the colour of the cell to YELLOW if the robot can enlighten the 
+	 * cell. Changes the lightable attribut from true to false (can't switch on an enlightened cell)
+	 * @param grid
+	 * @param robot
+	 */
 	public static void execute(Grid grid, Robot robot){
 		
 		if(canLight(robot, grid)){
@@ -26,7 +33,7 @@ public class Light implements _Action {
 	 * Checks if the robot can enlighten the current cell
 	 * @param robot
 	 * @param grid
-	 * @return returns false if the robot can't move, true if it can
+	 * @return returns false if the robot can't switch on the cell, true if it can
 	 */
 	private static boolean canLight(Robot robot, Grid grid){
 		
