@@ -26,9 +26,9 @@ public class Textures {
 		buttonTexture = new Texture();
 		
 		try {
-		    cubeTexture.loadFromFile(Paths.get(RESSOURCES_PATH+"cube.png"));
+		    cubeTexture.loadFromFile(Paths.get(RESSOURCES_PATH+"whitecube.png"));
 		    cubeTextureBlue.loadFromFile(Paths.get(RESSOURCES_PATH+"bluecube.png"));
-		    cubeTextureRed.loadFromFile(Paths.get(RESSOURCES_PATH+"redcube.png"));
+		    cubeTextureRed.loadFromFile(Paths.get(RESSOURCES_PATH+"orangecube.png"));
 		    cubeTextureYellow.loadFromFile(Paths.get(RESSOURCES_PATH+"yellowcube.png"));
 		    cellTexture.loadFromFile(Paths.get(RESSOURCES_PATH+"canva.png"));
 		    buttonTexture.loadFromFile(Paths.get(RESSOURCES_PATH+"button.png"));

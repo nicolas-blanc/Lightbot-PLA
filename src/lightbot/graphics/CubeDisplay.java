@@ -69,7 +69,8 @@ public class CubeDisplay {
 		Vector2f origin = Vector2f.div(new Vector2f(Textures.cubeTexture.getSize()), 2);
 		
 		toAdd.scale(new Vector2f((float)0.5, (float)0.5));
-		toAdd.setOrigin(Vector2f.sub(origin, decal));		
+		toAdd.setOrigin(Vector2f.sub(origin, decal));
+		//toAdd.setColor(new Color(255, 255, 255, 128));
 		return toAdd;
 	}
 }
