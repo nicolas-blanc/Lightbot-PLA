@@ -38,6 +38,14 @@ public class Textures {
 		
 		buttonTexture = new Texture();
 		
+		forwardTexture = new Texture();
+		jumpTexture = new Texture();
+		turnLeftTexture = new Texture();
+		turnRightTexture = new Texture();
+		lightTexture = new Texture();
+		procedure1Texture = new Texture();
+		procedure2Texture = new Texture();
+		
 		try {
 		    cubeTexture.loadFromFile(Paths.get(RESSOURCES_PATH+"whitecube.png"));
 		    cubeTextureBlue.loadFromFile(Paths.get(RESSOURCES_PATH+"bluecube.png"));
