@@ -3,7 +3,7 @@ package lightbot.system;
 public enum CardinalDirection {
 	NORTH, SOUTH, WEST, EAST;
 
-	static CardinalDirection getRotationDirection(CardinalDirection direction, RelativeDirection turnDirection) {
+	public static CardinalDirection getRotationDirection(CardinalDirection direction, RelativeDirection turnDirection) {
 		
 		if ((direction == CardinalDirection.NORTH && turnDirection == RelativeDirection.LEFT)
 				|| direction == CardinalDirection.SOUTH
