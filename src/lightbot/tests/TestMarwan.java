@@ -9,6 +9,7 @@ import org.jsfml.graphics.Color;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
+import org.jsfml.window.Mouse;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 
@@ -52,6 +53,7 @@ public class TestMarwan {
 				firstRendering = false;
 				window.clear(new Color(216, 216, 216));
 			}
+			
 			
 			renderInstructionsIcons(tex, 50, window);
 
