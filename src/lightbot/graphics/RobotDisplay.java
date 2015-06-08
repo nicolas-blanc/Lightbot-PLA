@@ -5,7 +5,7 @@ import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 
 import lightbot.system.Colour;
-import lightbot.system.Direction;
+import lightbot.system.CardinalDirection;
 
 public class RobotDisplay {
 	
@@ -13,14 +13,14 @@ public class RobotDisplay {
 	private int column;
 	private int level;
 	private Colour colour;
-	private Direction direction;
+	private CardinalDirection direction;
 	
 	private final float robotHeight = 40; 
 	
 	// The texture of the cube
 	public Texture currentTexture;
 	
-	public RobotDisplay(int line, int column, int level, Colour colour, Direction direction){
+	public RobotDisplay(int line, int column, int level, Colour colour, CardinalDirection direction){
 		this.line = line;
 		this.column = column;
 		this.level = level;

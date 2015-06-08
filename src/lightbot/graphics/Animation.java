@@ -1,6 +1,6 @@
 package lightbot.graphics;
 
-import lightbot.system.Direction;
+import lightbot.system.CardinalDirection;
 import lightbot.system.Robot;
 import lightbot.tests.Main;
 
@@ -231,11 +231,11 @@ public class Animation {
 			robotSprite.setColor(new Color(255, 255, 255, 0));
 	}
 	
-	void moveRobot(Direction direction, int upOrDown){
+	void moveRobot(CardinalDirection direction, int upOrDown){
 		boolean finished = false;
 		boolean endDisplay = false;
 		
-		float movementX;
+		float movementX = 0;
 		float movementY;
 		
 		int nextCellX = robot.getPositionX();
@@ -267,8 +267,11 @@ public class Animation {
 					break;
 			}
 		}
-		
-		System.out.println(movementX);
+		else if(upOrDown == 1){
+			movementY = (Textures.cellTexture.getSize().y*robotSprite.getScale().y)/2 / this.movementTime;
+		}
+		else
+			movementY = -(Textures.cellTexture.getSize().y*robotSprite.getScale().y)/2 / this.movementTime;
 		
 		//Create a frame clock which will be used to control the cube's movement
 		Clock frameClock = new Clock();

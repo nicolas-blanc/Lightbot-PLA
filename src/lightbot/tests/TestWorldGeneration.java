@@ -1,15 +1,7 @@
+/**
+ * 
+ */
 package lightbot.tests;
-
-import lightbot.graphics.Display;
-import lightbot.graphics.Editor;
-import lightbot.graphics.Game;
-import lightbot.graphics.Textures;
-import lightbot.system.Colour;
-import lightbot.system.CardinalDirection;
-import lightbot.system.Robot;
-import lightbot.system.generator.WorldGenerator;
-import lightbot.system.world.Grid;
-
 
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.RenderWindow;
@@ -17,19 +9,33 @@ import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.TextEvent;
 
-public class Main {
+import lightbot.graphics.Display;
+import lightbot.graphics.Game;
+import lightbot.graphics.Textures;
+import lightbot.system.CardinalDirection;
+import lightbot.system.Colour;
+import lightbot.system.Robot;
+import lightbot.system.generator.WorldGenerator;
+import lightbot.system.world.Grid;
+
+/**
+ * @author Nasheis
+ *
+ */
+public class TestWorldGeneration {
 	
 	public static RenderWindow window;
 	public static Display display;
 
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
+		WorldGenerator newWorld = new WorldGenerator();
 		
-		/***
-		 * 
-		 * TODO
-		 * 
-		 * use Editor button
-		 */
+		//newWorld.getGrid().printGrid();
+		Grid grid = newWorld.getGrid();
+		
 		Textures.initTextures();		
 		
 		int[][] mat = {
@@ -38,33 +44,8 @@ public class Main {
 			{1, 1, 0, 1},
 			{1, 2, 4, 4}
 		};
-		int size = 10;
 		
-WorldGenerator newWorld = new WorldGenerator();
-		
-		//newWorld.getGrid().printGrid();
-		Grid grid = newWorld.getGrid();
-		
-		//Grid grid = new Grid(size);
 		Robot robot = new Robot(0, 0, Colour.WHITE, CardinalDirection.EAST);
-		
-		/*grid.setCell(0, 0, 3);
-		grid.setCell(0, 1, 3);
-		grid.setCell(0, 2, 1);
-		grid.setCell(0, 3, 1);
-		
-		grid.setCell(1, 0, 1);
-		grid.setCell(1, 2, 1);
-		grid.setCell(1, 3, 2);
-		
-		grid.setCell(2, 0, 1);
-		grid.setCell(2, 1, 1);
-		grid.setCell(2, 3, 1);
-		
-		grid.setCell(3, 0, 1);
-		grid.setCell(3, 1, 2);
-		grid.setCell(3, 2, 4);
-		grid.setCell(3, 3, 4);*/
 		
 		//Create the window
 		window = new RenderWindow();
@@ -75,7 +56,7 @@ WorldGenerator newWorld = new WorldGenerator();
 
 		//display = new Editor(9, 9, 320, 100);
 		//display = new Game(mat, 320, 200);
-		display = new Game(grid, robot, 320, 100);
+		display = new Game(grid, robot, 320, 200);
 		display.printGrid();
 
 		//Main loop
@@ -109,4 +90,5 @@ WorldGenerator newWorld = new WorldGenerator();
 		    }
 		}
 	}
+
 }
