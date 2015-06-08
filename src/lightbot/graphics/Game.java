@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import lightbot.system.CardinalDirection;
 import lightbot.system.Robot;
 import lightbot.system.world.Grid;
+import lightbot.tests.Main;
 
 import org.jsfml.graphics.Sprite;
+import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
@@ -29,6 +31,9 @@ public class Game implements Display{
 	public ArrayList<Sprite> toDisplay;
 	
 	private Animation anim;
+	
+	private Button turnLeftButton;
+	private Button turnRightButton;
 	
 	public Game(int[][] mat, int originX, int originY){
 		this.toDisplay = new ArrayList<Sprite>();
@@ -57,13 +62,29 @@ public class Game implements Display{
 		this.gridDisplay = new GridDisplay(this.grid, this.robot, this.originX, this.originY);
 		this.gridDisplay.initGrid();
 		this.gridDisplay.initRobot();
+		
+		initConstantDisplay();
 	}
 	
 	/**
 	 * Initialize the constant display for a game 
 	 */
 	public void initConstantDisplay(){
-		// TODO
+		Sprite turnLeftSprite = new Sprite(Textures.turnLeftTexture);
+		//turnLeftSprite.scale(new Vector2f((float)0.2, (float)0.2));
+		turnLeftSprite.setOrigin(Vector2f.div(new Vector2f(Textures.turnLeftTexture.getSize()), 2));
+		turnLeftSprite.setPosition((int)(100*Main.scaleRatio), 425);
+		
+		Sprite turnRightSprite = new Sprite(Textures.turnRightTexture);
+		//turnLeftSprite.scale(new Vector2f((float)0.2, (float)0.2));
+		turnRightSprite.setOrigin(Vector2f.div(new Vector2f(Textures.turnLeftTexture.getSize()), 2));
+		turnRightSprite.setPosition((int)(960*Main.scaleRatio-(100*Main.scaleRatio)), 425);
+		
+		turnLeftButton = new Button(turnLeftSprite);
+		turnRightButton = new Button(turnRightSprite);
+		
+		toDisplay.add(turnLeftSprite);
+		toDisplay.add(turnRightSprite);
 	}
 	
 	/**
@@ -76,6 +97,8 @@ public class Game implements Display{
 	 * Display the game interface
 	 */
 	public void display(){
+		for(Sprite s : toDisplay)
+			Main.window.draw(s);
 		gridDisplay.printCubeList();		
 	}
 	
@@ -165,6 +188,12 @@ public class Game implements Display{
 		}
 		if(event.type == Event.Type.MOUSE_BUTTON_PRESSED){
 			MouseButtonEvent mouse = event.asMouseButtonEvent();
+			if(mouse.button == Mouse.Button.LEFT){
+				if(turnLeftButton.isInside(mouse.position))
+					gridDisplay.rotateLeft();
+				else if(turnRightButton.isInside(mouse.position))
+					gridDisplay.rotateRight();
+			}
        	 	/*if(mouse.button == Mouse.Button.LEFT){
        	 		anim.moveRobot(Direction.EAST);
        	 		this.robot.setPositionY(this.robot.getPositionY()+1);
