@@ -1,6 +1,7 @@
 package lightbot.graphics;
 
 import lightbot.system.Colour;
+import lightbot.tests.Main;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -73,7 +74,7 @@ public class CubeDisplay {
 		
 		Vector2f origin = Vector2f.div(new Vector2f(Textures.cubeTexture.getSize()), 2);
 		
-		toAdd.scale(new Vector2f((float)0.5, (float)0.5));
+		toAdd.scale(new Vector2f((float)1, (float)1));
 		toAdd.setOrigin(Vector2f.sub(origin, decal));
 		return toAdd;
 	}

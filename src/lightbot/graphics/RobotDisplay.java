@@ -1,11 +1,11 @@
 package lightbot.graphics;
 
+import lightbot.system.CardinalDirection;
+import lightbot.system.Colour;
+
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
-
-import lightbot.system.Colour;
-import lightbot.system.CardinalDirection;
 
 public class RobotDisplay {
 	
@@ -15,7 +15,7 @@ public class RobotDisplay {
 	private Colour colour;
 	private CardinalDirection direction;
 	
-	private final float robotHeight = 40; 
+	private final float robotHeight = 20; 
 	
 	// The texture of the cube
 	public Texture currentTexture;
@@ -78,7 +78,7 @@ public class RobotDisplay {
 
 		Vector2f origin = Vector2f.div(new Vector2f(Textures.cubeTexture.getSize()), 2);
 		
-		robot.scale(new Vector2f((float)0.5, (float)0.5));
+		robot.scale(new Vector2f(1, 1));
 		robot.setOrigin(Vector2f.sub(origin, decal));
 		return robot;
 	}

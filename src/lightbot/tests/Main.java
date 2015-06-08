@@ -23,6 +23,7 @@ public class Main {
 	public static Display display;
 	
 	public static VideoMode screenInformations;
+	public static float scaleRatio;
 
 	public static void main(String[] args) {
 		
@@ -30,10 +31,16 @@ public class Main {
 		
 		//Create the window
 		window = new RenderWindow();
-		window.create(new VideoMode(640, 480), "LightCore");
+		
+		screenInformations = VideoMode.getDesktopMode();
+		scaleRatio = ((float)screenInformations.width)/1920;
+		System.out.println(scaleRatio);
+		
+		// base 1280 * 960 for 1920*1080
+		window.create(new VideoMode((int)(1280*scaleRatio), (int)(960*scaleRatio)), "LightCore");
 		
 		//Limit the framerate
-		window.setFramerateLimit(30);
+		window.setFramerateLimit(60);
 		
 		int[][] mat = {
 			{3, 3, 1, 1},
@@ -71,7 +78,7 @@ public class Main {
 		
 		//display = new Editor(9, 9, 320, 100);
 		//display = new Game(mat, 320, 200);
-		display = new Game(grid, robot, 320, 100);
+		display = new Game(grid, robot, (int)(640*scaleRatio), (int)(200*scaleRatio));
 		display.printGrid();
 
 		//Main loop

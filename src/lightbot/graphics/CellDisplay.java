@@ -1,5 +1,7 @@
 package lightbot.graphics;
 
+import lightbot.tests.Main;
+
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
 
@@ -31,7 +33,7 @@ public class CellDisplay {
 		
 		Vector2f origin = Vector2f.div(new Vector2f(Textures.cubeTexture.getSize()), 2);
 		
-		toAdd.scale(new Vector2f((float)0.5, (float)0.5));
+		toAdd.scale(new Vector2f(1, 1));
 		toAdd.setOrigin(Vector2f.sub(origin, decal));
 		return toAdd;
 	}

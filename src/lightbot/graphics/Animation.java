@@ -19,14 +19,20 @@ public class Animation {
 	private final float fallY = 40;
 	private final float fallTime = 200;
 	
-	private final float robotArrivalTime = 200; 
-	private final float movementTime = 1000;
+	private final float robotArrivalTime = 500; 
+	private final float movementTime = 800;
 	
 	private Sprite[][][] cubes;
 	
 	private Sprite robotSprite = null;
 	private Robot robot = null;
 	
+	/**
+	 * 
+	 * @param cubes
+	 * @param robotSprite
+	 * @param robot
+	 */
 	public Animation(Sprite[][][] cubes, Sprite robotSprite, Robot robot){
 		this.cubes = cubes;
 		this.robotSprite = robotSprite;
@@ -64,11 +70,13 @@ public class Animation {
 		//Create a reset clock that will measure the time until 200 milliseconds have passed to finish the animation
 		Clock resetClock = new Clock();
 		
-		int transparency;
+		float transparency;
+		float incrementTransparency = 200 / fallTime;
+		
 		if(add){
 			transparency = 55;
 			cubes[line][column][level].move(0, -fallY);
-			cubes[line][column][level].setColor(new Color(255, 255, 255, transparency));
+			cubes[line][column][level].setColor(new Color(255, 255, 255, (int)transparency));
 		}
 		else
 			transparency = 255;
@@ -132,13 +140,13 @@ public class Animation {
 		    //Move the cube
 		    if(add){
 		    	cubes[line][column][level].move(0, deltaMilliseconds * (fallY/fallTime));
-		    	transparency += (int) deltaMilliseconds;
-		    	cubes[line][column][level].setColor(new Color(255, 255, 255, transparency));
+		    	transparency += incrementTransparency*deltaMilliseconds;
+		    	cubes[line][column][level].setColor(new Color(255, 255, 255, (int)transparency));
 		    }
 		    else{
 		    	cubes[line][column][level].move(0, -deltaMilliseconds * (fallY/fallTime));
-		    	transparency -= (int) deltaMilliseconds;
-		    	cubes[line][column][level].setColor(new Color(255, 255, 255, transparency));
+		    	transparency -= incrementTransparency*deltaMilliseconds;
+		    	cubes[line][column][level].setColor(new Color(255, 255, 255, (int)transparency));
 		    }
 
 		    //Check if 200 milliseconds have passed on the reset clock
@@ -151,8 +159,17 @@ public class Animation {
 			
 		if(!add)
 			cubes[line][column][level].setColor(new Color(255, 255, 255, 0));
+		else
+			cubes[line][column][level].setColor(new Color(255, 255, 255, 255));
 	}
 	
+	/**
+	 * 
+	 * @param line
+	 * @param column
+	 * @param level
+	 * @param add
+	 */
 	void displayRobot(int line, int column, int level, boolean add){
 		boolean finished = false;
 		boolean endDisplay = false;
@@ -162,10 +179,11 @@ public class Animation {
 		//Create a reset clock that will measure the time until 200 milliseconds have passed to finish the animation
 		Clock resetClock = new Clock();
 		
-		int transparency;
+		float transparency;
+		float incrementTransparency = 200 / robotArrivalTime;
 		if(add){
 			transparency = 55;
-			robotSprite.setColor(new Color(255, 255, 255, transparency));
+			robotSprite.setColor(new Color(255, 255, 255, (int)transparency));
 		}
 		else
 			transparency = 255;
@@ -214,12 +232,12 @@ public class Animation {
 
 		    //Move the cube
 		    if(add){
-		    	transparency += (int) deltaMilliseconds;
-		    	robotSprite.setColor(new Color(255, 255, 255, transparency));
+		    	transparency += incrementTransparency*deltaMilliseconds;
+		    	robotSprite.setColor(new Color(255, 255, 255, (int)transparency));
 		    }
 		    else{
-		    	transparency -= (int) deltaMilliseconds;
-		    	robotSprite.setColor(new Color(255, 255, 255, transparency));
+		    	transparency -= incrementTransparency*deltaMilliseconds;
+		    	robotSprite.setColor(new Color(255, 255, 255, (int)transparency));
 		    }
 
 		    //Check if 200 milliseconds have passed on the reset clock
@@ -229,8 +247,15 @@ public class Animation {
 			
 		if(!add)
 			robotSprite.setColor(new Color(255, 255, 255, 0));
+		else
+			robotSprite.setColor(new Color(255, 255, 255, 255));
 	}
 	
+	/**
+	 * 
+	 * @param direction
+	 * @param upOrDown
+	 */
 	void moveRobot(CardinalDirection direction, int upOrDown){
 		boolean finished = false;
 		
@@ -243,35 +268,35 @@ public class Animation {
 		if(upOrDown == 0){
 			switch(direction){
 				case EAST:
-					movementX = (Textures.cellTexture.getSize().x*robotSprite.getScale().x)/2 / this.movementTime;
-					movementY = (Textures.cellTexture.getSize().y*robotSprite.getScale().y)/2 / this.movementTime;
+					movementX = (Textures.cellTexture.getSize().x)/2 / this.movementTime;
+					movementY = (Textures.cellTexture.getSize().y)/2 / this.movementTime;
 					nextCellY++;
 					break;
 				case NORTH:
-					movementX = (Textures.cellTexture.getSize().x*robotSprite.getScale().x)/2 / this.movementTime;
-					movementY = -((Textures.cellTexture.getSize().y*robotSprite.getScale().y)/2 / this.movementTime);
+					movementX = (Textures.cellTexture.getSize().x)/2 / this.movementTime;
+					movementY = -((Textures.cellTexture.getSize().y)/2 / this.movementTime);
 					break;
 				case SOUTH:
-					movementX = -((Textures.cellTexture.getSize().x*robotSprite.getScale().x)/2 / this.movementTime);
-					movementY = (Textures.cellTexture.getSize().y*robotSprite.getScale().y)/2 / this.movementTime;
+					movementX = -((Textures.cellTexture.getSize().x)/2 / this.movementTime);
+					movementY = (Textures.cellTexture.getSize().y)/2 / this.movementTime;
 					//nextCellY++;
 					nextCellX++;
 					break;
 				case WEST:
-					movementX = -((Textures.cellTexture.getSize().x*robotSprite.getScale().x)/2 / this.movementTime);
-					movementY = -((Textures.cellTexture.getSize().y*robotSprite.getScale().y)/2 / this.movementTime);
+					movementX = -((Textures.cellTexture.getSize().x)/2 / this.movementTime);
+					movementY = -((Textures.cellTexture.getSize().y)/2 / this.movementTime);
 					break;
 				default:
-					movementX = (Textures.cellTexture.getSize().x*robotSprite.getScale().x)/2 / this.movementTime;
-					movementY = (Textures.cellTexture.getSize().y*robotSprite.getScale().y)/2 / this.movementTime;
+					movementX = (Textures.cellTexture.getSize().x)/2 / this.movementTime;
+					movementY = (Textures.cellTexture.getSize().y)/2 / this.movementTime;
 					break;
 			}
 		}
 		else if(upOrDown == 1){
-			movementY = (Textures.cellTexture.getSize().y*robotSprite.getScale().y)/2 / this.movementTime;
+			movementY = (Textures.cubeTexture.getSize().y-Textures.cellTexture.getSize().y) / this.movementTime;
 		}
 		else
-			movementY = -(Textures.cellTexture.getSize().y*robotSprite.getScale().y)/2 / this.movementTime;
+			movementY = -(Textures.cubeTexture.getSize().y-Textures.cellTexture.getSize().y) / this.movementTime;
 		
 		//Create a frame clock which will be used to control the cube's movement
 		Clock frameClock = new Clock();
@@ -324,4 +349,6 @@ public class Animation {
 		    	finished = true;
 		}
 	}
+	
+	
 }
