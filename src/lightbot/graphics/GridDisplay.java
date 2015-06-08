@@ -37,22 +37,7 @@ public class GridDisplay {
 		this.originX = originX;
 		this.originY = originY;
 		
-		cubes = new Sprite[this.line][this.column][50];
-		for(int l = 0; l < this.line; l++)
-			for(int c = 0; c < this.column; c++)
-				for(int level = 0; level < 50; level++)
-					cubes[l][c][level] = null;
-		
-		cellClick = new ClickableCell[this.line][this.column][50];
-		for(int l = 0; l < this.line; l++)
-			for(int c = 0; c < this.column; c++)
-				for(int level = 0; level < 50; level++)
-					cellClick[l][c][level] = null;
-		
-		levelMax = new int[this.line][this.column];
-		for(int l = 0; l < this.line; l++)
-			for(int c = 0; c < this.column; c++)
-				levelMax[l][c] = -1;
+		initArray();
 	}
 	
 	/**
@@ -68,6 +53,10 @@ public class GridDisplay {
 		this.originX = originX;
 		this.originY = originY;
 		
+		initArray();
+	}
+	
+	private void initArray(){
 		cubes = new Sprite[this.grid.getSize()][this.grid.getSize()][50];
 		for(int l = 0; l < cubes.length; l++)
 			for(int c = 0; c < cubes[0].length; c++)
@@ -193,6 +182,27 @@ public class GridDisplay {
 				addLevel(l, c, mat[l][c]);
 	}
 	
+	public void rotateLeft(){
+		grid.rotateLeft();
+		initArray();
+		initGrid();
+		
+		robot.setPositionX(0);
+		robot.setPositionY(grid.getSize()-1);
+		
+		initRobot();
+	}
+	
+	public void rotateRight(){
+		grid.rotateRight();
+		initArray();
+		initGrid();
+		
+		robot.setPositionX(grid.getSize()-1);
+		robot.setPositionY(0);
+		
+		initRobot();
+	}
 	
 	/****** test functions *****/
 	

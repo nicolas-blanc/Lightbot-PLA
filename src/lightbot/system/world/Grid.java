@@ -53,6 +53,28 @@ public class Grid {
 			}
 		}
 	}
+	
+	public void rotateRight(){
+		Cell[][] tmp = new Cell[grid.length][grid.length];
+		for(int l=0; l<grid.length; l++)
+			for(int c=0; c<grid.length; c++)
+				tmp[l][c] = grid[l][c];
+		
+		for(int l=0; l<grid.length; l++)
+			for(int c=0; c<grid.length; c++)
+				grid[l][c] = tmp[grid.length-c-1][l];
+	}
+	
+	public void rotateLeft(){
+		Cell[][] tmp = new Cell[grid.length][grid.length];
+		for(int l=0; l<grid.length; l++)
+			for(int c=0; c<grid.length; c++)
+				tmp[l][c] = grid[l][c];
+		
+		for(int l=0; l<grid.length; l++)
+			for(int c=0; c<grid.length; c++)
+				grid[l][c] = tmp[c][grid.length-l-1];
+	}
 
 	/**
 	 * getCell
