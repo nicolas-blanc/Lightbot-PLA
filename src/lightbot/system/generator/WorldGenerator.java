@@ -21,6 +21,7 @@ public class WorldGenerator {
 	private int probaJump;
 	private int probaRight;
 	private int probaLeft;
+	private CardinalDirection direction;
 	
 	private Random rand;
 	
@@ -51,7 +52,7 @@ public class WorldGenerator {
 		int maximumLight = rand.nextInt((maximumInstructions / 5) + 1);
 		
 		Cell currentCell = firstCell();
-		_Executable currentAction;
+		int currentAction;
 		
 		int numberProcedures = 0;
 		int numberInstruction = 0;
@@ -83,36 +84,76 @@ public class WorldGenerator {
 	 * @return Return the first case of the algorithm
 	 */
 	private Cell firstCell() {
-		return null;		
+		Cell firstcell = grid.getCell(0, 0);
+		firstcell.setHeight(rand.nextInt(1) + 1);
+		firstcell.setLightable(rand.nextInt(0) != 0);
+		boolean testLightable = firstcell.getLightable();
+		if (testLightable){
+			firstcell.setColour(Colour.GREEN);
+		}
+		else {
+			firstcell.setColour(Colour.WHITE);
+		}
+		firstcell.setLight(false);
+		int dir = rand.nextInt(0);
+		if (dir == 0){
+			direction = CardinalDirection.EAST;
+		}
+		else {
+			direction = CardinalDirection.SOUTH;
+		}
+		return firstcell;		
 	}
 	
 	/**
-	 * Get a random action as a function of the probabilities
+	 * Get a random action depending on its probabilities
 	 * @param numberLight The current number of the light in the algorithm
 	 * @param maximumLight The maximum number of the light in this world
 	 * @return Return an action among the possible action of the robot
 	 */
-	private _Executable giveAction(int maximumLight, int numberLight) {
-		return null;
+	private int giveAction(int maximumLight, int numberLight) {
+		return 0;
 	}
 	
 	/**
 	 * Create the next cell depending on the instruction and return this cell
 	 * @param cell The current cell that was already
-	 * @param instruction The instruction for create the next cell
+	 * @param currentAction The instruction for create the next cell
 	 * @param numInst The current number of the instruction in the algorithm 
 	 * @param numProc The current number of the procedure in the algorithm
 	 * @return Return the new cell create depending on the action
 	 */
-	private Cell setUpGrid(Cell cell, _Executable instruction, int numProc, int numInst) {
+	private Cell setUpGrid(Cell cell, int currentAction, int numProc, int numInst) {
 		return null;
 	}
 	
 	/**
-	 * Set up the probabilities of the element as a function of the previous instruction
-	 * @param instruction The current instruction use for create the cell
+	 * Update the probabilities of the element depending on the previous instruction
+	 * @param instruction The current instruction used to create the cell
 	 */
-	private void setUpProbalities(_Executable instruction) {
-		
+	private void setUpProbalities(int instruction) {
+		switch(instruction){
+		case 1:
+			initProba();
+			break;
+		case 2:
+			probaLight++;
+			probaForward--;
+			break;
+		case 3:
+			probaLight++;
+			probaJump--;
+			break;
+		case 4:
+			probaLight++;
+			probaRight--;
+			break;
+		case 5:
+			probaLight++;
+			probaLeft--;
+			break;
+		default:
+			System.out.println("The instruction does not exist!");
+		}
 	}
 }
