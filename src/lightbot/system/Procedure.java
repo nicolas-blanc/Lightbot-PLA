@@ -2,98 +2,77 @@ package lightbot.system;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
-import lightbot.system.action._Action;
+import lightbot.system.world.Grid;
 
-public class Procedure {
+public class Procedure implements _Executable {
 
-	private String name;
-	private int maxInstructions;
-	private List<_Action> actionList;
-
-	/**
-	 * Procedure constructor with a name and the max number of instructions
-	 * 
-	 * @param name
-	 * @param maxInstructions
+	/*
+	 * Procedure name
 	 */
-	public Procedure(String name, int maxInstructions) {
+	private String name;
+	
+	/*
+	 * Maximum number of actions that can be stored in the procedure
+	 */
+	private int procSizeLimit;
+	
+	/*
+	 * The list of actions stored in the procedure 
+	 */
+	private List<_Executable> actions;
+
+	public Procedure(String name, int actionLimit) {
 		this.name = name;
-		this.maxInstructions = maxInstructions;
+		this.procSizeLimit = actionLimit;
 
-		this.actionList = new ArrayList<_Action>(maxInstructions);
+		actions = new ArrayList<_Executable>(this.procSizeLimit);
 	}
-
+	
 	public String getName() {
 		return this.name;
 	}
-
-	public int getActionLimit() {
-		return this.maxInstructions;
-	}
-
-	public int actionCount() {
-		return this.actionList.size();
+	
+	/**
+	 * @return the maximum number of actions that this procdeure can hold
+	 */
+	public int getMaxNumOfActions() {
+		return this.procSizeLimit;
 	}
 
 	/**
-	 * Adds an action in the procedure
 	 * 
 	 * @param action
-	 * @return
+	 * @return true if the action was added to the procedure, false otherwise.
 	 */
-	public boolean addAction(_Action action) {
-		if (isFull()) {
+	public boolean addAction(_Executable action) {
+		if (this.actions.size() == procSizeLimit)
 			return false;
-		} else {
-			this.actionList.add(action);
-			return true;
+
+		this.actions.add(action);
+
+		assert this.actions.size() <= this.procSizeLimit;
+
+		return true;
+	}
+
+	/**
+	 * removes the action at position index 
+	 * @param index
+	 */
+	public void removeActionAtIndex(int index) {
+		if (index < 0 || index >= this.actions.size())
+			throw new IllegalArgumentException();
+
+		this.actions.remove(index);
+	}
+
+	@Override
+	public void execute(Grid grid, Robot robot) {
+		for (_Executable _action : actions) {
+			_action.execute(grid, robot);
 		}
-	}
-
-	/**
-	 * Adds an action at insertIndex in the procedure
-	 * 
-	 * @param action
-	 * @param insertIndex
-	 * @return
-	 */
-	public boolean addAction(_Action action, int insertIndex) {
-		if (insertIndex < 0 || insertIndex > this.actionList.size() || isFull()) {
-			return false;
-		} else {
-			this.actionList.add(insertIndex, action);
-			return true;
-		}
-	}
-
-	/**
-	 * Deletes an action from the procedure
-	 * 
-	 * @param actionIndex
-	 * @return
-	 */
-	public boolean deleteAction(int actionIndex) {
-		if (actionIndex < 0 || actionIndex > this.actionList.size()) {
-			return false;
-		} else {
-			this.actionList.remove(actionIndex);
-			return true;
-		}
-	}
-
-	/**
-	 * Deletes all the actions contained in the list
-	 */
-	public void deleteAllActions() {
-		this.actionList.clear();
-	}
-
-	/**
-	 * Checks if the list is full
-	 */
-	private boolean isFull() {
-		return this.actionList.size() == maxInstructions;
 	}
 
 }

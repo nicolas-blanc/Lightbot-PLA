@@ -19,27 +19,31 @@ public class TestTurn {
 		
 		//Testing the change of direction
 		Robot robot = new Robot(1,9,Colour.WHITE,Direction.EAST);
+		Turn turnLeft = new Turn(TurnDirection.LEFT);
+		Turn turnRight = new Turn(TurnDirection.RIGHT);
+		
+		
 		System.out.println("Position du robot : " + robot.getDirection());
 		
-		Turn.execute(robot, TurnDirection.LEFT);
+		turnLeft.execute(grid1, robot);
 		System.out.println("Position du robot : " + robot.getDirection());
 		
-		Turn.execute(robot, TurnDirection.LEFT);
+		turnLeft.execute(grid1, robot);
 		System.out.println("Position du robot : " + robot.getDirection());
 		
-		Turn.execute(robot, TurnDirection.LEFT);
+		turnLeft.execute(grid1, robot);
 		System.out.println("Position du robot : " + robot.getDirection());
 		
-		Turn.execute(robot, TurnDirection.RIGHT);
+		turnRight.execute(grid1, robot);
 		System.out.println("Position du robot : " + robot.getDirection());
 		
-		Turn.execute(robot, TurnDirection.RIGHT);
+		turnRight.execute(grid1, robot);
 		System.out.println("Position du robot : " + robot.getDirection());
 		
-		Turn.execute(robot, TurnDirection.RIGHT);
+		turnRight.execute(grid1, robot);
 		System.out.println("Position du robot : " + robot.getDirection());
 		
-		Turn.execute(robot, TurnDirection.RIGHT);
+		turnRight.execute(grid1, robot);
 		System.out.println("Position du robot : " + robot.getDirection());
 	}
 

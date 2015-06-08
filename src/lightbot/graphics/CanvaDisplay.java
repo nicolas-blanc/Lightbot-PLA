@@ -1,5 +1,7 @@
 package lightbot.graphics;
 
+import java.util.ArrayList;
+
 import lightbot.tests.Main;
 
 import org.jsfml.graphics.Sprite;
@@ -51,6 +53,14 @@ public class CanvaDisplay {
 		for(int l = 0; l < this.line; l++)
 			for(int c = 0; c < this.column; c++)
 				Main.window.draw(canva[l][c]);
+	}
+	
+	public ArrayList<Sprite> getCanva(){
+		ArrayList<Sprite> out = new ArrayList<Sprite>();
+		for(int l = 0; l < this.line; l++)
+			for(int c = 0; c < this.column; c++)
+				out.add(canva[l][c]);
+		return out;
 	}
 	
 	public CellPosition isInside(Vector2i coord){

@@ -2,6 +2,7 @@ package lightbot.system.action;
 
 import lightbot.system.Direction;
 import lightbot.system.Robot;
+import lightbot.system._Action;
 import lightbot.system.world.Cell;
 import lightbot.system.world.Grid;
 import lightbot.system.world.OutOfGridException;
@@ -13,7 +14,7 @@ public class Forward implements _Action {
 	 * @param grid
 	 * @param robot
 	 */
-	public static void execute(Grid grid, Robot robot){
+	public void execute(Grid grid, Robot robot){
 		
 		if(canMove(robot, grid)){
 			
@@ -43,7 +44,7 @@ public class Forward implements _Action {
 	 * @param direction
 	 * @return returns false if the robot can't move, true if it can
 	 */
-	private static boolean canMove(Robot robot, Grid grid){
+	private boolean canMove(Robot robot, Grid grid){
 		
 		int currentX = robot.getPositionX();
 		int currentY = robot.getPositionY();

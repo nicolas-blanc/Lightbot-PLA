@@ -1,5 +1,7 @@
 package lightbot.graphics;
 
+import java.util.ArrayList;
+
 import lightbot.system.Colour;
 import lightbot.tests.Main;
 
@@ -105,5 +107,17 @@ public class GridDisplay {
 						return true;
 					}
 		return false;
+	}
+	
+	public Sprite[][][] getGrid(){return cubes;}
+	
+	public ArrayList<Sprite> getGridDisplay(){
+		ArrayList<Sprite> out = new ArrayList<Sprite>();
+		for(int l = 0; l < this.line; l++)
+			for(int c = 0; c < this.column; c++)
+				for(int level = 0; level < 50; level++)
+					if(cubes[l][c][level] != null)
+						out.add(cubes[l][c][level]);
+		return out;
 	}
 }

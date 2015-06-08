@@ -2,6 +2,7 @@ package lightbot.system.action;
 
 import lightbot.system.Colour;
 import lightbot.system.Robot;
+import lightbot.system._Action;
 import lightbot.system.world.Cell;
 import lightbot.system.world.Grid;
 
@@ -16,7 +17,7 @@ public class Light implements _Action {
 	 * @param grid
 	 * @param robot
 	 */
-	public static void execute(Grid grid, Robot robot){
+	public void execute(Grid grid, Robot robot){
 		
 		if(canLight(robot, grid)){
 			int posX = robot.getPositionX();
@@ -35,7 +36,7 @@ public class Light implements _Action {
 	 * @param grid
 	 * @return returns false if the robot can't switch on the cell, true if it can
 	 */
-	private static boolean canLight(Robot robot, Grid grid){
+	private boolean canLight(Robot robot, Grid grid){
 		
 		int currentX = robot.getPositionX();
 		int currentY = robot.getPositionY();

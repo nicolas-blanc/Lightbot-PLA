@@ -2,6 +2,7 @@ package lightbot.system.action;
 
 import lightbot.system.Direction;
 import lightbot.system.Robot;
+import lightbot.system._Action;
 import lightbot.system.world.Cell;
 import lightbot.system.world.Grid;
 import lightbot.system.world.OutOfGridException;
@@ -11,10 +12,10 @@ public class Jump implements _Action {
 	
 	/**
 	 * Calculates the new position of the robot if it can go jump
-	 * @param robot
 	 * @param grid
+	 * @param robot
 	 */
-	public static void execute(Robot robot, Grid grid){
+	public void execute(Grid grid, Robot robot){
 		if(canJump(robot, grid)){
 			int posX = robot.getPositionX();
 			int posY = robot.getPositionY();
@@ -41,7 +42,7 @@ public class Jump implements _Action {
 	 * @param grid
 	 * @return false if the robot can't jump, true if it can
 	 */
-	private static boolean canJump(Robot robot, Grid grid){
+	private boolean canJump(Robot robot, Grid grid){
 		int currentX = robot.getPositionX();
 		int currentY = robot.getPositionY();
 		Direction direction = robot.getDirection();
@@ -55,4 +56,5 @@ public class Jump implements _Action {
     }
 		return (currentCell.getHeight() == nextCell.getHeight()-1 || currentCell.getHeight() == nextCell.getHeight()-1);
 	}
+
 }
