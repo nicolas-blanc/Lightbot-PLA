@@ -50,8 +50,8 @@ public class RobotDisplay {
 	}
 	
 	/**
-	 * Initialize a cube from the data given at the instantiation
-	 * @return A sprite of this cube
+	 * Initialize a robot from the data given at the instantiation
+	 * @return A sprite of this robot
 	 */
 	public Sprite createRobot(){
 		Sprite robot = new Sprite(currentTexture);

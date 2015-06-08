@@ -2,9 +2,10 @@ package lightbot.graphics;
 
 import java.util.ArrayList;
 
-import lightbot.system.CardinalDirection;
 import lightbot.system.Colour;
+import lightbot.system.RelativeDirection;
 import lightbot.system.Robot;
+import lightbot.system.action.Turn;
 import lightbot.system.world.Grid;
 import lightbot.tests.Main;
 
@@ -13,14 +14,15 @@ import org.jsfml.system.Vector2i;
 
 public class GridDisplay {
 	
-	private Grid grid;
-	private Robot robot = null;
+	/** Sprites **/
 	private Sprite robotSprite;
+	private Sprite[][][] cubes;
 	
 	private RobotDisplay robotDisplay;
 	
-	// Define an array for all displayed cubes
-	private Sprite[][][] cubes;
+	private Grid grid;
+	boolean isGame;
+	
 	private ClickableCell[][][] cellClick;
 	
 	// Keep the maximum level of cubes
@@ -32,11 +34,19 @@ public class GridDisplay {
 	private int originX;
 	private int originY;
 	
+	/**
+	 * 
+	 * @param line
+	 * @param column
+	 * @param originX
+	 * @param originY
+	 */
 	public GridDisplay(int line, int column, int originX, int originY){
 		this.line = line;
 		this.column = column;
 		this.originX = originX;
 		this.originY = originY;
+		this.isGame = false;
 		
 		initArray();
 	}
@@ -45,9 +55,9 @@ public class GridDisplay {
 	 * Create a display from a grid
 	 * @param grid
 	 */
-	public GridDisplay(Grid grid, Robot robot, int originX, int originY){
+	public GridDisplay(Grid grid, int originX, int originY){
 		this.grid = grid;
-		this.robot = robot;
+		this.isGame = true;
 		
 		this.line = grid.getSize();
 		this.column = grid.getSize();
@@ -120,7 +130,7 @@ public class GridDisplay {
 	 * Print the displayed grid
 	 */
 	public void printCubeList(){
-		if(robot == null){
+		if(!this.isGame){
 			for(int l = 0; l < this.line; l++)
 				for(int c = 0; c < this.column; c++)
 					for(int level = 0; level < 50; level++)
@@ -133,7 +143,7 @@ public class GridDisplay {
 					for(int level = 0; level < 50; level++){
 						if(cubes[l][c][level] != null)
 							Main.window.draw(cubes[l][c][level]);
-						if(robot.getPositionX() == l && robot.getPositionY() == c && (level == levelMax[l][c] || levelMax[l][c] == -1))
+						if(Robot.wheatley.getPositionX() == l && Robot.wheatley.getPositionY() == c && (level == levelMax[l][c] || levelMax[l][c] == -1))
 							Main.window.draw(robotSprite);
 					}
 		}
@@ -163,10 +173,10 @@ public class GridDisplay {
 	}
 	
 	public void initRobot(){
-		int level = levelMax[this.robot.getPositionX()][this.robot.getPositionY()];
-		robotDisplay = new RobotDisplay(this.robot.getPositionX(), 
-				this.robot.getPositionY(), level, 
-				this.robot.getColour(), this.robot.getDirection());
+		int level = levelMax[Robot.wheatley.getPositionX()][Robot.wheatley.getPositionY()];
+		robotDisplay = new RobotDisplay(Robot.wheatley.getPositionX(), 
+				Robot.wheatley.getPositionY(), level, 
+				Robot.wheatley.getColour(), Robot.wheatley.getDirection());
 		this.robotSprite = robotDisplay.createRobot();
 		this.robotSprite.setPosition(originX, originY);
 	}
@@ -188,31 +198,14 @@ public class GridDisplay {
 		initArray();
 		initGrid();
 		
-		int previousPosX = robot.getPositionX();
-		robot.setPositionX(grid.getSize()-robot.getPositionY()-1);
-		robot.setPositionY(previousPosX);
+		int previousPosX = Robot.wheatley.getPositionX();
+		Robot.wheatley.setPositionX(grid.getSize()-Robot.wheatley.getPositionY()-1);
+		Robot.wheatley.setPositionY(previousPosX);
 		
-		switch(robot.getDirection()){
-			case EAST:
-				robot.setDirection(CardinalDirection.NORTH);
-				break;
-			case NORTH:
-				robot.setDirection(CardinalDirection.WEST);
-				break;
-			case SOUTH:
-				robot.setDirection(CardinalDirection.EAST);
-				break;
-			case WEST:
-				robot.setDirection(CardinalDirection.SOUTH);
-				break;
-			default:
-				robot.setDirection(CardinalDirection.NORTH);
-				break;
-		
-		}
+		Turn turn = new Turn(RelativeDirection.LEFT);
+		turn.execute(null, Robot.wheatley);
 		
 		initRobot();
-		//turnRobotLeft();
 	}
 	
 	public void rotateRight(){
@@ -220,31 +213,14 @@ public class GridDisplay {
 		initArray();
 		initGrid();
 		
-		int previousPosX = robot.getPositionX();
-		robot.setPositionX(robot.getPositionY());
-		robot.setPositionY(grid.getSize()-previousPosX-1);
+		int previousPosX = Robot.wheatley.getPositionX();
+		Robot.wheatley.setPositionX(Robot.wheatley.getPositionY());
+		Robot.wheatley.setPositionY(grid.getSize()-previousPosX-1);
 		
-		switch(robot.getDirection()){
-			case EAST:
-				robot.setDirection(CardinalDirection.SOUTH);
-				break;
-			case NORTH:
-				robot.setDirection(CardinalDirection.EAST);
-				break;
-			case SOUTH:
-				robot.setDirection(CardinalDirection.WEST);
-				break;
-			case WEST:
-				robot.setDirection(CardinalDirection.NORTH);
-				break;
-			default:
-				robot.setDirection(CardinalDirection.NORTH);
-				break;
-		
-		}
+		Turn turn = new Turn(RelativeDirection.RIGHT);
+		turn.execute(null, Robot.wheatley);
 		
 		initRobot();
-		//turnRobotRight();
 	}
 	
 	/****** test functions *****/

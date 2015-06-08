@@ -25,7 +25,6 @@ public class Animation {
 	private Sprite[][][] cubes;
 	
 	private Sprite robotSprite = null;
-	private Robot robot = null;
 	
 	/**
 	 * 
@@ -33,10 +32,9 @@ public class Animation {
 	 * @param robotSprite
 	 * @param robot
 	 */
-	public Animation(Sprite[][][] cubes, Sprite robotSprite, Robot robot){
+	public Animation(Sprite[][][] cubes, Sprite robotSprite){
 		this.cubes = cubes;
 		this.robotSprite = robotSprite;
-		this.robot = robot;
 	}
 	
 	public Animation(Sprite[][][] cubes){
@@ -49,6 +47,15 @@ public class Animation {
 	 */
 	public void updateSprite(Sprite[][][] cubes){
 		this.cubes = cubes;
+	}
+	
+	public void updateSprite(Sprite[][][] cubes, Sprite robot){
+		this.cubes = cubes;
+		this.robotSprite = robot;
+	}
+	
+	public void updateRobot(Sprite robot){
+		this.robotSprite = robot;
 	}
 	
 	/**
@@ -106,8 +113,8 @@ public class Animation {
 								else{
 									if(cubes[l][c][lvl] != null)
 										Main.window.draw(cubes[l][c][lvl]);
-									if(robotSprite != null && robot != null 
-											&& l == robot.getPositionX() && c == robot.getPositionY() 
+									if(robotSprite != null 
+											&& l == Robot.wheatley.getPositionX() && c == Robot.wheatley.getPositionY() 
 											&& (lvl == GridDisplay.levelMax[l][c] || GridDisplay.levelMax[l][c] == -1))
 										Main.window.draw(robotSprite);
 								}
@@ -262,8 +269,8 @@ public class Animation {
 		float movementX = 0;
 		float movementY;
 		
-		int nextCellX = robot.getPositionX();
-		int nextCellY = robot.getPositionY();
+		int nextCellX = Robot.wheatley.getPositionX();
+		int nextCellY = Robot.wheatley.getPositionY();
 		
 		if(upOrDown == 0){
 			switch(direction){

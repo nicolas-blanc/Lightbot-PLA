@@ -3,6 +3,8 @@ package lightbot.system;
 
 public class Robot {
 	
+	public static Robot wheatley = new Robot(0, 0, Colour.WHITE, CardinalDirection.EAST);
+	
 	/* TODO : might change posX and posY to cellNb afterwards */
 	private int posX;
 	private int posY;

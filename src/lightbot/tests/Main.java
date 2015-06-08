@@ -1,15 +1,10 @@
 package lightbot.tests;
 
 import lightbot.graphics.Display;
-import lightbot.graphics.Editor;
 import lightbot.graphics.Game;
 import lightbot.graphics.Textures;
-import lightbot.system.Colour;
-import lightbot.system.CardinalDirection;
-import lightbot.system.Robot;
 import lightbot.system.generator.WorldGenerator;
 import lightbot.system.world.Grid;
-
 
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.RenderWindow;
@@ -56,7 +51,6 @@ public class Main {
 		Grid grid = newWorld.getGrid();
 		
 		//Grid grid = new Grid(size);
-		Robot robot = new Robot(0, 0, Colour.WHITE, CardinalDirection.EAST);
 		
 		/*grid.setCell(0, 0, 3);
 		grid.setCell(0, 1, 3);
@@ -78,7 +72,7 @@ public class Main {
 		
 		//display = new Editor(9, 9, 320, 100);
 		//display = new Game(mat, 320, 200);
-		display = new Game(grid, robot, (int)(640*scaleRatio), (int)(200*scaleRatio));
+		display = new Game(grid, (int)(640*scaleRatio), (int)(200*scaleRatio));
 		display.printGrid();
 
 		//Main loop

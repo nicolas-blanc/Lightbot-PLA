@@ -12,13 +12,11 @@ import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
-import org.jsfml.window.event.KeyEvent;
 import org.jsfml.window.event.MouseButtonEvent;
 
 public class Game implements Display{
 	
 	private Grid grid;
-	private Robot robot;
 	
 	private int line;
 	private int column;
@@ -47,9 +45,8 @@ public class Game implements Display{
 		gridDisplay.initGridFromMatrix(mat);
 	}
 	
-	public Game(Grid grid, Robot robot, int originX, int originY){
+	public Game(Grid grid, int originX, int originY){
 		this.toDisplay = new ArrayList<Sprite>();
-		this.robot = robot;
 		
 		this.grid = grid;
 		this.line = grid.getSize();
@@ -57,9 +54,7 @@ public class Game implements Display{
 		this.originX = originX;
 		this.originY = originY;
 		
-		//this.gridDisplay = new GridDisplay(this.line, this.column, this.originX, this.originY);
-		//grid.initGridFromMatrix(mat);
-		this.gridDisplay = new GridDisplay(this.grid, this.robot, this.originX, this.originY);
+		this.gridDisplay = new GridDisplay(this.grid, this.originX, this.originY);
 		this.gridDisplay.initGrid();
 		this.gridDisplay.initRobot();
 		
@@ -103,12 +98,12 @@ public class Game implements Display{
 	}
 	
 	public void printGrid(){
-		anim = new Animation(this.gridDisplay.getGrid(), this.gridDisplay.getRobot(), this.robot);
+		anim = new Animation(this.gridDisplay.getGrid(), this.gridDisplay.getRobot());
 		Sprite[][][] grid = this.gridDisplay.getGrid();
 		for(int l = 0; l < grid.length; l++)
 			for(int c = 0; c < grid[0].length; c++)
 				for(int level = 0; level < 50; level++)
-					if(l == robot.getPositionX() && c == robot.getPositionY() && level == GridDisplay.levelMax[l][c]){
+					if(l == Robot.wheatley.getPositionX() && c == Robot.wheatley.getPositionY() && level == GridDisplay.levelMax[l][c]){
 						anim.addRemoveCube(l, c, level, true, true);
 						anim.displayRobot(l, c, level, true);
 					}
@@ -138,30 +133,28 @@ public class Game implements Display{
 		return new CellPosition(0, 0, 0, false);
 	}
 
-	@Override
 	public void eventManager(Event event) {
-		// TODO Auto-generated method stub
 		if(event.type == Event.Type.KEY_PRESSED){
 			switch(event.asKeyEvent().key){
 				case UP:
 					anim.moveRobot(CardinalDirection.NORTH, 0);
-	    	 		this.robot.setPositionX(this.robot.getPositionX()-1);
+					Robot.wheatley.setPositionX(Robot.wheatley.getPositionX()-1);
 					break;
 					
 				case DOWN:
 					anim.moveRobot(CardinalDirection.SOUTH, 0);
-	    	 		this.robot.setPositionX(this.robot.getPositionX()+1);
+					Robot.wheatley.setPositionX(Robot.wheatley.getPositionX()+1);
 					break;
 					
 				case LEFT:
 					anim.moveRobot(CardinalDirection.WEST, 0);
-	       	 		this.robot.setPositionY(this.robot.getPositionY()-1);
+					Robot.wheatley.setPositionY(Robot.wheatley.getPositionY()-1);
 					break;
 					
 				case RIGHT:
 					
 		       	 	anim.moveRobot(CardinalDirection.EAST, 0);
-	       	 		this.robot.setPositionY(this.robot.getPositionY()+1);
+		       	 Robot.wheatley.setPositionY(Robot.wheatley.getPositionY()+1);
 					break;
 					
 				case PAGEUP:
@@ -183,35 +176,21 @@ public class Game implements Display{
 					break;
 				
 			}
-			
-			System.out.println("Robot --> l : "+robot.getPositionX()+", c : "+robot.getPositionY());
+			anim.updateRobot(gridDisplay.getRobot());
+			System.out.println("Robot --> l : "+Robot.wheatley.getPositionX()+", c : "+Robot.wheatley.getPositionY());
 		}
 		if(event.type == Event.Type.MOUSE_BUTTON_PRESSED){
 			MouseButtonEvent mouse = event.asMouseButtonEvent();
 			if(mouse.button == Mouse.Button.LEFT){
-				if(turnLeftButton.isInside(mouse.position))
+				if(turnLeftButton.isInside(mouse.position)){
 					gridDisplay.rotateLeft();
-				else if(turnRightButton.isInside(mouse.position))
+					anim.updateSprite(gridDisplay.getGrid(), gridDisplay.getRobot());
+				}
+				else if(turnRightButton.isInside(mouse.position)){
 					gridDisplay.rotateRight();
+					anim.updateSprite(gridDisplay.getGrid(), gridDisplay.getRobot());
+				}
 			}
-       	 	/*if(mouse.button == Mouse.Button.LEFT){
-       	 		anim.moveRobot(Direction.EAST);
-       	 		this.robot.setPositionY(this.robot.getPositionY()+1);
-       	 	}
-       	 	else if(mouse.button == Mouse.Button.RIGHT){
-       	 		anim.moveRobot(Direction.WEST);
-       	 		this.robot.setPositionY(this.robot.getPositionY()-1);
-       	 		//deleteGrid();
-       	 	}*/
-       	 	/*if(mouse.button == Mouse.Button.LEFT){
-    	 		anim.moveRobot(Direction.NORTH);
-    	 		this.robot.setPositionX(this.robot.getPositionX()-1);
-    	 	}
-       	 	else if(mouse.button == Mouse.Button.RIGHT){
-    	 		anim.moveRobot(Direction.SOUTH);
-    	 		this.robot.setPositionX(this.robot.getPositionX()+1);
-    	 		//deleteGrid();
-    	 	}*/
 		}
 	}
 }
