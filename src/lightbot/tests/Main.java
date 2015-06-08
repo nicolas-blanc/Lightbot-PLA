@@ -5,7 +5,7 @@ import lightbot.graphics.Editor;
 import lightbot.graphics.Game;
 import lightbot.graphics.Textures;
 import lightbot.system.Colour;
-import lightbot.system.Direction;
+import lightbot.system.CardinalDirection;
 import lightbot.system.Robot;
 import lightbot.system.world.Grid;
 
@@ -40,7 +40,7 @@ public class Main {
 		int size = 10;
 		
 		Grid grid = new Grid(size);
-		Robot robot = new Robot(0, 0, Colour.WHITE, Direction.EAST);
+		Robot robot = new Robot(0, 0, Colour.WHITE, CardinalDirection.EAST);
 		
 		grid.setCell(0, 0, 3);
 		grid.setCell(0, 1, 3);
@@ -68,7 +68,6 @@ public class Main {
 		window.setFramerateLimit(30);
 
 		//display = new Editor(9, 9, 320, 100);
-		//display = new Game(mat, 320, 200);
 		display = new Game(grid, robot, 320, 200);
 		display.printGrid();
 

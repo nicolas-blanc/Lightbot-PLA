@@ -2,7 +2,7 @@ package lightbot.graphics;
 
 import java.util.ArrayList;
 
-import lightbot.system.Direction;
+import lightbot.system.CardinalDirection;
 import lightbot.system.Robot;
 import lightbot.system.world.Grid;
 
@@ -121,23 +121,23 @@ public class Game implements Display{
 		if(event.type == Event.Type.KEY_PRESSED){
 			switch(event.asKeyEvent().key){
 				case UP:
-					anim.moveRobot(Direction.NORTH, 0);
+					anim.moveRobot(CardinalDirection.NORTH, 0);
 	    	 		this.robot.setPositionX(this.robot.getPositionX()-1);
 					break;
 					
 				case DOWN:
-					anim.moveRobot(Direction.SOUTH, 0);
+					anim.moveRobot(CardinalDirection.SOUTH, 0);
 	    	 		this.robot.setPositionX(this.robot.getPositionX()+1);
 					break;
 					
 				case LEFT:
-					anim.moveRobot(Direction.WEST, 0);
+					anim.moveRobot(CardinalDirection.WEST, 0);
 	       	 		this.robot.setPositionY(this.robot.getPositionY()-1);
 					break;
 					
 				case RIGHT:
 					
-		       	 	anim.moveRobot(Direction.EAST, 0);
+		       	 	anim.moveRobot(CardinalDirection.EAST, 0);
 	       	 		this.robot.setPositionY(this.robot.getPositionY()+1);
 					break;
 					
