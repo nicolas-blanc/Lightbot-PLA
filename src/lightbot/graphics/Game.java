@@ -141,10 +141,27 @@ public class Game implements Display{
 	       	 		this.robot.setPositionY(this.robot.getPositionY()+1);
 					break;
 					
+				case PAGEUP:
+					
+					anim.moveRobot(CardinalDirection.EAST, 2);
+					break;
+					
+				case PAGEDOWN:
+					
+					anim.moveRobot(CardinalDirection.EAST, 1);
+					break;
+					
+				case NUMPAD6:
+					this.gridDisplay.turnRobotRight();
+					break;
+					
 				default:
+					this.gridDisplay.turnRobotLeft();
 					break;
 				
 			}
+			
+			System.out.println("Robot --> l : "+robot.getPositionX()+", c : "+robot.getPositionY());
 		}
 		if(event.type == Event.Type.MOUSE_BUTTON_PRESSED){
 			MouseButtonEvent mouse = event.asMouseButtonEvent();

@@ -16,6 +16,8 @@ public class GridDisplay {
 	private Robot robot = null;
 	private Sprite robotSprite;
 	
+	private RobotDisplay robotDisplay;
+	
 	// Define an array for all displayed cubes
 	private Sprite[][][] cubes;
 	private ClickableCell[][][] cellClick;
@@ -172,7 +174,7 @@ public class GridDisplay {
 	
 	public void initRobot(){
 		int level = levelMax[this.robot.getPositionX()][this.robot.getPositionY()];
-		RobotDisplay robotDisplay = new RobotDisplay(this.robot.getPositionX(), 
+		robotDisplay = new RobotDisplay(this.robot.getPositionX(), 
 				this.robot.getPositionY(), level, 
 				this.robot.getColour(), this.robot.getDirection());
 		this.robotSprite = robotDisplay.createRobot();
@@ -245,6 +247,14 @@ public class GridDisplay {
 	public Sprite[][][] getGrid(){return cubes;}
 	
 	public Sprite getRobot(){return robotSprite;}
+	
+	public void turnRobotLeft(){
+		robotDisplay.turnLeft(robotSprite);
+	}
+	
+	public void turnRobotRight(){
+		robotDisplay.turnRight(robotSprite);
+	}
 	
 	
 	/**

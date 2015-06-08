@@ -29,6 +29,7 @@ public class RobotDisplay {
 		
 		System.out.println("Line : " + line + ", column : " + column + ", level : " + level + " " + direction.toString());
 		
+		
 		switch(this.direction){
 			case EAST:
 				currentTexture = Textures.robotEast;
@@ -80,5 +81,31 @@ public class RobotDisplay {
 		robot.scale(new Vector2f((float)0.5, (float)0.5));
 		robot.setOrigin(Vector2f.sub(origin, decal));
 		return robot;
+	}
+	
+	public void turnRight(Sprite robot){
+		if(currentTexture == Textures.robotNorth)
+			currentTexture = Textures.robotWest;
+		else if(currentTexture == Textures.robotWest)
+			currentTexture = Textures.robotSouth;
+		else if(currentTexture == Textures.robotSouth)
+			currentTexture = Textures.robotEast;
+		else if(currentTexture == Textures.robotEast)
+			currentTexture = Textures.robotNorth;
+		
+		robot.setTexture(currentTexture);
+	}
+	
+	public void turnLeft(Sprite robot){
+		if(currentTexture == Textures.robotNorth)
+			currentTexture = Textures.robotEast;
+		else if(currentTexture == Textures.robotEast)
+			currentTexture = Textures.robotSouth;
+		else if(currentTexture == Textures.robotSouth)
+			currentTexture = Textures.robotWest;
+		else if(currentTexture == Textures.robotWest)
+			currentTexture = Textures.robotNorth;
+		
+		robot.setTexture(currentTexture);
 	}
 }

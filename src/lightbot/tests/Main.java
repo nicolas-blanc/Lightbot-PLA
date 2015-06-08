@@ -21,16 +21,19 @@ public class Main {
 	
 	public static RenderWindow window;
 	public static Display display;
+	
+	public static VideoMode screenInformations;
 
 	public static void main(String[] args) {
 		
-		/***
-		 * 
-		 * TODO
-		 * 
-		 * use Editor button
-		 */
-		Textures.initTextures();		
+		Textures.initTextures();
+		
+		//Create the window
+		window = new RenderWindow();
+		window.create(new VideoMode(640, 480), "LightCore");
+		
+		//Limit the framerate
+		window.setFramerateLimit(30);
 		
 		int[][] mat = {
 			{3, 3, 1, 1},
@@ -40,7 +43,7 @@ public class Main {
 		};
 		int size = 10;
 		
-WorldGenerator newWorld = new WorldGenerator();
+		WorldGenerator newWorld = new WorldGenerator();
 		
 		//newWorld.getGrid().printGrid();
 		Grid grid = newWorld.getGrid();
@@ -66,13 +69,6 @@ WorldGenerator newWorld = new WorldGenerator();
 		grid.setCell(3, 2, 4);
 		grid.setCell(3, 3, 4);*/
 		
-		//Create the window
-		window = new RenderWindow();
-		window.create(new VideoMode(640, 480), "Hello JSFML!");
-
-		//Limit the framerate
-		window.setFramerateLimit(30);
-
 		//display = new Editor(9, 9, 320, 100);
 		//display = new Game(mat, 320, 200);
 		display = new Game(grid, robot, 320, 100);

@@ -233,7 +233,6 @@ public class Animation {
 	
 	void moveRobot(CardinalDirection direction, int upOrDown){
 		boolean finished = false;
-		boolean endDisplay = false;
 		
 		float movementX = 0;
 		float movementY;
@@ -255,6 +254,7 @@ public class Animation {
 				case SOUTH:
 					movementX = -((Textures.cellTexture.getSize().x*robotSprite.getScale().x)/2 / this.movementTime);
 					movementY = (Textures.cellTexture.getSize().y*robotSprite.getScale().y)/2 / this.movementTime;
+					//nextCellY++;
 					nextCellX++;
 					break;
 				case WEST:
@@ -292,7 +292,7 @@ public class Animation {
 					for(int level = 0; level < 50; level++){
 						if(cubes[l][c][level] != null)
 							Main.window.draw(cubes[l][c][level]);
-						if(nextCellY == l && nextCellX == c && (level == GridDisplay.levelMax[l][c] || GridDisplay.levelMax[l][c] == -1))
+						if(nextCellX == l && nextCellY == c && (level == GridDisplay.levelMax[l][c] || GridDisplay.levelMax[l][c] == -1))
 							Main.window.draw(robotSprite);
 					}
 	    	
@@ -318,7 +318,6 @@ public class Animation {
 			    
 		    //Move the cube
 		    robotSprite.move(movementX*deltaMilliseconds, movementY*deltaMilliseconds);
-		    System.out.println(movementX*deltaMilliseconds);
 
 		    //Check if 200 milliseconds have passed on the reset clock
 		    if(resetClock.getElapsedTime().asMilliseconds() >= movementTime)
