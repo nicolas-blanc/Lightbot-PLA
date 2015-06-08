@@ -39,6 +39,20 @@ public class Grid {
 			}
 		}
 	}
+	
+	/**
+	 * Constructs a grid from a matrix
+	 * @param m : matrix
+	 */
+	public Grid(Cell[][] m){
+		this(m.length);
+		for(int i=0; i<m.length; i++){
+			for(int j=0; j<m.length; j++){
+				Cell cell = new Cell(m[i][j].getHeight(), m[i][j].getColour(), i, j, m[i][j].getLightable());
+				this.setCell(i,j,cell.getHeight());
+			}
+		}
+	}
 
 	/**
 	 * getCell
