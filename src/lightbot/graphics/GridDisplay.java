@@ -2,6 +2,7 @@ package lightbot.graphics;
 
 import java.util.ArrayList;
 
+import lightbot.system.CardinalDirection;
 import lightbot.system.Colour;
 import lightbot.system.Robot;
 import lightbot.system.world.Grid;
@@ -187,10 +188,31 @@ public class GridDisplay {
 		initArray();
 		initGrid();
 		
-		robot.setPositionX(0);
-		robot.setPositionY(grid.getSize()-1);
+		int previousPosX = robot.getPositionX();
+		robot.setPositionX(grid.getSize()-robot.getPositionY()-1);
+		robot.setPositionY(previousPosX);
+		
+		switch(robot.getDirection()){
+			case EAST:
+				robot.setDirection(CardinalDirection.NORTH);
+				break;
+			case NORTH:
+				robot.setDirection(CardinalDirection.WEST);
+				break;
+			case SOUTH:
+				robot.setDirection(CardinalDirection.EAST);
+				break;
+			case WEST:
+				robot.setDirection(CardinalDirection.SOUTH);
+				break;
+			default:
+				robot.setDirection(CardinalDirection.NORTH);
+				break;
+		
+		}
 		
 		initRobot();
+		//turnRobotLeft();
 	}
 	
 	public void rotateRight(){
@@ -198,10 +220,31 @@ public class GridDisplay {
 		initArray();
 		initGrid();
 		
-		robot.setPositionX(grid.getSize()-1);
-		robot.setPositionY(0);
+		int previousPosX = robot.getPositionX();
+		robot.setPositionX(robot.getPositionY());
+		robot.setPositionY(grid.getSize()-previousPosX-1);
+		
+		switch(robot.getDirection()){
+			case EAST:
+				robot.setDirection(CardinalDirection.SOUTH);
+				break;
+			case NORTH:
+				robot.setDirection(CardinalDirection.EAST);
+				break;
+			case SOUTH:
+				robot.setDirection(CardinalDirection.WEST);
+				break;
+			case WEST:
+				robot.setDirection(CardinalDirection.NORTH);
+				break;
+			default:
+				robot.setDirection(CardinalDirection.NORTH);
+				break;
+		
+		}
 		
 		initRobot();
+		//turnRobotRight();
 	}
 	
 	/****** test functions *****/

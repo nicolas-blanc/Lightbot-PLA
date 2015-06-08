@@ -83,7 +83,7 @@ public class RobotDisplay {
 		return robot;
 	}
 	
-	public void turnRight(Sprite robot){
+	public void turnLeft(Sprite robot){
 		if(currentTexture == Textures.robotNorth)
 			currentTexture = Textures.robotWest;
 		else if(currentTexture == Textures.robotWest)
@@ -96,7 +96,7 @@ public class RobotDisplay {
 		robot.setTexture(currentTexture);
 	}
 	
-	public void turnLeft(Sprite robot){
+	public void turnRight(Sprite robot){
 		if(currentTexture == Textures.robotNorth)
 			currentTexture = Textures.robotEast;
 		else if(currentTexture == Textures.robotEast)
@@ -107,5 +107,13 @@ public class RobotDisplay {
 			currentTexture = Textures.robotNorth;
 		
 		robot.setTexture(currentTexture);
+	}
+	
+	public void setLine(int line){
+		this.line = line;
+	}
+	
+	public void setColumn(int column){
+		this.column = column;
 	}
 }
