@@ -14,6 +14,19 @@ public class Textures {
 	public static Texture cubeTextureYellow;
 	public static Texture cellTexture;
 	
+
+	public static Texture playTexture;
+	public static Texture resetTexture;
+	
+	// actions textures
+	public static Texture forwardTexture;
+	public static Texture jumpTexture;
+	public static Texture turnLeftTexture;
+	public static Texture turnRightTexture;
+	public static Texture lightTexture;
+	public static Texture procedure1Texture;
+	public static Texture procedure2Texture;
+	
 	public static Texture buttonTexture;
 	
 	public static void initTextures(){
@@ -32,6 +45,21 @@ public class Textures {
 		    cubeTextureYellow.loadFromFile(Paths.get(RESSOURCES_PATH+"yellowcube.png"));
 		    cellTexture.loadFromFile(Paths.get(RESSOURCES_PATH+"canva.png"));
 		    buttonTexture.loadFromFile(Paths.get(RESSOURCES_PATH+"button.png"));
+		    
+		    // load action icons
+		    forwardTexture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconForward.png"));
+		    jumpTexture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconJump.png"));
+		    turnLeftTexture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconTurnLeft.png"));
+		    turnRightTexture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconTurnRight.png"));
+		    lightTexture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconLight.png"));
+		    
+		    procedure1Texture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconProcedure1.png"));
+		    procedure2Texture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconProcedure2.png"));
+		    
+		    // load play and reset icons
+		    playTexture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconPlay.png"));
+		    resetTexture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconReset.png"));
+		    
 		} catch(IOException ex) {
 		    //Ouch! something went wrong
 		    ex.printStackTrace();
