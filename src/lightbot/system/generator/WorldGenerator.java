@@ -6,7 +6,6 @@ package lightbot.system.generator;
 import java.util.Random;
 
 import lightbot.system.*;
-import lightbot.system.action.*;
 import lightbot.system.world.*;
 
 /**
@@ -21,6 +20,13 @@ public class WorldGenerator {
 	private int probaJump;
 	private int probaRight;
 	private int probaLeft;
+	final private int range = 12;
+	
+	int numberProcedures;
+	int numberInstruction;
+	int numberLight;
+	
+	CardinalDirection direction;
 	
 	private Random rand;
 	
@@ -28,9 +34,14 @@ public class WorldGenerator {
 	 * 
 	 */
 	public WorldGenerator() {
+		numberProcedures = 0;
+		numberInstruction = 0;
+		numberLight = 0;
+		
 		grid = new Grid(10);
 		rand = new Random();
 		generation();
+		grid.levelToZero();
 	}
 	
 	/**
@@ -51,15 +62,17 @@ public class WorldGenerator {
 		int maximumLight = rand.nextInt((maximumInstructions / 5) + 1);
 		
 		Cell currentCell = firstCell();
-		_Executable currentAction;
-		
-		int numberProcedures = 0;
-		int numberInstruction = 0;
-		int numberLight = 0;
+		Cell newCell;
+		int currentAction;
 
 		while(numberInstruction <= maximumInstructions) {
-			currentAction = giveAction(maximumLight, numberLight);
-			currentCell = setUpGrid(currentCell, currentAction, numberProcedures, numberInstruction);
+			currentAction = giveAction(maximumLight);
+			newCell = updateGrid(currentCell, currentAction);
+			if (newCell == null) {
+				currentAction = -1;
+			} else {
+				currentCell = newCell;
+			}
 			setUpProbalities(currentAction);
 		}
 		
@@ -71,10 +84,10 @@ public class WorldGenerator {
 	 */
 	private void initProba() {
 		probaLight = 2;
-		probaForward = 4;
-		probaJump = 4;
-		probaRight= 1;
-		probaLeft = 1;
+		probaForward = 6;
+		probaJump = 10;
+		probaRight= 11;
+		probaLeft = 12;
 	}
 
 	
@@ -88,31 +101,94 @@ public class WorldGenerator {
 	
 	/**
 	 * Get a random action as a function of the probabilities
-	 * @param numberLight The current number of the light in the algorithm
-	 * @param maximumLight The maximum number of the light in this world
-	 * @return Return an action among the possible action of the robot
+	 * @param maxLight The maximum number of the light in this world
+	 * @param numLight The current number of the light in the algorithm
+	 * @return Return an action among the possible action of the robot, -1 if there is an error
 	 */
-	private _Executable giveAction(int maximumLight, int numberLight) {
-		return null;
+	private int giveAction(Integer maxLight) {
+		int randAction = rand.nextInt(range);
+		int action = -1;
+		
+		if (randAction <= probaLight) {
+			if (numberLight < maxLight) {
+				action = 0;
+				numberLight++;
+			} else {
+				action = giveAction(maxLight);
+			}
+		} else if (randAction <= (probaForward - 1)) {
+			action = 1;
+		} else if (randAction <= (probaJump - 1)) {
+			action = 2;
+		} else if (randAction == (probaRight - 1)) {
+			action = 3;
+		} else if (randAction == (probaLeft - 1)) {
+			action = 4;
+		}
+		
+		return action;
 	}
 	
 	/**
 	 * Create the next cell depending on the instruction and return this cell
 	 * @param cell The current cell that was already
-	 * @param instruction The instruction for create the next cell
-	 * @param numInst The current number of the instruction in the algorithm 
-	 * @param numProc The current number of the procedure in the algorithm
-	 * @return Return the new cell create depending on the action
+	 * @param currentAction The instruction for create the next cell
+	 * @return Return the new cell create depending on the action, 
 	 */
-	private Cell setUpGrid(Cell cell, _Executable instruction, int numProc, int numInst) {
-		return null;
+	private Cell updateGrid(Cell cell, int action) {
+		switch (action) {
+		case 0:
+			cell.getLightable();
+			break;
+		case 1:
+			try {
+				Cell newCell = grid.getNextCell(cell.getposX(), cell.getposY(), direction);
+				newCell.setHeight(cell.getHeight());
+				cell = newCell;
+			} catch (OutOfGridException e) {
+				if (rand.nextInt(2) == 0) {
+					direction = CardinalDirection.getRotationDirection(direction, RelativeDirection.RIGHT);
+				} else {
+					direction = CardinalDirection.getRotationDirection(direction, RelativeDirection.LEFT);
+				}
+			}
+			break;
+		case 2:
+			try {
+				Cell newCell = grid.getNextCell(cell.getposX(), cell.getposY(), direction);
+				if(cell.getHeight() == 1) {
+					newCell.setHeight(cell.getHeight() + rand.nextInt(2));
+				} else {
+					newCell.setHeight(cell.getHeight() + (rand.nextInt(3) - 1));
+				}
+				cell = newCell;
+			} catch (OutOfGridException e) {
+				if (rand.nextInt(2) == 0) {
+					direction = CardinalDirection.getRotationDirection(direction, RelativeDirection.RIGHT);
+				} else {
+					direction = CardinalDirection.getRotationDirection(direction, RelativeDirection.LEFT);
+				}
+			}
+			break;
+		case 3:
+			direction = CardinalDirection.getRotationDirection(direction, RelativeDirection.RIGHT);
+			break;
+		case 4:
+			direction = CardinalDirection.getRotationDirection(direction, RelativeDirection.LEFT);
+			break;
+		default:
+			cell = null;
+			break;
+		}
+		
+		return cell;
 	}
 	
 	/**
 	 * Set up the probabilities of the element as a function of the previous instruction
-	 * @param instruction The current instruction use for create the cell
+	 * @param currentAction The current instruction use for create the cell
 	 */
-	private void setUpProbalities(_Executable instruction) {
+	private void setUpProbalities(int currentAction) {
 		
 	}
 }
