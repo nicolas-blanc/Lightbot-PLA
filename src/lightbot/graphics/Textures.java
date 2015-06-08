@@ -6,7 +6,8 @@ import java.nio.file.Paths;
 import org.jsfml.graphics.Texture;
 
 public class Textures {
-	public static final String RESSOURCES_PATH = "ressources/";
+	public static final String RESSOURCE_PATH = "ressources/";
+	public static final String NEW_ICONS_PATH = RESSOURCE_PATH + "new_icons/";
 	
 	public static Texture cubeTexture;
 	public static Texture cubeTextureBlue;
@@ -62,32 +63,32 @@ public class Textures {
 		robotEast = new Texture();
 		
 		try {
-		    cubeTexture.loadFromFile(Paths.get(RESSOURCES_PATH+"whitecube.png"));
-		    cubeTextureBlue.loadFromFile(Paths.get(RESSOURCES_PATH+"bluecube.png"));
-		    cubeTextureRed.loadFromFile(Paths.get(RESSOURCES_PATH+"orangecube.png"));
-		    cubeTextureYellow.loadFromFile(Paths.get(RESSOURCES_PATH+"yellowcube.png"));
-		    cellTexture.loadFromFile(Paths.get(RESSOURCES_PATH+"canva.png"));
-		    buttonTexture.loadFromFile(Paths.get(RESSOURCES_PATH+"button.png"));
+		    cubeTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"whitecube.png"));
+		    cubeTextureBlue.loadFromFile(Paths.get(RESSOURCE_PATH+"bluecube.png"));
+		    cubeTextureRed.loadFromFile(Paths.get(RESSOURCE_PATH+"orangecube.png"));
+		    cubeTextureYellow.loadFromFile(Paths.get(RESSOURCE_PATH+"yellowcube.png"));
+		    cellTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"canva.png"));
+		    buttonTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"button.png"));
 		    
 		    // load action icons
-		    forwardTexture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconForward.png"));
-		    jumpTexture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconJump.png"));
-		    turnLeftTexture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconTurnLeft.png"));
-		    turnRightTexture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconTurnRight.png"));
-		    lightTexture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconLight.png"));
+		    forwardTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconForward.png"));
+		    jumpTexture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconJump.png"));
+		    turnLeftTexture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconTurnLeft.png"));
+		    turnRightTexture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconTurnRight.png"));
+		    lightTexture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconLight.png"));
 		    
-		    procedure1Texture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconProcedure1.png"));
-		    procedure2Texture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconProcedure2.png"));
+		    procedure1Texture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconProcedure1.png"));
+		    procedure2Texture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconProcedure2.png"));
 		    
 		    // load play and reset icons
-		    playTexture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconPlay.png"));
-		    resetTexture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconReset.png"));
+		    playTexture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconPlay.png"));
+		    resetTexture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconReset.png"));
 		    
 		    // robot
-		    robotNorth.loadFromFile(Paths.get(RESSOURCES_PATH + "robot/white_north.png"));
-		    robotSouth.loadFromFile(Paths.get(RESSOURCES_PATH + "robot/white_south.png"));
-		    robotWest.loadFromFile(Paths.get(RESSOURCES_PATH + "robot/white_west.png"));
-		    robotEast.loadFromFile(Paths.get(RESSOURCES_PATH + "robot/white_east.png"));
+		    robotNorth.loadFromFile(Paths.get(RESSOURCE_PATH + "robot/white_north.png"));
+		    robotSouth.loadFromFile(Paths.get(RESSOURCE_PATH + "robot/white_south.png"));
+		    robotWest.loadFromFile(Paths.get(RESSOURCE_PATH + "robot/white_west.png"));
+		    robotEast.loadFromFile(Paths.get(RESSOURCE_PATH + "robot/white_east.png"));
 		    
 		} catch(IOException ex) {
 		    //Ouch! something went wrong
