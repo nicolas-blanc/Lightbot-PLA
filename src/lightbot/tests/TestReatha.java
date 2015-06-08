@@ -1,7 +1,7 @@
 package lightbot.tests;
 
 import lightbot.system.Colour;
-import lightbot.system.Direction;
+import lightbot.system.CardinalDirection;
 import lightbot.system.Procedure;
 import lightbot.system.Robot;
 import lightbot.system.action.Forward;
@@ -40,7 +40,7 @@ public class TestReatha {
 		
 		// class Robot tests
 		System.out.println("** Class Robot tests **");
-		Robot robot = new Robot(1,9,Colour.WHITE,Direction.EAST);
+		Robot robot = new Robot(1,9,Colour.WHITE,CardinalDirection.EAST);
 		System.out.println("	Position du robot : " + "(" + robot.getPositionX() + ", " + robot.getPositionY() + ")");
 		System.out.println("	Direction du robot : " + robot.getDirection());
 		System.out.println("	Execution Forward ");
@@ -49,13 +49,13 @@ public class TestReatha {
 		
 		
 		robot.setPosition(2, 1);
-		robot.setDirection(Direction.SOUTH);
+		robot.setDirection(CardinalDirection.SOUTH);
 		System.out.println("	Position du robot : " + "(" + robot.getPositionX() + ", " + robot.getPositionY() + ")");
 		System.out.println("	Direction du robot : " + robot.getDirection());
 		System.out.println("	Execution Forward ");
 		forward.execute(grid1,robot);
 		System.out.println("	Nouvelle position du robot : " + "(" + robot.getPositionX() + ", " + robot.getPositionY() + ")");
-		robot.setDirection(Direction.EAST);
+		robot.setDirection(CardinalDirection.EAST);
 		System.out.println("	MAJ direction du robot : " + robot.getDirection());
 		System.out.println("	Execution Forward ");
 		forward.execute(grid1,robot);

@@ -1,6 +1,6 @@
 package lightbot.system.action;
 
-import lightbot.system.Direction;
+import lightbot.system.CardinalDirection;
 import lightbot.system.Robot;
 import lightbot.system._Action;
 import lightbot.system.world.Cell;
@@ -20,16 +20,16 @@ public class Jump implements _Action {
 			int posX = robot.getPositionX();
 			int posY = robot.getPositionY();
 			
-			if(robot.getDirection() == Direction.NORTH){
+			if(robot.getDirection() == CardinalDirection.NORTH){
 				robot.setPositionX(posX - 1);
 			}
-			if(robot.getDirection() == Direction.EAST){
+			if(robot.getDirection() == CardinalDirection.EAST){
 				robot.setPositionY(posY + 1);
 			}
-			if(robot.getDirection() == Direction.SOUTH){
+			if(robot.getDirection() == CardinalDirection.SOUTH){
 				robot.setPositionX(posX + 1);
 			}
-			if(robot.getDirection() == Direction.WEST){
+			if(robot.getDirection() == CardinalDirection.WEST){
 				robot.setPositionY(posY - 1);
 			}
 		}
@@ -45,7 +45,7 @@ public class Jump implements _Action {
 	private boolean canJump(Robot robot, Grid grid){
 		int currentX = robot.getPositionX();
 		int currentY = robot.getPositionY();
-		Direction direction = robot.getDirection();
+		CardinalDirection direction = robot.getDirection();
 		Cell currentCell = grid.getCell(currentX, currentY);
 		Cell nextCell;
 		

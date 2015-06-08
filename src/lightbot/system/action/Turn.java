@@ -1,57 +1,58 @@
 package lightbot.system.action;
 
-import lightbot.system.Direction;
+import lightbot.system.CardinalDirection;
 import lightbot.system.Robot;
+import lightbot.system.RelativeDirection;
 import lightbot.system._Action;
 import lightbot.system.world.Grid;
 
 public class Turn implements _Action {
 
-	TurnDirection direction;
+	RelativeDirection direction;
 
-	public Turn(TurnDirection direction) {
+	public Turn(RelativeDirection direction) {
 		this.direction = direction;
 	}
 
 	public void execute(Grid grid, Robot robot) {
-		if (robot.getDirection() == Direction.NORTH
-				&& direction == TurnDirection.LEFT) {
-			robot.setDirection(Direction.WEST);
+		if (robot.getDirection() == CardinalDirection.NORTH
+				&& direction == RelativeDirection.LEFT) {
+			robot.setDirection(CardinalDirection.WEST);
 			return;
 		}
-		if (robot.getDirection() == Direction.NORTH
-				&& direction == TurnDirection.RIGHT) {
-			robot.setDirection(Direction.EAST);
+		if (robot.getDirection() == CardinalDirection.NORTH
+				&& direction == RelativeDirection.RIGHT) {
+			robot.setDirection(CardinalDirection.EAST);
 			return;
 		}
-		if (robot.getDirection() == Direction.SOUTH
-				&& direction == TurnDirection.LEFT) {
-			robot.setDirection(Direction.EAST);
+		if (robot.getDirection() == CardinalDirection.SOUTH
+				&& direction == RelativeDirection.LEFT) {
+			robot.setDirection(CardinalDirection.EAST);
 			return;
 		}
-		if (robot.getDirection() == Direction.SOUTH
-				&& direction == TurnDirection.RIGHT) {
-			robot.setDirection(Direction.WEST);
+		if (robot.getDirection() == CardinalDirection.SOUTH
+				&& direction == RelativeDirection.RIGHT) {
+			robot.setDirection(CardinalDirection.WEST);
 			return;
 		}
-		if (robot.getDirection() == Direction.EAST
-				&& direction == TurnDirection.LEFT) {
-			robot.setDirection(Direction.NORTH);
+		if (robot.getDirection() == CardinalDirection.EAST
+				&& direction == RelativeDirection.LEFT) {
+			robot.setDirection(CardinalDirection.NORTH);
 			return;
 		}
-		if (robot.getDirection() == Direction.EAST
-				&& direction == TurnDirection.RIGHT) {
-			robot.setDirection(Direction.SOUTH);
+		if (robot.getDirection() == CardinalDirection.EAST
+				&& direction == RelativeDirection.RIGHT) {
+			robot.setDirection(CardinalDirection.SOUTH);
 			return;
 		}
-		if (robot.getDirection() == Direction.WEST
-				&& direction == TurnDirection.LEFT) {
-			robot.setDirection(Direction.SOUTH);
+		if (robot.getDirection() == CardinalDirection.WEST
+				&& direction == RelativeDirection.LEFT) {
+			robot.setDirection(CardinalDirection.SOUTH);
 			return;
 		}
-		if (robot.getDirection() == Direction.WEST
-				&& direction == TurnDirection.RIGHT) {
-			robot.setDirection(Direction.NORTH);
+		if (robot.getDirection() == CardinalDirection.WEST
+				&& direction == RelativeDirection.RIGHT) {
+			robot.setDirection(CardinalDirection.NORTH);
 			return;
 		}
 

@@ -1,7 +1,7 @@
 package lightbot.tests;
 
 import lightbot.system.Colour;
-import lightbot.system.Direction;
+import lightbot.system.CardinalDirection;
 import lightbot.system.Robot;
 import lightbot.system.action.Jump;
 import lightbot.system.world.Grid;
@@ -17,7 +17,7 @@ public class TestJump {
 		grid1.setCell(1, 9, 3);
 		grid1.printGrid();
 		
-		Robot robot = new Robot(1,8,Colour.WHITE,Direction.EAST);
+		Robot robot = new Robot(1,8,Colour.WHITE,CardinalDirection.EAST);
 		System.out.println("Position du robot : " + "(" + robot.getPositionX() + ", " + robot.getPositionY() + ")");
 		
 		

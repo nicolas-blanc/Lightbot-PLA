@@ -7,7 +7,7 @@ public class Robot {
 	private int posX;
 	private int posY;
 	private Colour colour;
-	private Direction direction;
+	private CardinalDirection direction;
 	
 	/**
 	 * Default constructor for a Robot
@@ -16,7 +16,7 @@ public class Robot {
 		this.posX = 0;
 		this.posY = 0;
 		colour = Colour.WHITE;
-		direction = Direction.NORTH;
+		direction = CardinalDirection.NORTH;
 	}
 	
 	/**
@@ -25,7 +25,7 @@ public class Robot {
 	 * @param y : line in the grid
 	 * @param colour : initial colour
 	 */
-	public Robot(int x, int y, Colour colour, Direction direction){
+	public Robot(int x, int y, Colour colour, CardinalDirection direction){
 		this.posX = x;
 		this.posY = y;
 		this.colour = colour;
@@ -62,7 +62,7 @@ public class Robot {
 	 * Sets direction
 	 * @param direction
 	 */
-	public void setDirection(Direction direction){
+	public void setDirection(CardinalDirection direction){
 		this.direction = direction;
 	}
 	
@@ -102,7 +102,7 @@ public class Robot {
 	 * Gets direction
 	 * @param direction
 	 */
-	public Direction getDirection(){
+	public CardinalDirection getDirection(){
 		return this.direction;
 	}
 	

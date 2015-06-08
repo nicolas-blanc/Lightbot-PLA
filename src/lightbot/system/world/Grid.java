@@ -1,7 +1,7 @@
 package lightbot.system.world;
 
 import lightbot.system.Colour;
-import lightbot.system.Direction;
+import lightbot.system.CardinalDirection;
 
 public class Grid {
 
@@ -83,7 +83,7 @@ public class Grid {
 	 * @return the next cell, according to the current position and the direction of the robot
 	 * @throws OutOfGridException
 	 */
-	public Cell getNextCell(int currentL, int currentC, Direction direction) throws OutOfGridException {
+	public Cell getNextCell(int currentL, int currentC, CardinalDirection direction) throws OutOfGridException {
 
 		switch (direction) {
 		case NORTH:
