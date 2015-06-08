@@ -21,7 +21,7 @@ public class TestMarwan {
 		for (int i = 0; i < textures.size(); i++) {
 			Texture tex = textures.get(i);
 			Sprite s = new Sprite(tex);
-			float x = posFirstTex + i * tex.getSize().x + 6;
+			float x = posFirstTex + i * (tex.getSize().x + 6);
 			float y = 700;
 			s.setPosition(x, y);
 			window.draw(s);
@@ -62,6 +62,8 @@ public class TestMarwan {
 				case CLOSED:
 					window.close();
 					return;
+				case RESIZED:
+					window.clear(new Color(216, 216, 216));
 				}
 			}
 		}

@@ -73,8 +73,8 @@ public class Textures {
 		    // load action icons
 		    forwardTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconForward.png"));
 		    jumpTexture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconJump.png"));
-		    turnLeftTexture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconTurnLeft.png"));
-		    turnRightTexture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconTurnRight.png"));
+		    turnLeftTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconTurnLeft.png"));
+		    turnRightTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconTurnRight.png"));
 		    lightTexture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconLight.png"));
 		    
 		    procedure1Texture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconProcedure1.png"));
