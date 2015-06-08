@@ -8,5 +8,8 @@ package lightbot.system.action;
  *
  */
 public interface _Action {
-	// public execute();
+	
+	//public void execute();
+	
+	
 }

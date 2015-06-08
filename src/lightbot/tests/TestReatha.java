@@ -95,10 +95,14 @@ public class TestReatha {
 		System.out.println("	Cell (0,8) colour : " + (grid1.getCell(0,8)).getColour());
 		System.out.println("	Lightable cell (0,8) : " + (grid1.getCell(0,8)).getLightable());
 		
-
-		
-		
 		System.out.println();
+		
+		// test levelToZero method
+		grid1.levelToZero();
+		grid1.printGrid();
+		
+		
+
 	}
 
 }
