@@ -13,6 +13,7 @@ public class CubeDisplay {
 	private int level;
 	private Colour colour;
 	
+	// The texture of the cube
 	public Texture currentTexture;
 	
 	public CubeDisplay(int line, int column, int level, Colour colour){
@@ -45,6 +46,10 @@ public class CubeDisplay {
 		}		
 	}
 	
+	/**
+	 * Initialize a cube from the data given at the instantiation
+	 * @return A sprite of this cube
+	 */
 	public Sprite createCube(){
 		Sprite toAdd = new Sprite(currentTexture);
 		
@@ -70,7 +75,6 @@ public class CubeDisplay {
 		
 		toAdd.scale(new Vector2f((float)0.5, (float)0.5));
 		toAdd.setOrigin(Vector2f.sub(origin, decal));
-		//toAdd.setColor(new Color(255, 255, 255, 128));
 		return toAdd;
 	}
 }

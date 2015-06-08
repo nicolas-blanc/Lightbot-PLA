@@ -12,9 +12,16 @@ public class CanvaDisplay {
 	private Sprite[][] canva;
 	private ClickableCell[][] canvaClick;
 	
+	
+	/**
+	 * Number of lines and columns of the canvas
+	 */
 	private int line;
 	private int column;
 	
+	/**
+	 * The position of the first cell to be placed
+	 */
 	private int originX;
 	private int originY;
 	
@@ -35,6 +42,11 @@ public class CanvaDisplay {
 					canvaClick[l][c] = null;
 	}
 	
+	/**
+	 * Add a cell to the canvas
+	 * @param line The cell's line
+	 * @param column The cell's column
+	 */
 	public void addCel(int line, int column){
 		Sprite toAdd = CellDisplay.createCell(line, column);
 		toAdd.setPosition(originX, originY);
@@ -43,18 +55,28 @@ public class CanvaDisplay {
 		canvaClick[line][column] = new ClickableCell(toAdd, Textures.cellTexture);
 	}
 	
+	/**
+	 * Initialize a canvas of the size defined at the instantiation
+	 */
 	public void initCanva(){
 		for(int l = 0; l < this.line; l++)
 			for(int c = 0; c < this.column; c++)
 				addCel(l, c);
 	}
 	
+	/**
+	 * Print a canvas in the global window
+	 */
 	public void printCanva(){
 		for(int l = 0; l < this.line; l++)
 			for(int c = 0; c < this.column; c++)
 				Main.window.draw(canva[l][c]);
 	}
 	
+	/**
+	 * Get the list of sprite created by all the cells in the canvas
+	 * @return A list of sprites
+	 */
 	public ArrayList<Sprite> getCanva(){
 		ArrayList<Sprite> out = new ArrayList<Sprite>();
 		for(int l = 0; l < this.line; l++)
@@ -63,6 +85,11 @@ public class CanvaDisplay {
 		return out;
 	}
 	
+	/**
+	 * Checks if a coordinate is inside a cell
+	 * @param coord
+	 * @return
+	 */
 	public CellPosition isInside(Vector2i coord){
 		CellPosition pos = new CellPosition(0, 0, 0, false);
 		for(int l = this.line-1; l>=0; l--)

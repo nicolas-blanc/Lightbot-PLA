@@ -3,6 +3,8 @@ package lightbot.graphics;
 import java.util.ArrayList;
 
 import lightbot.system.Colour;
+import lightbot.system.Robot;
+import lightbot.system.world.Grid;
 import lightbot.tests.Main;
 
 import org.jsfml.graphics.Sprite;
@@ -10,9 +12,15 @@ import org.jsfml.system.Vector2i;
 
 public class GridDisplay {
 	
+	private Grid grid;
+	private Robot robot = null;
+	private Sprite robotSprite;
+	
+	// Define an array for all displayed cubes
 	private Sprite[][][] cubes;
 	private ClickableCell[][][] cellClick;
 	
+	// Keep the maximum level of cubes
 	public static int [][] levelMax;
 	
 	private int line;
@@ -45,12 +53,44 @@ public class GridDisplay {
 				levelMax[l][c] = -1;
 	}
 	
-	public void initGridFromMatrix(int[][] mat){
-		for(int l = 0; l<mat.length-1; l++)
-			for(int c = 0; c<mat[c].length-1; c++)
-				addLevel(l, c, mat[l][c]);
+	/**
+	 * Create a display from a grid
+	 * @param grid
+	 */
+	public GridDisplay(Grid grid, Robot robot, int originX, int originY){
+		this.grid = grid;
+		this.robot = robot;
+		
+		this.line = grid.getSize();
+		this.column = grid.getSize();
+		this.originX = originX;
+		this.originY = originY;
+		
+		cubes = new Sprite[this.grid.getSize()][this.grid.getSize()][50];
+		for(int l = 0; l < cubes.length; l++)
+			for(int c = 0; c < cubes[0].length; c++)
+				for(int level = 0; level < cubes[0][0].length; level++)
+					cubes[l][c][level] = null;
+		
+		cellClick = new ClickableCell[this.grid.getSize()][this.grid.getSize()][50];
+		for(int l = 0; l < cellClick.length; l++)
+			for(int c = 0; c < cellClick[0].length; c++)
+				for(int level = 0; level < cellClick[0][0].length; level++)
+					cellClick[l][c][level] = null;
+		
+		levelMax = new int[this.grid.getSize()][this.grid.getSize()];
+		for(int l = 0; l < levelMax.length; l++)
+			for(int c = 0; c < levelMax[0].length; c++)
+				levelMax[l][c] = -1;
 	}
 	
+	/**
+	 * Add a cube to the displayed grid
+	 * @param line The cube's line
+	 * @param column The cube's column
+	 * @param level The cube's level
+	 * @param colour The cube's colour
+	 */
 	public void addCube(int line, int column, int level, Colour colour){
 		CubeDisplay cube = new CubeDisplay(line, column, level, colour);
 		Sprite toAdd = cube.createCube() ;
@@ -61,25 +101,104 @@ public class GridDisplay {
 		cellClick[line][column][level] = new ClickableCell(toAdd, Textures.cellTexture);
 	}
 	
+	/**
+	 * Remove a cube to the displayed grid
+	 * @param line The cube's line
+	 * @param column The cube's column
+	 * @param level The cube's level
+	 */
 	public void removeCube(int line, int column, int level){
 		cubes[line][column][level-1] = null;
 		levelMax[line][column] = level-2;
 		cellClick[line][column][level-1] = null;
 	}
 	
+	/**
+	 * Add a level of cubes
+	 * @param line The cube's line
+	 * @param column The cube's column
+	 * @param level The max level
+	 */
 	public void addLevel(int line, int column, int level){
 		for(int i = 1; i<=level; i++)
 			addCube(line, column, i-1, Colour.WHITE);
 	}
 	
+	/**
+	 * Print the displayed grid
+	 */
 	public void printCubeList(){
-		for(int l = 0; l < this.line; l++)
-			for(int c = 0; c < this.column; c++)
-				for(int level = 0; level < 50; level++)
-					if(cubes[l][c][level] != null)
-						Main.window.draw(cubes[l][c][level]);
+		if(robot == null){
+			for(int l = 0; l < this.line; l++)
+				for(int c = 0; c < this.column; c++)
+					for(int level = 0; level < 50; level++)
+						if(cubes[l][c][level] != null)
+							Main.window.draw(cubes[l][c][level]);
+		}
+		else{
+			for(int l = 0; l < this.line; l++)
+				for(int c = 0; c < this.column; c++)
+					for(int level = 0; level < 50; level++){
+						if(cubes[l][c][level] != null)
+							Main.window.draw(cubes[l][c][level]);
+						if(robot.getPositionX() == l && robot.getPositionY() == c && (level == levelMax[l][c] || levelMax[l][c] == -1))
+							Main.window.draw(robotSprite);
+					}
+		}
 	}
 	
+	
+	
+	
+	/****************************************************************************/
+	/*							Initialization procedures						*/
+	/****************************************************************************/
+	
+	
+	/**
+	 * Initialize the displayed grid from a grid
+	 */
+	public void initGrid(){
+		for(int l = 0; l<this.grid.getSize(); l++){
+			for(int c = 0; c<this.grid.getSize(); c++){
+				int cubeHeight = this.grid.getCell(l, c).getHeight();
+				if(cubeHeight > 0){
+					addLevel(l, c, cubeHeight-1);
+					addCube(l, c, cubeHeight-1, this.grid.getCell(l, c).getColour());
+				}
+			}
+		}
+	}
+	
+	public void initRobot(){
+		int level = levelMax[this.robot.getPositionX()][this.robot.getPositionY()];
+		RobotDisplay robotDisplay = new RobotDisplay(this.robot.getPositionX(), 
+				this.robot.getPositionY(), level, 
+				this.robot.getColour(), this.robot.getDirection());
+		this.robotSprite = robotDisplay.createRobot();
+		this.robotSprite.setPosition(originX, originY);
+	}
+	
+	
+	/**
+	 * TODO suppress this
+	 * Init a grid from a matrix
+	 * @param mat
+	 */
+	public void initGridFromMatrix(int[][] mat){
+		for(int l = 0; l<mat.length; l++)
+			for(int c = 0; c<mat[0].length; c++)
+				addLevel(l, c, mat[l][c]);
+	}
+	
+	
+	/****** test functions *****/
+	
+	/**
+	 * Test if a coordinate is inside a cube's cell or not
+	 * @param coord The coordinate
+	 * @return A boolean
+	 */
 	public CellPosition isInside(Vector2i coord){
 		CellPosition pos = new CellPosition(0, 0, 0, false);
 		
@@ -98,6 +217,15 @@ public class GridDisplay {
 		return pos;
 	}
 	
+	
+	/**
+	 * Test if a coordinate is inside a cube's cell dead zone or not
+	 * @param coord The coordinate
+	 * @param lineMin The first line search has to be performed
+	 * @param columnMin The first column search has to be performed
+	 * @param levelMin The first level search has to be performed
+	 * @return A boolean
+	 */
 	public boolean isInsideDeadZone(Vector2i coord, int lineMin, int columnMin, int levelMin){
 		for(int l = this.line-1; l>=lineMin; l--)
 			for(int c = this.column-1; c>=columnMin; c--)
@@ -109,8 +237,20 @@ public class GridDisplay {
 		return false;
 	}
 	
+	
+	/**
+	 * Get the array of sprites corresponding to the displayed grid
+	 * @return
+	 */
 	public Sprite[][][] getGrid(){return cubes;}
 	
+	public Sprite getRobot(){return robotSprite;}
+	
+	
+	/**
+	 * Get the list of sprites corresponding to the displayed grid
+	 * @return
+	 */
 	public ArrayList<Sprite> getGridDisplay(){
 		ArrayList<Sprite> out = new ArrayList<Sprite>();
 		for(int l = 0; l < this.line; l++)

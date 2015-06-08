@@ -5,6 +5,12 @@ import org.jsfml.system.Vector2f;
 
 public class CellDisplay {
 	
+	/**
+	 * Create a sprite of a cell at the given coordinates
+	 * @param line The cell's line
+	 * @param column The cell's column
+	 * @return A sprite of the cell
+	 */
 	public static Sprite createCell(int line, int column){
 		Sprite toAdd = new Sprite(Textures.cellTexture);
 		

@@ -27,6 +27,13 @@ public class Textures {
 	public static Texture procedure1Texture;
 	public static Texture procedure2Texture;
 	
+	
+	// robot textures
+	public static Texture robotNorth;
+	public static Texture robotSouth;
+	public static Texture robotWest;
+	public static Texture robotEast;
+	
 	public static Texture buttonTexture;
 	
 	public static void initTextures(){
@@ -49,6 +56,11 @@ public class Textures {
 		playTexture = new Texture();
 		resetTexture = new Texture();
 		
+		robotNorth = new Texture();
+		robotSouth = new Texture();
+		robotWest = new Texture();
+		robotEast = new Texture();
+		
 		try {
 		    cubeTexture.loadFromFile(Paths.get(RESSOURCES_PATH+"whitecube.png"));
 		    cubeTextureBlue.loadFromFile(Paths.get(RESSOURCES_PATH+"bluecube.png"));
@@ -70,6 +82,12 @@ public class Textures {
 		    // load play and reset icons
 		    playTexture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconPlay.png"));
 		    resetTexture.loadFromFile(Paths.get(RESSOURCES_PATH + "iconReset.png"));
+		    
+		    // robot
+		    robotNorth.loadFromFile(Paths.get(RESSOURCES_PATH + "robot/white_north.png"));
+		    robotSouth.loadFromFile(Paths.get(RESSOURCES_PATH + "robot/white_south.png"));
+		    robotWest.loadFromFile(Paths.get(RESSOURCES_PATH + "robot/white_west.png"));
+		    robotEast.loadFromFile(Paths.get(RESSOURCES_PATH + "robot/white_east.png"));
 		    
 		} catch(IOException ex) {
 		    //Ouch! something went wrong
