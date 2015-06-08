@@ -6,9 +6,12 @@ import java.util.List;
 import lightbot.graphics.Textures;
 
 import org.jsfml.graphics.Color;
+import org.jsfml.graphics.Drawable;
+import org.jsfml.graphics.RectangleShape;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
+import org.jsfml.system.Vector2f;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
@@ -26,6 +29,21 @@ public class TestMarwan {
 			float y = 700;
 			s.setPosition(x, y);
 			window.draw(s);
+		}
+	}
+
+	public static void foo(RenderWindow window) {
+		Sprite s = new Sprite(Textures.forwardTexture);
+		int currentLine = 0;
+		for (int i = 0; i < 12; i++) {
+
+			s.setPosition(880 + 10 + (i % 4) * (85 + 10), 20 + currentLine
+					* (s.getTexture().getSize().y + 10));
+			window.draw(s);
+
+			if ((i + 1) % 4 == 0)
+				currentLine += 1;
+
 		}
 	}
 
@@ -48,14 +66,19 @@ public class TestMarwan {
 		tex.add(Textures.procedure1Texture);
 		tex.add(Textures.procedure2Texture);
 
+		RectangleShape mainBox = new RectangleShape(new Vector2f(390, 295));
+		mainBox.setFillColor(new Color(79, 179, 201));
+		mainBox.setPosition(880, 10);
+
 		while (window.isOpen()) {
 			if (firstRendering) {
 				firstRendering = false;
 				window.clear(new Color(216, 216, 216));
 			}
-			
-			
+
+			window.draw(mainBox);
 			renderInstructionsIcons(tex, 50, window);
+			foo(window);
 
 			window.display();
 
@@ -74,5 +97,4 @@ public class TestMarwan {
 		// forwardSprite.s
 
 	}
-
 }
