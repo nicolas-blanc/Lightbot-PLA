@@ -46,6 +46,9 @@ public class Textures {
 		procedure1Texture = new Texture();
 		procedure2Texture = new Texture();
 		
+		playTexture = new Texture();
+		resetTexture = new Texture();
+		
 		try {
 		    cubeTexture.loadFromFile(Paths.get(RESSOURCES_PATH+"whitecube.png"));
 		    cubeTextureBlue.loadFromFile(Paths.get(RESSOURCES_PATH+"bluecube.png"));
