@@ -58,14 +58,17 @@ public class WorldGenerator {
 	private void generation() {
 		initProba();
 		
-		int maximumInstructions = rand.nextInt(20 - 5 + 1) + 5;
+		int maximumInstructions = rand.nextInt(50 - 5 + 1) + 5;
 		int maximumLight = rand.nextInt((maximumInstructions / 5) + 1);
 		
 		Cell currentCell = firstCell();
 		Cell newCell;
 		int currentAction;
+		
+		int numLoop = 0;
 
 		while(numberInstruction <= maximumInstructions) {
+			numLoop++;
 			currentAction = giveAction(maximumLight);
 			newCell = updateGrid(currentCell, currentAction);
 			if (newCell == null) {
@@ -74,6 +77,9 @@ public class WorldGenerator {
 				currentCell = newCell;
 			}
 			setUpProbalities(currentAction);
+			if ((numLoop % 5) == 0) {
+				initProba();
+			}
 		}
 		
 		currentCell.setLightable(true);
@@ -97,8 +103,8 @@ public class WorldGenerator {
 	 */
 	private Cell firstCell() {
 		Cell firstcell = grid.getCell(0, 0);
-		firstcell.setHeight(rand.nextInt(1) + 1);
-		firstcell.setLightable(rand.nextInt(0) != 0);
+		firstcell.setHeight(rand.nextInt(3) + 1);
+		firstcell.setLightable(rand.nextInt(2) != 0);
 		boolean testLightable = firstcell.getLightable();
 		if (testLightable){
 			firstcell.setColour(Colour.GREEN);
@@ -107,8 +113,8 @@ public class WorldGenerator {
 			firstcell.setColour(Colour.WHITE);
 		}
 		firstcell.setLight(false);
-		int dir = rand.nextInt(0);
-		if (dir == 0){
+
+		if (rand.nextInt(2) == 0){
 			direction = CardinalDirection.EAST;
 		}
 		else {
@@ -125,15 +131,17 @@ public class WorldGenerator {
 	 */
 	private int giveAction(Integer maxLight) {
 		int randAction = rand.nextInt(range);
+		
+		while (randAction <= probaLight && numberLight < maxLight) {
+			randAction = rand.nextInt(range);
+			System.out.println("In while : " + randAction + " instruction : " + numberInstruction);
+		}
+		
 		int action = -1;
 		
 		if (randAction <= probaLight) {
-			if (numberLight < maxLight) {
 				action = 0;
 				numberLight++;
-			} else {
-				action = giveAction(maxLight);
-			}
 		} else if (randAction <= (probaForward - 1)) {
 			action = 1;
 		} else if (randAction <= (probaJump - 1)) {
@@ -154,15 +162,21 @@ public class WorldGenerator {
 	 * @return Return the new cell create depending on the action, 
 	 */
 	private Cell updateGrid(Cell cell, int action) {
+		numberInstruction++;	
 		switch (action) {
 		case 0:
-			cell.getLightable();
+			cell.setLightable(true);
 			break;
 		case 1:
 			try {
 				Cell newCell = grid.getNextCell(cell.getposX(), cell.getposY(), direction);
-				newCell.setHeight(cell.getHeight());
-				cell = newCell;
+				if (newCell.getHeight() == -1) {
+					newCell.setHeight(cell.getHeight());
+					cell = newCell;
+				} else {
+					numberInstruction--;
+					cell = null;
+				}
 			} catch (OutOfGridException e) {
 				if (rand.nextInt(2) == 0) {
 					direction = CardinalDirection.getRotationDirection(direction, RelativeDirection.RIGHT);
@@ -174,12 +188,17 @@ public class WorldGenerator {
 		case 2:
 			try {
 				Cell newCell = grid.getNextCell(cell.getposX(), cell.getposY(), direction);
-				if(cell.getHeight() == 1) {
-					newCell.setHeight(cell.getHeight() + rand.nextInt(2));
+				if (newCell.getHeight() == -1) {
+					if(cell.getHeight() == 1) {
+						newCell.setHeight(cell.getHeight() + rand.nextInt(2));
+					} else {
+						newCell.setHeight(cell.getHeight() + (rand.nextInt(3) - 1));
+					}
+					cell = newCell;
 				} else {
-					newCell.setHeight(cell.getHeight() + (rand.nextInt(3) - 1));
+					numberInstruction--;
+					cell = null;
 				}
-				cell = newCell;
 			} catch (OutOfGridException e) {
 				if (rand.nextInt(2) == 0) {
 					direction = CardinalDirection.getRotationDirection(direction, RelativeDirection.RIGHT);
@@ -196,8 +215,10 @@ public class WorldGenerator {
 			break;
 		default:
 			cell = null;
+			numberInstruction--;
 			break;
 		}
+		
 		
 		return cell;
 	}
