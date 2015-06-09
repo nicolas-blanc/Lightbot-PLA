@@ -35,7 +35,7 @@ public class Grid {
 		for(int i=0; i<size; i++){
 			for(int j=0; j<size; j++){
 				Cell cellToCopy = gridToCopy.getCell(i,j);
-				this.setCell(i,j,cellToCopy.getHeight());
+				this.setCell(i,j,cellToCopy.getHeight(), cellToCopy.getColour());
 			}
 		}
 	}
@@ -49,7 +49,7 @@ public class Grid {
 		for(int i=0; i<m.length; i++){
 			for(int j=0; j<m.length; j++){
 				Cell cell = new Cell(m[i][j].getHeight(), m[i][j].getColour(), i, j, m[i][j].getLightable());
-				this.setCell(i,j,cell.getHeight());
+				this.setCell(i,j,cell.getHeight(), Colour.WHITE);
 			}
 		}
 	}
@@ -93,8 +93,9 @@ public class Grid {
 	 * @param c : column
 	 * @param level
 	 */
-	public void setCell(int l, int c, int level){
+	public void setCell(int l, int c, int level, Colour colour){
 		this.grid[l][c].setHeight(level);
+		this.grid[l][c].setColour(colour);
 	}
 
 	/**

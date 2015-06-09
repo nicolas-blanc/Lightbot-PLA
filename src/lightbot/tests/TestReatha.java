@@ -22,9 +22,9 @@ public class TestReatha {
 		
 		System.out.println("	Size = " + grid1.getSize());
 		
-		grid1.setCell(2, 1, 2);
-		grid1.setCell(2, 2, 2);
-		grid1.setCell(0, 7, 3);
+		grid1.setCell(2, 1, 2, Colour.WHITE);
+		grid1.setCell(2, 2, 2, Colour.WHITE);
+		grid1.setCell(0, 7, 3, Colour.WHITE);
 		grid1.printGrid();
 
 		// class Procedure tests

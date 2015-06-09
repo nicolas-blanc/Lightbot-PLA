@@ -13,8 +13,8 @@ public class TestJump {
 		int size = 10;
 		Grid grid1 = new Grid(size);
 		
-		grid1.setCell(1, 8, 2);
-		grid1.setCell(1, 9, 3);
+		grid1.setCell(1, 8, 2, Colour.WHITE);
+		grid1.setCell(1, 9, 3, Colour.WHITE);
 		grid1.printGrid();
 		
 		Robot robot = new Robot(1,8,Colour.WHITE,CardinalDirection.EAST);

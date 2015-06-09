@@ -20,7 +20,7 @@ public class GridDisplay {
 	
 	private RobotDisplay robotDisplay;
 	
-	private Grid grid;
+	private Grid grid = null;
 	boolean isGame;
 	
 	private ClickableCell[][][] cellClick;
@@ -48,6 +48,8 @@ public class GridDisplay {
 		this.originY = originY;
 		this.isGame = false;
 		
+		grid = new Grid(this.line);
+		grid.levelToZero();
 		initArray();
 	}
 	
@@ -68,19 +70,19 @@ public class GridDisplay {
 	}
 	
 	private void initArray(){
-		cubes = new Sprite[this.grid.getSize()][this.grid.getSize()][50];
+		cubes = new Sprite[this.line][this.column][50];
 		for(int l = 0; l < cubes.length; l++)
 			for(int c = 0; c < cubes[0].length; c++)
 				for(int level = 0; level < cubes[0][0].length; level++)
 					cubes[l][c][level] = null;
 		
-		cellClick = new ClickableCell[this.grid.getSize()][this.grid.getSize()][50];
+		cellClick = new ClickableCell[this.line][this.column][50];
 		for(int l = 0; l < cellClick.length; l++)
 			for(int c = 0; c < cellClick[0].length; c++)
 				for(int level = 0; level < cellClick[0][0].length; level++)
 					cellClick[l][c][level] = null;
 		
-		levelMax = new int[this.grid.getSize()][this.grid.getSize()];
+		levelMax = new int[this.line][this.column];
 		for(int l = 0; l < levelMax.length; l++)
 			for(int c = 0; c < levelMax[0].length; c++)
 				levelMax[l][c] = -1;
@@ -98,6 +100,8 @@ public class GridDisplay {
 		Sprite toAdd = cube.createCube() ;
 		toAdd.setPosition(originX, originY);
 		
+		grid.setCell(line, column, level+1, colour);
+		
 		cubes[line][column][level] = toAdd;
 		levelMax[line][column] = level;
 		cellClick[line][column][level] = new ClickableCell(toAdd, Textures.cellTexture);
@@ -113,6 +117,7 @@ public class GridDisplay {
 		cubes[line][column][level-1] = null;
 		levelMax[line][column] = level-2;
 		cellClick[line][column][level-1] = null;
+		grid.setCell(line, column, level-1, Colour.WHITE);
 	}
 	
 	/**
@@ -273,7 +278,9 @@ public class GridDisplay {
 	 * Get the array of sprites corresponding to the displayed grid
 	 * @return
 	 */
-	public Sprite[][][] getGrid(){return cubes;}
+	public Sprite[][][] getGridSprites(){return cubes;}
+	
+	public Grid getGrid(){return this.grid;}
 	
 	public Sprite getRobot(){return robotSprite;}
 	

@@ -1,6 +1,7 @@
 package lightbot.tests;
 
 import lightbot.graphics.Display;
+import lightbot.graphics.Editor;
 import lightbot.graphics.Game;
 import lightbot.graphics.Textures;
 import lightbot.system.generator.WorldGenerator;
@@ -70,9 +71,9 @@ public class Main {
 		grid.setCell(3, 2, 4);
 		grid.setCell(3, 3, 4);*/
 		
-		//display = new Editor(9, 9, 320, 100);
+		display = new Editor(9, 9, 320, 100);
 		//display = new Game(mat, 320, 200);
-		display = new Game(grid, (int)(640*scaleRatio), (int)(200*scaleRatio));
+		//display = new Game(grid, (int)(640*scaleRatio), (int)(200*scaleRatio));
 		display.printGrid();
 
 		//Main loop

@@ -98,8 +98,8 @@ public class Game implements Display{
 	}
 	
 	public void printGrid(){
-		anim = new Animation(this.gridDisplay.getGrid(), this.gridDisplay.getRobot());
-		Sprite[][][] grid = this.gridDisplay.getGrid();
+		anim = new Animation(this.gridDisplay.getGridSprites(), this.gridDisplay.getRobot());
+		Sprite[][][] grid = this.gridDisplay.getGridSprites();
 		for(int l = 0; l < grid.length; l++)
 			for(int c = 0; c < grid[0].length; c++)
 				for(int level = 0; level < 50; level++)
@@ -114,7 +114,7 @@ public class Game implements Display{
 	}
 	
 	public void deleteGrid(){
-		Sprite[][][] grid = this.gridDisplay.getGrid();
+		Sprite[][][] grid = this.gridDisplay.getGridSprites();
 		for(int l = grid.length-1; l >= 0; l--)
 			for(int c = grid[0].length-1; c >= 0; c--)
 				for(int level = 49; level >= 0; level--)
@@ -184,11 +184,11 @@ public class Game implements Display{
 			if(mouse.button == Mouse.Button.LEFT){
 				if(turnLeftButton.isInside(mouse.position)){
 					gridDisplay.rotateLeft();
-					anim.updateSprite(gridDisplay.getGrid(), gridDisplay.getRobot());
+					anim.updateSprite(gridDisplay.getGridSprites(), gridDisplay.getRobot());
 				}
 				else if(turnRightButton.isInside(mouse.position)){
 					gridDisplay.rotateRight();
-					anim.updateSprite(gridDisplay.getGrid(), gridDisplay.getRobot());
+					anim.updateSprite(gridDisplay.getGridSprites(), gridDisplay.getRobot());
 				}
 			}
 		}

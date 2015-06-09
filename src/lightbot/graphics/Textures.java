@@ -13,6 +13,7 @@ public class Textures {
 	public static Texture cubeTextureBlue;
 	public static Texture cubeTextureRed;
 	public static Texture cubeTextureYellow;
+	public static Texture cubeTextureTeleport;
 	public static Texture cellTexture;
 	
 
@@ -36,15 +37,18 @@ public class Textures {
 	public static Texture robotEast;
 	
 	public static Texture buttonTexture;
+	public static Texture teleportTexture;
 	
 	public static void initTextures(){
 		cubeTexture = new Texture();
 		cubeTextureBlue = new Texture();
 		cubeTextureRed = new Texture();
 		cubeTextureYellow = new Texture();
+		cubeTextureTeleport = new Texture();
 		cellTexture = new Texture();
 		
 		buttonTexture = new Texture();
+		teleportTexture = new Texture();
 		
 		forwardTexture = new Texture();
 		jumpTexture = new Texture();
@@ -67,8 +71,11 @@ public class Textures {
 		    cubeTextureBlue.loadFromFile(Paths.get(RESSOURCE_PATH+"bluecube.png"));
 		    cubeTextureRed.loadFromFile(Paths.get(RESSOURCE_PATH+"orangecube.png"));
 		    cubeTextureYellow.loadFromFile(Paths.get(RESSOURCE_PATH+"yellowcube.png"));
+		    cubeTextureTeleport.loadFromFile(Paths.get(RESSOURCE_PATH+"spacecube.png"));
 		    cellTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"canva.png"));
+		    
 		    buttonTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"button.png"));
+		    teleportTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"teleport.png"));
 		    
 		    // load action icons
 		    forwardTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconForward.png"));

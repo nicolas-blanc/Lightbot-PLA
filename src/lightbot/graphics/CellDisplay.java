@@ -21,13 +21,13 @@ public class CellDisplay {
 		
 		Vector2f decal;
 		if(line == column)
-			decal = new Vector2f(-1, 
-					line*2*(decalY-1) 
+			decal = new Vector2f(0, 
+					line*2*(decalY) 
 						+ (Math.round(Textures.cubeTexture.getSize().y) 
 						- (Math.round(Textures.cellTexture.getSize().y))));
 		else
-			decal = new Vector2f((column-line)*(decalX-1),
-					(line+column)*(decalY-1)
+			decal = new Vector2f((column-line)*(decalX),
+					(line+column)*(decalY)
 					+ (Math.round(Textures.cubeTexture.getSize().y) 
 					- (Math.round(Textures.cellTexture.getSize().y))));
 		

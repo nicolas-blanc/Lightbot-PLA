@@ -1,7 +1,6 @@
 package lightbot.graphics;
 
 import lightbot.system.Colour;
-import lightbot.tests.Main;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -41,6 +40,10 @@ public class CubeDisplay {
 				this.currentTexture = Textures.cubeTextureYellow;
 				break;
 				
+			case TELEPORT:
+				this.currentTexture = Textures.cubeTextureTeleport;
+				break;
+				
 			default:
 				this.currentTexture = Textures.cubeTexture;
 				break;
@@ -61,15 +64,15 @@ public class CubeDisplay {
 		Vector2f decal;
 		if(this.level == 0){
 			if(this.line == this.column)
-				decal = new Vector2f(-1, this.line*2*(decalY-1));
+				decal = new Vector2f(0, this.line*2*(decalY));
 			else
-				decal = new Vector2f((this.column-this.line)*(decalX-1), (this.line+this.column)*(decalY-1));
+				decal = new Vector2f((this.column-this.line)*(decalX), (this.line+this.column)*(decalY));
 		}
 		else{
 			if(this.line == this.column)
-				decal = new Vector2f(-1, (this.line+1)*2*(decalY-1)-(sizeCubeY-2)-(this.level-1)*decalY);
+				decal = new Vector2f(0, (this.line+1)*2*(decalY)-(sizeCubeY-2)-(this.level-1)*decalY);
 			else
-				decal = new Vector2f((this.column-this.line)*(decalX-1), (this.line+this.column+2)*(decalY-1)-(sizeCubeY-2)-(this.level-1)*decalY);
+				decal = new Vector2f((this.column-this.line)*(decalX), (this.line+this.column+2)*(decalY)-(sizeCubeY-2)-(this.level-1)*decalY);
 		}
 		
 		Vector2f origin = Vector2f.div(new Vector2f(Textures.cubeTexture.getSize()), 2);
@@ -78,4 +81,6 @@ public class CubeDisplay {
 		toAdd.setOrigin(Vector2f.sub(origin, decal));
 		return toAdd;
 	}
+	
+	public Colour getColour(){return this.colour;}
 }
