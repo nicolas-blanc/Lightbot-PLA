@@ -1,15 +1,11 @@
 /**
  * 
  */
-package lightbot.system.action;
+package lightbot.system;
 
 /**
  * @author Nasheis
  *
  */
-public interface _Action {
-	
-	//public void execute();
-	
-	
+public interface _Action extends _Executable {
 }
