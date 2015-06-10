@@ -3,7 +3,6 @@ package lightbot.system.action;
 import lightbot.system.CardinalDirection;
 import lightbot.system.Robot;
 import lightbot.system.RelativeDirection;
-import lightbot.system._Action;
 import lightbot.system.world.Grid;
 
 public class Turn implements _Action {

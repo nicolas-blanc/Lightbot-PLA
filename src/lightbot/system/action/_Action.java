@@ -1,7 +1,9 @@
 /**
  * 
  */
-package lightbot.system;
+package lightbot.system.action;
+
+import lightbot.system._Executable;
 
 /**
  * @author Nasheis

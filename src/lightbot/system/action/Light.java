@@ -2,7 +2,6 @@ package lightbot.system.action;
 
 import lightbot.system.Colour;
 import lightbot.system.Robot;
-import lightbot.system._Action;
 import lightbot.system.world.Cell;
 import lightbot.system.world.Grid;
 
