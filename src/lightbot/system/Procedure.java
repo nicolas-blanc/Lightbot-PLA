@@ -2,8 +2,6 @@ package lightbot.system;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
-
 import lightbot.system.world.Grid;
 
 public class Procedure implements _Executable {

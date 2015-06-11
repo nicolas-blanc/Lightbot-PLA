@@ -22,9 +22,11 @@ public class WorldGenerator {
 	private int probaLeft;
 	final private int range = 12;
 	
+	@SuppressWarnings("unused")
 	private int numberProcedures;
 	private int numberInstruction;
 	private int numberLight;
+	private int height;
 	
 	private CardinalDirection direction;
 	
@@ -38,7 +40,7 @@ public class WorldGenerator {
 		numberInstruction = 0;
 		numberLight = 0;
 		
-		grid = new Grid(10);
+		grid = new Grid(8);
 		rand = new Random();
 		generation();
 		grid.levelToZero();
@@ -59,7 +61,7 @@ public class WorldGenerator {
 		initProba();
 		
 		int maximumInstructions = rand.nextInt(50 - 5 + 1) + 5;
-		int maximumLight = rand.nextInt((maximumInstructions / 5) + 1);
+		int maximumLight = rand.nextInt((maximumInstructions / 5) + 4) + 3;
 		
 		Cell currentCell = firstCell();
 		Cell newCell;
@@ -83,6 +85,10 @@ public class WorldGenerator {
 		}
 		
 		currentCell.setLightable(true);
+		
+		System.out.println("Max - Instruction : " + maximumInstructions + " / LIght : " + maximumLight);
+		System.out.println("Instruction : " + numberInstruction + " / LIght : " + numberLight);
+		
 	}
 	
 	/**
@@ -103,7 +109,8 @@ public class WorldGenerator {
 	 */
 	private Cell firstCell() {
 		Cell firstcell = grid.getCell(0, 0);
-		firstcell.setHeight(rand.nextInt(3) + 1);
+		firstcell.setHeight(rand.nextInt(2) + 1);
+		height = firstcell.getHeight();
 		firstcell.setLightable(rand.nextInt(2) != 0);
 		boolean testLightable = firstcell.getLightable();
 		if (testLightable){
@@ -191,10 +198,13 @@ public class WorldGenerator {
 				if (newCell.getHeight() == -1) {
 					if(cell.getHeight() == 1) {
 						newCell.setHeight(cell.getHeight() + rand.nextInt(2));
-					} else {
+						} else if (height == 4) {
+							newCell.setHeight(cell.getHeight() + (rand.nextInt(2) - 1));
+						} else {
 						newCell.setHeight(cell.getHeight() + (rand.nextInt(3) - 1));
 					}
 					cell = newCell;
+					height = cell.getHeight();
 				} else {
 					numberInstruction--;
 					cell = null;
