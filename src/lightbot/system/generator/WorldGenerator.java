@@ -7,6 +7,7 @@ import java.util.Random;
 
 import lightbot.system.*;
 import lightbot.system.world.*;
+import lightbot.system.world.cell.*;
 
 /**
  * @author Nasheis
@@ -44,7 +45,6 @@ public class WorldGenerator {
 		rand = new Random();
 		generation();
 //		finishGeneration();
-		grid.levelToZero();
 	}
 	
 	/**
@@ -88,7 +88,7 @@ public class WorldGenerator {
 			previousAction = currentAction;
 		}
 		
-		currentCell.setLightable(true); 
+		grid.changeToLightable(currentCell.getX(),currentCell.getY());
 //		System.out.println("Light ? -> " + currentCell.getLightable());
 		
 		System.out.println("Max - Instruction : " + maximumInstructions + " / LIght : " + maximumLight);
@@ -117,20 +117,14 @@ public class WorldGenerator {
 	 * @return Return the first case of the algorithm
 	 */
 	private Cell firstCell() {
+		if(rand.nextInt(2) != 0) {
+			grid.setCell(new LightableCell(0, 0, (rand.nextInt(2) + 1)));
+		} else {
+			grid.setCell(new NormalCell(0, 0, (rand.nextInt(2) + 1)));
+		}
+		
 		Cell firstcell = grid.getCell(0, 0);
-		firstcell.setHeight(rand.nextInt(2) + 1);
 		height = firstcell.getHeight();
-		firstcell.setLightable(rand.nextInt(2) != 0);
-		/*
-		boolean testLightable = firstcell.getLightable();
-		if (testLightable){
-			firstcell.setColour(Colour.GREEN);
-		}
-		else {
-			firstcell.setColour(Colour.WHITE);
-		}
-		*/
-		firstcell.setLight(false);
 
 		if (rand.nextInt(2) == 0){
 			direction = CardinalDirection.EAST;
@@ -201,17 +195,17 @@ public class WorldGenerator {
 		numberInstruction++;	
 		switch (action) {
 		case 0:
-			cell.setLightable(true);
+			grid.changeToLightable(cell.getX(), cell.getY());
 //			System.out.println("Light !!!! // x : " + cell.getposX() + " - y : " + cell.getposY());
 //			System.out.println("Light ? -> " + cell.getLightable());
 			break;
 		case 1:
 			try {
-				Cell newCell = grid.getNextCell(cell.getposX(), cell.getposY(), direction);
-				System.out.println("Heigh cell : " + newCell.getHeight());
-				if (newCell.getHeight() == -1) {
-					newCell.setHeight(cell.getHeight());
-					cell = newCell;
+				Cell emptyCell = grid.getNextCell(cell.getX(), cell.getY(), direction);
+				System.out.println("Heigh cell : " + emptyCell.getHeight());
+				if (emptyCell.isEmptyCell()) {
+					grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), cell.getHeight()));
+					cell = grid.getCell(emptyCell.getX(), emptyCell.getY());
 				} else {
 					numberInstruction--;
 					cell = null;
@@ -229,17 +223,17 @@ public class WorldGenerator {
 			break;
 		case 2:
 			try {
-				Cell newCell = grid.getNextCell(cell.getposX(), cell.getposY(), direction);
-				System.out.println("Heigh cell : " + newCell.getHeight());
-				if (newCell.getHeight() == -1) {
+				Cell emptyCell = grid.getNextCell(cell.getX(), cell.getY(), direction);
+				System.out.println("Heigh cell : " + emptyCell.getHeight());
+				if (emptyCell.getHeight() == -1) {
 					if(cell.getHeight() == 1) {
-						newCell.setHeight(cell.getHeight() + rand.nextInt(2));
+						grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), (cell.getHeight() + rand.nextInt(2))));
 						} else if (height == 4) {
-							newCell.setHeight(cell.getHeight() + (rand.nextInt(2) - 1));
+							grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), (cell.getHeight() + (rand.nextInt(2) - 1))));
 						} else {
-						newCell.setHeight(cell.getHeight() + (rand.nextInt(3) - 1));
+							grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), (cell.getHeight() + (rand.nextInt(3) - 1))));
 					}
-					cell = newCell;
+					cell = grid.getCell(emptyCell.getX(), emptyCell.getY());
 					height = cell.getHeight();
 				} else {
 					numberInstruction--;
