@@ -1,13 +1,18 @@
 package lightbot.graphics;
 
-import lightbot.system.Colour;
 import lightbot.system.world.Grid;
+import lightbot.system.world.cell.Cell;
+import lightbot.system.world.cell.EmptyCell;
+import lightbot.system.world.cell.FullCell;
+import lightbot.system.world.cell.NormalCell;
 import lightbot.tests.Main;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2i;
 
 public class GridDisplay {
+	
+	public static final int maxHeight = 50; 
 	
 	private Sprite[][][] cubes;
 	
@@ -40,7 +45,6 @@ public class GridDisplay {
 		this.isGame = false;
 		
 		grid = new Grid(this.line);
-		grid.levelToZero();
 		initArray();
 	}
 	
@@ -68,13 +72,13 @@ public class GridDisplay {
 	 * Initialize all the array of the GridDisplay
 	 */
 	private void initArray(){
-		cubes = new Sprite[this.line][this.column][50];
+		cubes = new Sprite[this.line][this.column][maxHeight];
 		for(int l = 0; l < cubes.length; l++)
 			for(int c = 0; c < cubes[0].length; c++)
 				for(int level = 0; level < cubes[0][0].length; level++)
 					cubes[l][c][level] = null;
 		
-		cellClick = new ClickableCell[this.line][this.column][50];
+		cellClick = new ClickableCell[this.line][this.column][maxHeight];
 		for(int l = 0; l < cellClick.length; l++)
 			for(int c = 0; c < cellClick[0].length; c++)
 				for(int level = 0; level < cellClick[0][0].length; level++)
@@ -90,15 +94,13 @@ public class GridDisplay {
 	 * Initialize the displayed grid from a grid
 	 */
 	public void initGrid(){
-		for(int l = 0; l<this.grid.getSize(); l++){
-			for(int c = 0; c<this.grid.getSize(); c++){
-				int cubeHeight = this.grid.getCell(l, c).getHeight();
-				if(cubeHeight > 0){
+		for(int l = 0; l<this.grid.getSize(); l++)
+			for(int c = 0; c<this.grid.getSize(); c++)
+				if(!(this.grid.getCell(l, c) instanceof EmptyCell)){
+					int cubeHeight = this.grid.getCell(l, c).getHeight();
 					addLevel(l, c, cubeHeight-1);
-					addCube(l, c, cubeHeight-1, this.grid.getCell(l, c).getColour());
+					addCube(this.grid.getCell(l, c));
 				}
-			}
-		}
 	}
 	
 	
@@ -129,17 +131,18 @@ public class GridDisplay {
 	 * @param level The cube's level
 	 * @param colour The cube's colour
 	 */
-	public void addCube(int line, int column, int level, Colour colour){
-		CubeDisplay cube = new CubeDisplay(line, column, level, colour);
+	public void addCube(Cell cell){
+		CubeDisplay cube = new CubeDisplay(cell);
 		Sprite toAdd = cube.create() ;
 		toAdd.setPosition(originX, originY);
 		
-		if(!this.isGame)
-			grid.setCell(line, column, level+1, colour);
+		if(!this.isGame){
+			grid.setCell(cell);
+		}
 		
-		cubes[line][column][level] = toAdd;
-		levelMax[line][column] = level;
-		cellClick[line][column][level] = new ClickableCell(toAdd, Textures.cellTexture);
+		cubes[cell.getX()][cell.getY()][cell.getHeight()] = toAdd;
+		levelMax[cell.getX()][cell.getY()] = cell.getHeight();
+		cellClick[cell.getX()][cell.getY()][cell.getHeight()] = new ClickableCell(toAdd, Textures.cellTexture);
 	}
 	
 	/**
@@ -153,8 +156,17 @@ public class GridDisplay {
 		levelMax[line][column] = level-2;
 		cellClick[line][column][level-1] = null;
 		
-		if(!this.isGame)
-			grid.setCell(line, column, level-1, Colour.WHITE);
+		if(!this.isGame){
+			Cell cell = grid.getCell(line, column);
+			if(cell instanceof FullCell){
+				if(((FullCell)cell).getHeight() == 0)
+					cell = new EmptyCell(cell.getX(), cell.getY());
+				else
+					((FullCell)cell).setHeight(level-1);
+				grid.setCell(cell);
+			}
+			//grid.setCell(line, column, level-1, Colour.WHITE);
+		}
 	}
 	
 	/**
@@ -164,8 +176,8 @@ public class GridDisplay {
 	 * @param level The max level
 	 */
 	public void addLevel(int line, int column, int level){
-		for(int i = 1; i<=level; i++)
-			addCube(line, column, i-1, Colour.WHITE);
+		for(int i = 0; i<=level; i++)
+			addCube(new NormalCell(line, column, i-1));
 	}
 	
 	
@@ -193,7 +205,7 @@ public class GridDisplay {
 		initGrid();
 	}
 	
-	public void rotateRight(){
+	public void rotateRight(){		
 		grid.rotateRight();
 		initArray();
 		initGrid();

@@ -66,8 +66,11 @@ public class Grid {
 				tmp[l][c] = grid[l][c];
 
 		for (int l = 0; l < grid.length; l++)
-			for (int c = 0; c < grid.length; c++)
+			for (int c = 0; c < grid.length; c++){
 				grid[l][c] = tmp[grid.length - c - 1][l];
+				grid[l][c].setX(l);
+				grid[l][c].setY(c);
+			}
 	}
 
 	public void rotateLeft() {
@@ -75,10 +78,13 @@ public class Grid {
 		for (int l = 0; l < grid.length; l++)
 			for (int c = 0; c < grid.length; c++)
 				tmp[l][c] = grid[l][c];
-
+		
 		for (int l = 0; l < grid.length; l++)
-			for (int c = 0; c < grid.length; c++)
+			for (int c = 0; c < grid.length; c++){
 				grid[l][c] = tmp[c][grid.length - l - 1];
+				grid[l][c].setX(l);
+				grid[l][c].setY(c);
+			}
 	}
 
 	public void changeToLightable(int x, int y) {

@@ -13,7 +13,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import lightbot.system.world.Cell;
+import lightbot.system.world.cell.*;
 import lightbot.system.world.Grid;
 
 public class ParserJSON {
@@ -47,8 +47,36 @@ public class ParserJSON {
 					int lineAttribut = (int)(long)column.get("l");
 					int columnAttribut = (int)(long)column.get("c");
 					int levelAttribut = (int)(long)column.get("h");
-					Colour colour = stringToColour((String)column.get("colour"));
-					grid.setCell(lineAttribut, columnAttribut, levelAttribut, colour);
+					String type = (String)column.get("type");
+					
+					Cell cell = null;
+					
+					switch(type){
+						case "ColoredCell":
+							Colour colour = stringToColour((String)column.get("colour"));
+							cell = new ColoredCell(lineAttribut, columnAttribut, levelAttribut, colour);
+							break;
+							
+						case "TeleportCell":
+							TeleportColour teleportColour = stringToTeleportColour((String)column.get("colour"));
+							JSONArray dest = (JSONArray)column.get("dest");
+							cell = new TeleportCell(lineAttribut, columnAttribut, levelAttribut, (int)(long)dest.get(0), (int)(long)dest.get(1), teleportColour);
+							break;
+						default:
+							break;
+					}
+					
+					if(!type.equals("EmptyCell")){
+						cell = new NormalCell(lineAttribut, columnAttribut, levelAttribut);
+						//System.out.println(lineAttribut + columnAttribut + levelAttribut);
+					}
+					else{
+						cell = new EmptyCell(lineAttribut, columnAttribut);
+					}
+					
+					
+					
+					grid.setCell(cell);
 				}
 			}
 			
@@ -81,11 +109,29 @@ public class ParserJSON {
 					JSONObject cellObject = new JSONObject();
 					cellObject.put("l", l);
 					cellObject.put("c", c);
-					cellObject.put("h", cell.getHeight());
-					cellObject.put("colour", cell.getColour().toString());
-					/*cellObject.put("type", cell.getType());
-					if(cell.getType() == Type.Teleport)
-						cellObject.put("dest", cell.getDest());*/
+					
+					
+					if(cell instanceof EmptyCell){
+						cellObject.put("h", 0);
+					}
+					else{
+						cellObject.put("h", ((FullCell)cell).getHeight());
+					}
+					
+					cellObject.put("type", getClassName(cell));
+					
+					switch(getClassName(cell)){
+						case "ColoredCell":
+							cellObject.put("colour", ((ColoredCell)cell).getColour().toString());
+						case "TeleportCell":
+							JSONArray dest = new JSONArray();
+							dest.add(((TeleportCell)cell).getDestX());
+							dest.add(((TeleportCell)cell).getDestY());
+							cellObject.put("dest", dest);
+							cellObject.put("colour", ((TeleportCell)cell).getColour().toString());
+						default:
+							break;
+					}
 					
 					lines.add(cellObject);
 				}
@@ -123,21 +169,33 @@ public class ParserJSON {
 			case "RED":
 				colour = Colour.RED;
 				break;
-			case "TELEPORT":
-				colour = Colour.TELEPORT;
-				break;
-			case "TELEPORTGREEN":
-				colour = Colour.TELEPORTGREEN;
-				break;
-			case "TELEPORTYELLOW":
-				colour = Colour.TELEPORTYELLOW;
-				break;
-			case "TELEPORTRED":
-				colour = Colour.TELEPORTRED;
-				break;
 			default:
 				break;
 		}
 		return colour;
+	}
+	
+	private static TeleportColour stringToTeleportColour(String colourIn){
+		TeleportColour colour = null;
+		switch(colourIn){
+			case "TELEPORT":
+				colour = TeleportColour.TELEPORT;
+				break;
+			case "TELEPORTGREEN":
+				colour = TeleportColour.TELEPORTGREEN;
+				break;
+			case "TELEPORTYELLOW":
+				colour = TeleportColour.TELEPORTYELLOW;
+				break;
+			case "TELEPORTRED":
+				colour = TeleportColour.TELEPORTRED;
+				break;
+		}
+		return colour;
+	}
+	
+	public static String getClassName(Cell cell){
+		String []className = cell.getClass().getName().split("\\.");
+		return className[className.length-1];
 	}
 }

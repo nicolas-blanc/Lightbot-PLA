@@ -27,6 +27,14 @@ public abstract class Cell {
 	public int getY() {
 		return this.position.getY();
 	}
+	
+	public void setX(int x){
+		this.position.setX(x);
+	}
+	
+	public void setY(int y){
+		this.position.setY(y);
+	}
 
 	/**
 	 * @return true if cell is an EmptyCell.

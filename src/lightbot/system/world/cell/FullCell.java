@@ -17,5 +17,9 @@ public abstract class FullCell extends Cell {
 	public int getHeight() {
 		return this.height;
 	}
+	
+	public void setHeight(int height){
+		this.height = height;
+	}
 
 }

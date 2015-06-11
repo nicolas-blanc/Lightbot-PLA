@@ -1,6 +1,10 @@
 package lightbot.graphics;
 
-import lightbot.system.Colour;
+import lightbot.system.world.cell.Cell;
+import lightbot.system.world.cell.ColoredCell;
+import lightbot.system.world.cell.LightableCell;
+import lightbot.system.world.cell.NormalCell;
+import lightbot.system.world.cell.TeleportCell;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -11,43 +15,41 @@ public class CubeDisplay implements DisplayPrimitive{
 	private int line;
 	private int column;
 	private int level;
-	private Colour colour;
 	
 	// The texture of the cube
 	public Texture currentTexture;
 	
-	public CubeDisplay(int line, int column, int level, Colour colour){
-		this.line = line;
-		this.column = column;
-		this.level = level;
-		this.colour = colour;
+	public CubeDisplay(Cell cell){
+		this.line = cell.getX();
+		this.column = cell.getY();
+		this.level = cell.getHeight();
 		
-		switch(this.colour){
-			case WHITE:
-				this.currentTexture = Textures.cubeTexture;
-				break;
-				
-			case GREEN:
-				// TODO change
-				this.currentTexture = Textures.cubeTextureBlue;
-				break;
-				
-			case RED:
-				this.currentTexture = Textures.cubeTextureRed;
-				break;
-				
-			case YELLOW:
-				this.currentTexture = Textures.cubeTextureYellow;
-				break;
-				
-			case TELEPORT:
-				this.currentTexture = Textures.cubeTextureTeleport;
-				break;
-				
-			default:
-				this.currentTexture = Textures.cubeTexture;
-				break;
-		}		
+		if(cell instanceof ColoredCell){
+			switch(((ColoredCell)cell).getColour()){
+				case GREEN:
+					// TODO change
+					this.currentTexture = Textures.cubeTextureBlue;
+					break;
+				case RED:
+					this.currentTexture = Textures.cubeTextureRed;
+					break;
+				case YELLOW:
+					this.currentTexture = Textures.cubeTextureYellow;
+					break;
+				default:
+					this.currentTexture = Textures.cubeTexture;
+					break;
+			}
+		}
+		else if(cell instanceof LightableCell)
+			this.currentTexture = Textures.cubeTextureBlue; // TODO change this
+		else if(cell instanceof NormalCell)
+			this.currentTexture = Textures.cubeTexture;
+		else if(cell instanceof TeleportCell)
+			this.currentTexture = Textures.cubeTextureTeleport;
+		else //TODO change this
+			this.currentTexture = Textures.cubeTexture;
+			
 	}
 	
 	/**
@@ -81,8 +83,4 @@ public class CubeDisplay implements DisplayPrimitive{
 		toAdd.setOrigin(Vector2f.sub(origin, decal));
 		return toAdd;
 	}
-	
-	//TODO
-	/************************** Maybe to suppresss *******************/
-	public Colour getColour(){return this.colour;}
 }

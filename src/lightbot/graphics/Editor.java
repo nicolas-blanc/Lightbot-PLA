@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 import lightbot.system.Colour;
 import lightbot.system.ParserJSON;
+import lightbot.system.world.cell.ColoredCell;
+import lightbot.system.world.cell.LightableCell;
+import lightbot.system.world.cell.NormalCell;
+import lightbot.system.world.cell.TeleportCell;
+import lightbot.system.world.cell.TeleportColour;
 import lightbot.tests.Main;
 
 import org.jsfml.graphics.Sprite;
@@ -137,27 +142,34 @@ public class Editor implements DisplayMode{
        	 			if(light){
        	 				if(pos.getLevel() > -1){
        	 					this.display.gridDisplay.removeCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
-       	 					this.display.gridDisplay.addCube(pos.getLine(), pos.getColumn(), pos.getLevel(), Colour.GREEN);
+       	 					LightableCell cell = new LightableCell(pos.getLine(), pos.getColumn(), pos.getLevel());
+       	 					this.display.gridDisplay.addCube(cell);
        	 				}
        	 				else{
-       	 					this.display.gridDisplay.addCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, Colour.GREEN);
+       	 					LightableCell cell = new LightableCell(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
+       	 					//this.display.gridDisplay.addCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, Colour.GREEN);
+       	 					this.display.gridDisplay.addCube(cell);
        	 					this.display.anim.addRemoveCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, true, false);
        	 					this.display.anim.updateSprite(this.display.gridDisplay.getGridSprites());
        	 				}
        	 			}
        	 			else if(teleport){
 	       	 			if(pos.getLevel() > -1){
+	       	 				TeleportCell cell = new TeleportCell(pos.getLine(), pos.getColumn(), pos.getLevel(), 0, 0, TeleportColour.TELEPORT);
 	       	 				this.display.gridDisplay.removeCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
-	       	 				this.display.gridDisplay.addCube(pos.getLine(), pos.getColumn(), pos.getLevel(), Colour.TELEPORT);
+	       	 				this.display.gridDisplay.addCube(cell);
 	   	 				}
 	   	 				else{
-	   	 					this.display.gridDisplay.addCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, Colour.TELEPORT);
+	   	 					TeleportCell cell = new TeleportCell(pos.getLine(), pos.getColumn(), pos.getLevel()+1, 0, 0, TeleportColour.TELEPORT);
+	   	 					this.display.gridDisplay.addCube(cell);
 	   	 					this.display.anim.addRemoveCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, true, false);
 	   	 					this.display.anim.updateSprite(this.display.gridDisplay.getGridSprites());
 	   	 				}
        	 			}
        	 			else{
-       	 				this.display.gridDisplay.addCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, Colour.WHITE);
+       	 				NormalCell cell = new NormalCell(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
+       	 				
+       	 				this.display.gridDisplay.addCube(cell);
        	 				this.display.anim.addRemoveCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, true, false);
        	 				this.display.anim.updateSprite(this.display.gridDisplay.getGridSprites());
        	 			}

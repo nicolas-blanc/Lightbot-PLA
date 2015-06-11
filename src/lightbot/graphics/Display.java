@@ -81,7 +81,6 @@ public class Display {
 	public GridDisplay getGridDisplay(){return this.gridDisplay;}
 	
 	public void rotate(int way){
-		System.out.println(way);
 		if(way == 0){
 			this.gridDisplay.rotateLeft();
 			int previousPosX = Robot.wheatley.getLine();

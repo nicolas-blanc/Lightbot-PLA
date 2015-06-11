@@ -45,9 +45,9 @@ public class Main {
 		//Grid grid = newWorld.getGrid();
 		Grid grid = ParserJSON.deserialize("grid1.json");
 		
-		display = new Editor(9, 9, 320, 100);
+		//display = new Editor(5, 5, 320, 100);
 		//display = new Game(mat, 320, 200);
-		//display = new Game(grid, (int)(640*scaleRatio), (int)(200*scaleRatio));
+		display = new Game(grid, (int)(640*scaleRatio), (int)(200*scaleRatio));
 		display.printGrid();
 
 		//Main loop
