@@ -8,20 +8,32 @@ import lightbot.system.action.Turn;
 import lightbot.system.world.Grid;
 
 public class Display {
-
+	
 	private Grid grid;
-	public GridDisplay gridDisplay;
-	private RobotDisplay robotDisplay;
-	private boolean isGame = false;
-	
-	public Animation anim;
-	
 	private int line;
 	private int column;
 	
+	public GridDisplay gridDisplay;
+	public RobotDisplay robotDisplay;
+	
+	public Animation anim;
+	
+	private boolean robotIsDisplayed = false;
+	
+	
+	/********************************************************************************************/
+	/*										Constructors										*/
+	/********************************************************************************************/
+	
+	/**
+	 * Create a Display object in order to play on a grid
+	 * @param grid The grid to play on
+	 * @param originX
+	 * @param originY
+	 */
 	public Display(Grid grid, int originX, int originY){
 		this.grid = grid;
-		this.isGame = true;
+		this.robotIsDisplayed = true;
 		
 		this.line = this.grid.getSize();
 		this.column = this.grid.getSize();
@@ -31,28 +43,54 @@ public class Display {
 		this.robotDisplay = new RobotDisplay(Robot.wheatley, 255, originX, originY);
 	}
 	
+	/**
+	 * Create a Display object in order to use the Editor
+	 * @param line The number of line of the editor
+	 * @param column The number of column of the editor
+	 * @param originX
+	 * @param originY
+	 */
 	public Display(int line, int column, int originX, int originY){
-		this.isGame = false;
+		this.robotIsDisplayed = false;
 		this.line = line;
 		this.column = column;
 		
-		this.gridDisplay = new GridDisplay(line, column, originX, originY);
-		anim = new Animation(this.gridDisplay.getGridSprites());
+		gridDisplay = new GridDisplay(line, column, originX, originY);
+		anim = new Animation(gridDisplay.getGridSprites());
 	}
 	
+	
+	/********************************************************************************************/
+	/*										Accessors											*/
+	/********************************************************************************************/
+	
+	public GridDisplay getGridDisplay(){return this.gridDisplay;}
+	
+	
+	/********************************************************************************************/
+	/*									Printing procedures										*/
+	/********************************************************************************************/
+	
+	/**
+	 * Print the grid, and if it's a game, 
+	 * print the robot if it has to be displayed
+	 */
 	public void print(){
-		for(int l=0; l<this.line; l++)
-			for(int c=0; c<this.column; c++){
-				this.gridDisplay.printPillar(l, c);
-				if(this.isGame && Robot.wheatley.getLine() == l && Robot.wheatley.getColumn() == c)
-					this.robotDisplay.print();
+		for(int l=0; l<line; l++)
+			for(int c=0; c<column; c++){
+				gridDisplay.printPillar(l, c);
+				if(robotIsDisplayed && Robot.wheatley.getLine() == l && Robot.wheatley.getColumn() == c)
+					robotDisplay.print();
 			}
 	}
 	
-	public void printAnim(){
-		anim = new Animation(this.gridDisplay.getGridSprites(), this.robotDisplay.robotSprite);
+	/**
+	 * Animation of the grid's construction
+	 */
+	public void createGridAnim(){
+		anim = new Animation(gridDisplay.getGridSprites(), robotDisplay.robotSprite);
 		
-		Sprite[][][] grid = this.gridDisplay.getGridSprites();
+		Sprite[][][] grid = gridDisplay.getGridSprites();
 		for(int l = 0; l < grid.length; l++){
 			for(int c = 0; c < grid[0].length; c++){
 				for(int level = 0; level < 50; level++){
@@ -69,8 +107,11 @@ public class Display {
 		}
 	}
 	
-	public void removeAnim(){
-		Sprite[][][] grid = this.gridDisplay.getGridSprites();
+	/**
+	 * Animation of the grid's destruction 
+	 */
+	public void deleteGridAnim(){
+		Sprite[][][] grid = gridDisplay.getGridSprites();
 		for(int l = grid.length-1; l >= 0; l--)
 			for(int c = grid[0].length-1; c >= 0; c--)
 				for(int level = 49; level >= 0; level--)
@@ -78,29 +119,42 @@ public class Display {
 						anim.addRemoveCube(l, c, level, false, true);
 	}
 	
-	public GridDisplay getGridDisplay(){return this.gridDisplay;}
 	
+	/********************************************************************************************/
+	/*									Actions on the grid										*/
+	/********************************************************************************************/
+	
+	/**
+	 * Rotation of the grid and the robot
+	 * @param way
+	 */
 	public void rotate(int way){
 		if(way == 0){
-			this.gridDisplay.rotateLeft();
-			int previousPosX = Robot.wheatley.getLine();
-			Robot.wheatley.setLine(grid.getSize()-Robot.wheatley.getColumn()-1);
-			Robot.wheatley.setColumn(previousPosX);
+			gridDisplay.rotateLeft();
 			
-			Turn turn = new Turn(RelativeDirection.LEFT);
-			turn.execute(null, Robot.wheatley);
-			this.robotDisplay.updateRobot(Robot.wheatley, 255);
+			if(robotIsDisplayed){
+				int previousPosX = Robot.wheatley.getLine();
+				Robot.wheatley.setLine(grid.getSize()-Robot.wheatley.getColumn()-1);
+				Robot.wheatley.setColumn(previousPosX);
+				
+				Turn turn = new Turn(RelativeDirection.LEFT);
+				turn.execute(null, Robot.wheatley);
+				robotDisplay.updateRobot(Robot.wheatley, 255);
+			}
 		}
 		else{
-			this.gridDisplay.rotateRight();
-			int previousPosX = Robot.wheatley.getLine();
-			Robot.wheatley.setLine(Robot.wheatley.getColumn());
-			Robot.wheatley.setColumn(grid.getSize()-previousPosX-1);
+			gridDisplay.rotateRight();
 			
-			Turn turn = new Turn(RelativeDirection.RIGHT);
-			turn.execute(null, Robot.wheatley);
-			this.robotDisplay.updateRobot(Robot.wheatley, 255);
+			if(robotIsDisplayed){
+				int previousPosX = Robot.wheatley.getLine();
+				Robot.wheatley.setLine(Robot.wheatley.getColumn());
+				Robot.wheatley.setColumn(grid.getSize()-previousPosX-1);
+				
+				Turn turn = new Turn(RelativeDirection.RIGHT);
+				turn.execute(null, Robot.wheatley);
+				robotDisplay.updateRobot(Robot.wheatley, 255);
+			}
 		}
-		anim.updateSprite(this.gridDisplay.getGridSprites(), this.robotDisplay.getSprite());
+		anim.updateSprite(gridDisplay.getGridSprites(), robotDisplay.getSprite());
 	}
 }

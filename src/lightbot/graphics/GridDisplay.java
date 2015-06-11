@@ -14,26 +14,28 @@ public class GridDisplay {
 	
 	public static final int maxHeight = 50; 
 	
-	private Sprite[][][] cubes;
-	
 	private Grid grid = null;
-	boolean isGame;
-	
-	private ClickableCell[][][] cellClick;
-	
-	// Keep the maximum level of cubes
-	public static int [][] levelMax;
-	
 	private int line;
 	private int column;
-	
 	private int originX;
 	private int originY;
 	
+	boolean isGame;
+	
+	private Sprite[][][] cubes;
+	private ClickableCell[][][] cellClick;
+	
+	public static int [][] levelMax;
+	
+	
+	/********************************************************************************************/
+	/*										Constructors										*/
+	/********************************************************************************************/
+	
 	/**
-	 * 
-	 * @param line
-	 * @param column
+	 * Create a GridDisplay object in order to use the Editor
+	 * @param line The line number of the editor
+	 * @param column The column number of the editor
 	 * @param originX
 	 * @param originY
 	 */
@@ -42,49 +44,69 @@ public class GridDisplay {
 		this.column = column;
 		this.originX = originX;
 		this.originY = originY;
-		this.isGame = false;
+		isGame = false;
 		
 		grid = new Grid(this.line);
 		initArray();
 	}
-	
+
 	/**
-	 * Create a display from a grid
-	 * @param grid
+	 * Create a Display object in order to play on a grid 
+	 * @param grid The grid to display
+	 * @param originX
+	 * @param originY
 	 */
 	public GridDisplay(Grid grid, int originX, int originY){
 		this.grid = grid;
-		this.isGame = true;
+		isGame = true;
 		
-		this.line = grid.getSize();
-		this.column = grid.getSize();
+		line = grid.getSize();
+		column = grid.getSize();
 		this.originX = originX;
 		this.originY = originY;
 		
 		initArray();
 	}
 	
+	
 	/********************************************************************************************/
-	/*								Initialization functions								*/
+	/*										Accessors											*/
+	/********************************************************************************************/
+	
+	/**
+	 * Get the array of sprites corresponding to the displayed grid
+	 * @return A three-dimensional array of sprites
+	 */
+	public Sprite[][][] getGridSprites(){return cubes;}
+	
+	/**
+	 * Get the Grid used in the GridDisplay object
+	 * @return
+	 */
+	public Grid getGrid(){return this.grid;}
+	
+	
+	/********************************************************************************************/
+	/*								Initialization functions									*/
 	/********************************************************************************************/
 	
 	/**
 	 * Initialize all the array of the GridDisplay
 	 */
 	private void initArray(){
-		cubes = new Sprite[this.line][this.column][maxHeight];
+		cubes = new Sprite[line][column][maxHeight];
 		for(int l = 0; l < cubes.length; l++)
 			for(int c = 0; c < cubes[0].length; c++)
 				for(int level = 0; level < cubes[0][0].length; level++)
 					cubes[l][c][level] = null;
 		
-		cellClick = new ClickableCell[this.line][this.column][maxHeight];
+		cellClick = new ClickableCell[line][column][maxHeight];
 		for(int l = 0; l < cellClick.length; l++)
 			for(int c = 0; c < cellClick[0].length; c++)
 				for(int level = 0; level < cellClick[0][0].length; level++)
 					cellClick[l][c][level] = null;
 		
-		levelMax = new int[this.line][this.column];
+		levelMax = new int[line][column];
 		for(int l = 0; l < levelMax.length; l++)
 			for(int c = 0; c < levelMax[0].length; c++)
 				levelMax[l][c] = -1;
@@ -94,51 +116,31 @@ public class GridDisplay {
 	 * Initialize the displayed grid from a grid
 	 */
 	public void initGrid(){
-		for(int l = 0; l<this.grid.getSize(); l++)
-			for(int c = 0; c<this.grid.getSize(); c++)
-				if(!(this.grid.getCell(l, c) instanceof EmptyCell)){
-					int cubeHeight = this.grid.getCell(l, c).getHeight();
+		for(int l = 0; l<grid.getSize(); l++)
+			for(int c = 0; c<grid.getSize(); c++)
+				if(!(grid.getCell(l, c) instanceof EmptyCell)){
+					int cubeHeight = grid.getCell(l, c).getHeight();
 					addLevel(l, c, cubeHeight-1);
-					addCube(this.grid.getCell(l, c));
+					addCube(grid.getCell(l, c));
 				}
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/********************************************************************************************/
+	/*									Display construction									*/
+	/********************************************************************************************/
 	
 	/**
 	 * Add a cube to the displayed grid
-	 * @param line The cube's line
-	 * @param column The cube's column
-	 * @param level The cube's level
-	 * @param colour The cube's colour
+	 * @param cell
 	 */
 	public void addCube(Cell cell){
 		CubeDisplay cube = new CubeDisplay(cell);
 		Sprite toAdd = cube.create() ;
 		toAdd.setPosition(originX, originY);
 		
-		if(!this.isGame){
+		if(!isGame)
 			grid.setCell(cell);
-		}
 		
 		cubes[cell.getX()][cell.getY()][cell.getHeight()] = toAdd;
 		levelMax[cell.getX()][cell.getY()] = cell.getHeight();
@@ -156,7 +158,7 @@ public class GridDisplay {
 		levelMax[line][column] = level-2;
 		cellClick[line][column][level-1] = null;
 		
-		if(!this.isGame){
+		if(!isGame){
 			Cell cell = grid.getCell(line, column);
 			if(cell instanceof FullCell){
 				if(((FullCell)cell).getHeight() == 0)
@@ -165,7 +167,6 @@ public class GridDisplay {
 					((FullCell)cell).setHeight(level-1);
 				grid.setCell(cell);
 			}
-			//grid.setCell(line, column, level-1, Colour.WHITE);
 		}
 	}
 	
@@ -177,16 +178,13 @@ public class GridDisplay {
 	 */
 	public void addLevel(int line, int column, int level){
 		for(int i = 0; i<=level; i++)
-			addCube(new NormalCell(line, column, i-1));
+			addCube(new NormalCell(line, column, i));
 	}
 	
 	
-	
-	
-	
-	
-	
-	
+	/********************************************************************************************/
+	/*									Printing procedures										*/
+	/********************************************************************************************/	
 	
 	/**
 	 * Print a pillar
@@ -197,21 +195,35 @@ public class GridDisplay {
 		for(int level=0; level<=levelMax[line][column]; level++)
 			if(cubes[line][column][level] != null)
 				Main.window.draw(cubes[line][column][level]);
-	}	
+	}
 	
+	
+	/********************************************************************************************/
+	/*									Actions on the grid										*/
+	/********************************************************************************************/
+	
+	/**
+	 * Rotate the grid to the left
+	 */
 	public void rotateLeft(){
 		grid.rotateLeft();
 		initArray();
 		initGrid();
 	}
 	
+	/**
+	 * Rotate the grid to the right
+	 */
 	public void rotateRight(){		
 		grid.rotateRight();
 		initArray();
 		initGrid();
 	}
 	
-	/****** test functions *****/
+	
+	/********************************************************************************************/
+	/*										Tests functions										*/
+	/********************************************************************************************/
 	
 	/**
 	 * Test if a coordinate is inside a cube's cell or not
@@ -221,8 +233,8 @@ public class GridDisplay {
 	public CellPosition isInside(Vector2i coord){
 		CellPosition pos = new CellPosition(0, 0, 0, false);
 		
-		for(int l = this.line-1; l>=0; l--)
-			for(int c = this.column-1; c>=0; c--)
+		for(int l = line-1; l>=0; l--)
+			for(int c = column-1; c>=0; c--)
 				for(int level = levelMax[l][c]; level>=0; level--){
 					if(cellClick[l][c][level].isInside(coord) && !isInsideDeadZone(coord, l, c, level)){
 						pos.line = l;
@@ -246,22 +258,13 @@ public class GridDisplay {
 	 * @return A boolean
 	 */
 	public boolean isInsideDeadZone(Vector2i coord, int lineMin, int columnMin, int levelMin){
-		for(int l = this.line-1; l>=lineMin; l--)
-			for(int c = this.column-1; c>=columnMin; c--)
+		for(int l = line-1; l>=lineMin; l--)
+			for(int c = column-1; c>=columnMin; c--)
 				for(int level = levelMax[l][c]; level>=levelMin; level--)
 					if(cellClick[l][c][level].isInsideDeadZone(coord)){
 						//System.out.println("Is inside dead zone --> l : " + l + ", c : " + c + ", level : " + level);
 						return true;
 					}
 		return false;
-	}
-	
-	/**
-	 * Get the array of sprites corresponding to the displayed grid
-	 * @return
-	 */
-	public Sprite[][][] getGridSprites(){return cubes;}
-	
-	public Grid getGrid(){return this.grid;}
-	
+	}	
 }

@@ -127,7 +127,7 @@ public class RobotDisplay implements DisplayPrimitive{
 	
 	// TODO
 	/************ Maybe to suppress *************/
-	public void turnLeft(Sprite robot){
+	public void turnLeft(){
 		if(currentTexture == Textures.robotNorth)
 			currentTexture = Textures.robotWest;
 		else if(currentTexture == Textures.robotWest)
@@ -137,10 +137,10 @@ public class RobotDisplay implements DisplayPrimitive{
 		else if(currentTexture == Textures.robotEast)
 			currentTexture = Textures.robotNorth;
 		
-		robot.setTexture(currentTexture);
+		this.robotSprite.setTexture(currentTexture);
 	}
 	
-	public void turnRight(Sprite robot){
+	public void turnRight(){
 		if(currentTexture == Textures.robotNorth)
 			currentTexture = Textures.robotEast;
 		else if(currentTexture == Textures.robotEast)
@@ -150,16 +150,16 @@ public class RobotDisplay implements DisplayPrimitive{
 		else if(currentTexture == Textures.robotWest)
 			currentTexture = Textures.robotNorth;
 		
-		robot.setTexture(currentTexture);
+		this.robotSprite.setTexture(currentTexture);
 	}
 	
-	public void setLine(int line){
+	/*public void setLine(int line){
 		this.line = line;
 	}
 	
 	public void setColumn(int column){
 		this.column = column;
-	}
+	}*/
 	
 	/***************************************************/
 }

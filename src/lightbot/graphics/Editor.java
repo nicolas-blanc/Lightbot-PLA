@@ -2,9 +2,7 @@ package lightbot.graphics;
 
 import java.util.ArrayList;
 
-import lightbot.system.Colour;
 import lightbot.system.ParserJSON;
-import lightbot.system.world.cell.ColoredCell;
 import lightbot.system.world.cell.LightableCell;
 import lightbot.system.world.cell.NormalCell;
 import lightbot.system.world.cell.TeleportCell;
@@ -134,7 +132,7 @@ public class Editor implements DisplayMode{
        	 			teleport = !teleport;
        	 		}
        	 		else if(saveButton.isInside(mouse.position)){
-       	 			this.display.gridDisplay.getGrid().printGrid();
+       	 			//this.display.gridDisplay.getGrid().printGrid();
        	 			ParserJSON.serialize("grid1.json", this.display.gridDisplay.getGrid());
        	 		}
        	 		else if(pos.isFound()){
@@ -147,7 +145,6 @@ public class Editor implements DisplayMode{
        	 				}
        	 				else{
        	 					LightableCell cell = new LightableCell(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
-       	 					//this.display.gridDisplay.addCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, Colour.GREEN);
        	 					this.display.gridDisplay.addCube(cell);
        	 					this.display.anim.addRemoveCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, true, false);
        	 					this.display.anim.updateSprite(this.display.gridDisplay.getGridSprites());

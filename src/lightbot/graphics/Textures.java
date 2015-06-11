@@ -79,17 +79,17 @@ public class Textures {
 		    
 		    // load action icons
 		    forwardTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconForward.png"));
-		    jumpTexture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconJump.png"));
+		    jumpTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconJump.png"));
 		    turnLeftTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconTurnLeft.png"));
 		    turnRightTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconTurnRight.png"));
-		    lightTexture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconLight.png"));
+		    lightTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconLight.png"));
 		    
-		    procedure1Texture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconProcedure1.png"));
-		    procedure2Texture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconProcedure2.png"));
+		    procedure1Texture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconProcedure1.png"));
+		    procedure2Texture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconProcedure2.png"));
 		    
 		    // load play and reset icons
-		    playTexture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconPlay.png"));
-		    resetTexture.loadFromFile(Paths.get(RESSOURCE_PATH + "iconReset.png"));
+		    playTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconPlay.png"));
+		    resetTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconReset.png"));
 		    
 		    // robot
 		    robotNorth.loadFromFile(Paths.get(RESSOURCE_PATH + "robot/white_north.png"));

@@ -3,7 +3,9 @@ package lightbot.graphics;
 import java.util.ArrayList;
 
 import lightbot.system.CardinalDirection;
+import lightbot.system.RelativeDirection;
 import lightbot.system.Robot;
+import lightbot.system.action.Turn;
 import lightbot.system.world.Grid;
 import lightbot.tests.Main;
 
@@ -24,11 +26,11 @@ public class Game implements DisplayMode{
 	private Display display;
 	
 	public Game(Grid grid, int originX, int originY){
-		this.toDisplay = new ArrayList<Sprite>();
+		toDisplay = new ArrayList<Sprite>();
 	
 		initConstantDisplay();
 		
-		this.display = new Display(grid, originX, originY);
+		display = new Display(grid, originX, originY);
 	}
 	
 	/**
@@ -64,15 +66,15 @@ public class Game implements DisplayMode{
 	public void display(){
 		for(Sprite s : toDisplay)
 			Main.window.draw(s);
-		this.display.print();
+		display.print();
 	}
 	
 	public void printGrid(){
-		this.display.printAnim();
+		display.createGridAnim();
 	}
 	
 	public void deleteGrid(){
-		this.display.removeAnim();
+		display.deleteGridAnim();
 	}
 	
 	/**
@@ -87,59 +89,63 @@ public class Game implements DisplayMode{
 	}
 
 	public void eventManager(Event event) {
+		Turn turn;
 		if(event.type == Event.Type.KEY_PRESSED){
 			switch(event.asKeyEvent().key){
 				case UP:
-					this.display.anim.moveRobot(CardinalDirection.NORTH, 0);
+					display.anim.moveRobot(CardinalDirection.NORTH, 0);
 					Robot.wheatley.setLine(Robot.wheatley.getLine()-1);
 					break;
 					
 				case DOWN:
-					this.display.anim.moveRobot(CardinalDirection.SOUTH, 0);
+					display.anim.moveRobot(CardinalDirection.SOUTH, 0);
 					Robot.wheatley.setLine(Robot.wheatley.getLine()+1);
 					break;
 					
 				case LEFT:
-					this.display.anim.moveRobot(CardinalDirection.WEST, 0);
+					display.anim.moveRobot(CardinalDirection.WEST, 0);
 					Robot.wheatley.setColumn(Robot.wheatley.getColumn()-1);
 					break;
 					
 				case RIGHT:
 					
-					this.display.anim.moveRobot(CardinalDirection.EAST, 0);
+					display.anim.moveRobot(CardinalDirection.EAST, 0);
 		       	 Robot.wheatley.setColumn(Robot.wheatley.getColumn()+1);
 					break;
 					
 				case PAGEUP:
 					
-					this.display.anim.moveRobot(CardinalDirection.EAST, 2);
+					display.anim.moveRobot(CardinalDirection.EAST, 2);
 					break;
 					
 				case PAGEDOWN:
 					
-					this.display.anim.moveRobot(CardinalDirection.EAST, 1);
+					display.anim.moveRobot(CardinalDirection.EAST, 1);
 					break;
 					
 				case NUMPAD6:
-					//this.gridDisplay.turnRobotRight();
+					turn = new Turn(RelativeDirection.RIGHT);
+					turn.execute(null, Robot.wheatley);
 					break;
 					
 				default:
-					//this.gridDisplay.turnRobotLeft();
+					turn = new Turn(RelativeDirection.LEFT);
+					turn.execute(null, Robot.wheatley);
 					break;
 				
 			}
-			//anim.updateRobot(gridDisplay.getRobot());
+			display.robotDisplay.updateRobot(Robot.wheatley, 255);
+			display.anim.updateRobot(display.robotDisplay.robotSprite);
 			System.out.println("Robot --> l : "+Robot.wheatley.getLine()+", c : "+Robot.wheatley.getColumn());
 		}
 		if(event.type == Event.Type.MOUSE_BUTTON_PRESSED){
 			MouseButtonEvent mouse = event.asMouseButtonEvent();
 			if(mouse.button == Mouse.Button.LEFT){
 				if(turnLeftButton.isInside(mouse.position)){
-					this.display.rotate(0);
+					display.rotate(0);
 				}
 				else if(turnRightButton.isInside(mouse.position)){
-					this.display.rotate(1);
+					display.rotate(1);
 				}
 			}
 		}

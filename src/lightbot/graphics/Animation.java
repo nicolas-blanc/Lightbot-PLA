@@ -26,6 +26,11 @@ public class Animation {
 	
 	private Sprite robotSprite = null;
 	
+	
+	/********************************************************************************************/
+	/*										Constructors										*/
+	/********************************************************************************************/
+	
 	/**
 	 * 
 	 * @param cubes
@@ -58,6 +63,21 @@ public class Animation {
 		this.robotSprite = robot;
 	}
 	
+	/********************************************************************************************/
+	/*										Animations											*/
+	/********************************************************************************************/
+	
+	/**
+	 * Print a pillar
+	 * @param line The line of the pillar
+	 * @param column The column of the pillar
+	 */
+	public void printPillar(int line, int column){
+		for(int level=0; level<GridDisplay.maxHeight; level++)
+			if(cubes[line][column][level] != null)
+				Main.window.draw(cubes[line][column][level]);
+	}
+	
 	/**
 	 * Animation for adding or removing a cube
 	 * @param line The cube's line
@@ -71,10 +91,7 @@ public class Animation {
 		boolean endDisplay = false;
 		Vector2f initialPosition = cubes[line][column][level].getPosition();
 		
-		//Create a frame clock which will be used to control the cube's movement
 		Clock frameClock = new Clock();
-
-		//Create a reset clock that will measure the time until 200 milliseconds have passed to finish the animation
 		Clock resetClock = new Clock();
 		
 		float transparency;
@@ -88,38 +105,33 @@ public class Animation {
 		else
 			transparency = 255;
 
-		//Main loop
 		while(Main.window.isOpen() && !finished) {
 			
-			//Draw everything
 		    Main.window.clear(Color.WHITE);
 		    
 	    	for(Sprite s : Main.display.getConstantDisplay())
 	    		Main.window.draw(s);
-		    
+	    	
 	    	if(!block){
 			    for(int l = 0; l<cubes.length; l++)
 					for(int c = 0; c<cubes[0].length; c++)
-						for(int lvl=0; lvl<50; lvl++)
-							if(cubes[l][c][lvl] != null)
-								Main.window.draw(cubes[l][c][lvl]);
+						printPillar(l, c);
 	    	}
 			else{
-				for(int l = 0; l<cubes.length && !endDisplay; l++){
+				for(int l = 0; l<cubes.length && !endDisplay; l++)
 					for(int c = 0; c<cubes[0].length && !endDisplay; c++)
-							for(int lvl=0; lvl<50 && !endDisplay; lvl++){
-								if(lvl == level && l == line && c == column)
-									endDisplay = true;
-								else{
-									if(cubes[l][c][lvl] != null)
-										Main.window.draw(cubes[l][c][lvl]);
-									if(robotSprite != null 
-											&& l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn() 
-											&& (lvl == GridDisplay.levelMax[l][c] || GridDisplay.levelMax[l][c] == -1))
-										Main.window.draw(robotSprite);
-								}
+						for(int lvl=0; lvl<GridDisplay.maxHeight && !endDisplay; lvl++){
+							if(lvl == level && l == line && c == column)
+								endDisplay = true;
+							else{
+								if(cubes[l][c][lvl] != null)
+									Main.window.draw(cubes[l][c][lvl]);
+								if(robotSprite != null 
+										&& l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn() 
+										&& (lvl == GridDisplay.levelMax[l][c] || GridDisplay.levelMax[l][c] == -1))
+									Main.window.draw(robotSprite);
 							}
-				}
+						}
 				Main.window.draw(cubes[line][column][level]);
 				endDisplay = false;
 			}
@@ -138,10 +150,7 @@ public class Animation {
 		    	}
 		    }
 
-		    //Get the amount of time that has passed since the last frame and restart the frame clock
 		    Time deltaTime = frameClock.restart();
-
-		    //Convert the time into seconds
 		    float deltaMilliseconds = deltaTime.asMilliseconds();
 
 		    //Move the cube
@@ -156,7 +165,6 @@ public class Animation {
 		    	cubes[line][column][level].setColor(new Color(255, 255, 255, (int)transparency));
 		    }
 
-		    //Check if 200 milliseconds have passed on the reset clock
 		    if(resetClock.getElapsedTime().asMilliseconds() >= fallTime)
 		    	finished = true;
 		}
@@ -181,9 +189,7 @@ public class Animation {
 		boolean finished = false;
 		boolean endDisplay = false;
 		
-		//Create a frame clock which will be used to control the cube's movement
 		Clock frameClock = new Clock();
-		//Create a reset clock that will measure the time until 200 milliseconds have passed to finish the animation
 		Clock resetClock = new Clock();
 		
 		float transparency;
@@ -195,25 +201,20 @@ public class Animation {
 		else
 			transparency = 255;
 
-		//Main loop
 		while(Main.window.isOpen() && !finished) {
 			
-			//Draw everything
 		    Main.window.clear(Color.WHITE);
 		    
 	    	for(Sprite s : Main.display.getConstantDisplay())
 	    		Main.window.draw(s);
 	    	
-			for(int l = 0; l<cubes.length && !endDisplay; l++){
+			for(int l = 0; l<cubes.length && !endDisplay; l++)
 				for(int c = 0; c<cubes[0].length && !endDisplay; c++){
-						for(int lvl=0; lvl<50 && !endDisplay; lvl++){
-							if(lvl == level && l == line && c == column)
-								endDisplay = true;
-							if(cubes[l][c][lvl] != null)
-								Main.window.draw(cubes[l][c][lvl]);
-						}
+					if(l == line && c == column)
+						endDisplay = true;
+					printPillar(l, c);
 				}
-			}
+			
 			endDisplay = false;
 		    
 			Main.window.draw(robotSprite);
@@ -231,13 +232,10 @@ public class Animation {
 		    	}
 		    }
 
-		    //Get the amount of time that has passed since the last frame and restart the frame clock
 		    Time deltaTime = frameClock.restart();
-
-		    //Convert the time into seconds
 		    float deltaMilliseconds = deltaTime.asMilliseconds();
 
-		    //Move the cube
+		    //Change the robot's transparency
 		    if(add){
 		    	transparency += incrementTransparency*deltaMilliseconds;
 		    	robotSprite.setColor(new Color(255, 255, 255, (int)transparency));
@@ -246,8 +244,7 @@ public class Animation {
 		    	transparency -= incrementTransparency*deltaMilliseconds;
 		    	robotSprite.setColor(new Color(255, 255, 255, (int)transparency));
 		    }
-
-		    //Check if 200 milliseconds have passed on the reset clock
+		    
 		    if(resetClock.getElapsedTime().asMilliseconds() >= robotArrivalTime)
 		    	finished = true;
 		}
@@ -282,6 +279,8 @@ public class Animation {
 				case NORTH:
 					movementX = (Textures.cellTexture.getSize().x)/2 / this.movementTime;
 					movementY = -((Textures.cellTexture.getSize().y)/2 / this.movementTime);
+					nextCellX = Robot.wheatley.getLine()-1;
+					nextCellY = Robot.wheatley.getColumn()+1;
 					break;
 				case SOUTH:
 					movementX = -((Textures.cellTexture.getSize().x)/2 / this.movementTime);
@@ -305,28 +304,37 @@ public class Animation {
 		else
 			movementY = -(Textures.cubeTexture.getSize().y-Textures.cellTexture.getSize().y) / this.movementTime;
 		
-		//Create a frame clock which will be used to control the cube's movement
 		Clock frameClock = new Clock();
-		//Create a reset clock that will measure the time until 200 milliseconds have passed to finish the animation
 		Clock resetClock = new Clock();
 
-		//Main loop
 		while(Main.window.isOpen() && !finished) {
 			
-			//Draw everything
 		    Main.window.clear(Color.WHITE);
 		    
 	    	for(Sprite s : Main.display.getConstantDisplay())
 	    		Main.window.draw(s);
 	    	
 	    	for(int l = 0; l < cubes.length; l++)
-				for(int c = 0; c < cubes[0].length; c++)
-					for(int level = 0; level < 50; level++){
-						if(cubes[l][c][level] != null)
-							Main.window.draw(cubes[l][c][level]);
-						if(nextCellX == l && nextCellY == c && (level == GridDisplay.levelMax[l][c] || GridDisplay.levelMax[l][c] == -1))
+				for(int c = 0; c < cubes[0].length; c++){
+					if(!(nextCellY > Robot.wheatley.getColumn() 
+							&& (l >= nextCellX && l <= Robot.wheatley.getLine())
+							&& (c >= nextCellY && c <= Robot.wheatley.getColumn())) 
+							&& (l != nextCellX || c != nextCellY))
+						printPillar(l, c);
+					if(l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn()){
+						if(nextCellY > Robot.wheatley.getColumn() && nextCellX < Robot.wheatley.getLine()){
 							Main.window.draw(robotSprite);
+							for(int lin = nextCellX; lin<=Robot.wheatley.getLine(); lin++)
+								for(int cin = nextCellY; cin<cubes[0].length; cin++)
+									if(!(lin == nextCellX && cin < nextCellY))
+										printPillar(lin, cin);
+						}
+						else{
+							printPillar(nextCellX, nextCellY);
+							Main.window.draw(robotSprite);
+						}
 					}
+				}
 	    	
 		    Main.window.display();
 
@@ -342,20 +350,14 @@ public class Animation {
 		    	}
 		    }
 
-		    //Get the amount of time that has passed since the last frame and restart the frame clock
 		    Time deltaTime = frameClock.restart();
-
-		    //Convert the time into seconds
 		    float deltaMilliseconds = deltaTime.asMilliseconds();
 			    
-		    //Move the cube
+		    //Move the robot
 		    robotSprite.move(movementX*deltaMilliseconds, movementY*deltaMilliseconds);
 
-		    //Check if 200 milliseconds have passed on the reset clock
 		    if(resetClock.getElapsedTime().asMilliseconds() >= movementTime)
 		    	finished = true;
 		}
 	}
-	
-	
 }

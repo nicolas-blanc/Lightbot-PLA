@@ -9,21 +9,18 @@ import org.jsfml.system.Vector2i;
 
 public class CanvaDisplay{
 	
+	private int line;
+	private int column;
+	private int originX;
+	private int originY;
+	
 	private Sprite[][] canva;
 	private ClickableCell[][] canvaClick;
 	
 	
-	/**
-	 * Number of lines and columns of the canvas
-	 */
-	private int line;
-	private int column;
-	
-	/**
-	 * The position of the first cell to be placed
-	 */
-	private int originX;
-	private int originY;
+	/********************************************************************************************/
+	/*										Constructors										*/
+	/********************************************************************************************/
 	
 	public CanvaDisplay(int line, int column, int originX, int originY){
 		this.line = line;
@@ -42,6 +39,28 @@ public class CanvaDisplay{
 					canvaClick[l][c] = null;
 	}
 	
+	
+	/********************************************************************************************/
+	/*										Accessors											*/
+	/********************************************************************************************/
+	
+	/**
+	 * Get the list of sprite created by all the cells in the canvas
+	 * @return A list of sprites
+	 */
+	public ArrayList<Sprite> getCanva(){
+		ArrayList<Sprite> out = new ArrayList<Sprite>();
+		for(int l = 0; l < this.line; l++)
+			for(int c = 0; c < this.column; c++)
+				out.add(canva[l][c]);
+		return out;
+	}
+	
+	
+	/********************************************************************************************/
+	/*								Initialization functions									*/
+	/********************************************************************************************/
+	
 	/**
 	 * Initialize a canvas of the size defined at the instantiation
 	 */
@@ -50,6 +69,11 @@ public class CanvaDisplay{
 			for(int c = 0; c < this.column; c++)
 				addCel(l, c);
 	}
+	
+	
+	/********************************************************************************************/
+	/*									Display construction									*/
+	/********************************************************************************************/
 	
 	/**
 	 * Add a cell to the canvas
@@ -64,6 +88,11 @@ public class CanvaDisplay{
 		canvaClick[line][column] = new ClickableCell(toAdd, Textures.cellTexture);
 	}	
 	
+	
+	/********************************************************************************************/
+	/*									Printing procedures										*/
+	/********************************************************************************************/
+	
 	/**
 	 * Print a canvas in the global window
 	 */
@@ -73,17 +102,10 @@ public class CanvaDisplay{
 				Main.window.draw(canva[l][c]);
 	}
 	
-	/**
-	 * Get the list of sprite created by all the cells in the canvas
-	 * @return A list of sprites
-	 */
-	public ArrayList<Sprite> getCanva(){
-		ArrayList<Sprite> out = new ArrayList<Sprite>();
-		for(int l = 0; l < this.line; l++)
-			for(int c = 0; c < this.column; c++)
-				out.add(canva[l][c]);
-		return out;
-	}
+	
+	/********************************************************************************************/
+	/*										Tests functions										*/
+	/********************************************************************************************/
 	
 	/**
 	 * Checks if a coordinate is inside a cell
