@@ -100,7 +100,8 @@ public class GridDisplay {
 		Sprite toAdd = cube.createCube() ;
 		toAdd.setPosition(originX, originY);
 		
-		grid.setCell(line, column, level+1, colour);
+		if(!this.isGame)
+			grid.setCell(line, column, level+1, colour);
 		
 		cubes[line][column][level] = toAdd;
 		levelMax[line][column] = level;
@@ -117,7 +118,9 @@ public class GridDisplay {
 		cubes[line][column][level-1] = null;
 		levelMax[line][column] = level-2;
 		cellClick[line][column][level-1] = null;
-		grid.setCell(line, column, level-1, Colour.WHITE);
+		
+		if(!this.isGame)
+			grid.setCell(line, column, level-1, Colour.WHITE);
 	}
 	
 	/**

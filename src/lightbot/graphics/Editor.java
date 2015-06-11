@@ -3,6 +3,7 @@ package lightbot.graphics;
 import java.util.ArrayList;
 
 import lightbot.system.Colour;
+import lightbot.system.ParserJSON;
 import lightbot.tests.Main;
 
 import org.jsfml.graphics.Sprite;
@@ -140,6 +141,7 @@ public class Editor implements Display{
        	 		}
        	 		else if(saveButton.isInside(mouse.position)){
        	 			this.grid.getGrid().printGrid();
+       	 			ParserJSON.serialize("grid1.json", this.grid.getGrid());
        	 		}
        	 		else if(pos.isFound()){
        	 			System.out.println("Add cube on : \t\tLine : " + pos.getLine() + ", column : " + pos.getColumn() + ", level : " + pos.getLevel());
