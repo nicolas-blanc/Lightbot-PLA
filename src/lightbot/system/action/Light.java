@@ -2,7 +2,8 @@ package lightbot.system.action;
 
 import lightbot.system.Colour;
 import lightbot.system.Robot;
-import lightbot.system.world.Cell;
+import lightbot.system.world.cell.Cell;
+import lightbot.system.world.cell.LightableCell;
 import lightbot.system.world.Grid;
 
 public class Light implements _Action {
@@ -19,12 +20,10 @@ public class Light implements _Action {
 	public void execute(Grid grid, Robot robot){
 		
 		if(canLight(robot, grid)){
-			int posX = robot.getPositionX();
-			int posY = robot.getPositionY();
+			int posX = robot.getLine();
+			int posY = robot.getColumn();
 			
 			(grid.getCell(posX, posY)).setLight(true);
-			(grid.getCell(posX, posY)).setLightable(false);
-			(grid.getCell(posX, posY)).setColour(Colour.YELLOW);
 		}
 	}
 	
@@ -37,11 +36,14 @@ public class Light implements _Action {
 	 */
 	private boolean canLight(Robot robot, Grid grid){
 		
-		int currentX = robot.getPositionX();
-		int currentY = robot.getPositionY();
+		int currentX = robot.getLine();
+		int currentY = robot.getColumn();
 		Cell currentCell = grid.getCell(currentX, currentY);
 		
-		if(currentCell.getLightable() == false || currentCell.getLightOn() == true){
+		if(!(currentCell instanceof LightableCell)){
+			return false;
+		}
+		if((currentCell instanceof LightableCell) && (currentCell.isLightON())){
 			return false;
 		}
 		

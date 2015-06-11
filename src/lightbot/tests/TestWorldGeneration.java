@@ -9,7 +9,7 @@ import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.TextEvent;
 
-import lightbot.graphics.Display;
+import lightbot.graphics.DisplayMode;
 import lightbot.graphics.Game;
 import lightbot.graphics.Textures;
 import lightbot.system.CardinalDirection;
@@ -25,7 +25,7 @@ import lightbot.system.world.Grid;
 public class TestWorldGeneration {
 	
 	public static RenderWindow window;
-	public static Display display;
+	public static DisplayMode display;
 
 	/**
 	 * @param args

@@ -3,6 +3,7 @@ package lightbot.graphics;
 import java.util.ArrayList;
 
 import lightbot.system.Colour;
+import lightbot.system.ParserJSON;
 import lightbot.tests.Main;
 
 import org.jsfml.graphics.Sprite;
@@ -12,16 +13,9 @@ import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.MouseButtonEvent;
 
-public class Editor implements Display{
-	
-	private int line;
-	private int column;
-	
-	private int originX;
-	private int originY;
+public class Editor implements DisplayMode{
 	
 	private CanvaDisplay canva;
-	private GridDisplay grid;
 	
 	private Button button;
 	private Button teleportButton;
@@ -32,23 +26,18 @@ public class Editor implements Display{
 	
 	public ArrayList<Sprite> toDisplay;
 	
-	private Animation anim;
+	private Display display;
 	
 	/* Creates an interface for the editor */
 	public Editor(int nLine, int nColumn, int originX, int originY){
-		this.toDisplay = new ArrayList<Sprite>();
+		display = new Display(nLine, nColumn, originX, originY);
 		
-		this.line = nLine;
-		this.column = nColumn;
-		this.originX = originX;
-		this.originY = originY;
+		this.toDisplay = new ArrayList<Sprite>();
 		
 		this.light = false;
 		this.teleport = false;
 		
-		this.canva = new CanvaDisplay(this.line, this.column, this.originX, this.originY);
-		this.grid = new GridDisplay(this.line, this.column, this.originX, this.originY);
-		anim = new Animation(this.grid.getGridSprites());
+		this.canva = new CanvaDisplay(nLine, nColumn, originX, originY);
 		
 		initConstantDisplay();
 	}
@@ -97,14 +86,15 @@ public class Editor implements Display{
 	public void display(){		
 		for(Sprite s : toDisplay)
 			Main.window.draw(s);
-		grid.printCubeList();	
+		this.display.print();
 	}
 	
 	/**
 	 * Get the grid from the editor
 	 */
 	public GridDisplay getGrid(){
-		return this.grid;
+		return this.display.gridDisplay;
+		//return this.grid;
 	}
 	
 	/**
@@ -112,7 +102,7 @@ public class Editor implements Display{
 	 */
 	public CellPosition isInside(Vector2i coord){
 		CellPosition pos;
-		pos = this.grid.isInside(coord);
+		pos = this.display.gridDisplay.isInside(coord);
 		if(pos.isFound)
 			return pos;
 		
@@ -139,45 +129,46 @@ public class Editor implements Display{
        	 			teleport = !teleport;
        	 		}
        	 		else if(saveButton.isInside(mouse.position)){
-       	 			this.grid.getGrid().printGrid();
+       	 			this.display.gridDisplay.getGrid().printGrid();
+       	 			ParserJSON.serialize("grid1.json", this.display.gridDisplay.getGrid());
        	 		}
        	 		else if(pos.isFound()){
        	 			System.out.println("Add cube on : \t\tLine : " + pos.getLine() + ", column : " + pos.getColumn() + ", level : " + pos.getLevel());
        	 			if(light){
        	 				if(pos.getLevel() > -1){
-       	 					this.grid.removeCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
-       	 					this.grid.addCube(pos.getLine(), pos.getColumn(), pos.getLevel(), Colour.GREEN);
+       	 					this.display.gridDisplay.removeCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
+       	 					this.display.gridDisplay.addCube(pos.getLine(), pos.getColumn(), pos.getLevel(), Colour.GREEN);
        	 				}
        	 				else{
-       	 					this.grid.addCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, Colour.GREEN);
-       	 					anim.addRemoveCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, true, false);
-       	 					anim.updateSprite(this.grid.getGridSprites());
+       	 					this.display.gridDisplay.addCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, Colour.GREEN);
+       	 					this.display.anim.addRemoveCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, true, false);
+       	 					this.display.anim.updateSprite(this.display.gridDisplay.getGridSprites());
        	 				}
        	 			}
        	 			else if(teleport){
 	       	 			if(pos.getLevel() > -1){
-	   	 					this.grid.removeCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
-	   	 					this.grid.addCube(pos.getLine(), pos.getColumn(), pos.getLevel(), Colour.TELEPORT);
+	       	 				this.display.gridDisplay.removeCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
+	       	 				this.display.gridDisplay.addCube(pos.getLine(), pos.getColumn(), pos.getLevel(), Colour.TELEPORT);
 	   	 				}
 	   	 				else{
-	   	 					this.grid.addCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, Colour.TELEPORT);
-	   	 					anim.addRemoveCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, true, false);
-	   	 					anim.updateSprite(this.grid.getGridSprites());
+	   	 					this.display.gridDisplay.addCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, Colour.TELEPORT);
+	   	 					this.display.anim.addRemoveCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, true, false);
+	   	 					this.display.anim.updateSprite(this.display.gridDisplay.getGridSprites());
 	   	 				}
        	 			}
        	 			else{
-       	 				this.grid.addCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, Colour.WHITE);
-       	 				anim.addRemoveCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, true, false);
-	 					anim.updateSprite(this.grid.getGridSprites());
+       	 				this.display.gridDisplay.addCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, Colour.WHITE);
+       	 				this.display.anim.addRemoveCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, true, false);
+       	 				this.display.anim.updateSprite(this.display.gridDisplay.getGridSprites());
        	 			}
        	 		}
        	 	}
        	 	else if(mouse.button == Mouse.Button.RIGHT){
        	 		if(pos.isFound() && pos.getLevel() > -1){
        	 			System.out.println("Remove cube on : \tLine : " + pos.getLine() + ", column : " + pos.getColumn() + ", level : " + pos.getLevel());
-       	 			anim.addRemoveCube(pos.getLine(), pos.getColumn(), pos.getLevel(), false, false);
-       	 			this.grid.removeCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
-       	 			anim.updateSprite(this.grid.getGridSprites());
+       	 			this.display.anim.addRemoveCube(pos.getLine(), pos.getColumn(), pos.getLevel(), false, false);
+       	 			this.display.gridDisplay.removeCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
+       	 			this.display.anim.updateSprite(this.display.gridDisplay.getGridSprites());
        	 		}
        	 	}
 		}

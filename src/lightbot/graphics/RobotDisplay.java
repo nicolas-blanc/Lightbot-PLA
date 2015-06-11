@@ -2,35 +2,66 @@ package lightbot.graphics;
 
 import lightbot.system.CardinalDirection;
 import lightbot.system.Colour;
+import lightbot.system.Robot;
+import lightbot.tests.Main;
 
+import org.jsfml.graphics.Color;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 
-public class RobotDisplay {
+public class RobotDisplay implements DisplayPrimitive{
+	
+	private Robot robot;
 	
 	private int line;
 	private int column;
 	private int level;
+	
+	private int originX;
+	private int originY;
+	
 	private Colour colour;
 	private CardinalDirection direction;
+	private int transparency;
 	
-	private final float robotHeight = 20; 
+	private final float robotHeight = 20;
 	
-	// The texture of the cube
+	// The texture of the robot
 	public Texture currentTexture;
+	public Sprite robotSprite;
 	
-	public RobotDisplay(int line, int column, int level, Colour colour, CardinalDirection direction){
-		this.line = line;
-		this.column = column;
-		this.level = level;
-		this.colour = colour;
-		this.direction = direction;
+	/**
+	 * Constructor
+	 * @param robot
+	 * @param transparency
+	 */
+	public RobotDisplay(Robot robot, int transparency, int originX, int originY){
+		this.originX = originX;
+		this.originY = originY;
+		updateRobot(robot, transparency);
+	}
+	
+	/**
+	 * Update the robot with a new robot and a new transparency
+	 * @param robot
+	 * @param transparency
+	 */
+	public void updateRobot(Robot robot, int transparency){
+		this.robot = robot;
+		
+		this.line = this.robot.getLine();
+		this.column = this.robot.getColumn();
+		this.level = GridDisplay.levelMax[this.line][this.column];
+		this.colour = this.robot.getColour();
+		this.direction = this.robot.getDirection();
+		
+		this.transparency = transparency;
 		
 		System.out.println("Line : " + line + ", column : " + column + ", level : " + level + " " + direction.toString());
 		
 		
-		switch(this.direction){
+		switch(this.robot.getDirection()){
 			case EAST:
 				currentTexture = Textures.robotEast;
 				break;
@@ -47,13 +78,19 @@ public class RobotDisplay {
 				currentTexture = Textures.robotNorth;
 				break;
 		}
+		
+		this.robotSprite = create();
+	}
+	
+	public void print(){
+		Main.window.draw(robotSprite);
 	}
 	
 	/**
 	 * Initialize a robot from the data given at the instantiation
 	 * @return A sprite of this robot
 	 */
-	public Sprite createRobot(){
+	public Sprite create(){
 		Sprite robot = new Sprite(currentTexture);
 		
 		float decalX = Textures.cellTexture.getSize().x / 2;
@@ -80,9 +117,16 @@ public class RobotDisplay {
 		
 		robot.scale(new Vector2f(1, 1));
 		robot.setOrigin(Vector2f.sub(origin, decal));
+		robot.setColor(new Color(255, 255, 255, this.transparency));
+		robot.setPosition(originX, originY);
 		return robot;
 	}
 	
+	public Sprite getSprite(){return this.robotSprite;}
+	
+	
+	// TODO
+	/************ Maybe to suppress *************/
 	public void turnLeft(Sprite robot){
 		if(currentTexture == Textures.robotNorth)
 			currentTexture = Textures.robotWest;
@@ -116,4 +160,6 @@ public class RobotDisplay {
 	public void setColumn(int column){
 		this.column = column;
 	}
+	
+	/***************************************************/
 }
