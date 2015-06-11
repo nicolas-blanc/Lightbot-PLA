@@ -19,15 +19,15 @@ public class TestJump {
 		grid1.printGrid();
 		
 		Robot robot = new Robot(1,8,Colour.WHITE,CardinalDirection.EAST);
-		System.out.println("Position du robot : " + "(" + robot.getPositionX() + ", " + robot.getPositionY() + ")");
+		System.out.println("Position du robot : " + "(" + robot.getLine() + ", " + robot.getColumn() + ")");
 		
 		
 		Jump j = new Jump();
 		j.execute(grid1, robot);
-		System.out.println("Position du robot : " + "(" + robot.getPositionX() + ", " + robot.getPositionY() + ")");
+		System.out.println("Position du robot : " + "(" + robot.getLine() + ", " + robot.getColumn() + ")");
 		
 		j.execute(grid1, robot);
-		System.out.println("Position du robot : " + "(" + robot.getPositionX() + ", " + robot.getPositionY() + ")");
+		System.out.println("Position du robot : " + "(" + robot.getLine() + ", " + robot.getColumn() + ")");
 	}
 
 }

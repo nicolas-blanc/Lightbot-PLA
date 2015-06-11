@@ -6,7 +6,7 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 
-public class CubeDisplay {
+public class CubeDisplay implements DisplayPrimitive{
 	
 	private int line;
 	private int column;
@@ -54,7 +54,7 @@ public class CubeDisplay {
 	 * Initialize a cube from the data given at the instantiation
 	 * @return A sprite of this cube
 	 */
-	public Sprite createCube(){
+	public Sprite create(){
 		Sprite toAdd = new Sprite(currentTexture);
 		
 		float decalX = Textures.cellTexture.getSize().x / 2;
@@ -82,5 +82,7 @@ public class CubeDisplay {
 		return toAdd;
 	}
 	
+	//TODO
+	/************************** Maybe to suppresss *******************/
 	public Colour getColour(){return this.colour;}
 }

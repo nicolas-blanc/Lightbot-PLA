@@ -1,6 +1,6 @@
 package lightbot.tests;
 
-import lightbot.graphics.Display;
+import lightbot.graphics.DisplayMode;
 import lightbot.graphics.Editor;
 import lightbot.graphics.Game;
 import lightbot.graphics.Textures;
@@ -17,7 +17,7 @@ import org.jsfml.window.event.TextEvent;
 public class Main {
 	
 	public static RenderWindow window;
-	public static Display display;
+	public static DisplayMode display;
 	
 	public static VideoMode screenInformations;
 	public static float scaleRatio;
@@ -39,43 +39,15 @@ public class Main {
 		//Limit the framerate
 		window.setFramerateLimit(60);
 		
-		int[][] mat = {
-			{3, 3, 1, 1},
-			{1, 0, 1, 2},
-			{1, 1, 0, 1},
-			{1, 2, 4, 4}
-		};
-		int size = 10;
-		
-		WorldGenerator newWorld = new WorldGenerator();
+		//WorldGenerator newWorld = new WorldGenerator();
 		
 		//newWorld.getGrid().printGrid();
 		//Grid grid = newWorld.getGrid();
 		Grid grid = ParserJSON.deserialize("grid1.json");
 		
-		//Grid grid = new Grid(size);
-		
-		/*grid.setCell(0, 0, 3);
-		grid.setCell(0, 1, 3);
-		grid.setCell(0, 2, 1);
-		grid.setCell(0, 3, 1);
-		
-		grid.setCell(1, 0, 1);
-		grid.setCell(1, 2, 1);
-		grid.setCell(1, 3, 2);
-		
-		grid.setCell(2, 0, 1);
-		grid.setCell(2, 1, 1);
-		grid.setCell(2, 3, 1);
-		
-		grid.setCell(3, 0, 1);
-		grid.setCell(3, 1, 2);
-		grid.setCell(3, 2, 4);
-		grid.setCell(3, 3, 4);*/
-		
-		//display = new Editor(9, 9, 320, 100);
+		display = new Editor(9, 9, 320, 100);
 		//display = new Game(mat, 320, 200);
-		display = new Game(grid, (int)(640*scaleRatio), (int)(200*scaleRatio));
+		//display = new Game(grid, (int)(640*scaleRatio), (int)(200*scaleRatio));
 		display.printGrid();
 
 		//Main loop

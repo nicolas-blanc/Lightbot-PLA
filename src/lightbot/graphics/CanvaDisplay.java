@@ -7,7 +7,7 @@ import lightbot.tests.Main;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2i;
 
-public class CanvaDisplay {
+public class CanvaDisplay{
 	
 	private Sprite[][] canva;
 	private ClickableCell[][] canvaClick;
@@ -43,6 +43,15 @@ public class CanvaDisplay {
 	}
 	
 	/**
+	 * Initialize a canvas of the size defined at the instantiation
+	 */
+	public void initCanva(){
+		for(int l = 0; l < this.line; l++)
+			for(int c = 0; c < this.column; c++)
+				addCel(l, c);
+	}
+	
+	/**
 	 * Add a cell to the canvas
 	 * @param line The cell's line
 	 * @param column The cell's column
@@ -53,21 +62,12 @@ public class CanvaDisplay {
 		
 		canva[line][column] = toAdd;
 		canvaClick[line][column] = new ClickableCell(toAdd, Textures.cellTexture);
-	}
-	
-	/**
-	 * Initialize a canvas of the size defined at the instantiation
-	 */
-	public void initCanva(){
-		for(int l = 0; l < this.line; l++)
-			for(int c = 0; c < this.column; c++)
-				addCel(l, c);
-	}
+	}	
 	
 	/**
 	 * Print a canvas in the global window
 	 */
-	public void printCanva(){
+	public void print(){
 		for(int l = 0; l < this.line; l++)
 			for(int c = 0; c < this.column; c++)
 				Main.window.draw(canva[l][c]);
