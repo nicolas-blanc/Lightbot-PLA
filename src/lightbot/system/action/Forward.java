@@ -3,6 +3,7 @@ package lightbot.system.action;
 import lightbot.system.CardinalDirection;
 import lightbot.system.Robot;
 import lightbot.system.world.cell.Cell;
+import lightbot.system.world.cell.FullCell;
 import lightbot.system.world.Grid;
 import lightbot.system.world.OutOfGridException;
 
@@ -56,9 +57,12 @@ public class Forward implements _Action {
 			return false;
 		}
 		
-		return (currentCell.getHeight() == nextCell.getHeight());
+		if (currentCell instanceof FullCell && nextCell instanceof FullCell){
+			return (currentCell.getHeight() == nextCell.getHeight());
+		}
+		else{
+			return false;
+		}
 	}
-
-
-
-}
+		
+	}
