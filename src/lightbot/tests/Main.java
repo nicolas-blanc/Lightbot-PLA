@@ -74,7 +74,9 @@ public class Main {
 		//display = new Editor(9, 9, 320, 100);
 		//display = new Game(mat, 320, 200);
 		display = new Game(grid, (int)(640*scaleRatio), (int)(200*scaleRatio));
-		display.printGrid();
+		//display.printGrid();
+		
+		display.getGrid().getGrid().printGrid();
 
 		//Main loop
 		while (window.isOpen()) {
