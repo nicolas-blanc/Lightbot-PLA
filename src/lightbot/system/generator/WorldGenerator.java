@@ -22,6 +22,7 @@ public class WorldGenerator {
 	private int probaLeft;
 	final private int range = 12;
 	
+	@SuppressWarnings("unused")
 	private int numberProcedures;
 	private int numberInstruction;
 	private int numberLight;
@@ -39,7 +40,7 @@ public class WorldGenerator {
 		numberInstruction = 0;
 		numberLight = 0;
 		
-		grid = new Grid(10);
+		grid = new Grid(8);
 		rand = new Random();
 		generation();
 		grid.levelToZero();
@@ -60,7 +61,7 @@ public class WorldGenerator {
 		initProba();
 		
 		int maximumInstructions = rand.nextInt(50 - 5 + 1) + 5;
-		int maximumLight = rand.nextInt((maximumInstructions / 5) + 1) + 1;
+		int maximumLight = rand.nextInt((maximumInstructions / 5) + 4) + 3;
 		
 		Cell currentCell = firstCell();
 		Cell newCell;
@@ -84,6 +85,10 @@ public class WorldGenerator {
 		}
 		
 		currentCell.setLightable(true);
+		
+		System.out.println("Max - Instruction : " + maximumInstructions + " / LIght : " + maximumLight);
+		System.out.println("Instruction : " + numberInstruction + " / LIght : " + numberLight);
+		
 	}
 	
 	/**
