@@ -41,25 +41,25 @@ public class TestReatha {
 		// class Robot tests
 		System.out.println("** Class Robot tests **");
 		Robot robot = new Robot(1,9,Colour.WHITE,CardinalDirection.EAST);
-		System.out.println("	Position du robot : " + "(" + robot.getPositionX() + ", " + robot.getPositionY() + ")");
+		System.out.println("	Position du robot : " + "(" + robot.getLine() + ", " + robot.getColumn() + ")");
 		System.out.println("	Direction du robot : " + robot.getDirection());
 		System.out.println("	Execution Forward ");
 		forward.execute(grid1,robot);
-		System.out.println("	Nouvelle position du robot : " + "(" + robot.getPositionX() + ", " + robot.getPositionY() + ")");
+		System.out.println("	Nouvelle position du robot : " + "(" + robot.getLine() + ", " + robot.getColumn() + ")");
 		
 		
 		robot.setPosition(2, 1);
 		robot.setDirection(CardinalDirection.SOUTH);
-		System.out.println("	Position du robot : " + "(" + robot.getPositionX() + ", " + robot.getPositionY() + ")");
+		System.out.println("	Position du robot : " + "(" + robot.getLine() + ", " + robot.getColumn() + ")");
 		System.out.println("	Direction du robot : " + robot.getDirection());
 		System.out.println("	Execution Forward ");
 		forward.execute(grid1,robot);
-		System.out.println("	Nouvelle position du robot : " + "(" + robot.getPositionX() + ", " + robot.getPositionY() + ")");
+		System.out.println("	Nouvelle position du robot : " + "(" + robot.getLine() + ", " + robot.getColumn() + ")");
 		robot.setDirection(CardinalDirection.EAST);
 		System.out.println("	MAJ direction du robot : " + robot.getDirection());
 		System.out.println("	Execution Forward ");
 		forward.execute(grid1,robot);
-		System.out.println("	Nouvelle position du robot : " + "(" + robot.getPositionX() + ", " + robot.getPositionY() + ")");
+		System.out.println("	Nouvelle position du robot : " + "(" + robot.getLine() + ", " + robot.getColumn() + ")");
 
 		System.out.println();
 		
@@ -83,7 +83,7 @@ public class TestReatha {
 		Light light = new Light();
 		
 		robot.setPosition(0, 7);
-		System.out.println("	Position du robot : " + "(" + robot.getPositionX() + ", " + robot.getPositionY() + ")");
+		System.out.println("	Position du robot : " + "(" + robot.getLine() + ", " + robot.getColumn() + ")");
 		System.out.println("	Execution Light ");
 		light.execute(grid1,robot);
 		System.out.println("	Cell (0,7) colour : " + (grid1.getCell(0,7)).getColour());
@@ -92,7 +92,7 @@ public class TestReatha {
 		System.out.println();
 
 		robot.setPosition(0, 8);
-		System.out.println("	Position du robot : " + "(" + robot.getPositionX() + ", " + robot.getPositionY() + ")");
+		System.out.println("	Position du robot : " + "(" + robot.getLine() + ", " + robot.getColumn() + ")");
 		System.out.println("	Lightable cell (0,8) : " + (grid1.getCell(0,8)).getLightable());
 		System.out.println("	Execution Light ");
 		light.execute(grid1,robot);

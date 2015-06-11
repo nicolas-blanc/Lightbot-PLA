@@ -34,7 +34,6 @@ public class ParserJSON {
 				build.append((char)ch);
 			
 			String fileStringified = build.toString();
-			System.out.println(fileStringified);
 			JSONObject dataObject = (JSONObject) parser.parse(fileStringified);
 			
 			int size = (int)(long)dataObject.get("size");

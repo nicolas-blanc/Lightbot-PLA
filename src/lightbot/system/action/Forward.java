@@ -17,20 +17,20 @@ public class Forward implements _Action {
 		
 		if(canMove(robot, grid)){
 			
-			int posX = robot.getPositionX();
-			int posY = robot.getPositionY();
+			int posX = robot.getLine();
+			int posY = robot.getColumn();
 			
 			if(robot.getDirection() == CardinalDirection.NORTH){
-				robot.setPositionX(posX-1);
+				robot.setLine(posX-1);
 			}
 			if(robot.getDirection() == CardinalDirection.SOUTH){
-				robot.setPositionX(posX+1);
+				robot.setLine(posX+1);
 			}
 			if(robot.getDirection() == CardinalDirection.WEST){
-				robot.setPositionY(posY-1);
+				robot.setColumn(posY-1);
 			}
 			if(robot.getDirection() == CardinalDirection.EAST){
-				robot.setPositionY(posY+1);
+				robot.setColumn(posY+1);
 			}
 		}
 	}
@@ -45,8 +45,8 @@ public class Forward implements _Action {
 	 */
 	private boolean canMove(Robot robot, Grid grid){
 		
-		int currentX = robot.getPositionX();
-		int currentY = robot.getPositionY();
+		int currentX = robot.getLine();
+		int currentY = robot.getColumn();
 		Cell currentCell = grid.getCell(currentX, currentY);
 		Cell nextCell;
 		

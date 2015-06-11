@@ -114,7 +114,7 @@ public class Animation {
 									if(cubes[l][c][lvl] != null)
 										Main.window.draw(cubes[l][c][lvl]);
 									if(robotSprite != null 
-											&& l == Robot.wheatley.getPositionX() && c == Robot.wheatley.getPositionY() 
+											&& l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn() 
 											&& (lvl == GridDisplay.levelMax[l][c] || GridDisplay.levelMax[l][c] == -1))
 										Main.window.draw(robotSprite);
 								}
@@ -269,8 +269,8 @@ public class Animation {
 		float movementX = 0;
 		float movementY;
 		
-		int nextCellX = Robot.wheatley.getPositionX();
-		int nextCellY = Robot.wheatley.getPositionY();
+		int nextCellX = Robot.wheatley.getLine();
+		int nextCellY = Robot.wheatley.getColumn();
 		
 		if(upOrDown == 0){
 			switch(direction){
