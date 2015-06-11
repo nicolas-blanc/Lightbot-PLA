@@ -32,6 +32,10 @@ public class TestMarwan {
 		}
 	}
 
+	/* TODO: change this method so it takes a variable number of icons to display
+	 * 		 integrate this method in a procedure display class
+	 */
+	
 	public static void foo(RenderWindow window) {
 		Sprite s = new Sprite(Textures.forwardTexture);
 		int currentLine = 0;
