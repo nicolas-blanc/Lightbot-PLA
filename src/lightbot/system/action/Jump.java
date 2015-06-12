@@ -3,6 +3,7 @@ package lightbot.system.action;
 import lightbot.system.CardinalDirection;
 import lightbot.system.Robot;
 import lightbot.system.world.cell.Cell;
+import lightbot.system.world.cell.ColoredCell;
 import lightbot.system.world.Grid;
 import lightbot.system.world.OutOfGridException;
 
@@ -21,15 +22,19 @@ public class Jump implements _Action {
 			
 			if(robot.getDirection() == CardinalDirection.NORTH){
 				robot.setLine(posX - 1);
+				takeColour(robot,  grid);
 			}
 			if(robot.getDirection() == CardinalDirection.EAST){
 				robot.setColumn(posY + 1);
+				takeColour(robot,  grid);
 			}
 			if(robot.getDirection() == CardinalDirection.SOUTH){
 				robot.setLine(posX + 1);
+				takeColour(robot,  grid);
 			}
 			if(robot.getDirection() == CardinalDirection.WEST){
 				robot.setColumn(posY - 1);
+				takeColour(robot,  grid);
 			}
 		}
 		
@@ -54,6 +59,24 @@ public class Jump implements _Action {
             return false;
     }
 		return (nextCell.getHeight() !=0 || currentCell.getHeight() == nextCell.getHeight()-1 || currentCell.getHeight() == nextCell.getHeight()+1);
+	}
+	
+	/**
+	 * the robot takes the color if it is a ColoredCell
+	 * @param robot 
+	 * @param grid
+	 */
+	private void takeColour(Robot robot, Grid grid){
+		int posX, posY;
+		Cell Cell;
+		
+		posX = robot.getLine();
+		posY = robot.getColumn();
+		Cell = grid.getCell(posX, posY);
+		
+		if(Cell instanceof ColoredCell){
+			robot.setColour(((ColoredCell) Cell).getColour());
+		}	
 	}
 
 }
