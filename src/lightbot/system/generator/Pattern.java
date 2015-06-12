@@ -11,7 +11,13 @@ public class Pattern {
 	private ArrayList<Integer> patternList3 = new ArrayList<Integer>();
 	private ArrayList<Integer> patternList4 = new ArrayList<Integer>();
 	
-	private Random rand = new Random();
+	private Random rand;
+	
+	public Pattern(){
+		
+		rand = new Random();
+		patternArray();
+	}
 
 	public ArrayList<ArrayList<Integer>> patternArray(){
 		
