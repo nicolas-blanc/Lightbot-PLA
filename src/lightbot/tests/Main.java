@@ -39,17 +39,18 @@ public class Main {
 		//Limit the framerate
 		window.setFramerateLimit(60);
 		
-		//WorldGenerator newWorld = new WorldGenerator();
+		WorldGenerator newWorld = new WorldGenerator();
 		
 		//newWorld.getGrid().printGrid();
-		//Grid grid = newWorld.getGrid();
-		Grid grid = ParserJSON.deserialize("grid1.json");
+		Grid grid = newWorld.getGrid();
+		//Grid grid = ParserJSON.deserialize("grid1.json");
 		
 		//display = new Editor(5, 5, 320, 100);
 		//display = new Game(mat, 320, 200);
 		display = new Game(grid, (int)(640*scaleRatio), (int)(200*scaleRatio));
-		display.printGrid();
-
+		//display.printGrid();
+		display.getGrid().getGrid().printGrid();
+		
 		//Main loop
 		while (window.isOpen()) {
 		    //Draw everything

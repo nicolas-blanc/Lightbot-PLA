@@ -164,7 +164,11 @@ public class Grid {
 	public void printGrid(){
 		for(int i=0; i<grid.length; i++){
 			for(int j=0; j<grid[i].length; j++){
-				System.out.print(grid[i][j].getHeight() + " / ");
+				if(grid[i][j].isEmptyCell()) {
+					System.out.print("* / ");
+				} else {
+					System.out.print(grid[i][j].getHeight() + " / ");
+				}
 				if (grid[i][j] instanceof LightableCell) {
 					System.out.print("L \t");
 				} else {
