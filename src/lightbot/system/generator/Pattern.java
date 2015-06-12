@@ -11,9 +11,15 @@ public class Pattern {
 	private ArrayList<Integer> patternList3 = new ArrayList<Integer>();
 	private ArrayList<Integer> patternList4 = new ArrayList<Integer>();
 	
-	private Random rand = new Random();
+	private Random rand;
+	
+	public Pattern(){
+		
+		rand = new Random();
+		patternArray();
+	}
 
-	public ArrayList<ArrayList<Integer>> patternArray(){
+	private ArrayList<ArrayList<Integer>> patternArray(){
 		
 		patternList.add(patternList1);
 		patternList.add(patternList2);
@@ -23,12 +29,12 @@ public class Pattern {
 		return patternList;
 	}
 	
-	public ArrayList<Integer> givePattern(){
+	private ArrayList<Integer> givePattern(){
 		
 		return patternList.get(rand.nextInt(4));
 	}
 	
-	public ArrayList<Integer> pattern1(){
+	private ArrayList<Integer> pattern1(){
 		
 		
 		patternList1.add(1);
@@ -40,7 +46,7 @@ public class Pattern {
 		return patternList1;
 	}
 	
-	public ArrayList<Integer> pattern2(){
+	private ArrayList<Integer> pattern2(){
 		
 		patternList2.add(0);
 		patternList2.add(2);
@@ -53,7 +59,7 @@ public class Pattern {
 		return patternList2;
 	}
 	
-	public ArrayList<Integer> pattern3(){
+	private ArrayList<Integer> pattern3(){
 		
 		patternList3.add(2);
 		patternList3.add(0);
@@ -69,7 +75,7 @@ public class Pattern {
 		return patternList3;
 	}
 	
-	public ArrayList<Integer> pattern4(){
+	private ArrayList<Integer> pattern4(){
 		
 		patternList4.add(1);
 		patternList4.add(4);

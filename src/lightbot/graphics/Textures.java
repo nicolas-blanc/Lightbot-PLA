@@ -20,6 +20,9 @@ public class Textures {
 	public static Texture playTexture;
 	public static Texture resetTexture;
 	
+	public static Texture rotateLeft;
+	public static Texture rotateRight;
+	
 	// actions textures
 	public static Texture forwardTexture;
 	public static Texture jumpTexture;
@@ -39,6 +42,9 @@ public class Textures {
 	public static Texture buttonTexture;
 	public static Texture teleportTexture;
 	
+	//menu textures
+	public static Texture menuButton;
+	
 	public static void initTextures(){
 		cubeTexture = new Texture();
 		cubeTextureBlue = new Texture();
@@ -49,6 +55,9 @@ public class Textures {
 		
 		buttonTexture = new Texture();
 		teleportTexture = new Texture();
+		
+		rotateLeft = new Texture();
+		rotateRight = new Texture();
 		
 		forwardTexture = new Texture();
 		jumpTexture = new Texture();
@@ -66,6 +75,8 @@ public class Textures {
 		robotWest = new Texture();
 		robotEast = new Texture();
 		
+		menuButton = new Texture();
+		
 		try {
 		    cubeTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"whitecube.png"));
 		    cubeTextureBlue.loadFromFile(Paths.get(RESSOURCE_PATH+"bluecube.png"));
@@ -73,6 +84,9 @@ public class Textures {
 		    cubeTextureYellow.loadFromFile(Paths.get(RESSOURCE_PATH+"yellowcube.png"));
 		    cubeTextureTeleport.loadFromFile(Paths.get(RESSOURCE_PATH+"spacecube.png"));
 		    cellTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"canva.png"));
+		    
+		    rotateLeft.loadFromFile(Paths.get(NEW_ICONS_PATH + "rotateL.png"));
+		    rotateRight.loadFromFile(Paths.get(NEW_ICONS_PATH + "rotateR.png"));
 		    
 		    buttonTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"button.png"));
 		    teleportTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"teleport.png"));
@@ -96,6 +110,41 @@ public class Textures {
 		    robotSouth.loadFromFile(Paths.get(RESSOURCE_PATH + "robot/white_south.png"));
 		    robotWest.loadFromFile(Paths.get(RESSOURCE_PATH + "robot/white_west.png"));
 		    robotEast.loadFromFile(Paths.get(RESSOURCE_PATH + "robot/white_east.png"));
+			
+			//menu
+			menuButton.loadFromFile(Paths.get(RESSOURCE_PATH + "menuButton.png"));
+		    
+		    cubeTexture.setSmooth(true);
+			cubeTextureBlue.setSmooth(true);
+			cubeTextureRed.setSmooth(true);
+			cubeTextureYellow.setSmooth(true);
+			cubeTextureTeleport.setSmooth(true);
+			cellTexture.setSmooth(true);
+			
+			buttonTexture.setSmooth(true);
+			teleportTexture.setSmooth(true);
+			
+			rotateLeft.setSmooth(true);
+			rotateRight.setSmooth(true);
+			
+			forwardTexture.setSmooth(true);
+			jumpTexture.setSmooth(true);
+			turnLeftTexture.setSmooth(true);
+			turnRightTexture.setSmooth(true);
+			lightTexture.setSmooth(true);
+			procedure1Texture.setSmooth(true);
+			procedure2Texture.setSmooth(true);
+			
+			playTexture.setSmooth(true);
+			resetTexture.setSmooth(true);
+			
+			robotNorth.setSmooth(true);
+			robotSouth.setSmooth(true);
+			robotWest.setSmooth(true);
+			robotEast.setSmooth(true);
+			
+			menuButton.setSmooth(true);
+
 		    
 		} catch(IOException ex) {
 		    //Ouch! something went wrong

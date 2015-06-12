@@ -41,6 +41,8 @@ public class Display {
 		this.gridDisplay = new GridDisplay(grid, originX, originY);
 		this.gridDisplay.initGrid();
 		this.robotDisplay = new RobotDisplay(Robot.wheatley, 255, originX, originY);
+		
+		anim = new Animation(gridDisplay.getGridSprites(), robotDisplay.robotSprite);
 	}
 	
 	/**
@@ -87,9 +89,7 @@ public class Display {
 	/**
 	 * Animation of the grid's construction
 	 */
-	public void createGridAnim(){
-		anim = new Animation(gridDisplay.getGridSprites(), robotDisplay.robotSprite);
-		
+	public void createGridAnim(){		
 		Sprite[][][] grid = gridDisplay.getGridSprites();
 		for(int l = 0; l < grid.length; l++){
 			for(int c = 0; c < grid[0].length; c++){

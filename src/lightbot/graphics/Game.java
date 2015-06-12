@@ -37,15 +37,11 @@ public class Game implements DisplayMode{
 	 * Initialize the constant display for a game 
 	 */
 	public void initConstantDisplay(){
-		Sprite turnLeftSprite = new Sprite(Textures.turnLeftTexture);
-		//turnLeftSprite.scale(new Vector2f((float)0.2, (float)0.2));
-		turnLeftSprite.setOrigin(Vector2f.div(new Vector2f(Textures.turnLeftTexture.getSize()), 2));
-		turnLeftSprite.setPosition((int)(100*Main.scaleRatio), 425);
+		Sprite turnLeftSprite = new Sprite(Textures.rotateLeft);
+		turnLeftSprite.setPosition(50, (490-30-Textures.rotateLeft.getSize().y));
 		
-		Sprite turnRightSprite = new Sprite(Textures.turnRightTexture);
-		//turnLeftSprite.scale(new Vector2f((float)0.2, (float)0.2));
-		turnRightSprite.setOrigin(Vector2f.div(new Vector2f(Textures.turnLeftTexture.getSize()), 2));
-		turnRightSprite.setPosition((int)(960*Main.scaleRatio-(100*Main.scaleRatio)), 425);
+		Sprite turnRightSprite = new Sprite(Textures.rotateRight);
+		turnRightSprite.setPosition((765-35-Textures.rotateRight.getSize().y), (490-30-Textures.rotateRight.getSize().y));
 		
 		turnLeftButton = new Button(turnLeftSprite);
 		turnRightButton = new Button(turnRightSprite);
