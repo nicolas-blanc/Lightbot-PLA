@@ -58,8 +58,6 @@ public class Jump implements _Action {
     } catch (OutOfGridException e) {
             return false;
     }
-        System.out.println(nextCell.getHeight() !=0 && (currentCell.getHeight() == nextCell.getHeight()-1 || currentCell.getHeight() == nextCell.getHeight()+1));
-		//System.out.println(nextCell.getX() + " " + nextCell.getY());
         return (nextCell.getHeight() !=0 && (currentCell.getHeight() == nextCell.getHeight()-1 || currentCell.getHeight() == nextCell.getHeight()+1));
 	}
 	
