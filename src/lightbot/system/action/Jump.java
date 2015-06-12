@@ -4,6 +4,7 @@ import lightbot.system.CardinalDirection;
 import lightbot.system.Robot;
 import lightbot.system.world.cell.Cell;
 import lightbot.system.world.cell.ColoredCell;
+import lightbot.system.world.cell.TeleportCell;
 import lightbot.system.world.Grid;
 import lightbot.system.world.OutOfGridException;
 
@@ -23,18 +24,22 @@ public class Jump implements _Action {
 			if(robot.getDirection() == CardinalDirection.NORTH){
 				robot.setLine(posX - 1);
 				takeColour(robot,  grid);
+				teleport(robot, grid);
 			}
 			if(robot.getDirection() == CardinalDirection.EAST){
 				robot.setColumn(posY + 1);
 				takeColour(robot,  grid);
+				teleport(robot, grid);
 			}
 			if(robot.getDirection() == CardinalDirection.SOUTH){
 				robot.setLine(posX + 1);
 				takeColour(robot,  grid);
+				teleport(robot, grid);
 			}
 			if(robot.getDirection() == CardinalDirection.WEST){
 				robot.setColumn(posY - 1);
 				takeColour(robot,  grid);
+				teleport(robot, grid);
 			}
 		}
 		
@@ -77,6 +82,27 @@ public class Jump implements _Action {
 		if(Cell instanceof ColoredCell){
 			robot.setColour(((ColoredCell) Cell).getColour());
 		}	
+	}
+	
+	/**
+	 * Teleports the robot from its current cell to the destination if it's an instance of
+	 * TeleportCell
+	 * @param robot
+	 * @param grid
+	 */
+	private void teleport(Robot robot, Grid grid){
+		int line, column;
+		Cell cell;
+		
+		line = robot.getLine();
+		column = robot.getColumn();
+		cell = grid.getCell(line, column);
+		
+		if(cell instanceof TeleportCell){
+			robot.setPosition(((TeleportCell) cell).getDestX(), ((TeleportCell) cell).getDestY());
+			grid.changeToNormal(line, column);
+			grid.changeToNormal(((TeleportCell) cell).getDestX(), ((TeleportCell) cell).getDestY());
+		}
 	}
 
 }

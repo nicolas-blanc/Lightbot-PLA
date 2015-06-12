@@ -109,6 +109,10 @@ public class TestReatha {
 		
 		System.out.println();
 		
+		// Teleportation tests
+		System.out.println("** Teleportation tests  **");
+		System.out.println("		Forward");
+		
 		Jump jump = new Jump();
 		Turn turnLeft = new Turn(RelativeDirection.LEFT);
 		Turn turnRight = new Turn(RelativeDirection.RIGHT);
@@ -134,7 +138,19 @@ public class TestReatha {
 		turnRight.execute(grid1, robot1);
 		forward.execute(grid1, robot1);
 		System.out.println("	Tourner à droite+Avancer -> Position du robot1 : " + "(" + robot1.getLine() + ", " + robot1.getColumn() + ")");
+		grid1.printGrid();
+		System.out.println();
 		
+		System.out.println("		Jump");
+
+		System.out.println("	> Set cells (8,9) & (9,0) to TeleportCell");
+		grid1.setCell(new TeleportCell(8,9,2,9,0,TeleportColour.TELEPORT));
+		grid1.setCell(new TeleportCell(9,0,2,8,9,TeleportColour.TELEPORT));		
+		grid1.printGrid();
+		System.out.println("	Position du robot1 : " + "(" + robot1.getLine() + ", " + robot1.getColumn() + ")");
+		turnRight.execute(grid1, robot1);
+		jump.execute(grid1, robot1);
+		System.out.println("	Tourner à droite+Sauter -> Position du robot1 : " + "(" + robot1.getLine() + ", " + robot1.getColumn() + ")");
 		grid1.printGrid();
 	}
 }
