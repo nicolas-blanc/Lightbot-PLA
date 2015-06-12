@@ -13,15 +13,8 @@ import lightbot.system.world.cell.*;
  * @author Nasheis
  *
  */
-public class WorldGenerator {	
+public class WorldGenerator {
 	private Grid grid;
-	
-	private int probaLight;
-	private int probaForward;
-	private int probaJump;
-	private int probaRight;
-	private int probaLeft;
-	final private int range = 12;
 	
 	@SuppressWarnings("unused")
 	private int numberProcedures;
@@ -29,9 +22,13 @@ public class WorldGenerator {
 	private int numberLight;
 	private int height;
 	
+	private Probabilities probabilities;
+	
 	private CardinalDirection direction;
 	
 	private Random rand;
+	
+	final private int size = 7;
 	
 	/**
 	 * 
@@ -41,10 +38,12 @@ public class WorldGenerator {
 		numberInstruction = 0;
 		numberLight = 0;
 		
-		grid = new Grid(8);
+		grid = new Grid(size);
 		rand = new Random();
+		probabilities = new Probabilities();
+		
 		generation();
-//		finishGeneration();
+		finishGeneration();
 	}
 	
 	/**
@@ -59,10 +58,10 @@ public class WorldGenerator {
 	 * 
 	 */
 	private void generation() {
-		initProba();
+		probabilities.initProba();
 		
 		int maximumInstructions = rand.nextInt(30 - 5 + 1) + 5;
-		int maximumLight = rand.nextInt((maximumInstructions / 5) + 4) + 3;
+		int maximumLight = rand.nextInt((maximumInstructions / 5) + 4) + 1;
 		
 		Cell currentCell = firstCell();
 		Cell newCell;
@@ -80,9 +79,9 @@ public class WorldGenerator {
 			} else {
 				currentCell = newCell;
 			}
-			setUpProbalities(currentAction);
+			probabilities.setUpProbalities(currentAction);
 			if ((numLoop % 5) == 0) {
-				initProba();
+				probabilities.initProba();
 			}
 			
 			previousAction = currentAction;
@@ -97,20 +96,26 @@ public class WorldGenerator {
 	}
 	
 	private void finishGeneration() {
-		boolean[] col = getColWithFullCell();
+		int[] col = getColWithFullCell();
+		int[] line = getLineWithFullCell();
+		
+		System.out.print("Col :");
+		for (int i = 0; i < col.length; i++) { System.out.print(col[i] + " / "); }
+		System.out.println();
+		
+		System.out.print("Line :");
+		for (int i = 0; i < line.length; i++) { System.out.print(line[i] + " / "); }
+		System.out.println();
+		
+		for (int i = 0; i < col.length; i++) {
+			for (int j = 0; j < line.length; j++) {
+				//!a.b+a.!b
+				if(line[j] == 0 && col[i] == 0 && grid.getCell(j, i).isEmptyCell()) {
+					grid.setCell(new NormalCell(j, i, rand.nextInt(3)));
+				}
+			}
+		}
 	}
-	
-	/**
-	 * 
-	 */
-	private void initProba() {
-		probaLight = 2;
-		probaForward = 6;
-		probaJump = 10;
-		probaRight= 11;
-		probaLeft = 12;
-	}
-
 	
 	/**
 	 * Get a random case in the grid for the first case of the algorithm and generate then.
@@ -118,9 +123,9 @@ public class WorldGenerator {
 	 */
 	private Cell firstCell() {
 		if(rand.nextInt(2) != 0) {
-			grid.setCell(new LightableCell(0, 0, (rand.nextInt(2) + 1)));
+			grid.setCell(new LightableCell(0, 0, 0));
 		} else {
-			grid.setCell(new NormalCell(0, 0, (rand.nextInt(2) + 1)));
+			grid.setCell(new NormalCell(0, 0, 0));
 		}
 		
 		Cell firstcell = grid.getCell(0, 0);
@@ -142,37 +147,37 @@ public class WorldGenerator {
 	 * @return Return an action among the possible action of the robot, -1 if there is an error
 	 */
 	private int giveAction(Integer maxLight, int prevAction) {
-		int randAction = rand.nextInt(range);
+		int randAction = rand.nextInt(probabilities.getRange());
 		
 //		System.out.print("Before while : " + randAction);
 		
-		while (randAction < probaLight && numberLight == (maxLight - 1)) {
-			randAction = rand.nextInt(range);
+		while (randAction < probabilities.getProbaLight() && numberLight == (maxLight - 1)) {
+			randAction = rand.nextInt(probabilities.getRange());
 //			System.out.println("In while : " + randAction + " instruction : " + numberInstruction);
 		}
 		
-		while((randAction >= probaRight && randAction <= probaLeft) && (prevAction == 3 || prevAction == 4)) {
-			randAction = rand.nextInt(range);
+		while((randAction >= probabilities.getProbaRight() && randAction <= probabilities.getProbaLeft()) && (prevAction == 3 || prevAction == 4)) {
+			randAction = rand.nextInt(probabilities.getRange());
 		}
 		
 //		System.out.println(" // After while : " + randAction);
 		
 		int action = -1;
 		
-		if (randAction < probaLight) {
+		if (randAction < probabilities.getProbaLight()) {
 				action = 0;
 				numberLight++;
 				System.out.print("Light !!!!");
-		} else if (randAction < probaForward) {
+		} else if (randAction < probabilities.getProbaForward()) {
 			action = 1;
 			System.out.print("Forward !!!!");
-		} else if (randAction < probaJump) {
+		} else if (randAction < probabilities.getProbaJump()) {
 			action = 2;
 			System.out.print("Jump !!!!");
-		} else if (randAction < probaRight) {
+		} else if (randAction < probabilities.getProbaRight()) {
 			action = 3;
 			System.out.print("Right !!!!");
-		} else if (randAction < probaLeft) {
+		} else if (randAction < probabilities.getProbaLeft()) {
 			action = 4;
 			System.out.print("Left !!!!");
 		}
@@ -207,9 +212,20 @@ public class WorldGenerator {
 					grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), cell.getHeight()));
 					cell = grid.getCell(emptyCell.getX(), emptyCell.getY());
 				} else {
-					numberInstruction--;
-					cell = null;
-					System.out.println("Empty Cell");
+					//numberInstruction--;
+					//cell = null;
+					System.out.println("Not Empty Cell");					
+					if (cell.getHeight() <= (height + 1) && cell.getHeight() >= (height - 1)) {
+						cell = emptyCell;
+					} else {
+						if (rand.nextInt(2) == 0) {
+							direction = CardinalDirection.getRotationDirection(direction, RelativeDirection.RIGHT);
+							System.out.println("Update - Right !!!!");
+						} else {
+							direction = CardinalDirection.getRotationDirection(direction, RelativeDirection.LEFT);
+							System.out.println("Update - Left !!!!");
+						}
+					}
 				}
 			} catch (OutOfGridException e) {
 				if (rand.nextInt(2) == 0) {
@@ -226,7 +242,7 @@ public class WorldGenerator {
 				Cell emptyCell = grid.getNextCell(cell.getX(), cell.getY(), direction);
 //				System.out.println("Heigh cell : " + emptyCell.getHeight());
 				if (emptyCell.isEmptyCell()) {
-					if(cell.getHeight() == 1) {
+					if(cell.getHeight() == 0) {
 						grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), (cell.getHeight() + rand.nextInt(2))));
 						} else if (height == 4) {
 							grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), (cell.getHeight() + (rand.nextInt(2) - 1))));
@@ -236,9 +252,20 @@ public class WorldGenerator {
 					cell = grid.getCell(emptyCell.getX(), emptyCell.getY());
 					height = cell.getHeight();
 				} else {
-					numberInstruction--;
-					cell = null;
-					System.out.println("Empty Cell");
+					//numberInstruction--;
+					//cell = null;
+					System.out.println("Not Empty Cell");
+					if (cell.getHeight() <= (height + 1) && cell.getHeight() >= (height - 1)) {
+						cell = emptyCell;
+					} else {
+						if (rand.nextInt(2) == 0) {
+							direction = CardinalDirection.getRotationDirection(direction, RelativeDirection.RIGHT);
+							System.out.println("Update - Right !!!!");
+						} else {
+							direction = CardinalDirection.getRotationDirection(direction, RelativeDirection.LEFT);
+							System.out.println("Update - Left !!!!");
+						}
+					}
 				}
 			} catch (OutOfGridException e) {
 				if (rand.nextInt(2) == 0) {
@@ -266,67 +293,29 @@ public class WorldGenerator {
 		return cell;
 	}
 	
-	/**
-	 * Update the probabilities of the element depending on the previous instruction
-	 * @param instruction The current instruction used to create the cell
-	 */
-	private void setUpProbalities(int instruction) {
-//		System.out.println("action in proba :" + instruction);
-		
-		switch(instruction){
-		case 0:
-			initProba();
-			break;
-		case 1:
-			probaLight++;
-			probaForward--;
-			break;
-		case 2:
-			probaLight++;
-			probaJump--;
-			break;
-		case 3:
-			probaLight++;
-			probaRight--;
-			break;
-		case 4:
-			probaLight++;
-			probaLeft--;
-			break;
-		default:
-			System.out.println("The instruction does not exist!");
-		}
-		
-		//printProba();
-	}
-	
-	private boolean[] getColWithFullCell() {
+	private int[] getColWithFullCell() {
 		int j = 0;
-		boolean[] tab = {true};
-		for (int i = 0; i < 8; i++) {
+		int[] tab = new int[size];
+		for (int i = 0; i < size; i++) {
 			j = 0;
-			while (j < 8 && !(grid.isEmpty(i,j))) { j++; }
-			if (j == 8) {
-				tab[i] = false;
+			while (j < size && (grid.getCell(j, i).isEmptyCell())) { j++; }
+			if (j == size) {
+				tab[i] = 1;
 			}
 		}
 		return tab;
 	}
 	
-	private boolean[] getLineWithFullCell() {
+	private int[] getLineWithFullCell() {		
 		int j = 0;
-		boolean[] tab = {true};
-		for (int i = 0; i < 8; i++) {
+		int[] tab = new int[size];
+		for (int i = 0; i < size; i++) {
 			j = 0;
-			while (j < 8 && !(grid.isEmpty(j,i))) { j++; }
-			if (j == 8) {
-				tab[i] = false;
+			while (j < size && (grid.getCell(i, j).isEmptyCell())) { j++; }
+			if (j == size) {
+				tab[i] = 1;
 			}
 		}
 		return tab;
-	}
-	
-	private void printProba() {
-		System.out.println("Light : " + probaLight + " / Forward : " + probaForward  + " / Jump : " + probaJump  + " / Left : " + probaLeft + " / Right : " + probaRight);
 	}
 }
