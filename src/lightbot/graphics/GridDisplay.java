@@ -14,9 +14,8 @@ public class GridDisplay {
 	
 	public static final int maxHeight = 50; 
 	
-	private Grid grid = null;
-	private int line;
-	private int column;
+	public Grid grid = null;
+	private int size;
 	private int originX;
 	private int originY;
 	
@@ -39,14 +38,13 @@ public class GridDisplay {
 	 * @param originX
 	 * @param originY
 	 */
-	public GridDisplay(int line, int column, int originX, int originY){
-		this.line = line;
-		this.column = column;
+	public GridDisplay(int size, int originX, int originY){
+		this.size = size;
 		this.originX = originX;
 		this.originY = originY;
 		isGame = false;
 		
-		grid = new Grid(this.line);
+		grid = new Grid(this.size);
 		initArray();
 	}
 
@@ -60,8 +58,7 @@ public class GridDisplay {
 		this.grid = grid;
 		isGame = true;
 		
-		line = grid.getSize();
-		column = grid.getSize();
+		size = grid.getSize();
 		this.originX = originX;
 		this.originY = originY;
 		
@@ -94,19 +91,19 @@ public class GridDisplay {
 	 * Initialize all the array of the GridDisplay
 	 */
 	private void initArray(){
-		cubes = new Sprite[line][column][maxHeight];
+		cubes = new Sprite[size][size][maxHeight];
 		for(int l = 0; l < cubes.length; l++)
 			for(int c = 0; c < cubes[0].length; c++)
 				for(int level = 0; level < cubes[0][0].length; level++)
 					cubes[l][c][level] = null;
 		
-		cellClick = new ClickableCell[line][column][maxHeight];
+		cellClick = new ClickableCell[size][size][maxHeight];
 		for(int l = 0; l < cellClick.length; l++)
 			for(int c = 0; c < cellClick[0].length; c++)
 				for(int level = 0; level < cellClick[0][0].length; level++)
 					cellClick[l][c][level] = null;
 		
-		levelMax = new int[line][column];
+		levelMax = new int[size][size];
 		for(int l = 0; l < levelMax.length; l++)
 			for(int c = 0; c < levelMax[0].length; c++)
 				levelMax[l][c] = -1;
@@ -233,8 +230,8 @@ public class GridDisplay {
 	public CellPosition isInside(Vector2i coord){
 		CellPosition pos = new CellPosition(0, 0, 0, false);
 		
-		for(int l = line-1; l>=0; l--)
-			for(int c = column-1; c>=0; c--)
+		for(int l = size-1; l>=0; l--)
+			for(int c = size-1; c>=0; c--)
 				for(int level = levelMax[l][c]; level>=0; level--){
 					if(cellClick[l][c][level].isInside(coord) && !isInsideDeadZone(coord, l, c, level)){
 						pos.line = l;
@@ -258,8 +255,8 @@ public class GridDisplay {
 	 * @return A boolean
 	 */
 	public boolean isInsideDeadZone(Vector2i coord, int lineMin, int columnMin, int levelMin){
-		for(int l = line-1; l>=lineMin; l--)
-			for(int c = column-1; c>=columnMin; c--)
+		for(int l = size-1; l>=lineMin; l--)
+			for(int c = size-1; c>=columnMin; c--)
 				for(int level = levelMax[l][c]; level>=levelMin; level--)
 					if(cellClick[l][c][level].isInsideDeadZone(coord)){
 						//System.out.println("Is inside dead zone --> l : " + l + ", c : " + c + ", level : " + level);

@@ -9,8 +9,7 @@ import org.jsfml.system.Vector2i;
 
 public class CanvaDisplay{
 	
-	private int line;
-	private int column;
+	private int size;
 	private int originX;
 	private int originY;
 	
@@ -22,20 +21,19 @@ public class CanvaDisplay{
 	/*										Constructors										*/
 	/********************************************************************************************/
 	
-	public CanvaDisplay(int line, int column, int originX, int originY){
-		this.line = line;
-		this.column = column;
+	public CanvaDisplay(int size, int originX, int originY){
+		this.size = size;
 		this.originX = originX;
 		this.originY = originY;
 		
-		canva = new Sprite[this.line][this.column];
-		for(int l = 0; l < this.line; l++)
-			for(int c = 0; c < this.column; c++)
+		canva = new Sprite[size][size];
+		for(int l = 0; l<size; l++)
+			for(int c = 0; c<size; c++)
 					canva[l][c]= null;
 		
-		canvaClick = new ClickableCell[this.line][this.column];
-		for(int l = 0; l < this.line; l++)
-			for(int c = 0; c < this.column; c++)
+		canvaClick = new ClickableCell[size][size];
+		for(int l = 0; l<size; l++)
+			for(int c = 0; c<size; c++)
 					canvaClick[l][c] = null;
 	}
 	
@@ -50,8 +48,8 @@ public class CanvaDisplay{
 	 */
 	public ArrayList<Sprite> getCanva(){
 		ArrayList<Sprite> out = new ArrayList<Sprite>();
-		for(int l = 0; l < this.line; l++)
-			for(int c = 0; c < this.column; c++)
+		for(int l = 0; l<size; l++)
+			for(int c = 0; c<size; c++)
 				out.add(canva[l][c]);
 		return out;
 	}
@@ -65,8 +63,8 @@ public class CanvaDisplay{
 	 * Initialize a canvas of the size defined at the instantiation
 	 */
 	public void initCanva(){
-		for(int l = 0; l < this.line; l++)
-			for(int c = 0; c < this.column; c++)
+		for(int l = 0; l<size; l++)
+			for(int c = 0; c<size; c++)
 				addCel(l, c);
 	}
 	
@@ -97,8 +95,8 @@ public class CanvaDisplay{
 	 * Print a canvas in the global window
 	 */
 	public void print(){
-		for(int l = 0; l < this.line; l++)
-			for(int c = 0; c < this.column; c++)
+		for(int l = 0; l<size; l++)
+			for(int c = 0; c<size; c++)
 				Main.window.draw(canva[l][c]);
 	}
 	
@@ -114,8 +112,8 @@ public class CanvaDisplay{
 	 */
 	public CellPosition isInside(Vector2i coord){
 		CellPosition pos = new CellPosition(0, 0, 0, false);
-		for(int l = this.line-1; l>=0; l--)
-			for(int c = this.column-1; c>=0; c--)
+		for(int l = size-1; l>=0; l--)
+			for(int c = size-1; c>=0; c--)
 				if(canvaClick[l][c].isInside(coord) && GridDisplay.levelMax[l][c] == -1){
 					pos.line = l;
 					pos.column = c;
