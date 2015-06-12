@@ -107,7 +107,5 @@ public class Robot {
 	public CardinalDirection getDirection(){
 		return this.direction;
 	}
-	
-	
 
 }
