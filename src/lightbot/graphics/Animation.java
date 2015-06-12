@@ -360,4 +360,8 @@ public class Animation {
 		    	finished = true;
 		}
 	}
+	
+	public void animeBlackHole(boolean open){
+		
+	}
 }
