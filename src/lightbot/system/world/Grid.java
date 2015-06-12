@@ -5,6 +5,8 @@ import lightbot.system.world.cell.Cell;
 import lightbot.system.world.cell.EmptyCell;
 import lightbot.system.world.cell.FullCell;
 import lightbot.system.world.cell.LightableCell;
+import lightbot.system.world.cell.NormalCell;
+import lightbot.system.world.cell.TeleportCell;
 
 public class Grid {
 
@@ -87,17 +89,34 @@ public class Grid {
 			}
 	}
 
-	public void changeToLightable(int x, int y) {
-		if (grid[x][y] instanceof EmptyCell)
-			this.grid[x][y] = new LightableCell(x, y, 1);
+	/**
+	 * changeToLightable
+	 * Changes any cell to a LightableCell
+	 * @param l
+	 * @param c
+	 */
+	public void changeToLightable(int l, int c) {
+		if (grid[l][c] instanceof EmptyCell)
+			this.grid[l][c] = new LightableCell(l, c, 1);
 		else
-			this.grid[x][y] = new LightableCell(x, y,
-					((FullCell) grid[x][y]).getHeight());
+			this.grid[l][c] = new LightableCell(l, c, grid[l][c].getHeight());
+	}
+	
+	/**
+	 * changeToNormal
+	 * Changes any cell to a NormalCell
+	 * @param l
+	 * @param c
+	 */
+	public void changeToNormal(int l, int c){
+		if (grid[l][c] instanceof EmptyCell)
+			this.grid[l][c] = new NormalCell(l, c, 1);
+		else
+			this.grid[l][c] = new NormalCell(l, c, grid[l][c].getHeight());
 	}
 
 	/**
 	 * getCell
-	 * 
 	 * @param l: line
 	 * @param c: column
 	 * @return the (l,c) cell of the grid
@@ -108,11 +127,8 @@ public class Grid {
 
 	/**
 	 * setCell sets the level of the (l,c) cell
-	 * 
-	 * @param l
-	 *            : line
-	 * @param c
-	 *            : column
+	 * @param l: line
+	 * @param c: column
 	 * @param level
 	 */
 	public void setCell(Cell c) {
@@ -121,7 +137,6 @@ public class Grid {
 
 	/**
 	 * getNextCell
-	 * 
 	 * @param currentL: current l position (line) of the robot
 	 * @param currentC: current c position (column) of the robot
 	 * @param direction: the current direction of the robot
@@ -159,7 +174,8 @@ public class Grid {
 	}
 
 	/**
-	 * printGrid Prints a grid
+	 * printGrid
+	 * Prints a grid
 	 */
 	public void printGrid(){
 		for(int i=0; i<grid.length; i++){
@@ -167,12 +183,16 @@ public class Grid {
 				if(grid[i][j].isEmptyCell()) {
 					System.out.print("* / ");
 				} else {
-					System.out.print(grid[i][j].getHeight() + " / ");
+					System.out.print(grid[i][j].getHeight() + " /");
 				}
 				if (grid[i][j] instanceof LightableCell) {
-					System.out.print("L \t");
+					System.out.print("L\t");
 				} else {
-				System.out.print("  \t");
+					if (grid[i][j] instanceof TeleportCell){
+						System.out.print("T\t");
+					}
+					else
+						System.out.print("  \t");
 				}
 			}
 			System.out.println();
@@ -181,7 +201,6 @@ public class Grid {
 
 	/**
 	 * getSize
-	 * 
 	 * @return the size of a size*size grid
 	 */
 	public int getSize() {
