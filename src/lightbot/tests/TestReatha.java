@@ -3,13 +3,18 @@ package lightbot.tests;
 import lightbot.system.Colour;
 import lightbot.system.CardinalDirection;
 import lightbot.system.Procedure;
+import lightbot.system.RelativeDirection;
 import lightbot.system.Robot;
 import lightbot.system.action.Forward;
+import lightbot.system.action.Jump;
 import lightbot.system.action.Light;
+import lightbot.system.action.Turn;
 import lightbot.system.world.Grid;
 import lightbot.system.world.cell.Cell;
 import lightbot.system.world.cell.LightableCell;
 import lightbot.system.world.cell.NormalCell;
+import lightbot.system.world.cell.TeleportCell;
+import lightbot.system.world.cell.TeleportColour;
 
 public class TestReatha {
 
@@ -101,6 +106,35 @@ public class TestReatha {
 		System.out.println();
 
 		grid1.printGrid();
+		
+		System.out.println();
+		
+		Jump jump = new Jump();
+		Turn turnLeft = new Turn(RelativeDirection.LEFT);
+		Turn turnRight = new Turn(RelativeDirection.RIGHT);
+		
+		Robot robot1 = new Robot(2,2,Colour.WHITE,CardinalDirection.WEST);
+		System.out.println("	Position du robot1 : " + "(" + robot1.getLine() + ", " + robot1.getColumn() + ")");
+		grid1.setCell(new NormalCell(3,1,2));
+		grid1.setCell(new NormalCell(4,1,1));
+		System.out.println("	> Set cells (4,0) & (9,9) to TeleportCell");
+		System.out.println();
+		grid1.setCell(new TeleportCell(4,0,1,9,9,TeleportColour.TELEPORT));
+		grid1.setCell(new TeleportCell(9,9,1,4,0,TeleportColour.TELEPORT));
+		
+		grid1.printGrid();
+		
+		jump.execute(grid1, robot1);
+		System.out.println("	Sauter -> Position du robot1 : " + "(" + robot1.getLine() + ", " + robot1.getColumn() + ")");
+		turnLeft.execute(grid1, robot1);
+		forward.execute(grid1, robot1);
+		System.out.println("	Tourner à gauche+Avancer -> Position du robot1 : " + "(" + robot1.getLine() + ", " + robot1.getColumn() + ")");
+		jump.execute(grid1, robot1);
+		System.out.println("	Sauter -> Position du robot1 : " + "(" + robot1.getLine() + ", " + robot1.getColumn() + ")");
+		turnRight.execute(grid1, robot1);
+		forward.execute(grid1, robot1);
+		System.out.println("	Tourner à droite+Avancer -> Position du robot1 : " + "(" + robot1.getLine() + ", " + robot1.getColumn() + ")");
+		
+		grid1.printGrid();
 	}
-
 }
