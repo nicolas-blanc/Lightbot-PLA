@@ -42,6 +42,9 @@ public class Textures {
 	public static Texture buttonTexture;
 	public static Texture teleportTexture;
 	
+	//menu textures
+	public static Texture menuButton;
+	
 	public static void initTextures(){
 		cubeTexture = new Texture();
 		cubeTextureBlue = new Texture();
@@ -71,6 +74,8 @@ public class Textures {
 		robotSouth = new Texture();
 		robotWest = new Texture();
 		robotEast = new Texture();
+		
+		menuButton = new Texture();
 		
 		try {
 		    cubeTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"whitecube.png"));
@@ -105,6 +110,9 @@ public class Textures {
 		    robotSouth.loadFromFile(Paths.get(RESSOURCE_PATH + "robot/white_south.png"));
 		    robotWest.loadFromFile(Paths.get(RESSOURCE_PATH + "robot/white_west.png"));
 		    robotEast.loadFromFile(Paths.get(RESSOURCE_PATH + "robot/white_east.png"));
+			
+			//menu
+			menuButton.loadFromFile(Paths.get(RESSOURCE_PATH + "menuButton.png"));
 		    
 		    cubeTexture.setSmooth(true);
 			cubeTextureBlue.setSmooth(true);
@@ -134,6 +142,9 @@ public class Textures {
 			robotSouth.setSmooth(true);
 			robotWest.setSmooth(true);
 			robotEast.setSmooth(true);
+			
+			menuButton.setSmooth(true);
+
 		    
 		} catch(IOException ex) {
 		    //Ouch! something went wrong
