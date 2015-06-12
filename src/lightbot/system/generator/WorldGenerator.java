@@ -202,7 +202,7 @@ public class WorldGenerator {
 		case 1:
 			try {
 				Cell emptyCell = grid.getNextCell(cell.getX(), cell.getY(), direction);
-				System.out.println("Heigh cell : " + emptyCell.getHeight());
+//				System.out.println("Heigh cell : " + emptyCell.getHeight());
 				if (emptyCell.isEmptyCell()) {
 					grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), cell.getHeight()));
 					cell = grid.getCell(emptyCell.getX(), emptyCell.getY());
@@ -224,8 +224,8 @@ public class WorldGenerator {
 		case 2:
 			try {
 				Cell emptyCell = grid.getNextCell(cell.getX(), cell.getY(), direction);
-				System.out.println("Heigh cell : " + emptyCell.getHeight());
-				if (emptyCell.getHeight() == -1) {
+//				System.out.println("Heigh cell : " + emptyCell.getHeight());
+				if (emptyCell.isEmptyCell()) {
 					if(cell.getHeight() == 1) {
 						grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), (cell.getHeight() + rand.nextInt(2))));
 						} else if (height == 4) {

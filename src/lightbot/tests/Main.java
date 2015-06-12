@@ -65,7 +65,7 @@ public class Main {
 		rect.setPosition(15, 15);
 		rect.setOutlineThickness(1);
 		rect.setOutlineColor(Color.BLACK);
-
+		
 		//Main loop
 		while (window.isOpen()) {
 		    //Draw everything
