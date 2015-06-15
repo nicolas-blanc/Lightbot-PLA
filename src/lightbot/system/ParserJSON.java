@@ -7,21 +7,26 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import lightbot.system.action.*;
 import lightbot.system.world.cell.*;
 import lightbot.system.world.Grid;
+import lightbot.system.world.Level;
 
 public class ParserJSON {
 	
 	
 	// TODO add the robot
-	public static Grid deserialize(String filename){
+	public static Level deserialize(String filename){
+		Level level = null;
 		Grid grid = null;
+		ArrayList<_Executable> listOfActions = new ArrayList<_Executable>();
 		InputStream inStream = null;
 		JSONParser parser = new JSONParser();
 		try {
@@ -38,6 +43,31 @@ public class ParserJSON {
 			JSONObject robot = (JSONObject)dataObject.get("robot");
 			Robot.wheatley.setLine((int)(long)robot.get("l"));
 			Robot.wheatley.setColumn((int)(long)robot.get("c"));
+			
+			JSONArray actions = (JSONArray)dataObject.get("actions");
+			for(Object o : actions){
+				switch((String)o){
+					case "Forward":
+						listOfActions.add(new Forward());
+						break;
+					
+					case "Jump":
+						listOfActions.add(new Jump());
+						break;
+						
+					case "Light":
+						listOfActions.add(new Light());
+						break;
+						
+					case "Turn_LEFT":
+						listOfActions.add(new Turn(RelativeDirection.LEFT, Colour.WHITE));
+						break;
+						
+					case "Turn_RIGHT":
+						listOfActions.add(new Turn(RelativeDirection.RIGHT, Colour.WHITE));
+						break;	
+				}
+			}
 			
 			int size = (int)(long)dataObject.get("size");
 			grid = new Grid(size);
@@ -82,21 +112,22 @@ public class ParserJSON {
 				}
 			}
 			
+			level = new Level(grid, listOfActions);
+			
 			inStream.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("Unable to open file : "+filename);
 		} catch (IOException e) {
 			System.out.println("Error while reading file : "+filename);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Error while parsing file : "+filename);
 			e.printStackTrace();
 		}
-		return grid;
+		return level;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static void serialize(String filename, Grid grid){
+	public static void serialize(String filename, Grid grid, ArrayList<_Executable> listOfActions){
 		OutputStream outStream = null;
 		try {
 			outStream = new FileOutputStream(new File(filename));
@@ -143,11 +174,22 @@ public class ParserJSON {
 			dataObject.put("grid", gridArray);
 			dataObject.put("size", grid.getSize());
 			
+			// Informations about the robot
 			JSONObject robot = new JSONObject();
 			robot.put("l", Robot.wheatley.getLine());
 			robot.put("c", Robot.wheatley.getColumn());
-			
 			dataObject.put("robot", robot);
+			
+			// Informations about the list of actions
+			JSONArray actions = new JSONArray();
+			for(_Executable e : listOfActions){
+				String toAdd = getClassName(e);
+				if(toAdd.equals("Turn"))
+					actions.add(toAdd+"_"+((Turn)e).getDirection().toString());
+				else
+					actions.add(toAdd);
+			}
+			dataObject.put("actions", actions);
 			
 			// writing process
 			byte [] contentToWrite = dataObject.toJSONString().getBytes();
@@ -204,6 +246,11 @@ public class ParserJSON {
 	
 	public static String getClassName(Cell cell){
 		String []className = cell.getClass().getName().split("\\.");
+		return className[className.length-1];
+	}
+	
+	public static String getClassName(_Executable action){
+		String []className = action.getClass().getName().split("\\.");
 		return className[className.length-1];
 	}
 }
