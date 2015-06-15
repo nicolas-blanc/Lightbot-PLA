@@ -16,8 +16,6 @@ import lightbot.system.world.cell.*;
 public class WorldGenerator {
 	private Grid grid;
 	
-	@SuppressWarnings("unused")
-	private int numberProcedures;
 	private int numberInstruction;
 	private int numberLight;
 	private int height;
@@ -34,7 +32,6 @@ public class WorldGenerator {
 	 * 
 	 */
 	public WorldGenerator() {
-		numberProcedures = 0;
 		numberInstruction = 0;
 		numberLight = 0;
 		
@@ -88,10 +85,9 @@ public class WorldGenerator {
 		}
 		
 		grid.changeToLightable(currentCell.getX(),currentCell.getY());
-//		System.out.println("Light ? -> " + currentCell.getLightable());
 		
-		System.out.println("Max - Instruction : " + maximumInstructions + " / LIght : " + maximumLight);
-		System.out.println("Instruction : " + numberInstruction + " / LIght : " + numberLight);
+//		System.out.println("Max - Instruction : " + maximumInstructions + " / LIght : " + maximumLight);
+//		System.out.println("Instruction : " + numberInstruction + " / LIght : " + numberLight);
 		
 	}
 	
@@ -109,7 +105,6 @@ public class WorldGenerator {
 		
 		for (int i = 0; i < col.length; i++) {
 			for (int j = 0; j < line.length; j++) {
-				//!a.b+a.!b
 				if(line[j] == 0 && col[i] == 0 && grid.getCell(j, i).isEmptyCell()) {
 					grid.setCell(new NormalCell(j, i, rand.nextInt(3)));
 				}
