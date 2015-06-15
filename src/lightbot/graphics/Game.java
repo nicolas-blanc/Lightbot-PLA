@@ -10,7 +10,6 @@ import lightbot.system.world.Grid;
 import lightbot.tests.Main;
 
 import org.jsfml.graphics.Sprite;
-import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
@@ -25,7 +24,17 @@ public class Game implements DisplayMode{
 	
 	private Display display;
 	
-	public Game(Grid grid, int originX, int originY){
+	private int originX;
+	private int originY;
+	
+	/********************************************************************************************/
+	/*										Constructors										*/
+	/********************************************************************************************/
+	
+	public Game(Grid grid){
+		originX = (750/2)+15;
+		originY = (475-(grid.getSize()*Textures.cellTexture.getSize().y));
+		
 		toDisplay = new ArrayList<Sprite>();
 	
 		initConstantDisplay();
@@ -43,8 +52,8 @@ public class Game implements DisplayMode{
 		Sprite turnRightSprite = new Sprite(Textures.rotateRight);
 		turnRightSprite.setPosition((765-35-Textures.rotateRight.getSize().y), (490-30-Textures.rotateRight.getSize().y));
 		
-		turnLeftButton = new Button(turnLeftSprite);
-		turnRightButton = new Button(turnRightSprite);
+		turnLeftButton = new Button(turnLeftSprite, null, null);
+		turnRightButton = new Button(turnRightSprite, null, null);
 		
 		toDisplay.add(turnLeftSprite);
 		toDisplay.add(turnRightSprite);

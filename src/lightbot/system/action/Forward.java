@@ -5,6 +5,7 @@ import lightbot.system.Robot;
 import lightbot.system.world.cell.Cell;
 import lightbot.system.world.cell.ColoredCell;
 import lightbot.system.world.cell.FullCell;
+import lightbot.system.world.cell.ObstacleCell;
 import lightbot.system.world.cell.TeleportCell;
 import lightbot.system.world.Grid;
 import lightbot.system.world.OutOfGridException;
@@ -67,7 +68,7 @@ public class Forward implements _Action {
 			return false;
 		}
 		
-		if (currentCell instanceof FullCell && nextCell instanceof FullCell){
+		if (currentCell instanceof FullCell && nextCell instanceof FullCell && !(nextCell instanceof ObstacleCell)){
 			return (currentCell.getHeight() == nextCell.getHeight());
 		}
 		else{

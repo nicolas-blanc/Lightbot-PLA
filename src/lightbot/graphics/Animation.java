@@ -89,6 +89,7 @@ public class Animation {
 	public void addRemoveCube(int line, int column, int level, boolean add, boolean block){
 		boolean finished = false;
 		boolean endDisplay = false;
+		
 		Vector2f initialPosition = cubes[line][column][level].getPosition();
 		
 		Clock frameClock = new Clock();
@@ -114,8 +115,11 @@ public class Animation {
 	    	
 	    	if(!block){
 			    for(int l = 0; l<cubes.length; l++)
-					for(int c = 0; c<cubes[0].length; c++)
+					for(int c = 0; c<cubes[0].length; c++){
 						printPillar(l, c);
+						if(robotSprite != null && l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn())
+							Main.window.draw(robotSprite);
+					}
 	    	}
 			else{
 				for(int l = 0; l<cubes.length && !endDisplay; l++)

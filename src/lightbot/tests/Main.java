@@ -48,20 +48,14 @@ public class Main {
 		
 		//newWorld.getGrid().printGrid();
 		//Grid grid = newWorld.getGrid();
-		Grid grid = ParserJSON.deserialize("grid1.json");
+		//Grid grid = ParserJSON.deserialize("grid1.json");
 
-		originX = (750/2)+15;
-		originY = (475-(5*Textures.cellTexture.getSize().y));
-		
-		
-		int sizeX = (750/2)+15;
-		//int sizeY = (475-15-(grid.getSize()*Textures.cellTexture.getSize().y));
-		int sizeY = (475-(5*Textures.cellTexture.getSize().y));
-		//display = new Editor(5, 5, sizeX, sizeY);
-		display = new Game(grid, sizeX, sizeY);
+		display = new Editor(5);
+		//display = new Game(grid);
 		//display.printGrid();
 		
-		RectangleShape rect = new RectangleShape(new Vector2f(750, 475));
+		//RectangleShape rect = new RectangleShape(new Vector2f(750, 460));
+		RectangleShape rect = new RectangleShape(new Vector2f(730, 570));
 		rect.setPosition(15, 15);
 		rect.setOutlineThickness(1);
 		rect.setOutlineColor(Color.BLACK);

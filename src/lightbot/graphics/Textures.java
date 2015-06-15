@@ -39,8 +39,21 @@ public class Textures {
 	public static Texture robotWest;
 	public static Texture robotEast;
 	
-	public static Texture buttonTexture;
-	public static Texture teleportTexture;
+	public static Texture blueSplash;
+	
+	// Editor
+	public static Texture lightButtonTexture;
+	public static Texture lightButtonTextureRelief;
+	public static Texture loadButtonTexture;
+	public static Texture loadButtonTextureRelief;
+	public static Texture saveButtonTexture;
+	public static Texture saveButtonTextureRelief;
+	
+	public static Texture teleportButtonTexture;
+	public static Texture teleportButtonTextureRelief;
+	
+	public static Texture robotButtonTexture;
+	public static Texture robotButtonTextureRelief;
 	
 	//menu textures
 	public static Texture menuButton;
@@ -53,8 +66,8 @@ public class Textures {
 		cubeTextureTeleport = new Texture();
 		cellTexture = new Texture();
 		
-		buttonTexture = new Texture();
-		teleportTexture = new Texture();
+		blueSplash = new Texture();
+		
 		
 		rotateLeft = new Texture();
 		rotateRight = new Texture();
@@ -75,6 +88,17 @@ public class Textures {
 		robotWest = new Texture();
 		robotEast = new Texture();
 		
+		lightButtonTexture = new Texture();
+		lightButtonTextureRelief = new Texture();
+		loadButtonTexture = new Texture();
+		loadButtonTextureRelief = new Texture();
+		saveButtonTexture = new Texture();
+		saveButtonTextureRelief = new Texture();
+		teleportButtonTexture = new Texture();
+		teleportButtonTextureRelief = new Texture();
+		robotButtonTexture = new Texture();
+		robotButtonTextureRelief = new Texture();
+		
 		menuButton = new Texture();
 		
 		try {
@@ -88,8 +112,8 @@ public class Textures {
 		    rotateLeft.loadFromFile(Paths.get(NEW_ICONS_PATH + "rotateL.png"));
 		    rotateRight.loadFromFile(Paths.get(NEW_ICONS_PATH + "rotateR.png"));
 		    
-		    buttonTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"button.png"));
-		    teleportTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"teleport.png"));
+		    blueSplash.loadFromFile(Paths.get(RESSOURCE_PATH+"bluesplash.png"));
+		    
 		    
 		    // load action icons
 		    forwardTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconForward.png"));
@@ -113,7 +137,19 @@ public class Textures {
 			
 			//menu
 			menuButton.loadFromFile(Paths.get(RESSOURCE_PATH + "menuButton.png"));
-		    
+			
+			// Editor
+			lightButtonTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"light.png"));
+			lightButtonTextureRelief.loadFromFile(Paths.get(RESSOURCE_PATH+"lightRelief.png"));
+			loadButtonTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"load.png"));
+			loadButtonTextureRelief.loadFromFile(Paths.get(RESSOURCE_PATH+"loadRelief.png"));
+			saveButtonTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"save.png"));
+			saveButtonTextureRelief.loadFromFile(Paths.get(RESSOURCE_PATH+"saveRelief.png"));
+			teleportButtonTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"teleport.png"));
+			teleportButtonTextureRelief.loadFromFile(Paths.get(RESSOURCE_PATH+"teleportRelief.png"));
+			robotButtonTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"robot.png"));
+			robotButtonTextureRelief.loadFromFile(Paths.get(RESSOURCE_PATH+"robotRelief.png"));
+			
 		    cubeTexture.setSmooth(true);
 			cubeTextureBlue.setSmooth(true);
 			cubeTextureRed.setSmooth(true);
@@ -121,8 +157,7 @@ public class Textures {
 			cubeTextureTeleport.setSmooth(true);
 			cellTexture.setSmooth(true);
 			
-			buttonTexture.setSmooth(true);
-			teleportTexture.setSmooth(true);
+			blueSplash.setSmooth(true);
 			
 			rotateLeft.setSmooth(true);
 			rotateRight.setSmooth(true);
@@ -144,6 +179,13 @@ public class Textures {
 			robotEast.setSmooth(true);
 			
 			menuButton.setSmooth(true);
+			
+			lightButtonTexture.setSmooth(true);
+			lightButtonTextureRelief.setSmooth(true);
+			teleportButtonTexture.setSmooth(true);
+			teleportButtonTextureRelief.setSmooth(true);
+			robotButtonTexture.setSmooth(true);
+			robotButtonTextureRelief.setSmooth(true);
 
 		    
 		} catch(IOException ex) {

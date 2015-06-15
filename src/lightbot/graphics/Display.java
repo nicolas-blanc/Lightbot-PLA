@@ -10,8 +10,7 @@ import lightbot.system.world.Grid;
 public class Display {
 	
 	private Grid grid;
-	private int line;
-	private int column;
+	private int size;
 	
 	public GridDisplay gridDisplay;
 	public RobotDisplay robotDisplay;
@@ -35,8 +34,7 @@ public class Display {
 		this.grid = grid;
 		this.robotIsDisplayed = true;
 		
-		this.line = this.grid.getSize();
-		this.column = this.grid.getSize();
+		this.size = this.grid.getSize();
 		
 		this.gridDisplay = new GridDisplay(grid, originX, originY);
 		this.gridDisplay.initGrid();
@@ -52,13 +50,37 @@ public class Display {
 	 * @param originX
 	 * @param originY
 	 */
-	public Display(int line, int column, int originX, int originY){
+	public Display(int size, int originX, int originY){
 		this.robotIsDisplayed = false;
-		this.line = line;
-		this.column = column;
+		this.size = size;
 		
-		gridDisplay = new GridDisplay(line, column, originX, originY);
+		gridDisplay = new GridDisplay(size, originX, originY);
 		anim = new Animation(gridDisplay.getGridSprites());
+	}
+	
+	public void reinit(Grid grid, int originX, int originY){
+		this.grid = grid;
+		
+		this.size = grid.getSize();
+		gridDisplay.reinit(this.grid, originX, originY);
+		
+		anim = new Animation(gridDisplay.getGridSprites());
+	}
+	
+	public void displayRobot(int line, int column, int originX, int originY){
+		if(!robotIsDisplayed)
+			robotIsDisplayed = true;
+		Robot.wheatley.setPosition(line, column);
+		this.robotDisplay = new RobotDisplay(Robot.wheatley, 255, originX, originY);
+		this.robotDisplay.setTransparency(150);
+		anim.updateRobot(robotDisplay.robotSprite);
+	}
+	
+	public void deleteRobot(){
+		if(robotIsDisplayed){
+			robotIsDisplayed = false;
+			anim.updateRobot(null);
+		}
 	}
 	
 	
@@ -78,8 +100,8 @@ public class Display {
 	 * print the robot if it has to be displayed
 	 */
 	public void print(){
-		for(int l=0; l<line; l++)
-			for(int c=0; c<column; c++){
+		for(int l=0; l<size; l++)
+			for(int c=0; c<size; c++){
 				gridDisplay.printPillar(l, c);
 				if(robotIsDisplayed && Robot.wheatley.getLine() == l && Robot.wheatley.getColumn() == c)
 					robotDisplay.print();

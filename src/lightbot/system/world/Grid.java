@@ -3,7 +3,6 @@ package lightbot.system.world;
 import lightbot.system.CardinalDirection;
 import lightbot.system.world.cell.Cell;
 import lightbot.system.world.cell.EmptyCell;
-import lightbot.system.world.cell.FullCell;
 import lightbot.system.world.cell.LightableCell;
 import lightbot.system.world.cell.NormalCell;
 import lightbot.system.world.cell.TeleportCell;
@@ -37,8 +36,8 @@ public class Grid {
 	 * @param gridToCopy
 	 * @param size
 	 */
-	public Grid(Grid gridToCopy, int size) {
-		this(size);
+	public Grid(Grid gridToCopy) {
+		this.size = gridToCopy.getSize();
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				Cell cellToCopy = gridToCopy.grid[i][j];

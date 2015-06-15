@@ -4,6 +4,7 @@ import lightbot.system.CardinalDirection;
 import lightbot.system.Robot;
 import lightbot.system.world.cell.Cell;
 import lightbot.system.world.cell.ColoredCell;
+import lightbot.system.world.cell.ObstacleCell;
 import lightbot.system.world.cell.TeleportCell;
 import lightbot.system.world.Grid;
 import lightbot.system.world.OutOfGridException;
@@ -63,7 +64,8 @@ public class Jump implements _Action {
     } catch (OutOfGridException e) {
             return false;
     }
-        return (nextCell.getHeight() !=0 && (currentCell.getHeight() == nextCell.getHeight()-1 || currentCell.getHeight() == nextCell.getHeight()+1));
+        return (nextCell.getHeight() !=0 && (currentCell.getHeight() == nextCell.getHeight()-1 || currentCell.getHeight() == nextCell.getHeight()+1) 
+        		&& !(nextCell instanceof ObstacleCell));
 	}
 	
 	/**

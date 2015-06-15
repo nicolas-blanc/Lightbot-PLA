@@ -124,6 +124,10 @@ public class RobotDisplay implements DisplayPrimitive{
 	
 	public Sprite getSprite(){return this.robotSprite;}
 	
+	public void setTransparency(int transparency){
+		this.robotSprite.setColor(new Color(255, 255, 255, transparency));
+	}
+	
 	
 	// TODO
 	/************ Maybe to suppress *************/
