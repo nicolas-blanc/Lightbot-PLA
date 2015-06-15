@@ -8,6 +8,7 @@ import org.jsfml.graphics.Texture;
 public class Textures {
 	public static final String RESSOURCE_PATH = "ressources/";
 	public static final String NEW_ICONS_PATH = RESSOURCE_PATH + "new_icons/";
+	public static final String MENU_PATH = RESSOURCE_PATH + "menu/";
 	
 	public static Texture cubeTexture;
 	public static Texture cubeTextureBlue;
@@ -56,7 +57,13 @@ public class Textures {
 	public static Texture robotButtonTextureRelief;
 	
 	//menu textures
-	public static Texture menuButton;
+	public static Texture menuLogo;
+	public static Texture menuJouer;
+	public static Texture menuEditeur;
+	public static Texture menuQuitter;
+	public static Texture menuCharger;
+	public static Texture menuBg;
+	
 	
 	public static void initTextures(){
 		cubeTexture = new Texture();
@@ -99,7 +106,12 @@ public class Textures {
 		robotButtonTexture = new Texture();
 		robotButtonTextureRelief = new Texture();
 		
-		menuButton = new Texture();
+		menuLogo = new Texture();
+		menuJouer = new Texture();
+		menuQuitter = new Texture();
+		menuEditeur = new Texture();
+		menuCharger = new Texture();
+		menuBg = new Texture();
 		
 		try {
 		    cubeTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"whitecube.png"));
@@ -136,7 +148,13 @@ public class Textures {
 		    robotEast.loadFromFile(Paths.get(RESSOURCE_PATH + "robot/white_east.png"));
 			
 			//menu
-			menuButton.loadFromFile(Paths.get(RESSOURCE_PATH + "menuButton.png"));
+			menuBg.loadFromFile(Paths.get(MENU_PATH + "menuBg.png"));
+			menuJouer.loadFromFile(Paths.get(MENU_PATH + "playButton.png"));
+			menuQuitter.loadFromFile(Paths.get(MENU_PATH + "exitButton.png"));
+			menuEditeur.loadFromFile(Paths.get(MENU_PATH + "editorButton.png"));
+			menuCharger.loadFromFile(Paths.get(MENU_PATH + "loadButton.png"));
+			menuLogo.loadFromFile(Paths.get(MENU_PATH + "logoLightcore.png"));
+			
 			
 			// Editor
 			lightButtonTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"light.png"));
@@ -178,7 +196,12 @@ public class Textures {
 			robotWest.setSmooth(true);
 			robotEast.setSmooth(true);
 			
-			menuButton.setSmooth(true);
+			menuBg.setSmooth(true);
+			menuJouer.setSmooth(true);
+			menuQuitter.setSmooth(true);
+			menuEditeur.setSmooth(true);
+			menuCharger.setSmooth(true);
+			menuLogo.setSmooth(true);
 			
 			lightButtonTexture.setSmooth(true);
 			lightButtonTextureRelief.setSmooth(true);
