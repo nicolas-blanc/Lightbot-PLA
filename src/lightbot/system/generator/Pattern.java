@@ -29,7 +29,7 @@ public class Pattern {
 		return patternList;
 	}
 	
-	private ArrayList<Integer> givePattern(){
+	public ArrayList<Integer> givePattern(){
 		
 		return patternList.get(rand.nextInt(4));
 	}

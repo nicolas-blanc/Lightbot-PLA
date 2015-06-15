@@ -8,6 +8,8 @@ import java.util.Random;
 import lightbot.system.CardinalDirection;
 import lightbot.system.world.Grid;
 import lightbot.system.world.cell.Cell;
+import lightbot.system.world.cell.LightableCell;
+import lightbot.system.world.cell.NormalCell;
 
 /**
  * @author Nasheis
@@ -50,6 +52,14 @@ public class WorldGeneratorProcedure {
 	public Grid getGrid() {
 		return grid;
 	}
+	
+	/**
+	 * 
+	 */
+	private void generation() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	/**
 	 * 
@@ -69,12 +79,25 @@ public class WorldGeneratorProcedure {
 	}
 
 	/**
-	 * 
+	 * Generate the first cell of the algorithm at the position 0,0.
+	 * @return Return the first case of the algorithm
 	 */
-	private void generation() {
-		// TODO Auto-generated method stub
+	private Cell firstCell() {
+		if(rand.nextInt(2) != 0) {
+			grid.setCell(new LightableCell(0, 0, 0));
+		} else {
+			grid.setCell(new NormalCell(0, 0, 0));
+		}
 		
-	}
+		Cell firstcell = grid.getCell(0, 0);
+		height = firstcell.getHeight();
 
-	
+		if (rand.nextInt(2) == 0){
+			direction = CardinalDirection.EAST;
+		}
+		else {
+			direction = CardinalDirection.SOUTH;
+		}
+		return firstcell;		
+	}	
 }
