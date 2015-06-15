@@ -2,6 +2,7 @@ package lightbot.graphics;
 
 import org.jsfml.graphics.Sprite;
 
+import lightbot.system.Colour;
 import lightbot.system.RelativeDirection;
 import lightbot.system.Robot;
 import lightbot.system.action.Turn;
@@ -165,7 +166,7 @@ public class Display {
 				Robot.wheatley.setLine(size-Robot.wheatley.getColumn()-1);
 				Robot.wheatley.setColumn(previousPosX);
 				
-				Turn turn = new Turn(RelativeDirection.LEFT);
+				Turn turn = new Turn(RelativeDirection.LEFT, Colour.WHITE);
 				turn.execute(null, Robot.wheatley);
 				robotDisplay.updateRobot(Robot.wheatley, robotTransparency);
 			}
@@ -178,7 +179,7 @@ public class Display {
 				Robot.wheatley.setLine(Robot.wheatley.getColumn());
 				Robot.wheatley.setColumn(size-previousPosX-1);
 				
-				Turn turn = new Turn(RelativeDirection.RIGHT);
+				Turn turn = new Turn(RelativeDirection.RIGHT, Colour.WHITE);
 				turn.execute(null, Robot.wheatley);
 				robotDisplay.updateRobot(Robot.wheatley, robotTransparency);
 			}

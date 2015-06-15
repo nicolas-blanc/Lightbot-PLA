@@ -3,6 +3,7 @@ package lightbot.graphics;
 import java.util.ArrayList;
 
 import lightbot.system.CardinalDirection;
+import lightbot.system.Colour;
 import lightbot.system.RelativeDirection;
 import lightbot.system.Robot;
 import lightbot.system.action.Turn;
@@ -129,12 +130,12 @@ public class Game implements DisplayMode{
 					break;
 					
 				case NUMPAD6:
-					turn = new Turn(RelativeDirection.RIGHT);
+					turn = new Turn(RelativeDirection.RIGHT, Colour.WHITE);
 					turn.execute(null, Robot.wheatley);
 					break;
 					
 				default:
-					turn = new Turn(RelativeDirection.LEFT);
+					turn = new Turn(RelativeDirection.LEFT, Colour.WHITE);
 					turn.execute(null, Robot.wheatley);
 					break;
 				
