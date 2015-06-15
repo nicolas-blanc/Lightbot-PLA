@@ -1,10 +1,19 @@
 package lightbot.tests;
 
+import java.io.File;
+
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import lightbot.graphics.Button;
+import lightbot.graphics.Display;
+import lightbot.graphics.DisplayMode;
+import lightbot.graphics.Editor;
 import lightbot.graphics.Textures;
+import lightbot.graphics.Editor.LoadSaveFilter;
 import lightbot.system.Colour;
+import lightbot.system.ParserJSON;
+import lightbot.system.world.Grid;
 
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.RectangleShape;
@@ -82,6 +91,20 @@ public class TestMenu {
 								}
 							} while((sizeInt<1 || sizeInt>8) && size != null);
 						}
+						// Charger
+						if(buttonCharger.isInside(mouse.position)){
+							JFileChooser dialog = dialog = new JFileChooser();
+							
+							if (dialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+								  File file = dialog.getSelectedFile();
+								  Grid toOpen = ParserJSON.deserialize(file.getAbsolutePath());
+								  int x = (730/2)+15;
+								  int y = (600/2-15-(toOpen.getSize()*Textures.cellTexture.getSize().y)/2);
+
+
+								  System.out.println(file.getAbsolutePath());
+								}
+							}
 						// Quitter
 						if(buttonQuitter.isInside(mouse.position)){
 							window.close();
