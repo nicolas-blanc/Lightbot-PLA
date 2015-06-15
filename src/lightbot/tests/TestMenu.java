@@ -22,15 +22,10 @@ public class TestMenu {
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		boolean firstRendering = true;
 		window = new RenderWindow();
 		window.create(new VideoMode(1000, 600), "   LIGHTCORE  -  Menu");
 		window.setFramerateLimit(60);
-		
-		/*RectangleShape centerBox = new RectangleShape(new Vector2f(400, 450));
-		centerBox.setFillColor(new Color(235,235,235));
-		centerBox.setPosition(300, 100);*/
-		
+				
 		Textures.initTextures();
 		
 		Sprite menuLogo = new Sprite(Textures.menuLogo);
@@ -54,12 +49,7 @@ public class TestMenu {
 		
 		//Main loop
 		while (window.isOpen()) {
-			if (firstRendering) {
-				firstRendering = false;
-				window.clear(new Color(216, 216, 216));
-			}
 		    window.display();
-		   // window.draw(centerBox);
 		    window.draw(menuBg);
 		    window.draw(menuLogo);
 		    window.draw(menuJouer);
@@ -76,6 +66,7 @@ public class TestMenu {
 				case MOUSE_BUTTON_PRESSED:
 					MouseButtonEvent mouse = event.asMouseButtonEvent();
 					if(mouse.button == Mouse.Button.LEFT){
+						// Éditeur
 						if(buttonEditeur.isInside(mouse.position)){
 							int sizeInt = -1;
 							String size = null;
@@ -91,17 +82,17 @@ public class TestMenu {
 								}
 							} while((sizeInt<1 || sizeInt>8) && size != null);
 						}
+						// Quitter
 						if(buttonQuitter.isInside(mouse.position)){
 							window.close();
 						}
-				}
-					
-					
+					}
 					break;
 				default:
 					break;
 				}
 			}
 		}
+		
 	}
 }
