@@ -27,7 +27,7 @@ public class TestObstacle {
 		f.execute(grid, robot);
 		System.out.println(robot.getLine() + " " + robot.getColumn());
 		
-		Turn t = new Turn(RelativeDirection.RIGHT);
+		Turn t = new Turn(RelativeDirection.RIGHT, Colour.WHITE);
 		t.execute(grid, robot);
 		System.out.println(robot.getLine() + " " + robot.getColumn());
 		
