@@ -48,7 +48,7 @@ public class Main {
 		
 		//newWorld.getGrid().printGrid();
 		//Grid grid = newWorld.getGrid();
-		//Grid grid = ParserJSON.deserialize("grid1.json");
+		//Grid grid = ParserJSON.deserialize("rotation.json");
 
 		display = new Editor(5);
 		//display = new Game(grid);

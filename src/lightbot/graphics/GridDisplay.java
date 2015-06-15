@@ -147,7 +147,7 @@ public class GridDisplay {
 	 */
 	public void addCube(Cell cell){
 		CubeDisplay cube = new CubeDisplay(cell);
-		Sprite toAdd = cube.create() ;
+		Sprite toAdd = cube.create();
 		toAdd.setPosition(originX, originY);
 		
 		if(!isGame)
@@ -175,7 +175,7 @@ public class GridDisplay {
 				if(((FullCell)cell).getHeight() == 0)
 					cell = new EmptyCell(cell.getX(), cell.getY());
 				else
-					((FullCell)cell).setHeight(level-2);
+					cell = new NormalCell(cell.getX(), cell.getY(), level-2);
 				grid.setCell(cell);
 			}
 		}
@@ -219,7 +219,15 @@ public class GridDisplay {
 	public void rotateLeft(){
 		grid.rotateLeft();
 		initArray();
-		initGrid();
+		
+		if(!this.isGame){
+			this.isGame = true;
+			initGrid();
+			this.isGame = false;
+		}
+		else
+			initGrid();
+		
 	}
 	
 	/**
@@ -228,7 +236,14 @@ public class GridDisplay {
 	public void rotateRight(){		
 		grid.rotateRight();
 		initArray();
-		initGrid();
+		
+		if(!this.isGame){
+			this.isGame = true;
+			initGrid();
+			this.isGame = false;
+		}
+		else
+			initGrid();
 	}
 	
 	
