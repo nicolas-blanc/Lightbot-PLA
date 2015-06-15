@@ -21,6 +21,10 @@ public class Pattern {
 
 	private ArrayList<ArrayList<Integer>> patternArray(){
 		
+		pattern1();
+		pattern2();
+		pattern3();
+		pattern4();
 		patternList.add(patternList1);
 		patternList.add(patternList2);
 		patternList.add(patternList3);
