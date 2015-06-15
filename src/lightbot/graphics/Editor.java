@@ -325,7 +325,6 @@ public class Editor implements DisplayMode{
 							}
 							
 							if(((TeleportCell)cell).getDestX() != -1 && ((TeleportCell)cell).getDestY() != -1){
-								// TODO Change coord when rotation for TeleportCell
 								TeleportCell newCell = (TeleportCell)display.gridDisplay.grid.getCell(((TeleportCell)cell).getDestX(), ((TeleportCell)cell).getDestY());
 								display.anim.addRemoveCube(newCell.getX(), newCell.getY(), newCell.getHeight(), false, false);
 			       	 			display.gridDisplay.removeCube(newCell.getX(), newCell.getY(), newCell.getHeight()+1);

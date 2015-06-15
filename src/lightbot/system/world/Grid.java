@@ -71,6 +71,10 @@ public class Grid {
 				grid[l][c] = tmp[grid.length - c - 1][l];
 				grid[l][c].setX(l);
 				grid[l][c].setY(c);
+				if(tmp[grid.length - c - 1][l] instanceof TeleportCell){
+					Position teleport = ((TeleportCell)grid[l][c]).getDestinationPosition();
+					((TeleportCell)grid[l][c]).setDestXY(teleport.getY(), grid.length - teleport.getX() -1);
+				}
 			}
 	}
 
@@ -85,6 +89,10 @@ public class Grid {
 				grid[l][c] = tmp[c][grid.length - l - 1];
 				grid[l][c].setX(l);
 				grid[l][c].setY(c);
+				if(tmp[c][grid.length - l - 1] instanceof TeleportCell){
+					Position teleport = ((TeleportCell)grid[l][c]).getDestinationPosition();
+					((TeleportCell)grid[l][c]).setDestXY(grid.length - teleport.getY() -1, teleport.getX());
+				}
 			}
 	}
 
