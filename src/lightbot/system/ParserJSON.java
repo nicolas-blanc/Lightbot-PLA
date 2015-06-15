@@ -35,6 +35,9 @@ public class ParserJSON {
 			
 			String fileStringified = build.toString();
 			JSONObject dataObject = (JSONObject) parser.parse(fileStringified);
+			JSONObject robot = (JSONObject)dataObject.get("robot");
+			Robot.wheatley.setLine((int)(long)robot.get("l"));
+			Robot.wheatley.setColumn((int)(long)robot.get("c"));
 			
 			int size = (int)(long)dataObject.get("size");
 			grid = new Grid(size);
@@ -139,6 +142,12 @@ public class ParserJSON {
 			
 			dataObject.put("grid", gridArray);
 			dataObject.put("size", grid.getSize());
+			
+			JSONObject robot = new JSONObject();
+			robot.put("l", Robot.wheatley.getLine());
+			robot.put("c", Robot.wheatley.getColumn());
+			
+			dataObject.put("robot", robot);
 			
 			// writing process
 			byte [] contentToWrite = dataObject.toJSONString().getBytes();

@@ -12,6 +12,9 @@ public enum EditorEvent {
 	LOAD,
 	ROBOT,
 	
+	TURN_LEFT,
+	TURN_RIGHT,
+	
 	GRID_ADD,
 	GRID_DELETE;
 }

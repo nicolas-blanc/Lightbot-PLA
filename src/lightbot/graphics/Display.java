@@ -15,9 +15,11 @@ public class Display {
 	public GridDisplay gridDisplay;
 	public RobotDisplay robotDisplay;
 	
+	private int robotTransparency = 255;
+	
 	public Animation anim;
 	
-	private boolean robotIsDisplayed = false;
+	public boolean robotIsDisplayed = false;
 	
 	
 	/********************************************************************************************/
@@ -60,19 +62,23 @@ public class Display {
 	
 	public void reinit(Grid grid, int originX, int originY){
 		this.grid = grid;
-		
 		this.size = grid.getSize();
 		gridDisplay.reinit(this.grid, originX, originY);
 		
-		anim = new Animation(gridDisplay.getGridSprites());
+		if(!robotIsDisplayed)
+			robotIsDisplayed = true;
+		robotTransparency = 150;
+		this.robotDisplay = new RobotDisplay(Robot.wheatley, robotTransparency, originX, originY);
+		
+		anim = new Animation(gridDisplay.getGridSprites(), robotDisplay.robotSprite);
 	}
 	
 	public void displayRobot(int line, int column, int originX, int originY){
 		if(!robotIsDisplayed)
 			robotIsDisplayed = true;
 		Robot.wheatley.setPosition(line, column);
-		this.robotDisplay = new RobotDisplay(Robot.wheatley, 255, originX, originY);
-		this.robotDisplay.setTransparency(150);
+		robotTransparency = 150;
+		this.robotDisplay = new RobotDisplay(Robot.wheatley, robotTransparency, originX, originY);
 		anim.updateRobot(robotDisplay.robotSprite);
 	}
 	
@@ -156,12 +162,12 @@ public class Display {
 			
 			if(robotIsDisplayed){
 				int previousPosX = Robot.wheatley.getLine();
-				Robot.wheatley.setLine(grid.getSize()-Robot.wheatley.getColumn()-1);
+				Robot.wheatley.setLine(size-Robot.wheatley.getColumn()-1);
 				Robot.wheatley.setColumn(previousPosX);
 				
 				Turn turn = new Turn(RelativeDirection.LEFT);
 				turn.execute(null, Robot.wheatley);
-				robotDisplay.updateRobot(Robot.wheatley, 255);
+				robotDisplay.updateRobot(Robot.wheatley, robotTransparency);
 			}
 		}
 		else{
@@ -170,13 +176,16 @@ public class Display {
 			if(robotIsDisplayed){
 				int previousPosX = Robot.wheatley.getLine();
 				Robot.wheatley.setLine(Robot.wheatley.getColumn());
-				Robot.wheatley.setColumn(grid.getSize()-previousPosX-1);
+				Robot.wheatley.setColumn(size-previousPosX-1);
 				
 				Turn turn = new Turn(RelativeDirection.RIGHT);
 				turn.execute(null, Robot.wheatley);
-				robotDisplay.updateRobot(Robot.wheatley, 255);
+				robotDisplay.updateRobot(Robot.wheatley, robotTransparency);
 			}
 		}
-		anim.updateSprite(gridDisplay.getGridSprites(), robotDisplay.getSprite());
+		if(robotIsDisplayed)
+			anim.updateSprite(gridDisplay.getGridSprites(), robotDisplay.getSprite());
+		else
+			anim.updateSprite(gridDisplay.getGridSprites());
 	}
 }
