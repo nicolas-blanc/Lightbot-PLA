@@ -6,11 +6,21 @@ import lightbot.system.world.cell.Cell;
 import lightbot.system.world.cell.LightableCell;
 import lightbot.system.world.Grid;
 
-public class Light implements _Action {
+public class Light extends _Action {
 	
 	// lightable cell (cell that can be enlightened) : green
 	// enlightened cell : yellow
 	
+	public Light(){
+		super(Colour.WHITE);
+	}
+	
+	public Light(Colour colour) {
+		super(colour);
+		// TODO Auto-generated constructor stub
+	}
+
+
 	/**
 	 * execute : switches on the light and the colour of the cell to YELLOW if the robot can enlighten the 
 	 * cell. Changes the lightable attribut from true to false (can't switch on an enlightened cell)
@@ -18,6 +28,9 @@ public class Light implements _Action {
 	 * @param robot
 	 */
 	public void execute(Grid grid, Robot robot){
+		if(robot.getColour() != this.colour && this.colour != Colour.WHITE){
+			return;
+		}
 		
 		if(canLight(robot, grid)){
 			int posX = robot.getLine();

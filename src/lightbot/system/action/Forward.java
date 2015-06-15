@@ -1,6 +1,7 @@
 package lightbot.system.action;
 
 import lightbot.system.CardinalDirection;
+import lightbot.system.Colour;
 import lightbot.system.Robot;
 import lightbot.system.world.cell.Cell;
 import lightbot.system.world.cell.ColoredCell;
@@ -10,14 +11,26 @@ import lightbot.system.world.cell.TeleportCell;
 import lightbot.system.world.Grid;
 import lightbot.system.world.OutOfGridException;
 
-public class Forward implements _Action {
+public class Forward extends _Action {
 	
+	public Forward(){
+		super(Colour.WHITE);
+	}
+	
+	public Forward(Colour colour) {
+		super(colour);
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * Calculates the new position of the robot if it can go forwards
 	 * @param grid
 	 * @param robot
 	 */
 	public void execute(Grid grid, Robot robot){
+		if(robot.getColour() != this.colour && this.colour != Colour.WHITE){
+			return;
+		}
 		
 		if(canMove(robot, grid)){
 			

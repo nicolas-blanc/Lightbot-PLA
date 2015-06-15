@@ -1,19 +1,29 @@
 package lightbot.system.action;
 
 import lightbot.system.CardinalDirection;
+import lightbot.system.Colour;
 import lightbot.system.Robot;
 import lightbot.system.RelativeDirection;
 import lightbot.system.world.Grid;
 
-public class Turn implements _Action {
+public class Turn extends _Action {
 
 	RelativeDirection direction;
 
-	public Turn(RelativeDirection direction) {
+	public Turn(){
+		super(Colour.WHITE);
+	}
+	
+	public Turn(RelativeDirection direction, Colour colour) {
+		super(colour);
 		this.direction = direction;
 	}
 
 	public void execute(Grid grid, Robot robot) {
+		if(robot.getColour() != this.colour && this.colour != Colour.WHITE){
+			return;
+		}
+		
 		if (robot.getDirection() == CardinalDirection.NORTH
 				&& direction == RelativeDirection.LEFT) {
 			robot.setDirection(CardinalDirection.WEST);

@@ -1,6 +1,7 @@
 package lightbot.system.action;
 
 import lightbot.system.CardinalDirection;
+import lightbot.system.Colour;
 import lightbot.system.Robot;
 import lightbot.system.world.cell.Cell;
 import lightbot.system.world.cell.ColoredCell;
@@ -9,15 +10,27 @@ import lightbot.system.world.cell.TeleportCell;
 import lightbot.system.world.Grid;
 import lightbot.system.world.OutOfGridException;
 
-public class Jump implements _Action {
+public class Jump extends _Action {
 	
+	public Jump(){
+		super(Colour.WHITE);
+	}
 	
+	public Jump(Colour colour) {
+		super(colour);
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * Calculates the new position of the robot if it can go jump
 	 * @param grid
 	 * @param robot
 	 */
 	public void execute(Grid grid, Robot robot){
+		if(robot.getColour() != this.colour && this.colour != Colour.WHITE){
+			return;
+		}
+		
 		if(canJump(robot, grid)){
 			int posX = robot.getLine();
 			int posY = robot.getColumn();
