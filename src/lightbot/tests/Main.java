@@ -48,10 +48,10 @@ public class Main {
 		
 		//newWorld.getGrid().printGrid();
 		//Grid grid = newWorld.getGrid();
-		Grid grid = ParserJSON.deserialize("grid1.json");
+		//Grid grid = ParserJSON.deserialize("grid1.json");
 
-		//display = new Editor(5);
-		display = new Game(grid);
+		display = new Editor(5);
+		//display = new Game(grid);
 		//display.printGrid();
 		
 		//RectangleShape rect = new RectangleShape(new Vector2f(750, 460));

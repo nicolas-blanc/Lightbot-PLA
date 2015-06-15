@@ -27,14 +27,23 @@ public class Button {
 	
 	public void changeTexture(){
 		if(pushed){
-			sprite.setTexture(pushOff);
+			if(pushOff != null)
+				sprite.setTexture(pushOff);
 			sprite.setColor(new Color(255, 255, 255, 255));
 		}
 		else{
-			sprite.setTexture(pushOn);
+			if(pushOn != null)
+				sprite.setTexture(pushOn);
 			sprite.setColor(new Color(220, 220, 220, 255));
 		}
 		pushed = !pushed;
+	}
+	
+	public void reset(){
+		if(pushOff != null)
+			sprite.setTexture(pushOff);
+		sprite.setColor(new Color(255, 255, 255, 255));
+		pushed = false;
 	}
 	
 	public Sprite getSprite(){return this.sprite;}
@@ -55,7 +64,10 @@ public class Button {
 	}
 	
 	public void enable(){
-		sprite.setColor(new Color(255, 255, 255, 255));
+		if(pushed)
+			sprite.setColor(new Color(220, 220, 220, 255));
+		else
+			sprite.setColor(new Color(255, 255, 255, 255));
 		this.isEnable = true;
 	}
 	

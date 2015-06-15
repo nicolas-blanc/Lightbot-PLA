@@ -52,6 +52,9 @@ public class Textures {
 	public static Texture teleportButtonTexture;
 	public static Texture teleportButtonTextureRelief;
 	
+	public static Texture robotButtonTexture;
+	public static Texture robotButtonTextureRelief;
+	
 	//menu textures
 	public static Texture menuButton;
 	
@@ -93,6 +96,8 @@ public class Textures {
 		saveButtonTextureRelief = new Texture();
 		teleportButtonTexture = new Texture();
 		teleportButtonTextureRelief = new Texture();
+		robotButtonTexture = new Texture();
+		robotButtonTextureRelief = new Texture();
 		
 		menuButton = new Texture();
 		
@@ -142,7 +147,9 @@ public class Textures {
 			saveButtonTextureRelief.loadFromFile(Paths.get(RESSOURCE_PATH+"saveRelief.png"));
 			teleportButtonTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"teleport.png"));
 			teleportButtonTextureRelief.loadFromFile(Paths.get(RESSOURCE_PATH+"teleportRelief.png"));
-		    
+			robotButtonTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"robot.png"));
+			robotButtonTextureRelief.loadFromFile(Paths.get(RESSOURCE_PATH+"robotRelief.png"));
+			
 		    cubeTexture.setSmooth(true);
 			cubeTextureBlue.setSmooth(true);
 			cubeTextureRed.setSmooth(true);
@@ -175,9 +182,10 @@ public class Textures {
 			
 			lightButtonTexture.setSmooth(true);
 			lightButtonTextureRelief.setSmooth(true);
-			
 			teleportButtonTexture.setSmooth(true);
 			teleportButtonTextureRelief.setSmooth(true);
+			robotButtonTexture.setSmooth(true);
+			robotButtonTextureRelief.setSmooth(true);
 
 		    
 		} catch(IOException ex) {

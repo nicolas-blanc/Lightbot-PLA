@@ -82,6 +82,20 @@ public class GridDisplay {
 	 */
 	public Grid getGrid(){return this.grid;}
 	
+	public void reinit(Grid grid, int originX, int originY){
+		this.grid = grid;
+		this.size = grid.getSize();
+		
+		this.originX = originX;
+		this.originY = originY;
+		
+		initArray();
+		
+		this.isGame = true;
+		initGrid();
+		this.isGame = false;
+	}
+	
 	
 	/********************************************************************************************/
 	/*								Initialization functions									*/
@@ -161,7 +175,7 @@ public class GridDisplay {
 				if(((FullCell)cell).getHeight() == 0)
 					cell = new EmptyCell(cell.getX(), cell.getY());
 				else
-					((FullCell)cell).setHeight(level-1);
+					((FullCell)cell).setHeight(level-2);
 				grid.setCell(cell);
 			}
 		}

@@ -58,6 +58,31 @@ public class Display {
 		anim = new Animation(gridDisplay.getGridSprites());
 	}
 	
+	public void reinit(Grid grid, int originX, int originY){
+		this.grid = grid;
+		
+		this.size = grid.getSize();
+		gridDisplay.reinit(this.grid, originX, originY);
+		
+		anim = new Animation(gridDisplay.getGridSprites());
+	}
+	
+	public void displayRobot(int line, int column, int originX, int originY){
+		if(!robotIsDisplayed)
+			robotIsDisplayed = true;
+		Robot.wheatley.setPosition(line, column);
+		this.robotDisplay = new RobotDisplay(Robot.wheatley, 255, originX, originY);
+		this.robotDisplay.setTransparency(150);
+		anim.updateRobot(robotDisplay.robotSprite);
+	}
+	
+	public void deleteRobot(){
+		if(robotIsDisplayed){
+			robotIsDisplayed = false;
+			anim.updateRobot(null);
+		}
+	}
+	
 	
 	/********************************************************************************************/
 	/*										Accessors											*/

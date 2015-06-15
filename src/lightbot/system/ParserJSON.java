@@ -52,6 +52,10 @@ public class ParserJSON {
 					Cell cell = null;
 					
 					switch(type){
+						case "LightableCell":
+							cell = new LightableCell(lineAttribut, columnAttribut, levelAttribut);
+							break;
+							
 						case "ColoredCell":
 							Colour colour = stringToColour((String)column.get("colour"));
 							cell = new ColoredCell(lineAttribut, columnAttribut, levelAttribut, colour);
@@ -62,20 +66,15 @@ public class ParserJSON {
 							JSONArray dest = (JSONArray)column.get("dest");
 							cell = new TeleportCell(lineAttribut, columnAttribut, levelAttribut, (int)(long)dest.get(0), (int)(long)dest.get(1), teleportColour);
 							break;
-						default:
+						
+						case "NormalCell":
+							cell = new NormalCell(lineAttribut, columnAttribut, levelAttribut);
 							break;
-					}
-					
-					if(!type.equals("EmptyCell")){
-						cell = new NormalCell(lineAttribut, columnAttribut, levelAttribut);
-						//System.out.println(lineAttribut + columnAttribut + levelAttribut);
-					}
-					else{
-						cell = new EmptyCell(lineAttribut, columnAttribut);
-					}
-					
-					
-					
+							
+						default:
+							cell = new EmptyCell(lineAttribut, columnAttribut);
+							break;
+					}					
 					grid.setCell(cell);
 				}
 			}
