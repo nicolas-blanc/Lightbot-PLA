@@ -2,41 +2,56 @@ package lightbot.system;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import lightbot.system.action._Action;
 import lightbot.system.world.Grid;
 
-public class Procedure implements _Executable {
+public class Procedure extends _Executable {
 
+	
 	/*
 	 * Procedure name
 	 */
 	private String name;
-	
+
 	/*
 	 * Maximum number of actions that can be stored in the procedure
 	 */
 	private int procSizeLimit;
-	
+
 	/*
-	 * The list of actions stored in the procedure 
+	 * The list of actions stored in the procedure
 	 */
 	private List<_Executable> actions;
 
-	public Procedure(String name, int actionLimit) {
+	/*
+	 * The caller of this procedure. if main procedure, caller == null
+	 */
+	private Procedure caller;
+
+	private int nextInLine;
+
+	public Procedure(String name, int actionLimit, Colour colour) {
+		super(colour);
 		this.name = name;
 		this.procSizeLimit = actionLimit;
 
 		actions = new ArrayList<_Executable>(this.procSizeLimit);
+
+		this.caller = null;
+
+		this.nextInLine = 0;
 	}
-	
-	public String getName() {
-		return this.name;
-	}
-	
+
 	/**
-	 * @return the maximum number of actions that this procdeure can hold
+	 * @return the maximum number of actions that this procedure can hold
 	 */
 	public int getMaxNumOfActions() {
 		return this.procSizeLimit;
+	}
+	
+	public Procedure getCaller() {
+		return this.caller;
 	}
 
 	/**
@@ -48,15 +63,17 @@ public class Procedure implements _Executable {
 		if (this.actions.size() == procSizeLimit)
 			return false;
 
-		this.actions.add(action);
+		if (action instanceof Procedure)
+			((Procedure) action).caller = this;
 
-		assert this.actions.size() <= this.procSizeLimit;
+		this.actions.add(action);
 
 		return true;
 	}
 
 	/**
-	 * removes the action at position index 
+	 * removes the action at position index
+	 * 
 	 * @param index
 	 */
 	public void removeActionAtIndex(int index) {
@@ -66,11 +83,31 @@ public class Procedure implements _Executable {
 		this.actions.remove(index);
 	}
 
+	/**
+	 * Executes the next action in the procedure.
+	 */
 	@Override
 	public void execute(Grid grid, Robot robot) {
-		for (_Executable _action : actions) {
-			_action.execute(grid, robot);
+		_Executable e = this.actions.get(this.nextInLine);
+		
+	}
+
+	public _Executable Next() {
+		int oldNextInLine = this.nextInLine;
+		this.nextInLine += 1;
+		
+		_Executable next = this.actions.get(oldNextInLine);
+		
+		if(next instanceof Procedure)
+			return ((Procedure) next).Next();
+		
+		if(next instanceof _Action) {
+			
 		}
+	}
+
+	public boolean End() {
+		return this.nextInLine == this.actions.size();
 	}
 
 }

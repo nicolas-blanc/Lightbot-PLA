@@ -19,8 +19,8 @@ public class TestTurn {
 		
 		//Testing the change of direction
 		Robot robot = new Robot(1,9,Colour.WHITE,CardinalDirection.EAST);
-		Turn turnLeft = new Turn(RelativeDirection.LEFT);
-		Turn turnRight = new Turn(RelativeDirection.RIGHT);
+		Turn turnLeft = new Turn(RelativeDirection.LEFT, Colour.WHITE);
+		Turn turnRight = new Turn(RelativeDirection.RIGHT, Colour.WHITE);
 		
 		
 		System.out.println("Position du robot : " + robot.getDirection());

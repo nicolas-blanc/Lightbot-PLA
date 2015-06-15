@@ -2,12 +2,28 @@ package lightbot.system;
 
 import lightbot.system.world.Grid;
 
-public interface _Executable {
+public abstract class _Executable {
+
+	protected Colour colour;
+
+	public _Executable(Colour colour) {
+		this.colour = colour;
+	}
+
+	public void setColour(Colour colour) {
+		this.colour = colour;
+	}
+
+	public Colour getColour() {
+		return this.colour;
+	}
+
 	/**
 	 * executes a process given a grid and a robot
+	 * 
 	 * @param grid
 	 * @param robot
 	 */
-	public void execute(Grid grid, Robot robot);
+	public abstract void execute(Grid grid, Robot robot);
 
 }

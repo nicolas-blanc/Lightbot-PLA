@@ -39,8 +39,8 @@ public class TestReatha {
 		// class Procedure tests
 		System.out.println("** Class Procedures tests **");
 		
-		Procedure proc = new Procedure("proc1", 5);
-		System.out.println("	Name procedure : " + proc.getName());
+		Procedure proc = new Procedure("proc1", 5, Colour.WHITE);
+		//System.out.println("	Name procedure : " + proc.getName());
 		System.out.println("	Max number of actions : " + proc.getMaxNumOfActions());
 		
 		System.out.println();
@@ -114,8 +114,8 @@ public class TestReatha {
 		System.out.println("		Forward");
 		
 		Jump jump = new Jump();
-		Turn turnLeft = new Turn(RelativeDirection.LEFT);
-		Turn turnRight = new Turn(RelativeDirection.RIGHT);
+		Turn turnLeft = new Turn(RelativeDirection.LEFT, Colour.WHITE);
+		Turn turnRight = new Turn(RelativeDirection.RIGHT, Colour.WHITE);
 		
 		Robot robot1 = new Robot(2,2,Colour.WHITE,CardinalDirection.WEST);
 		System.out.println("	Position du robot1 : " + "(" + robot1.getLine() + ", " + robot1.getColumn() + ")");
