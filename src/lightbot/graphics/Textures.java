@@ -85,6 +85,13 @@ public class Textures {
 	public static Texture menuCharger;
 	public static Texture menuBg;
 	
+	public static Texture menuLogoH;
+	public static Texture menuJouerH;
+	public static Texture menuEditeurH;
+	public static Texture menuQuitterH;
+	public static Texture menuChargerH;
+	public static Texture menuBgH;
+	
 	
 	public static void initTextures(){
 		
@@ -158,6 +165,13 @@ public class Textures {
 		menuEditeur = new Texture();
 		menuCharger = new Texture();
 		menuBg = new Texture();
+		
+		menuLogoH = new Texture();
+		menuJouerH = new Texture();
+		menuQuitterH = new Texture();
+		menuEditeurH = new Texture();
+		menuChargerH = new Texture();
+		menuBgH = new Texture();
 		
 		try {
 			
@@ -233,6 +247,13 @@ public class Textures {
 			menuCharger.loadFromFile(Paths.get(MENU_PATH + "loadButton.png"));
 			menuLogo.loadFromFile(Paths.get(MENU_PATH + "logoLightcore.png"));
 			
+			menuBgH.loadFromFile(Paths.get(MENU_PATH + "menuBgH.png"));
+			menuJouerH.loadFromFile(Paths.get(MENU_PATH + "playButtonH.png"));
+			menuQuitterH.loadFromFile(Paths.get(MENU_PATH + "exitButtonH.png"));
+			menuEditeurH.loadFromFile(Paths.get(MENU_PATH + "editorButtonH.png"));
+			menuChargerH.loadFromFile(Paths.get(MENU_PATH + "loadButtonH.png"));
+			menuLogoH.loadFromFile(Paths.get(MENU_PATH + "logoLightcoreH.png"));
+			
 			
 			/************************ Set smoothing ************************/
 			
@@ -301,6 +322,13 @@ public class Textures {
 			menuEditeur.setSmooth(true);
 			menuCharger.setSmooth(true);
 			menuLogo.setSmooth(true);
+			
+			menuBgH.setSmooth(true);
+			menuJouerH.setSmooth(true);
+			menuQuitterH.setSmooth(true);
+			menuEditeurH.setSmooth(true);
+			menuChargerH.setSmooth(true);
+			menuLogoH.setSmooth(true);
 			
 		} catch(IOException ex) {
 		    //Ouch! something went wrong
