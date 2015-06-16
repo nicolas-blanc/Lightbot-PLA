@@ -5,9 +5,12 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import lightbot.LightCore;
 import lightbot.system.ParserJSON;
 import lightbot.system.world.Grid;
+import lightbot.system.world.Level;
 
+import org.jsfml.graphics.Color;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.window.Mouse;
@@ -17,7 +20,6 @@ import org.jsfml.window.event.MouseEvent;
 
 public class MenuDisplay {
 
-	//private static RenderWindow window;
 	private static int windowWidth = 1000;
 	private static int windowHeight = 600;
 	private static int leftMargin = 202;
@@ -36,31 +38,22 @@ public class MenuDisplay {
 	static Button buttonEditeur;
 	static Button buttonCharger;
 	
+	public MenuDisplay(){
+		setButtons();
+	}
 	
 	/**
 	 * To display the menu
 	 * @param window
 	 */
-	public static void menuDisplay(RenderWindow window) {
-		//createWindow();
-		setButtons();
-		
-		while (window.isOpen()) {
-			displayButtons(window);
-			eventManager(window);
-		}
+	public void display() {
+		displayButtons();
 	}
-	
-	/*public static void createWindow(){
-		window = new RenderWindow();
-		window.create(new VideoMode(windowWidth, windowHeight), "   LIGHTCORE  -  Menu");
-		window.setFramerateLimit(60);
-	}*/
 	
 	/**
 	 * To set all the buttons of the menu
 	 */
-	public static void setButtons(){
+	public void setButtons(){
 		Textures.initTextures();
 		
 		menuLogo = new Sprite(Textures.menuLogo);
@@ -87,26 +80,23 @@ public class MenuDisplay {
 	 * To display all the buttons of the menu
 	 * @param window
 	 */
-	public static void displayButtons(RenderWindow window){
-	    window.display();
-	    window.draw(menuBg);
-	    window.draw(menuLogo);
-	    window.draw(menuJouer);
-	    window.draw(menuEditeur);
-	    window.draw(menuCharger);
-	    window.draw(menuQuitter);
+	public void displayButtons(){
+	    LightCore.window.draw(menuBg);
+	    LightCore.window.draw(menuLogo);
+	    LightCore.window.draw(menuJouer);
+	    LightCore.window.draw(menuEditeur);
+	    LightCore.window.draw(menuCharger);
+	    LightCore.window.draw(menuQuitter);
 	}
 	
 	/**
 	 * Event manager for the menu
 	 * @param window
 	 */
-	public static void eventManager(RenderWindow window){
-
-		for (Event event : window.pollEvents()) {
+	public void eventManager(Event event){
 			switch (event.type) {
 			case CLOSED:
-				window.close();
+				LightCore.window.close();
 				break;
 			case MOUSE_MOVED:
 				MouseEvent mouse1 = event.asMouseEvent();
@@ -118,6 +108,19 @@ public class MenuDisplay {
 			case MOUSE_BUTTON_PRESSED:
 				MouseButtonEvent mouse = event.asMouseButtonEvent();
 				if(mouse.button == Mouse.Button.LEFT){
+					
+					// Jouer
+					if(buttonJouer.isInside(mouse.position)){
+						//TODO change this
+						Level level = ParserJSON.deserialize("example.json");
+						Grid grid = level.getGrid();
+						LightCore.display = new Game(grid);
+						LightCore.menu = false;
+						LightCore.game = true;
+						//LightCore.window.clear(Color.WHITE);
+						//LightCore.display.display();
+					}
+					
 					// Éditeur
 					if(buttonEditeur.isInside(mouse.position)){
 						int sizeInt = -1;
@@ -130,10 +133,14 @@ public class MenuDisplay {
 									JOptionPane.showMessageDialog(null, "Merci de saisir une taille comprise entre 1 et 8", "Éditeur", JOptionPane.ERROR_MESSAGE);
 								}else{
 									JOptionPane.showMessageDialog(null, "Vous allez créer une grille " + sizeInt + "x" + sizeInt, "Identité", JOptionPane.INFORMATION_MESSAGE);
+									LightCore.display = new Editor(sizeInt);
+									LightCore.editor = true;					
+									LightCore.menu = false;
 								}
 							}
 						} while((sizeInt<1 || sizeInt>8) && size != null);
 					}
+					
 					// Charger
 					if(buttonCharger.isInside(mouse.position)){
 						JFileChooser dialog = new JFileChooser();
@@ -143,22 +150,24 @@ public class MenuDisplay {
 							  Grid toOpen = ParserJSON.deserialize(file.getAbsolutePath()).getGrid();
 							  int x = (730/2)+15;
 							  int y = (600/2-15-(toOpen.getSize()*Textures.cellTexture.getSize().y)/2);
-
-
+							  LightCore.display = new Game(toOpen);
+							  LightCore.menu = false;
+							  LightCore.game = true;
 							  System.out.println(file.getAbsolutePath());
-							}
 						}
+					}
+					
 					// Quitter
 					if(buttonQuitter.isInside(mouse.position)){
-						window.close();
+						LightCore.window.close();
 					}
+					
 				}
 				break;
 			default:
 				break;
 			}
 		}
-	}
 	
 	
 	

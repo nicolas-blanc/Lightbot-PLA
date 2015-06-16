@@ -6,6 +6,7 @@ import lightbot.graphics.DisplayMode;
 import lightbot.graphics.Editor;
 import lightbot.graphics.Game;
 import lightbot.graphics.ActionListDisplay;
+import lightbot.graphics.MenuDisplay;
 import lightbot.graphics.Textures;
 import lightbot.system.ParserJSON;
 import lightbot.system._Executable;
@@ -26,24 +27,23 @@ public class LightCore {
 	public static RenderWindow window;
 	public static DisplayMode display;
 
-	public static VideoMode screenInformations;
-	public static float scaleRatio;
-
 	public static int originX;
 	public static int originY;
+	
+	public static boolean menu = true;
+	public static boolean game = false;
+	public static boolean editor = false;
 
 	public static void main(String[] args) {
 		
 		boolean firstLaunch = true;
+		boolean firstPrintGame = true;
+		MenuDisplay menuD = new MenuDisplay();
 
 		Textures.initTextures();
 
 		// Create the window
 		window = new RenderWindow();
-
-		screenInformations = VideoMode.getDesktopMode();
-		scaleRatio = ((float) screenInformations.width) / 1920;
-		System.out.println(scaleRatio);
 
 		// base 1280 * 960 for 1920*1080
 		window.create(new VideoMode(1000, 600), "LightCore");
@@ -52,18 +52,17 @@ public class LightCore {
 		window.setFramerateLimit(60);
 
 		// WorldGenerator newWorld = new WorldGenerator();
-
 		// newWorld.getGrid().printGrid();
 		// Grid grid = newWorld.getGrid();
-		Level level = ParserJSON.deserialize("example.json");
-		Grid grid = level.getGrid();
-		List<_Executable> actions = level.getListOfActions();
+		
+		//Level level = ParserJSON.deserialize("example.json");
+		//Grid grid = level.getGrid();
+		//List<_Executable> actions = level.getListOfActions();
 
-		// display = new Editor(5);
-		display = new Game(grid);
-		// display.printGrid();
+		//display = new Editor(5);
+		//display = new Game(grid);
+		//display.printGrid();
 
-		// RectangleShape rect = new RectangleShape(new Vector2f(750, 460));
 		RectangleShape rect = new RectangleShape(new Vector2f(710, 475));
 		rect.setPosition(15, 15);
 		rect.setOutlineThickness(1);
@@ -74,15 +73,30 @@ public class LightCore {
 			if(firstLaunch) {
 				firstLaunch = false;
 			}
+			
 			// Draw everything
 			window.clear(Color.WHITE);
-			window.draw(rect);
-			display.display();
-			ActionListDisplay.displayActionList(actions, 10, window);
+			//window.draw(rect);
+			//display.display();
+			//ActionListDisplay.displayActionList(actions, 10, window);
+			if(menu){
+				menuD.display();
+			}else if(game || editor){
+				if(game && firstPrintGame){
+					display.printGrid();
+					firstPrintGame = false;
+				}
+				display.display();
+			}
+			window.display();
 
 			// Handle events
 			for (Event event : window.pollEvents()) {
-				display.eventManager(event);
+				if(menu){
+					menuD.eventManager(event);
+				}else if(game || editor){
+					display.eventManager(event);
+				}
 				switch (event.type) {
 				case CLOSED:
 					System.out.println("The user pressed the close button!");
@@ -102,7 +116,7 @@ public class LightCore {
 				}
 			}
 
-			window.display();
+			//window.display();
 		}
 	}
 }
