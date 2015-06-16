@@ -7,6 +7,7 @@ import lightbot.system.CardinalDirection;
 import lightbot.system.Colour;
 import lightbot.system.RelativeDirection;
 import lightbot.system.Robot;
+import lightbot.system.action.Forward;
 import lightbot.system.action.Turn;
 import lightbot.system.world.Grid;
 
@@ -25,7 +26,7 @@ public class Game implements DisplayMode{
 	
 	private static Button homeButton;
 	
-	private Display display;
+	public Display display;
 	
 	private int originX;
 	private int originY;

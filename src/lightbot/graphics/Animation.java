@@ -264,7 +264,7 @@ public class Animation {
 	 * @param direction
 	 * @param upOrDown
 	 */
-	void moveRobot(CardinalDirection direction, int upOrDown){
+	 public void moveRobot(CardinalDirection direction, int upOrDown){
 		boolean finished = false;
 		
 		float movementX = 0;
