@@ -52,6 +52,9 @@ public class MenuDisplay {
 				case MOUSE_MOVED:
 					MouseEvent mouse1 = event.asMouseEvent();
 					buttonJouer.changeOnHover(mouse1.position);
+					buttonQuitter.changeOnHover(mouse1.position);
+					buttonCharger.changeOnHover(mouse1.position);
+					buttonEditeur.changeOnHover(mouse1.position);
 					break;
 				case MOUSE_BUTTON_PRESSED:
 					MouseButtonEvent mouse = event.asMouseButtonEvent();
@@ -116,10 +119,10 @@ public class MenuDisplay {
 		menuBg = new Sprite(Textures.menuBg);
 		
 		buttonLogo = new Button(menuLogo, null, null);	
-		buttonJouer = new Button(menuJouer, Textures.menuCharger, Textures.menuJouer);
-		buttonQuitter = new Button(menuQuitter, null, null);
-		buttonEditeur = new Button(menuEditeur, null, null);
-		buttonCharger = new Button(menuCharger, null, null);
+		buttonJouer = new Button(menuJouer, Textures.menuJouerH, Textures.menuJouer);
+		buttonQuitter = new Button(menuQuitter, Textures.menuQuitterH, Textures.menuQuitter);
+		buttonEditeur = new Button(menuEditeur, Textures.menuEditeurH, Textures.menuEditeur);
+		buttonCharger = new Button(menuCharger, Textures.menuChargerH, Textures.menuCharger);
 		
 		menuLogo.setPosition(35, 27);
 		menuJouer.setPosition(leftMargin, 206);

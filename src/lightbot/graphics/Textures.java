@@ -247,12 +247,10 @@ public class Textures {
 			menuCharger.loadFromFile(Paths.get(MENU_PATH + "loadButton.png"));
 			menuLogo.loadFromFile(Paths.get(MENU_PATH + "logoLightcore.png"));
 			
-			menuBgH.loadFromFile(Paths.get(MENU_PATH + "menuBgH.png"));
 			menuJouerH.loadFromFile(Paths.get(MENU_PATH + "playButtonH.png"));
 			menuQuitterH.loadFromFile(Paths.get(MENU_PATH + "exitButtonH.png"));
 			menuEditeurH.loadFromFile(Paths.get(MENU_PATH + "editorButtonH.png"));
 			menuChargerH.loadFromFile(Paths.get(MENU_PATH + "loadButtonH.png"));
-			menuLogoH.loadFromFile(Paths.get(MENU_PATH + "logoLightcoreH.png"));
 			
 			
 			/************************ Set smoothing ************************/
