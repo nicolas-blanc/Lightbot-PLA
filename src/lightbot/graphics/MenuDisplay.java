@@ -127,7 +127,7 @@ public class MenuDisplay {
 						String size = null;
 						do{
 							size = JOptionPane.showInputDialog(null, "Veuillez indiquer la taille de votre grille :", "Éditeur", JOptionPane.QUESTION_MESSAGE);
-							if(size != null){
+							if(size != null && !size.equals("")){
 								sizeInt = (size == null)?null : Integer.parseInt(size);
 								if(sizeInt<1 || sizeInt>8){
 									JOptionPane.showMessageDialog(null, "Merci de saisir une taille comprise entre 1 et 8", "Éditeur", JOptionPane.ERROR_MESSAGE);
@@ -138,7 +138,7 @@ public class MenuDisplay {
 									LightCore.menu = false;
 								}
 							}
-						} while((sizeInt<1 || sizeInt>8) && size != null);
+						} while((sizeInt<1 || sizeInt>8) && size != null && !size.equals(""));
 					}
 					
 					// Charger
