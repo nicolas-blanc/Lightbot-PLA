@@ -338,17 +338,27 @@ public class Editor implements DisplayMode{
 		       	 			}
 		       	 			else{
 			       	 			if(display.gridDisplay.grid.getCell(pos.getLine(), pos.getColumn()) instanceof NormalCell 
-			       	 					|| display.gridDisplay.grid.getCell(pos.getLine(), pos.getColumn()) instanceof EmptyCell){
-			       	 				Cell cell;
-			       	 				if(blue || orange || purple || red)
-			       	 					cell = new ColoredCell(pos.getLine(), pos.getColumn(), pos.getLevel()+1, colour);
-			       	 				else
-			       	 					cell = new NormalCell(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
-			       	 				
-			       	 				System.out.println(colour);
-			       	 				
-			       	 				display.gridDisplay.addCube(cell);
-			       	 				display.anim.addRemoveCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, true, false);
+			       	 					|| display.gridDisplay.grid.getCell(pos.getLine(), pos.getColumn()) instanceof EmptyCell
+			       	 					|| display.gridDisplay.grid.getCell(pos.getLine(), pos.getColumn()) instanceof ColoredCell){
+			       	 				if(blue || orange || purple || red){
+				       	 				if(pos.getLevel() > -1){
+				       	 					ColoredCell cell = new ColoredCell(pos.getLine(), pos.getColumn(), pos.getLevel(), colour);
+				       	 					display.gridDisplay.removeCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
+				       	 					display.gridDisplay.addCube(cell);
+				       	 				}
+				       	 				else{
+				       	 					ColoredCell cell = new ColoredCell(pos.getLine(), pos.getColumn(), pos.getLevel()+1, colour);
+				       	 					display.gridDisplay.addCube(cell);
+				       	 					display.anim.addRemoveCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, true, false);
+				       	 					display.anim.updateSprite(display.gridDisplay.getGridSprites());
+				       	 				}
+			       	 					
+			       	 				}
+			       	 				else{
+			       	 					NormalCell cell = new NormalCell(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
+				       	 				display.gridDisplay.addCube(cell);
+				       	 				display.anim.addRemoveCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1, true, false);
+			       	 				}			       	 				
 			       	 				display.anim.updateSprite(display.gridDisplay.getGridSprites());
 			       	 			}
 		       	 			}
