@@ -7,8 +7,11 @@ import lightbot.system.action._Action;
 import lightbot.system.world.Grid;
 
 public class Procedure extends _Executable {
-
 	
+	public static final String MAIN_NAME = "main";
+	public static final String PROCEDURE1_NAME = "proc1";
+	public static final String PROCEDURE2_NAME = "proc2";
+
 	/*
 	 * Procedure name
 	 */
@@ -49,9 +52,13 @@ public class Procedure extends _Executable {
 	public int getMaxNumOfActions() {
 		return this.procSizeLimit;
 	}
-	
+
 	public Procedure getCaller() {
 		return this.caller;
+	}
+	
+	public String getName() {
+		return this.name;
 	}
 
 	/**
@@ -88,22 +95,24 @@ public class Procedure extends _Executable {
 	 */
 	@Override
 	public void execute(Grid grid, Robot robot) {
-		_Executable e = this.actions.get(this.nextInLine);
-		
+
+		for (_Executable e : actions) {
+			if (e instanceof _Action)
+				e.execute(grid, robot);
+
+			if (e instanceof Procedure)
+				e.execute(grid, robot);
+
+		}
 	}
 
 	public _Executable Next() {
 		int oldNextInLine = this.nextInLine;
 		this.nextInLine += 1;
-		
+
 		_Executable next = this.actions.get(oldNextInLine);
-		
-		if(next instanceof Procedure)
-			return ((Procedure) next).Next();
-		
-		if(next instanceof _Action) {
-			
-		}
+
+		return next;
 	}
 
 	public boolean End() {
