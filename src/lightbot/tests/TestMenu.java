@@ -9,6 +9,7 @@ import lightbot.graphics.Button;
 import lightbot.graphics.Display;
 import lightbot.graphics.DisplayMode;
 import lightbot.graphics.Editor;
+import lightbot.graphics.MenuDisplay;
 import lightbot.graphics.Textures;
 import lightbot.graphics.Editor.LoadSaveFilter;
 import lightbot.system.Colour;
@@ -24,13 +25,14 @@ import org.jsfml.window.Mouse;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.MouseButtonEvent;
+import org.jsfml.window.event.MouseEvent;
 
 public class TestMenu {
 
 	public static RenderWindow window;
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	/*	// TODO Auto-generated method stub
 		window = new RenderWindow();
 		window.create(new VideoMode(1000, 600), "   LIGHTCORE  -  Menu");
 		window.setFramerateLimit(60);
@@ -45,7 +47,7 @@ public class TestMenu {
 		Sprite menuBg = new Sprite(Textures.menuBg);
 		
 		Button buttonLogo = new Button(menuLogo, null, null);	
-		Button buttonJouer = new Button(menuJouer, null, null);
+		Button buttonJouer = new Button(menuJouer, Textures.menuCharger, Textures.menuJouer);
 		Button buttonQuitter = new Button(menuQuitter, null, null);
 		Button buttonEditeur = new Button(menuEditeur, null, null);
 		Button buttonCharger = new Button(menuCharger, null, null);
@@ -72,6 +74,10 @@ public class TestMenu {
 				case CLOSED:
 					window.close();
 					break;
+				case MOUSE_MOVED:
+					MouseEvent mouse1 = event.asMouseEvent();
+					buttonJouer.changeOnHover(mouse1.position);
+					break;
 				case MOUSE_BUTTON_PRESSED:
 					MouseButtonEvent mouse = event.asMouseButtonEvent();
 					if(mouse.button == Mouse.Button.LEFT){
@@ -97,7 +103,7 @@ public class TestMenu {
 							
 							if (dialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 								  File file = dialog.getSelectedFile();
-								  Grid toOpen = ParserJSON.deserialize(file.getAbsolutePath());
+								  Grid toOpen = ParserJSON.deserialize(file.getAbsolutePath()).getGrid();
 								  int x = (730/2)+15;
 								  int y = (600/2-15-(toOpen.getSize()*Textures.cellTexture.getSize().y)/2);
 
@@ -115,7 +121,10 @@ public class TestMenu {
 					break;
 				}
 			}
-		}
+		}*/
+		
+		
+		MenuDisplay.menuDisplay();
 		
 	}
 }

@@ -15,6 +15,7 @@ public class Button {
 	private Texture pushOff;
 	
 	private boolean pushed;
+	private boolean hovered = false;
 	
 	public Button(Sprite sprite, Texture pushOn, Texture pushOff){
 		this.sprite = sprite;
@@ -73,5 +74,22 @@ public class Button {
 	
 	public boolean isInside(Vector2i coord){
 		return (isEnable && sprite.getGlobalBounds().contains(coord.x, coord.y));
+	}
+	
+	public void changeOnHover(Vector2i coord){
+		if(isInside(coord)){
+			if(!hovered){
+				if(pushOn != null)
+					sprite.setTexture(pushOn);
+				hovered = true;
+			}
+		}
+		else{
+			if(hovered){
+				if(pushOff != null)
+					sprite.setTexture(pushOff);
+				hovered = false;	
+			}
+		}
 	}
 }
