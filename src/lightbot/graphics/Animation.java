@@ -1,8 +1,8 @@
 package lightbot.graphics;
 
+import lightbot.LightCore;
 import lightbot.system.CardinalDirection;
 import lightbot.system.Robot;
-import lightbot.tests.Main;
 
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.Sprite;
@@ -75,7 +75,7 @@ public class Animation {
 	public void printPillar(int line, int column){
 		for(int level=0; level<GridDisplay.maxHeight; level++)
 			if(cubes[line][column][level] != null)
-				Main.window.draw(cubes[line][column][level]);
+				LightCore.window.draw(cubes[line][column][level]);
 	}
 	
 	/**
@@ -106,19 +106,19 @@ public class Animation {
 		else
 			transparency = 255;
 
-		while(Main.window.isOpen() && !finished) {
+		while(LightCore.window.isOpen() && !finished) {
 			
-		    Main.window.clear(Color.WHITE);
+		    LightCore.window.clear(Color.WHITE);
 		    
-	    	for(Sprite s : Main.display.getConstantDisplay())
-	    		Main.window.draw(s);
+	    	for(Sprite s : LightCore.display.getConstantDisplay())
+	    		LightCore.window.draw(s);
 	    	
 	    	if(!block){
 			    for(int l = 0; l<cubes.length; l++)
 					for(int c = 0; c<cubes[0].length; c++){
 						printPillar(l, c);
 						if(robotSprite != null && l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn())
-							Main.window.draw(robotSprite);
+							LightCore.window.draw(robotSprite);
 					}
 	    	}
 			else{
@@ -129,25 +129,25 @@ public class Animation {
 								endDisplay = true;
 							else{
 								if(cubes[l][c][lvl] != null)
-									Main.window.draw(cubes[l][c][lvl]);
+									LightCore.window.draw(cubes[l][c][lvl]);
 								if(robotSprite != null 
 										&& l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn() 
 										&& (lvl == GridDisplay.levelMax[l][c] || GridDisplay.levelMax[l][c] == -1))
-									Main.window.draw(robotSprite);
+									LightCore.window.draw(robotSprite);
 							}
 						}
-				Main.window.draw(cubes[line][column][level]);
+				LightCore.window.draw(cubes[line][column][level]);
 				endDisplay = false;
 			}
 		    
-		    Main.window.display();
+		    LightCore.window.display();
 
 		    //Handle events
-		    for(Event event : Main.window.pollEvents()) {
+		    for(Event event : LightCore.window.pollEvents()) {
 		    	switch(event.type) {
 		    		case CLOSED:
 		    			System.out.println("The user pressed the close button!");
-		    			Main.window.close();
+		    			LightCore.window.close();
 		    			break;
 					default:
 						break;
@@ -205,12 +205,12 @@ public class Animation {
 		else
 			transparency = 255;
 
-		while(Main.window.isOpen() && !finished) {
+		while(LightCore.window.isOpen() && !finished) {
 			
-		    Main.window.clear(Color.WHITE);
+		    LightCore.window.clear(Color.WHITE);
 		    
-	    	for(Sprite s : Main.display.getConstantDisplay())
-	    		Main.window.draw(s);
+	    	for(Sprite s : LightCore.display.getConstantDisplay())
+	    		LightCore.window.draw(s);
 	    	
 			for(int l = 0; l<cubes.length && !endDisplay; l++)
 				for(int c = 0; c<cubes[0].length && !endDisplay; c++){
@@ -221,15 +221,15 @@ public class Animation {
 			
 			endDisplay = false;
 		    
-			Main.window.draw(robotSprite);
-		    Main.window.display();
+			LightCore.window.draw(robotSprite);
+		    LightCore.window.display();
 
 		    //Handle events
-		    for(Event event : Main.window.pollEvents()) {
+		    for(Event event : LightCore.window.pollEvents()) {
 		    	switch(event.type) {
 		    		case CLOSED:
 		    			System.out.println("The user pressed the close button!");
-		    			Main.window.close();
+		    			LightCore.window.close();
 		    			break;
 					default:
 						break;
@@ -311,12 +311,12 @@ public class Animation {
 		Clock frameClock = new Clock();
 		Clock resetClock = new Clock();
 
-		while(Main.window.isOpen() && !finished) {
+		while(LightCore.window.isOpen() && !finished) {
 			
-		    Main.window.clear(Color.WHITE);
+		    LightCore.window.clear(Color.WHITE);
 		    
-	    	for(Sprite s : Main.display.getConstantDisplay())
-	    		Main.window.draw(s);
+	    	for(Sprite s : LightCore.display.getConstantDisplay())
+	    		LightCore.window.draw(s);
 	    	
 	    	for(int l = 0; l < cubes.length; l++)
 				for(int c = 0; c < cubes[0].length; c++){
@@ -327,7 +327,7 @@ public class Animation {
 						printPillar(l, c);
 					if(l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn()){
 						if(nextCellY > Robot.wheatley.getColumn() && nextCellX < Robot.wheatley.getLine()){
-							Main.window.draw(robotSprite);
+							LightCore.window.draw(robotSprite);
 							for(int lin = nextCellX; lin<=Robot.wheatley.getLine(); lin++)
 								for(int cin = nextCellY; cin<cubes[0].length; cin++)
 									if(!(lin == nextCellX && cin < nextCellY))
@@ -335,19 +335,19 @@ public class Animation {
 						}
 						else{
 							printPillar(nextCellX, nextCellY);
-							Main.window.draw(robotSprite);
+							LightCore.window.draw(robotSprite);
 						}
 					}
 				}
 	    	
-		    Main.window.display();
+		    LightCore.window.display();
 
 		    //Handle events
-		    for(Event event : Main.window.pollEvents()) {
+		    for(Event event : LightCore.window.pollEvents()) {
 		    	switch(event.type) {
 		    		case CLOSED:
 		    			System.out.println("The user pressed the close button!");
-		    			Main.window.close();
+		    			LightCore.window.close();
 		    			break;
 					default:
 						break;

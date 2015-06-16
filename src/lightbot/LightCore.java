@@ -1,4 +1,4 @@
-package lightbot.tests;
+package lightbot;
 
 import lightbot.graphics.DisplayMode;
 import lightbot.graphics.Editor;
@@ -16,7 +16,7 @@ import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.TextEvent;
 
-public class Main {
+public class LightCore {
 	
 	public static RenderWindow window;
 	public static DisplayMode display;
@@ -77,14 +77,14 @@ public class Main {
 			             window.close();
 			             break;
 			        	    
-			         case TEXT_ENTERED:
+			         /*case TEXT_ENTERED:
 			        	    TextEvent textEvent = event.asTextEvent();
 			        	    System.out.println("The user typed the following character: " + textEvent.character);
 			        	    break;
 	
 			         case MOUSE_WHEEL_MOVED:
 			             System.out.println("The user moved the mouse wheel!");
-			             break;
+			             break;*/
 					default:
 						break;
 			     }

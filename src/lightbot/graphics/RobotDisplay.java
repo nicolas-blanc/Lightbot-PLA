@@ -1,9 +1,9 @@
 package lightbot.graphics;
 
+import lightbot.LightCore;
 import lightbot.system.CardinalDirection;
 import lightbot.system.Colour;
 import lightbot.system.Robot;
-import lightbot.tests.Main;
 
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.Sprite;
@@ -83,7 +83,7 @@ public class RobotDisplay implements DisplayPrimitive{
 	}
 	
 	public void print(){
-		Main.window.draw(robotSprite);
+		LightCore.window.draw(robotSprite);
 	}
 	
 	/**

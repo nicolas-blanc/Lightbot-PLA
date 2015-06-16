@@ -1,6 +1,5 @@
 package lightbot.graphics;
 
-import java.awt.BorderLayout;
 import java.awt.Checkbox;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -11,19 +10,21 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
 
+import lightbot.LightCore;
 import lightbot.system.Colour;
 import lightbot.system.ParserJSON;
 import lightbot.system.RelativeDirection;
 import lightbot.system.Robot;
 import lightbot.system._Executable;
-import lightbot.system.action.*;
+import lightbot.system.action.Forward;
+import lightbot.system.action.Jump;
+import lightbot.system.action.Light;
+import lightbot.system.action.Turn;
 import lightbot.system.world.Grid;
 import lightbot.system.world.Position;
 import lightbot.system.world.cell.Cell;
@@ -32,7 +33,6 @@ import lightbot.system.world.cell.LightableCell;
 import lightbot.system.world.cell.NormalCell;
 import lightbot.system.world.cell.TeleportCell;
 import lightbot.system.world.cell.TeleportColour;
-import lightbot.tests.Main;
 
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.Sprite;
@@ -217,7 +217,7 @@ public class Editor implements DisplayMode{
 	 */
 	public void display(){		
 		for(Sprite s : toDisplay)
-			Main.window.draw(s);
+			LightCore.window.draw(s);
 		display.print();
 	}
 	
@@ -376,9 +376,9 @@ public class Editor implements DisplayMode{
 					if(display.robotIsDisplayed){
 						saveButton.changeTexture();
 						toDisplay.set(saveButton.getId(), saveButton.getSprite());
-						Main.window.clear(Color.WHITE);
+						LightCore.window.clear(Color.WHITE);
 						display();
-						Main.window.display();
+						LightCore.window.display();
 						
 						dialog = new JFileChooser();
 						
@@ -432,9 +432,9 @@ public class Editor implements DisplayMode{
 				case LOAD:
 					loadButton.changeTexture();
 					toDisplay.set(loadButton.getId(), loadButton.getSprite());
-					Main.window.clear(Color.WHITE);
+					LightCore.window.clear(Color.WHITE);
 					display();
-					Main.window.display();
+					LightCore.window.display();
 					
 					dialog = new JFileChooser();
 					
