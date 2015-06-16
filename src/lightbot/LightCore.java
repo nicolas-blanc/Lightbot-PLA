@@ -6,6 +6,7 @@ import lightbot.graphics.DisplayMode;
 import lightbot.graphics.Editor;
 import lightbot.graphics.Game;
 import lightbot.graphics.ActionListDisplay;
+import lightbot.graphics.LevelDisplay;
 import lightbot.graphics.MenuDisplay;
 import lightbot.graphics.Textures;
 import lightbot.system.ParserJSON;
@@ -39,6 +40,7 @@ public class LightCore {
 		boolean firstLaunch = true;
 		boolean firstPrintGame = true;
 		MenuDisplay menuD = new MenuDisplay();
+		LevelDisplay levels = new LevelDisplay();
 
 		Textures.initTextures();
 
@@ -81,21 +83,33 @@ public class LightCore {
 			//ActionListDisplay.displayActionList(actions, 10, window);
 			if(menu){
 				menuD.display();
-			}else if(game || editor){
+			} else {
+				if(game){
+					levels.display();
+				} else if (editor){
+					display.display();
+				}
+			}
+			
+			/*else if(game|| editor){
 				if(game && firstPrintGame){
 					display.printGrid();
 					firstPrintGame = false;
 				}
 				display.display();
-			}
+			}*/
 			window.display();
 
 			// Handle events
 			for (Event event : window.pollEvents()) {
 				if(menu){
 					menuD.eventManager(event);
-				}else if(game || editor){
-					display.eventManager(event);
+				}else{
+					if(game){
+						levels.eventManager(event);
+					}else if (editor){
+						display.eventManager(event);
+					}
 				}
 				switch (event.type) {
 				case CLOSED:

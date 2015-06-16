@@ -112,13 +112,13 @@ public class MenuDisplay {
 					// Jouer
 					if(buttonJouer.isInside(mouse.position)){
 						//TODO change this
-						Level level = ParserJSON.deserialize("example.json");
+						/*Level level = ParserJSON.deserialize("example.json");
 						Grid grid = level.getGrid();
 						LightCore.display = new Game(grid);
 						LightCore.menu = false;
+						*/
 						LightCore.game = true;
-						//LightCore.window.clear(Color.WHITE);
-						//LightCore.display.display();
+						LightCore.menu = false;
 					}
 					
 					// Éditeur
