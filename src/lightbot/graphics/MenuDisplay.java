@@ -36,69 +36,18 @@ public class MenuDisplay {
 	static Button buttonEditeur;
 	static Button buttonCharger;
 	
+	
+	/**
+	 * To display the menu
+	 * @param window
+	 */
 	public static void menuDisplay(RenderWindow window) {
 		//createWindow();
 		setButtons();
 		
 		while (window.isOpen()) {
 			displayButtons(window);
-		    
-		    //Events handling
-			for (Event event : window.pollEvents()) {
-				switch (event.type) {
-				case CLOSED:
-					window.close();
-					break;
-				case MOUSE_MOVED:
-					MouseEvent mouse1 = event.asMouseEvent();
-					buttonJouer.changeOnHover(mouse1.position);
-					buttonQuitter.changeOnHover(mouse1.position);
-					buttonCharger.changeOnHover(mouse1.position);
-					buttonEditeur.changeOnHover(mouse1.position);
-					break;
-				case MOUSE_BUTTON_PRESSED:
-					MouseButtonEvent mouse = event.asMouseButtonEvent();
-					if(mouse.button == Mouse.Button.LEFT){
-						// Éditeur
-						if(buttonEditeur.isInside(mouse.position)){
-							int sizeInt = -1;
-							String size = null;
-							do{
-								size = JOptionPane.showInputDialog(null, "Veuillez indiquer la taille de votre grille :", "Éditeur", JOptionPane.QUESTION_MESSAGE);
-								if(size != null){
-									sizeInt = (size == null)?null : Integer.parseInt(size);
-									if(sizeInt<1 || sizeInt>8){
-										JOptionPane.showMessageDialog(null, "Merci de saisir une taille comprise entre 1 et 8", "Éditeur", JOptionPane.ERROR_MESSAGE);
-									}else{
-										JOptionPane.showMessageDialog(null, "Vous allez créer une grille " + sizeInt + "x" + sizeInt, "Identité", JOptionPane.INFORMATION_MESSAGE);
-									}
-								}
-							} while((sizeInt<1 || sizeInt>8) && size != null);
-						}
-						// Charger
-						if(buttonCharger.isInside(mouse.position)){
-							JFileChooser dialog = new JFileChooser();
-							
-							if (dialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-								  File file = dialog.getSelectedFile();
-								  Grid toOpen = ParserJSON.deserialize(file.getAbsolutePath()).getGrid();
-								  int x = (730/2)+15;
-								  int y = (600/2-15-(toOpen.getSize()*Textures.cellTexture.getSize().y)/2);
-
-
-								  System.out.println(file.getAbsolutePath());
-								}
-							}
-						// Quitter
-						if(buttonQuitter.isInside(mouse.position)){
-							window.close();
-						}
-					}
-					break;
-				default:
-					break;
-				}
-			}
+			eventManager(window);
 		}
 	}
 	
@@ -108,6 +57,9 @@ public class MenuDisplay {
 		window.setFramerateLimit(60);
 	}*/
 	
+	/**
+	 * To set all the buttons of the menu
+	 */
 	public static void setButtons(){
 		Textures.initTextures();
 		
@@ -131,6 +83,10 @@ public class MenuDisplay {
 		menuQuitter.setPosition(leftMargin, 206 + 3*spaceBtwButtons);
 	}
 	
+	/**
+	 * To display all the buttons of the menu
+	 * @param window
+	 */
 	public static void displayButtons(RenderWindow window){
 	    window.display();
 	    window.draw(menuBg);
@@ -139,6 +95,69 @@ public class MenuDisplay {
 	    window.draw(menuEditeur);
 	    window.draw(menuCharger);
 	    window.draw(menuQuitter);
+	}
+	
+	/**
+	 * Event manager for the menu
+	 * @param window
+	 */
+	public static void eventManager(RenderWindow window){
+
+		for (Event event : window.pollEvents()) {
+			switch (event.type) {
+			case CLOSED:
+				window.close();
+				break;
+			case MOUSE_MOVED:
+				MouseEvent mouse1 = event.asMouseEvent();
+				buttonJouer.changeOnHover(mouse1.position);
+				buttonQuitter.changeOnHover(mouse1.position);
+				buttonCharger.changeOnHover(mouse1.position);
+				buttonEditeur.changeOnHover(mouse1.position);
+				break;
+			case MOUSE_BUTTON_PRESSED:
+				MouseButtonEvent mouse = event.asMouseButtonEvent();
+				if(mouse.button == Mouse.Button.LEFT){
+					// Éditeur
+					if(buttonEditeur.isInside(mouse.position)){
+						int sizeInt = -1;
+						String size = null;
+						do{
+							size = JOptionPane.showInputDialog(null, "Veuillez indiquer la taille de votre grille :", "Éditeur", JOptionPane.QUESTION_MESSAGE);
+							if(size != null){
+								sizeInt = (size == null)?null : Integer.parseInt(size);
+								if(sizeInt<1 || sizeInt>8){
+									JOptionPane.showMessageDialog(null, "Merci de saisir une taille comprise entre 1 et 8", "Éditeur", JOptionPane.ERROR_MESSAGE);
+								}else{
+									JOptionPane.showMessageDialog(null, "Vous allez créer une grille " + sizeInt + "x" + sizeInt, "Identité", JOptionPane.INFORMATION_MESSAGE);
+								}
+							}
+						} while((sizeInt<1 || sizeInt>8) && size != null);
+					}
+					// Charger
+					if(buttonCharger.isInside(mouse.position)){
+						JFileChooser dialog = new JFileChooser();
+						
+						if (dialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+							  File file = dialog.getSelectedFile();
+							  Grid toOpen = ParserJSON.deserialize(file.getAbsolutePath()).getGrid();
+							  int x = (730/2)+15;
+							  int y = (600/2-15-(toOpen.getSize()*Textures.cellTexture.getSize().y)/2);
+
+
+							  System.out.println(file.getAbsolutePath());
+							}
+						}
+					// Quitter
+					if(buttonQuitter.isInside(mouse.position)){
+						window.close();
+					}
+				}
+				break;
+			default:
+				break;
+			}
+		}
 	}
 	
 	
