@@ -27,8 +27,7 @@ public class CubeDisplay implements DisplayPrimitive{
 		if(cell instanceof ColoredCell){
 			switch(((ColoredCell)cell).getColour()){
 				case GREEN:
-					// TODO change
-					this.currentTexture = Textures.cubeTextureBlue;
+					this.currentTexture = Textures.cubeTextureGreen;
 					break;
 				case RED:
 					this.currentTexture = Textures.cubeTextureRed;
@@ -37,18 +36,18 @@ public class CubeDisplay implements DisplayPrimitive{
 					this.currentTexture = Textures.cubeTextureYellow;
 					break;
 				default:
-					this.currentTexture = Textures.cubeTexture;
+					this.currentTexture = Textures.cubeTextureWhite;
 					break;
 			}
 		}
 		else if(cell instanceof LightableCell)
-			this.currentTexture = Textures.cubeTextureBlue; // TODO change this
+			this.currentTexture = Textures.cubeTextureGreen; // TODO change this
 		else if(cell instanceof NormalCell)
-			this.currentTexture = Textures.cubeTexture;
+			this.currentTexture = Textures.cubeTextureWhite;
 		else if(cell instanceof TeleportCell)
-			this.currentTexture = Textures.cubeTextureTeleport;
+			this.currentTexture = Textures.cubeTextureTeleportWhite;
 		else //TODO change this
-			this.currentTexture = Textures.cubeTexture;
+			this.currentTexture = Textures.cubeTextureWhite;
 			
 	}
 	
@@ -61,7 +60,7 @@ public class CubeDisplay implements DisplayPrimitive{
 		
 		float decalX = Textures.cellTexture.getSize().x / 2;
 		float decalY = Textures.cellTexture.getSize().y / 2;
-		float sizeCubeY = Textures.cubeTexture.getSize().y;
+		float sizeCubeY = Textures.cubeTextureWhite.getSize().y;
 		
 		Vector2f decal;
 		if(this.level == 0){
@@ -77,7 +76,7 @@ public class CubeDisplay implements DisplayPrimitive{
 				decal = new Vector2f((this.column-this.line)*(decalX), (this.line+this.column+2)*(decalY)-(sizeCubeY-2)-(this.level-1)*decalY);
 		}
 		
-		Vector2f origin = Vector2f.div(new Vector2f(Textures.cubeTexture.getSize()), 2);
+		Vector2f origin = Vector2f.div(new Vector2f(Textures.cubeTextureWhite.getSize()), 2);
 		
 		toAdd.scale(new Vector2f((float)1, (float)1));
 		toAdd.setOrigin(Vector2f.sub(origin, decal));
