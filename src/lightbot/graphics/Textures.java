@@ -9,6 +9,7 @@ public class Textures {
 	public static final String RESSOURCE_PATH = "ressources/";
 	public static final String NEW_ICONS_PATH = RESSOURCE_PATH + "new_icons/";
 	public static final String MENU_PATH = RESSOURCE_PATH + "menu/";
+	public static final String LEVELS_PATH = RESSOURCE_PATH + "levels/";
 	public static final String ROBOT_PATH = RESSOURCE_PATH + "robot/";
 	
 	public static final String EDITOR_PATH = RESSOURCE_PATH + "editor/";
@@ -92,6 +93,22 @@ public class Textures {
 	public static Texture menuChargerH;
 	public static Texture menuBgH;
 	
+	//Levels
+	public static Texture levelBases;
+	public static Texture levelProcedures;
+	public static Texture levelIf;
+	public static Texture levelBreak;
+	public static Texture levelFork;
+	public static Texture levelPointeurs;
+	
+	public static Texture levelBg;
+	public static Texture levelBlock;
+	public static Texture levelTitle;
+	public static Texture level1;
+	public static Texture level2;
+	public static Texture level3;
+	public static Texture level4;
+	
 	
 	public static void initTextures(){
 		
@@ -173,6 +190,22 @@ public class Textures {
 		menuChargerH = new Texture();
 		menuBgH = new Texture();
 		
+		//Levels
+		levelBases = new Texture();
+		levelProcedures = new Texture();
+		levelIf = new Texture();
+		levelBreak = new Texture();
+		levelFork = new Texture();
+		levelPointeurs = new Texture();
+		
+		levelBg = new Texture();
+		levelBlock = new Texture();
+		levelTitle = new Texture();
+		level1 = new Texture();
+		level2 = new Texture();
+		level3 = new Texture();
+		level4 = new Texture();
+		
 		try {
 			
 			/************************ Load the textures ************************/
@@ -252,6 +285,22 @@ public class Textures {
 			menuEditeurH.loadFromFile(Paths.get(MENU_PATH + "editorButtonH.png"));
 			menuChargerH.loadFromFile(Paths.get(MENU_PATH + "loadButtonH.png"));
 			
+			//levels
+			levelBases.loadFromFile(Paths.get(LEVELS_PATH + "levelBases.png"));
+			levelProcedures.loadFromFile(Paths.get(LEVELS_PATH + "levelProcedures.png"));
+			levelIf.loadFromFile(Paths.get(LEVELS_PATH + "levelIf.png"));
+			levelBreak.loadFromFile(Paths.get(LEVELS_PATH + "levelBreak.png"));
+			levelFork.loadFromFile(Paths.get(LEVELS_PATH + "levelFork.png"));
+			levelPointeurs.loadFromFile(Paths.get(LEVELS_PATH + "levelPointeurs.png"));
+			
+			levelBg.loadFromFile(Paths.get(LEVELS_PATH + "levelBg.png"));
+			levelBlock.loadFromFile(Paths.get(LEVELS_PATH + "levelBlock.png"));
+			levelTitle.loadFromFile(Paths.get(LEVELS_PATH + "levelTitle.png"));
+			level1.loadFromFile(Paths.get(LEVELS_PATH + "levelUn.png"));
+			level2.loadFromFile(Paths.get(LEVELS_PATH + "levelDeux.png"));
+			level3.loadFromFile(Paths.get(LEVELS_PATH + "levelTrois.png"));
+			level4.loadFromFile(Paths.get(LEVELS_PATH + "levelQuatre.png"));
+			
 			
 			/************************ Set smoothing ************************/
 			
@@ -327,6 +376,22 @@ public class Textures {
 			menuEditeurH.setSmooth(true);
 			menuChargerH.setSmooth(true);
 			menuLogoH.setSmooth(true);
+			
+			// Level
+			levelBases.setSmooth(true);
+			levelProcedures.setSmooth(true);
+			levelIf.setSmooth(true);
+			levelBreak.setSmooth(true);
+			levelFork.setSmooth(true);
+			levelPointeurs.setSmooth(true);
+			
+			levelBg.setSmooth(true);
+			levelBlock.setSmooth(true);
+			levelTitle.setSmooth(true);
+			level1.setSmooth(true);
+			level2.setSmooth(true);
+			level3.setSmooth(true);
+			level4.setSmooth(true);
 			
 		} catch(IOException ex) {
 		    //Ouch! something went wrong
