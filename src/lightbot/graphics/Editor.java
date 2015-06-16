@@ -1,14 +1,30 @@
 package lightbot.graphics;
 
+import java.awt.Checkbox;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
+import lightbot.LightCore;
+import lightbot.system.Colour;
 import lightbot.system.ParserJSON;
+import lightbot.system.RelativeDirection;
 import lightbot.system.Robot;
+import lightbot.system._Executable;
+import lightbot.system.action.Forward;
+import lightbot.system.action.Jump;
+import lightbot.system.action.Light;
+import lightbot.system.action.Turn;
 import lightbot.system.world.Grid;
 import lightbot.system.world.Position;
 import lightbot.system.world.cell.Cell;
@@ -17,7 +33,6 @@ import lightbot.system.world.cell.LightableCell;
 import lightbot.system.world.cell.NormalCell;
 import lightbot.system.world.cell.TeleportCell;
 import lightbot.system.world.cell.TeleportColour;
-import lightbot.tests.Main;
 
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.Sprite;
@@ -202,7 +217,7 @@ public class Editor implements DisplayMode{
 	 */
 	public void display(){		
 		for(Sprite s : toDisplay)
-			Main.window.draw(s);
+			LightCore.window.draw(s);
 		display.print();
 	}
 	
@@ -361,9 +376,9 @@ public class Editor implements DisplayMode{
 					if(display.robotIsDisplayed){
 						saveButton.changeTexture();
 						toDisplay.set(saveButton.getId(), saveButton.getSprite());
-						Main.window.clear(Color.WHITE);
+						LightCore.window.clear(Color.WHITE);
 						display();
-						Main.window.display();
+						LightCore.window.display();
 						
 						dialog = new JFileChooser();
 						
@@ -381,8 +396,30 @@ public class Editor implements DisplayMode{
 							  fileName = fileName.substring(0, i); 
 						  }
 						  //System.out.println(fileName + ".json");
-						  ParserJSON.serialize(fileName+".json", display.gridDisplay.grid);
-						  display.gridDisplay.grid.printGrid();
+						  
+						  // Print a selection menu for list of actions
+						  
+						  ActionSelector selec = new ActionSelector();
+						  while(!selec.isValid && !selec.isAborted){
+							  System.out.print("");
+						  }
+						  
+						  if(selec.isValid){
+							  ArrayList<_Executable> listOfActions = new ArrayList<_Executable>();
+							  if(selec.checkForward.getState())
+								  listOfActions.add(new Forward());
+							  if(selec.checkJump.getState())
+								  listOfActions.add(new Jump());
+							  if(selec.checkTurnRight.getState())
+								  listOfActions.add(new Turn(RelativeDirection.RIGHT, Colour.WHITE));
+							  if(selec.checkTurnLeft.getState())
+								  listOfActions.add(new Turn(RelativeDirection.LEFT, Colour.WHITE));
+							  listOfActions.add(new Light());
+							  ParserJSON.serialize(fileName+".json", display.gridDisplay.grid, listOfActions);
+							  display.gridDisplay.grid.printGrid();
+						  }
+						  
+						  selec.dispose();
 						}
 						saveButton.changeTexture();
 						toDisplay.set(saveButton.getId(), saveButton.getSprite());
@@ -395,9 +432,9 @@ public class Editor implements DisplayMode{
 				case LOAD:
 					loadButton.changeTexture();
 					toDisplay.set(loadButton.getId(), loadButton.getSprite());
-					Main.window.clear(Color.WHITE);
+					LightCore.window.clear(Color.WHITE);
 					display();
-					Main.window.display();
+					LightCore.window.display();
 					
 					dialog = new JFileChooser();
 					
@@ -407,7 +444,7 @@ public class Editor implements DisplayMode{
 					
 					if (dialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 					  File file = dialog.getSelectedFile();
-					  Grid toOpen = ParserJSON.deserialize(file.getAbsolutePath());
+					  Grid toOpen = ParserJSON.deserialize(file.getAbsolutePath()).getGrid();
 					  originX = (GRID_DISPLAY_SIZE/2)+MARGIN_LEFT;
 					  originY = (WINDOW_HEIGHT/2-MARGIN_LEFT-(toOpen.getSize()*Textures.cellTexture.getSize().y)/2);
 					  display.reinit(toOpen, originX, originY);
@@ -574,6 +611,65 @@ public class Editor implements DisplayMode{
 		
 		public String getDescription(){
 			return this.description;
+		}
+	}
+	
+	public class ActionSelector extends JFrame{
+		private static final long serialVersionUID = 1L;
+		
+		private JButton valid = new JButton("Valider");
+		private JButton abort = new JButton("Annuler");
+		
+		public boolean isValid = false;
+		public boolean isAborted = false;
+		
+		public Checkbox checkForward = new Checkbox("Avancer");
+		public Checkbox checkJump = new Checkbox("Sauter");
+		public Checkbox checkTurnRight = new Checkbox("Tourner à droite");
+		public Checkbox checkTurnLeft = new Checkbox("Tourner à gauche");
+		
+		public ActionSelector(){
+			this.setTitle("Sélection des actions");
+		    this.setSize(300, 300);
+		    this.setLocationRelativeTo(null);
+		    
+		    GridLayout gl = new GridLayout(3, 1);
+		    gl.setHgap(5);
+		    gl.setVgap(5);
+		    
+		    this.setLayout(gl);
+		    this.getContentPane().add(checkForward);
+		    this.getContentPane().add(checkJump);
+		    this.getContentPane().add(checkTurnRight);
+		    this.getContentPane().add(checkTurnLeft);
+		    
+		    this.getContentPane().add(valid);
+		    this.getContentPane().add(abort);
+		    this.pack();
+		    this.setVisible(true);
+		    
+		    valid.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					isValid = true;
+					System.out.println("buttonpushed");
+				}
+			});
+		    
+		    abort.addActionListener(new ActionListener(){
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					isAborted = true;
+					System.out.println("buttonpushed");
+				}
+		    });
+		    
+		    this.addWindowListener(new WindowAdapter(){
+		    	public void windowClosing(WindowEvent e){
+		    		isAborted = true;
+		    		System.out.println("buttonpushed");
+		    	}
+		    });
 		}
 	}
 

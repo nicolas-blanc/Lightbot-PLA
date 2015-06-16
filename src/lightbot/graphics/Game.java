@@ -2,13 +2,13 @@ package lightbot.graphics;
 
 import java.util.ArrayList;
 
+import lightbot.LightCore;
 import lightbot.system.CardinalDirection;
 import lightbot.system.Colour;
 import lightbot.system.RelativeDirection;
 import lightbot.system.Robot;
 import lightbot.system.action.Turn;
 import lightbot.system.world.Grid;
-import lightbot.tests.Main;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2i;
@@ -71,7 +71,7 @@ public class Game implements DisplayMode{
 	 */
 	public void display(){
 		for(Sprite s : toDisplay)
-			Main.window.draw(s);
+			LightCore.window.draw(s);
 		display.print();
 	}
 	

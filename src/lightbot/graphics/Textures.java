@@ -32,6 +32,7 @@ public class Textures {
 	public static Texture lightTexture;
 	public static Texture procedure1Texture;
 	public static Texture procedure2Texture;
+	public static Texture showerTexture;
 	
 	
 	// robot textures
@@ -86,6 +87,7 @@ public class Textures {
 		lightTexture = new Texture();
 		procedure1Texture = new Texture();
 		procedure2Texture = new Texture();
+		showerTexture = new Texture();
 		
 		playTexture = new Texture();
 		resetTexture = new Texture();
@@ -133,9 +135,9 @@ public class Textures {
 		    turnLeftTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconTurnLeft.png"));
 		    turnRightTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconTurnRight.png"));
 		    lightTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconLight.png"));
-		    
 		    procedure1Texture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconProcedure1.png"));
 		    procedure2Texture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconProcedure2.png"));
+		    showerTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconShower.png"));
 		    
 		    // load play and reset icons
 		    playTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconPlay.png"));
@@ -187,6 +189,7 @@ public class Textures {
 			lightTexture.setSmooth(true);
 			procedure1Texture.setSmooth(true);
 			procedure2Texture.setSmooth(true);
+			showerTexture.setSmooth(true);
 			
 			playTexture.setSmooth(true);
 			resetTexture.setSmooth(true);

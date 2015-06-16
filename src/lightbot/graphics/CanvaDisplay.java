@@ -2,7 +2,7 @@ package lightbot.graphics;
 
 import java.util.ArrayList;
 
-import lightbot.tests.Main;
+import lightbot.LightCore;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2i;
@@ -97,7 +97,7 @@ public class CanvaDisplay{
 	public void print(){
 		for(int l = 0; l<size; l++)
 			for(int c = 0; c<size; c++)
-				Main.window.draw(canva[l][c]);
+				LightCore.window.draw(canva[l][c]);
 	}
 	
 	

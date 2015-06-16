@@ -10,6 +10,11 @@ public class Level {
 	
 	private ArrayList<_Executable> listOfActions;
 	
+	public Level(Grid grid, ArrayList<_Executable> listOfActions){
+		this.grid = grid;
+		this.listOfActions = listOfActions;
+	}
+	
 	public Grid getGrid() {
 		return this.grid;
 	}

@@ -26,7 +26,7 @@ public class TestMarwan {
 			Texture tex = textures.get(i);
 			Sprite s = new Sprite(tex);
 			float x = posFirstTex + i * (tex.getSize().x + 6);
-			float y = 700;
+			float y = 530;
 			s.setPosition(x, y);
 			window.draw(s);
 		}
@@ -41,7 +41,7 @@ public class TestMarwan {
 		int currentLine = 0;
 		for (int i = 0; i < 12; i++) {
 
-			s.setPosition(880 + 10 + (i % 4) * (85 + 10), 20 + currentLine
+			s.setPosition(730 + 10 + (i % 4) * (50 + 10), 15 + currentLine
 					* (s.getTexture().getSize().y + 10));
 			window.draw(s);
 
@@ -57,7 +57,7 @@ public class TestMarwan {
 		Textures.initTextures();
 
 		window = new RenderWindow();
-		window.create(new VideoMode(1280, 800), "Hello JSFML!");
+		window.create(new VideoMode(1000, 600), "Hello JSFML!");
 
 		window.setFramerateLimit(30);
 
@@ -69,11 +69,23 @@ public class TestMarwan {
 		tex.add(Textures.jumpTexture);
 		tex.add(Textures.procedure1Texture);
 		tex.add(Textures.procedure2Texture);
+		tex.add(Textures.showerTexture);
 
-		RectangleShape mainBox = new RectangleShape(new Vector2f(390, 295));
+		RectangleShape mainBox = new RectangleShape(new Vector2f(255, 182));
 		mainBox.setFillColor(new Color(79, 179, 201));
-		mainBox.setPosition(880, 10);
+		mainBox.setPosition(730, 1*10);
+		
+		RectangleShape p1Box = new RectangleShape(new Vector2f(255, 182));
+		p1Box.setFillColor(new Color(171, 171, 171));
+		p1Box.setPosition(730, 2*10+182);
+		
+		RectangleShape p2Box = new RectangleShape(new Vector2f(255, 182));
+		p2Box.setFillColor(new Color(171, 171, 171));
+		p2Box.setPosition(730, 3*10+2*182);
 
+		RectangleShape gameBox = new RectangleShape(new Vector2f(710, 475));
+		gameBox.setPosition(10,10);
+		
 		while (window.isOpen()) {
 			if (firstRendering) {
 				firstRendering = false;
@@ -81,7 +93,10 @@ public class TestMarwan {
 			}
 
 			window.draw(mainBox);
-			renderInstructionsIcons(tex, 50, window);
+			window.draw(p1Box);
+			window.draw(p2Box);
+			window.draw(gameBox);
+			renderInstructionsIcons(tex, 125, window);
 			foo(window);
 
 			window.display();

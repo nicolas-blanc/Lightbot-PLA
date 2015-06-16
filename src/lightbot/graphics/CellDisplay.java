@@ -1,7 +1,5 @@
 package lightbot.graphics;
 
-import lightbot.tests.Main;
-
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
 

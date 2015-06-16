@@ -1,11 +1,11 @@
 package lightbot.graphics;
 
+import lightbot.LightCore;
 import lightbot.system.world.Grid;
 import lightbot.system.world.cell.Cell;
 import lightbot.system.world.cell.EmptyCell;
 import lightbot.system.world.cell.FullCell;
 import lightbot.system.world.cell.NormalCell;
-import lightbot.tests.Main;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2i;
@@ -205,7 +205,7 @@ public class GridDisplay {
 	public void printPillar(int line, int column){
 		for(int level=0; level<=levelMax[line][column]; level++)
 			if(cubes[line][column][level] != null)
-				Main.window.draw(cubes[line][column][level]);
+				LightCore.window.draw(cubes[line][column][level]);
 	}
 	
 	
