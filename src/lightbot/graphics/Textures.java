@@ -44,6 +44,7 @@ public class Textures {
 	public static Texture rotateRight;
 	
 	// Actions
+	public static final int ACTION_TEXTURE_SIZE = 50;
 	public static Texture forwardTexture;
 	public static Texture jumpTexture;
 	public static Texture turnLeftTexture;
