@@ -26,26 +26,59 @@ public class CubeDisplay implements DisplayPrimitive{
 		
 		if(cell instanceof ColoredCell){
 			switch(((ColoredCell)cell).getColour()){
-				case GREEN:
-					this.currentTexture = Textures.cubeTextureGreen;
+				case BLUE:
+					this.currentTexture = Textures.cubeTextureBlue;
+					break;
+				case ORANGE:
+					this.currentTexture = Textures.cubeTextureOrange;
+					break;
+				case PURPLE:
+					this.currentTexture = Textures.cubeTexturePurple;
 					break;
 				case RED:
 					this.currentTexture = Textures.cubeTextureRed;
-					break;
-				case YELLOW:
-					this.currentTexture = Textures.cubeTextureYellow;
 					break;
 				default:
 					this.currentTexture = Textures.cubeTextureWhite;
 					break;
 			}
 		}
-		else if(cell instanceof LightableCell)
-			this.currentTexture = Textures.cubeTextureGreen; // TODO change this
+		else if(cell instanceof LightableCell){
+			if(((LightableCell)cell).isLightON())
+				this.currentTexture = Textures.cubeTextureYellow;
+			else
+				this.currentTexture = Textures.cubeTextureGreen;
+		}
 		else if(cell instanceof NormalCell)
 			this.currentTexture = Textures.cubeTextureWhite;
-		else if(cell instanceof TeleportCell)
-			this.currentTexture = Textures.cubeTextureTeleportWhite;
+		else if(cell instanceof TeleportCell){
+			switch(((TeleportCell)cell).getColour()){
+				case TELEPORT:
+					this.currentTexture = Textures.cubeTextureTeleportWhite;
+					break;
+				case TELEPORTBLUE:
+					this.currentTexture = Textures.cubeTextureTeleportBlue;
+					break;
+				case TELEPORTGREEN:
+					this.currentTexture = Textures.cubeTextureTeleportGreen;
+					break;
+				case TELEPORTORANGE:
+					this.currentTexture = Textures.cubeTextureTeleportOrange;
+					break;
+				case TELEPORTPURPLE:
+					this.currentTexture = Textures.cubeTextureTeleportPurple;
+					break;
+				case TELEPORTRED:
+					this.currentTexture = Textures.cubeTextureTeleportRed;
+					break;
+				case TELEPORTYELLOW:
+					this.currentTexture = Textures.cubeTextureTeleportYellow;
+					break;
+				default:
+					this.currentTexture = Textures.cubeTextureTeleportWhite;
+					break;
+			}
+		}
 		else //TODO change this
 			this.currentTexture = Textures.cubeTextureWhite;
 			
