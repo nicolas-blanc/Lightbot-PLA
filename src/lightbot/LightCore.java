@@ -1,12 +1,17 @@
 package lightbot;
 
+import java.util.List;
+
 import lightbot.graphics.DisplayMode;
 import lightbot.graphics.Editor;
 import lightbot.graphics.Game;
+import lightbot.graphics.ProcedureDisplay;
 import lightbot.graphics.Textures;
 import lightbot.system.ParserJSON;
+import lightbot.system._Executable;
 import lightbot.system.generator.WorldGenerator;
 import lightbot.system.world.Grid;
+import lightbot.system.world.Level;
 
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.RectangleShape;
@@ -48,14 +53,16 @@ public class LightCore {
 		
 		//newWorld.getGrid().printGrid();
 		//Grid grid = newWorld.getGrid();
-		//Grid grid = ParserJSON.deserialize("rotation.json");
+		Level level = ParserJSON.deserialize("example.json");
+		Grid grid = level.getGrid();
+		List<_Executable> actions = level.getListOfActions();
 
-		display = new Editor(5);
-		//display = new Game(grid);
+		//display = new Editor(5);
+		display = new Game(grid);
 		//display.printGrid();
 		
 		//RectangleShape rect = new RectangleShape(new Vector2f(750, 460));
-		RectangleShape rect = new RectangleShape(new Vector2f(730, 570));
+		RectangleShape rect = new RectangleShape(new Vector2f(710, 475));
 		rect.setPosition(15, 15);
 		rect.setOutlineThickness(1);
 		rect.setOutlineColor(Color.BLACK);
@@ -65,8 +72,10 @@ public class LightCore {
 		    //Draw everything
 		    window.clear(Color.WHITE);
 		    window.draw(rect);
-		    display.display();
-		    window.display();
+		    //display.display();
+		    ProcedureDisplay.displayActionList(actions, 125, window);
+		   
+		   
 
 		  //Handle events
 		    for(Event event : window.pollEvents()) {
@@ -89,6 +98,8 @@ public class LightCore {
 						break;
 			     }
 		    }
+		    
+		    window.display();
 		}
 	}
 }

@@ -11,14 +11,13 @@ import lightbot.system.world.Grid;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.window.Mouse;
-import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.MouseButtonEvent;
 import org.jsfml.window.event.MouseEvent;
 
 public class MenuDisplay {
 
-	private static RenderWindow window;
+	//private static RenderWindow window;
 	private static int windowWidth = 1000;
 	private static int windowHeight = 600;
 	private static int leftMargin = 202;
@@ -37,12 +36,12 @@ public class MenuDisplay {
 	static Button buttonEditeur;
 	static Button buttonCharger;
 	
-	public static void menuDisplay(){
-		createWindow();
+	public static void menuDisplay(RenderWindow window) {
+		//createWindow();
 		setButtons();
 		
 		while (window.isOpen()) {
-			displayButtons();
+			displayButtons(window);
 		    
 		    //Events handling
 			for (Event event : window.pollEvents()) {
@@ -75,7 +74,7 @@ public class MenuDisplay {
 						}
 						// Charger
 						if(buttonCharger.isInside(mouse.position)){
-							JFileChooser dialog = dialog = new JFileChooser();
+							JFileChooser dialog = new JFileChooser();
 							
 							if (dialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 								  File file = dialog.getSelectedFile();
@@ -100,11 +99,11 @@ public class MenuDisplay {
 		}
 	}
 	
-	public static void createWindow(){
+	/*public static void createWindow(){
 		window = new RenderWindow();
 		window.create(new VideoMode(windowWidth, windowHeight), "   LIGHTCORE  -  Menu");
 		window.setFramerateLimit(60);
-	}
+	}*/
 	
 	public static void setButtons(){
 		Textures.initTextures();
@@ -129,7 +128,7 @@ public class MenuDisplay {
 		menuQuitter.setPosition(leftMargin, 206 + 3*spaceBtwButtons);
 	}
 	
-	public static void displayButtons(){
+	public static void displayButtons(RenderWindow window){
 	    window.display();
 	    window.draw(menuBg);
 	    window.draw(menuLogo);

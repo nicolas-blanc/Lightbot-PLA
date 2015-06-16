@@ -32,12 +32,20 @@ public class TestMenu {
 	public static RenderWindow window;
 	
 	public static void main(String[] args) {
-	/*	// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 		window = new RenderWindow();
 		window.create(new VideoMode(1000, 600), "   LIGHTCORE  -  Menu");
 		window.setFramerateLimit(60);
+		
+		//Editor ed = new Editor(8);
+		
+		
+		/*while(window.isOpen()) {
+			ed.display();
+			
+		}*/
 				
-		Textures.initTextures();
+		/*Textures.initTextures();
 		
 		Sprite menuLogo = new Sprite(Textures.menuLogo);
 		Sprite menuJouer = new Sprite(Textures.menuJouer);
@@ -124,7 +132,7 @@ public class TestMenu {
 		}*/
 		
 		
-		MenuDisplay.menuDisplay();
+		MenuDisplay.menuDisplay(window);
 		
 	}
 }
