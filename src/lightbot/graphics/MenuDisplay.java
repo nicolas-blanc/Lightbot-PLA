@@ -125,12 +125,15 @@ public class MenuDisplay {
 					if(buttonEditeur.isInside(mouse.position)){
 						int sizeInt = -1;
 						String size = null;
-						do{
+						do{	
 							size = JOptionPane.showInputDialog(null, "Veuillez indiquer la taille de votre grille :", "Éditeur", JOptionPane.QUESTION_MESSAGE);
 							if(size != null && !size.equals("")){
-								sizeInt = (size == null)?null : Integer.parseInt(size);
+								try {
+								sizeInt = Integer.parseInt(size);
+								} catch (NumberFormatException nfe){}
+								
 								if(sizeInt<1 || sizeInt>8){
-									JOptionPane.showMessageDialog(null, "Merci de saisir une taille comprise entre 1 et 8", "Éditeur", JOptionPane.ERROR_MESSAGE);
+									JOptionPane.showMessageDialog(null, "Merci de saisir un nombre entier compris entre 1 et 8", "Éditeur", JOptionPane.ERROR_MESSAGE);
 								}else{
 									JOptionPane.showMessageDialog(null, "Vous allez créer une grille " + sizeInt + "x" + sizeInt, "Identité", JOptionPane.INFORMATION_MESSAGE);
 									LightCore.display = new Editor(sizeInt);
