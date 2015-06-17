@@ -1,7 +1,9 @@
 package lightbot.graphics;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import lightbot.LightCore;
 import lightbot.system.Procedure;
 import lightbot.system.RelativeDirection;
 import lightbot.system._Executable;
@@ -10,26 +12,90 @@ import lightbot.system.action.Jump;
 import lightbot.system.action.Light;
 import lightbot.system.action.Turn;
 import lightbot.system.action.Wash;
+import lightbot.system.world.Level;
 
-import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
+import org.jsfml.system.Vector2i;
+import org.jsfml.window.Mouse;
+import org.jsfml.window.event.Event;
+import org.jsfml.window.event.MouseButtonEvent;
 
 public class ActionListDisplay {
-	
-	private static int firstActionTextureX;
-	private static int firstActionTextureY;
-	
-	//public static
 
-	public static void displayActionList(List<_Executable> actions, int firstTopLeft, RenderWindow window) {
-		for (int i = 0; i < actions.size(); i++) {
-			Texture tex = getTextureForAction(actions.get(i));
-			Sprite s = new Sprite(tex);
-			float x = firstTopLeft + i * (tex.getSize().x + 6);
+	// private static List<Button> actionButtons;
+	// private static Map<_Executable, Button> actionButtons;
+
+	private static List<_Executable> actionsL = new ArrayList<_Executable>();
+	private static List<Button> buttonsL = new ArrayList<Button>();
+
+	public static void init(Level level) {
+
+		if (actionsL != null) {
+			actionsL.clear();
+			buttonsL.clear();
+		} else {
+			actionsL = new ArrayList<_Executable>();
+			buttonsL = new ArrayList<Button>();
+		}
+
+		List<_Executable> levelActions = level.getListOfActions();
+
+		for (_Executable e : levelActions) {
+			Texture t = getTextureForAction(e);
+			Sprite s = new Sprite(t);
+			Button b = new Button(s, null, null);
+			actionsL.add(e);
+			buttonsL.add(b);
+		}
+
+		display(125);
+	}
+
+	public static void display(int firstTopLeft) {
+
+		int i = 0;
+		for (Button button : buttonsL) {
+			Sprite s = new Sprite(button.getSprite().getTexture());
+			float x = firstTopLeft + i * (Textures.ACTION_TEXTURE_SIZE + 6);
 			float y = 500;
 			s.setPosition(x, y);
-			window.draw(s);
+			buttonsL.get(i).getSprite().setPosition(x, y);
+			i++;
+			LightCore.window.draw(s);
+		}
+	}
+
+	public static void eventManager(Event event) {
+		switch (event.type) {
+		case CLOSED:
+			LightCore.window.close();
+			break;
+		case MOUSE_BUTTON_PRESSED:
+			MouseButtonEvent mouse = event.asMouseButtonEvent();
+			if (mouse.button == Mouse.Button.LEFT) {
+
+				int pressedActionIndex = isInsideList(mouse.position);
+
+				if (pressedActionIndex == -1)
+					break;
+				else {
+					_Executable e = null;
+					Button b = null;
+
+					for (int i = 0; i < actionsL.size(); i++) {
+						if (i == pressedActionIndex) {
+							e = actionsL.get(i);
+							b = buttonsL.get(i);
+						}
+					}
+
+					ProcedureBlockDisplay.add(e, b);
+				}
+			}
+
+		default:
+			break;
 		}
 	}
 
@@ -56,6 +122,15 @@ public class ActionListDisplay {
 		}
 
 		return null;
+	}
+
+	private static int isInsideList(Vector2i coord) {
+		for (int i = 0; i < buttonsL.size(); i++) {
+			if (buttonsL.get(i).isInside(coord))
+				return i;
+		}
+
+		return -1;
 	}
 
 }

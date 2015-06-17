@@ -20,8 +20,7 @@ public class TestMarwan {
 
 	public static RenderWindow window;
 
-	public static void renderInstructionsIcons(List<Texture> textures,
-			int posFirstTex, RenderWindow window) {
+	public static void renderInstructionsIcons(List<Texture> textures, int posFirstTex, RenderWindow window) {
 		for (int i = 0; i < textures.size(); i++) {
 			Texture tex = textures.get(i);
 			Sprite s = new Sprite(tex);
@@ -32,17 +31,17 @@ public class TestMarwan {
 		}
 	}
 
-	/* TODO: change this method so it takes a variable number of icons to display
-	 * 		 integrate this method in a procedure display class
+	/*
+	 * TODO: change this method so it takes a variable number of icons to
+	 * display integrate this method in a procedure display class
 	 */
-	
+
 	public static void foo(RenderWindow window) {
 		Sprite s = new Sprite(Textures.forwardTexture);
 		int currentLine = 0;
 		for (int i = 0; i < 12; i++) {
 
-			s.setPosition(730 + 10 + (i % 4) * (50 + 10), 15 + currentLine
-					* (s.getTexture().getSize().y + 10));
+			s.setPosition(730 + 10 + (i % 4) * (50 + 10), 15 + currentLine * (s.getTexture().getSize().y + 10));
 			window.draw(s);
 
 			if ((i + 1) % 4 == 0)
@@ -73,19 +72,19 @@ public class TestMarwan {
 
 		RectangleShape mainBox = new RectangleShape(new Vector2f(255, 182));
 		mainBox.setFillColor(new Color(79, 179, 201));
-		mainBox.setPosition(730, 1*10);
-		
+		mainBox.setPosition(730, 1 * 10);
+
 		RectangleShape p1Box = new RectangleShape(new Vector2f(255, 182));
 		p1Box.setFillColor(new Color(171, 171, 171));
-		p1Box.setPosition(730, 2*10+182);
-		
+		p1Box.setPosition(730, 2 * 10 + 182);
+
 		RectangleShape p2Box = new RectangleShape(new Vector2f(255, 182));
 		p2Box.setFillColor(new Color(171, 171, 171));
-		p2Box.setPosition(730, 3*10+2*182);
+		p2Box.setPosition(730, 3 * 10 + 2 * 182);
 
 		RectangleShape gameBox = new RectangleShape(new Vector2f(710, 475));
-		gameBox.setPosition(10,10);
-		
+		gameBox.setPosition(10, 10);
+
 		while (window.isOpen()) {
 			if (firstRendering) {
 				firstRendering = false;
