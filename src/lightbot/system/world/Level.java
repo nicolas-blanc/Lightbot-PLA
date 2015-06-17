@@ -11,9 +11,26 @@ public class Level {
 
 	private ArrayList<_Executable> listOfActions;
 
-	public Level(Grid grid, ArrayList<_Executable> listOfActions) {
+	// TODO: add these to the json parser
+	private boolean useProc1;
+	private boolean useProc2;
+
+	// max number of actions in procedures
+	private int mainLimit;
+	private int proc1Limit;
+	private int proc2Limit;
+	//
+	
+	public Level(Grid grid, ArrayList<_Executable> listOfActions, boolean useProc1, boolean useProc2, int proc1Limit,
+			int proc2Limit) {
 		this.grid = grid;
 		this.listOfActions = listOfActions;
+
+		this.useProc1 = useProc1;
+		this.useProc2 = useProc2;
+
+		this.proc1Limit = proc1Limit;
+		this.proc2Limit = proc2Limit;
 	}
 
 	public Grid getGrid() {
@@ -22,6 +39,26 @@ public class Level {
 
 	public ArrayList<_Executable> getListOfActions() {
 		return this.listOfActions;
+	}
+
+	public boolean useProc1() {
+		return this.useProc1;
+	}
+
+	public boolean useProc2() {
+		return this.useProc2;
+	}
+
+	public int getMainLimit() {
+		return this.mainLimit;
+	}
+
+	public int getProc1Limit() {
+		return this.proc1Limit;
+	}
+
+	public int getProc2Limit() {
+		return this.proc2Limit;
 	}
 
 	public void setGrid(Grid grid) {
