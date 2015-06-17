@@ -28,7 +28,8 @@ public class Level {
 
 		this.useProc1 = useProc1;
 		this.useProc2 = useProc2;
-
+		
+		this.mainLimit = mainLimit;
 		this.proc1Limit = proc1Limit;
 		this.proc2Limit = proc2Limit;
 	}
