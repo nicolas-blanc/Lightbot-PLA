@@ -164,6 +164,7 @@ public class MenuDisplay {
 						*/
 						LightCore.worlds = true;
 						LightCore.menu = false;
+						LightCore.firstPrintGame = true;
 					}
 					
 					// Éditeur
@@ -202,6 +203,7 @@ public class MenuDisplay {
 							  LightCore.menu = false;
 							  LightCore.game = true;
 							  System.out.println(file.getAbsolutePath());
+							  LightCore.firstPrintGame = true;
 						}
 					}
 					
@@ -212,6 +214,7 @@ public class MenuDisplay {
 						WorldGenerator newWorld = new WorldGenerator();
 						Grid grid = newWorld.getGrid();
 						LightCore.display = new Game(grid);
+						LightCore.firstPrintGame = true;
 					}
 					// Quitter
 					if(buttonQuitter.isInside(mouse.position)){

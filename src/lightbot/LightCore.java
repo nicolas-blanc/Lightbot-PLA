@@ -43,6 +43,7 @@ public class LightCore {
 	public static boolean pointeurs = false;
 	public static boolean fork = false;
 	public static boolean levelButtonIsDisplayed = false;
+	public static boolean firstPrintGame = true;
 	
 	public static String path = null;
 
@@ -53,7 +54,6 @@ public class LightCore {
 		/***********************************/
 		
 		boolean firstLaunch = true;
-		boolean firstPrintGame = true;
 		MenuDisplay menuD = new MenuDisplay();
 		LevelDisplay levels = new LevelDisplay();
 
@@ -120,6 +120,10 @@ public class LightCore {
 						levels.displayLevelButtons();
 					}
 				} else if (editor || game || random){
+					if((game || random) && firstPrintGame){
+						display.printGrid();
+						firstPrintGame = false;
+					}
 					display.display();
 				}
 			}
@@ -159,10 +163,6 @@ public class LightCore {
 							levels.eventManager(event);
 						}
 					}else if (editor || game || random){
-						if((game || random) && firstPrintGame){
-							display.printGrid();
-							firstPrintGame = false;
-						}
 						display.eventManager(event);
 					}
 				}
