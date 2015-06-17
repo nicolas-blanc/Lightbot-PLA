@@ -32,8 +32,14 @@ public class LightCore {
 	public static int originY;
 	
 	public static boolean menu = true;
-	public static boolean game = false;
+	public static boolean worlds = false;
 	public static boolean editor = false;
+	public static boolean bases = false;
+	public static boolean procedures = false;
+	public static boolean breakaction = false;
+	public static boolean ifthenelse = false;
+	public static boolean pointeurs = false;
+	public static boolean fork = false;
 
 	public static void main(String[] args) {
 		
@@ -84,8 +90,26 @@ public class LightCore {
 			if(menu){
 				menuD.display();
 			} else {
-				if(game){
+				if(worlds){
 					levels.display();
+					if(bases){
+						levels.displayLevelButtons();
+					}
+					if(procedures){
+						levels.displayLevelButtons();
+					}
+					if(breakaction){
+						levels.displayLevelButtons();
+					}
+					if(pointeurs){
+						levels.displayLevelButtons();
+					}
+					if(ifthenelse){
+						levels.displayLevelButtons();
+					}
+					if(fork){
+						levels.displayLevelButtons();
+					}
 				} else if (editor){
 					display.display();
 				}
@@ -105,8 +129,11 @@ public class LightCore {
 				if(menu){
 					menuD.eventManager(event);
 				}else{
-					if(game){
+					if(worlds){
 						levels.eventManager(event);
+						if(bases){
+							levels.eventManager(event);
+						}
 					}else if (editor){
 						display.eventManager(event);
 					}

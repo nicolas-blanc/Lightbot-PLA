@@ -117,7 +117,7 @@ public class MenuDisplay {
 						LightCore.display = new Game(grid);
 						LightCore.menu = false;
 						*/
-						LightCore.game = true;
+						LightCore.worlds = true;
 						LightCore.menu = false;
 					}
 					
@@ -155,7 +155,7 @@ public class MenuDisplay {
 							  int y = (600/2-15-(toOpen.getSize()*Textures.cellTexture.getSize().y)/2);
 							  LightCore.display = new Game(toOpen);
 							  LightCore.menu = false;
-							  LightCore.game = true;
+							  LightCore.worlds = true;
 							  System.out.println(file.getAbsolutePath());
 						}
 					}
