@@ -71,6 +71,7 @@ public class Game implements DisplayMode{
 		toDisplay.add(turnLeftSprite);
 		toDisplay.add(turnRightSprite);
 		toDisplay.add(homeSprite);
+		
 	}
 	
 	/**
@@ -86,6 +87,8 @@ public class Game implements DisplayMode{
 		for(Sprite s : toDisplay)
 			LightCore.window.draw(s);
 		display.print();
+		ActionListDisplay.display(125);
+		ProcedureBlockDisplay.updateDisplay();
 	}
 	
 	public void printGrid(){
@@ -109,6 +112,8 @@ public class Game implements DisplayMode{
 
 	public void eventManager(Event event) {
 		Turn turn;
+		ActionListDisplay.eventManager(event);
+		ProcedureBlockDisplay.eventManager(event);
 		if(event.type == Event.Type.KEY_PRESSED){
 			switch(event.asKeyEvent().key){
 				case UP:

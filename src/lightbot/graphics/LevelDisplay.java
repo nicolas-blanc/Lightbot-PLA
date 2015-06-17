@@ -1,8 +1,16 @@
 package lightbot.graphics;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lightbot.LightCore;
 import lightbot.system.ParserJSON;
+import lightbot.system._Executable;
+import lightbot.system.action.Forward;
+import lightbot.system.action.Jump;
+import lightbot.system.world.Grid;
 import lightbot.system.world.Level;
+import lightbot.system.world.cell.NormalCell;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -11,7 +19,7 @@ import org.jsfml.window.event.MouseButtonEvent;
 import org.jsfml.window.event.MouseEvent;
 
 public class LevelDisplay {
-	
+
 	/*
 	 * Sprites for the "world page"
 	 */
@@ -23,7 +31,7 @@ public class LevelDisplay {
 	static Sprite levelPointeurs;
 	static Sprite levelBg;
 	static Sprite levelTitle;
-	
+
 	/*
 	 * Sprites for the "level page"
 	 */
@@ -32,7 +40,7 @@ public class LevelDisplay {
 	static Sprite level2;
 	static Sprite level3;
 	static Sprite level4;
-	
+
 	/*
 	 * Buttons for the "world page"
 	 */
@@ -45,7 +53,7 @@ public class LevelDisplay {
 	static Button homeButton;
 	static Button buttonBg;
 	static Button buttonTitle;
-	
+
 	/*
 	 * Buttons for the "level page"
 	 */
@@ -54,15 +62,14 @@ public class LevelDisplay {
 	static Button button2;
 	static Button button3;
 	static Button button4;
-	
-	
-	public LevelDisplay(){
+
+	public LevelDisplay() {
 		setButtons();
 	}
-	
-	public void setButtons(){
+
+	public void setButtons() {
 		Textures.initTextures();
-		
+
 		/*
 		 * Sprites for the "world page"
 		 */
@@ -74,7 +81,7 @@ public class LevelDisplay {
 		levelPointeurs = new Sprite(Textures.levelPointeurs);
 		levelBg = new Sprite(Textures.levelBg);
 		levelTitle = new Sprite(Textures.levelTitle);
-		
+
 		/*
 		 * Sprites for the "level page"
 		 */
@@ -83,7 +90,7 @@ public class LevelDisplay {
 		level2 = new Sprite(Textures.level2);
 		level3 = new Sprite(Textures.level3);
 		level4 = new Sprite(Textures.level4);
-		
+
 		/*
 		 * Buttons for the "world page"
 		 */
@@ -94,8 +101,8 @@ public class LevelDisplay {
 		buttonFork = new Button(levelFork, Textures.levelForkH, Textures.levelFork);
 		buttonPointeurs = new Button(levelPointeurs, Textures.levelPointeursH, Textures.levelPointeurs);
 		buttonBg = new Button(levelBg, null, null);
-		buttonTitle = new Button(levelTitle, null, null);	
-		
+		buttonTitle = new Button(levelTitle, null, null);
+
 		/*
 		 * Buttons for the "level page"
 		 */
@@ -104,7 +111,7 @@ public class LevelDisplay {
 		button2 = new Button(level2, Textures.level2H, Textures.level2);
 		button3 = new Button(level3, Textures.level3H, Textures.level3);
 		button4 = new Button(level4, Textures.level4H, Textures.level4);
-		
+
 		/*
 		 * Set positions
 		 */
@@ -116,13 +123,14 @@ public class LevelDisplay {
 		levelFork.setPosition(190, 470);
 		levelBg.setPosition(0, 0);
 		levelTitle.setPosition(100, 0);
-		
+
 		levelBlock.setPosition(530, 70);
 		level1.setPosition(590, 180);
-		level2.setPosition(590, 240);;
+		level2.setPosition(590, 240);
+		;
 		level3.setPosition(590, 300);
-		level4.setPosition(590, 360);	
-		
+		level4.setPosition(590, 360);
+
 		/*
 		 * Sprite & button for home icon
 		 */
@@ -130,32 +138,32 @@ public class LevelDisplay {
 		homeSprite.setPosition(15, 15);
 		homeButton = new Button(homeSprite, null, null);
 	}
-	
-	public void displayButtons(){
-	    LightCore.window.draw(levelBg);
-	    LightCore.window.draw(levelTitle);
-	    LightCore.window.draw(levelBases);
-	    LightCore.window.draw(levelProcedures);
-	    LightCore.window.draw(levelIf);
-	    LightCore.window.draw(levelBreak);
-	    LightCore.window.draw(levelFork);
-	    LightCore.window.draw(levelPointeurs);
+
+	public void displayButtons() {
+		LightCore.window.draw(levelBg);
+		LightCore.window.draw(levelTitle);
+		LightCore.window.draw(levelBases);
+		LightCore.window.draw(levelProcedures);
+		LightCore.window.draw(levelIf);
+		LightCore.window.draw(levelBreak);
+		LightCore.window.draw(levelFork);
+		LightCore.window.draw(levelPointeurs);
 		LightCore.window.draw(homeButton.getSprite());
 	}
-	
-	public void displayLevelButtons(){
-	    LightCore.window.draw(levelBlock);
-	    LightCore.window.draw(level1);
-	    LightCore.window.draw(level2);
-	    LightCore.window.draw(level3);
-	    LightCore.window.draw(level4);	    
+
+	public void displayLevelButtons() {
+		LightCore.window.draw(levelBlock);
+		LightCore.window.draw(level1);
+		LightCore.window.draw(level2);
+		LightCore.window.draw(level3);
+		LightCore.window.draw(level4);
 	}
-	
+
 	public void display() {
 		displayButtons();
 	}
-	
-	public void eventManager(Event event){
+
+	public void eventManager(Event event) {
 		switch (event.type) {
 		case CLOSED:
 			LightCore.window.close();
@@ -175,18 +183,27 @@ public class LevelDisplay {
 			break;
 		case MOUSE_BUTTON_PRESSED:
 			MouseButtonEvent mouse = event.asMouseButtonEvent();
-			if(LightCore.levelButtonIsDisplayed){
-				if(button1.isInside(mouse.position)){
+			if (LightCore.levelButtonIsDisplayed) {
+				if (button1.isInside(mouse.position)) {
 					LightCore.bases = false;
 					LightCore.procedures = false;
 					LightCore.game = true;
 					LightCore.worlds = false;
 					LightCore.path = LightCore.path + "1.json";
 					Level level = ParserJSON.deserialize(LightCore.path);
+					/*
+					 * Grid g = new Grid(2); g.setCell(new NormalCell(0, 0, 1));
+					 * g.setCell(new NormalCell(1, 1, 2));
+					 * ArrayList<_Executable> a = new ArrayList<_Executable>();
+					 * a.add(new Forward()); a.add(new Jump()); Level level =
+					 * new Level(g, a, true, true, 10, 5, 5);
+					 */
 					System.out.println(LightCore.path);
 					LightCore.display = new Game(level.getGrid());
+					ActionListDisplay.init(level);
+					ProcedureBlockDisplay.init(level);
 				}
-				if(button2.isInside(mouse.position)){
+				if (button2.isInside(mouse.position)) {
 					LightCore.bases = false;
 					LightCore.procedures = false;
 					LightCore.game = true;
@@ -196,7 +213,7 @@ public class LevelDisplay {
 					System.out.println(LightCore.path);
 					LightCore.display = new Game(level.getGrid());
 				}
-				if(button3.isInside(mouse.position)){
+				if (button3.isInside(mouse.position)) {
 					LightCore.bases = false;
 					LightCore.procedures = false;
 					LightCore.game = true;
@@ -206,7 +223,7 @@ public class LevelDisplay {
 					System.out.println(LightCore.path);
 					LightCore.display = new Game(level.getGrid());
 				}
-				if(button4.isInside(mouse.position)){
+				if (button4.isInside(mouse.position)) {
 					LightCore.bases = false;
 					LightCore.procedures = false;
 					LightCore.game = true;
@@ -217,7 +234,7 @@ public class LevelDisplay {
 					LightCore.display = new Game(level.getGrid());
 				}
 			}
-			if(homeButton.isInside(mouse.position)){
+			if (homeButton.isInside(mouse.position)) {
 				LightCore.bases = false;
 				LightCore.procedures = false;
 				LightCore.ifthenelse = false;
@@ -227,7 +244,7 @@ public class LevelDisplay {
 				LightCore.worlds = false;
 				LightCore.menu = true;
 			}
-			if(buttonBases.isInside(mouse.position)){
+			if (buttonBases.isInside(mouse.position)) {
 				LightCore.procedures = false;
 				LightCore.ifthenelse = false;
 				LightCore.breakaction = false;
@@ -238,7 +255,7 @@ public class LevelDisplay {
 				LightCore.levelButtonIsDisplayed = true;
 				LightCore.path = "Levels/Basics/Basic";
 			}
-			if(buttonProcedures.isInside(mouse.position)){
+			if (buttonProcedures.isInside(mouse.position)) {
 				LightCore.ifthenelse = false;
 				LightCore.breakaction = false;
 				LightCore.pointeurs = false;
@@ -248,7 +265,7 @@ public class LevelDisplay {
 				LightCore.levelButtonIsDisplayed = true;
 				LightCore.path = "Levels/Procedures/Proc";
 			}
-			if(buttonIf.isInside(mouse.position)){
+			if (buttonIf.isInside(mouse.position)) {
 				LightCore.breakaction = false;
 				LightCore.pointeurs = false;
 				LightCore.fork = false;
@@ -258,7 +275,7 @@ public class LevelDisplay {
 				LightCore.levelButtonIsDisplayed = true;
 				LightCore.path = "Levels/Ifthenelse/Ifthenelse";
 			}
-			if(buttonFork.isInside(mouse.position)){
+			if (buttonFork.isInside(mouse.position)) {
 				LightCore.ifthenelse = false;
 				LightCore.breakaction = false;
 				LightCore.pointeurs = false;
@@ -268,7 +285,7 @@ public class LevelDisplay {
 				LightCore.levelButtonIsDisplayed = true;
 				LightCore.path = "Levels/Fork/Fork";
 			}
-			if(buttonPointeurs.isInside(mouse.position)){
+			if (buttonPointeurs.isInside(mouse.position)) {
 				LightCore.ifthenelse = false;
 				LightCore.breakaction = false;
 				LightCore.fork = false;
@@ -278,7 +295,7 @@ public class LevelDisplay {
 				LightCore.levelButtonIsDisplayed = true;
 				LightCore.path = "Levels/Pointeurs/Pointeurs";
 			}
-			if(buttonBreak.isInside(mouse.position)){
+			if (buttonBreak.isInside(mouse.position)) {
 				LightCore.ifthenelse = false;
 				LightCore.pointeurs = false;
 				LightCore.fork = false;

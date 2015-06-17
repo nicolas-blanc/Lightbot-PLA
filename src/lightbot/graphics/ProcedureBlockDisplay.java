@@ -13,6 +13,7 @@ import org.jsfml.graphics.Color;
 import org.jsfml.graphics.RectangleShape;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
+import org.jsfml.system.Vector2i;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.MouseButtonEvent;
@@ -21,6 +22,11 @@ public class ProcedureBlockDisplay {
 
 	private static final int BLOCK_WIDTH = 255;
 	private static final int BLOCK_HEIGHT = 182;
+
+	private enum SelectedBox {
+		MAIN, PROC1, PROC2;
+
+	}
 
 	private static final int TOP_MARGIN = 10;
 
@@ -39,9 +45,9 @@ public class ProcedureBlockDisplay {
 	public static boolean proc1IsActive;
 	public static boolean proc2IsActive;
 
-	private static RectangleShape mainRect;
-	private static RectangleShape proc1Rect;
-	private static RectangleShape proc2Rect;
+	private static RectangleShape mainRect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
+	private static RectangleShape proc1Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
+	private static RectangleShape proc2Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 
 	public static void init(Level level) {
 
@@ -169,18 +175,155 @@ public class ProcedureBlockDisplay {
 		case MOUSE_BUTTON_PRESSED:
 			MouseButtonEvent mouse = event.asMouseButtonEvent();
 			if (mouse.button == Mouse.Button.LEFT) {
+				SelectedBox sl = selectedbox(mouse.position);
+				if (sl != null) {
+					switch (sl) {
+					case MAIN:
+						mainIsActive = true;
+						proc1IsActive = false;
+						proc2IsActive = false;
+						break;
+					case PROC1:
+						proc1IsActive = true;
+						mainIsActive = false;
+						proc2IsActive = false;
+						break;
+					case PROC2:
+						proc2IsActive = true;
+						mainIsActive = false;
+						proc2IsActive = false;
+					}
+				}
+			}
 
+			if (mouse.button == Mouse.Button.RIGHT) {
+				SelectedBox sl = selectedbox(mouse.position);
+				int index;
+				if (sl != null) {
+					switch (sl) {
+					case MAIN:
+						index = isInsideBox(mouse.position, SelectedBox.MAIN);
+						if (index != -1) {
+							deleteFromProcedureAtIndex(index, SelectedBox.MAIN);
+							updateDisplay();
+						}
+						break;
+					case PROC1:
+						index = isInsideBox(mouse.position, SelectedBox.PROC1);
+						if (index != -1) {
+							deleteFromProcedureAtIndex(index, SelectedBox.PROC1);
+							updateDisplay();
+						}
+						break;
+					case PROC2:
+						index = isInsideBox(mouse.position, SelectedBox.PROC1);
+						if (index != -1) {
+							deleteFromProcedureAtIndex(index, SelectedBox.PROC1);
+							updateDisplay();
+						}
+						break;
+					}
+				}
 			}
 		default:
 			break;
 
 		}
 	}
-	
-	//private static 
-	
 
-	private static void updateDisplay() {
+	private static SelectedBox selectedbox(Vector2i coords) {
+		if (mainRect.getGlobalBounds().contains(coords.x, coords.y))
+			return SelectedBox.MAIN;
+
+		if (proc1Rect.getGlobalBounds().contains(coords.x, coords.y))
+			return SelectedBox.PROC1;
+
+		if (proc2Rect.getGlobalBounds().contains(coords.x, coords.y))
+			return SelectedBox.PROC2;
+
+		return null;
+	}
+
+	private static int isInsideBox(Vector2i coords, SelectedBox sb) {
+		switch (sb) {
+		case MAIN:
+			for (int i = 0; i < mainButtons.size(); i++) {
+				if (mainButtons.get(i).isInside(coords))
+					return i;
+			}
+			return -1;
+
+		case PROC1:
+			for (int i = 0; i < proc1Buttons.size(); i++) {
+				if (proc1Buttons.get(i).isInside(coords))
+					return i;
+			}
+			return -1;
+
+		case PROC2:
+			for (int i = 0; i < proc2Buttons.size(); i++) {
+				if (proc2Buttons.get(i).isInside(coords))
+					return i;
+			}
+			return -1;
+		}
+
+		return -1;
+	}
+
+	private static void deleteFromProcedureAtIndex(int index, SelectedBox sb) {
+		int lastIndex;
+		Vector2f lastPos;
+
+		switch (sb) {
+		case MAIN:
+			main.removeActionAtIndex(index);
+
+			lastIndex = index;
+			lastPos = mainButtons.get(index).getSprite().getPosition();
+			mainButtons.remove(index);
+
+			for (int i = lastIndex; i < mainButtons.size(); i++) {
+				Vector2f oldPos = mainButtons.get(i).getSprite().getPosition();
+				mainButtons.get(i).getSprite().setPosition(lastPos);
+				lastPos = oldPos;
+
+			}
+			break;
+
+		case PROC1:
+			proc1.removeActionAtIndex(index);
+
+			lastIndex = index;
+			lastPos = mainButtons.get(index).getSprite().getPosition();
+			mainButtons.remove(index);
+
+			for (int i = lastIndex; i < mainButtons.size(); i++) {
+				Vector2f oldPos = mainButtons.get(i).getSprite().getPosition();
+				mainButtons.get(i).getSprite().setPosition(lastPos);
+				lastPos = oldPos;
+
+			}
+			break;
+
+		case PROC2:
+			proc1.removeActionAtIndex(index);
+
+			lastIndex = index;
+			lastPos = mainButtons.get(index).getSprite().getPosition();
+			mainButtons.remove(index);
+
+			for (int i = lastIndex; i < mainButtons.size(); i++) {
+				Vector2f oldPos = mainButtons.get(i).getSprite().getPosition();
+				mainButtons.get(i).getSprite().setPosition(lastPos);
+				lastPos = oldPos;
+
+			}
+			break;
+		}
+	}
+
+	public static void updateDisplay() {
 		LightCore.window.draw(mainRect);
 
 		for (int i = 0; i < mainButtons.size(); i++) {
@@ -201,4 +344,5 @@ public class ProcedureBlockDisplay {
 			}
 		}
 	}
+
 }
