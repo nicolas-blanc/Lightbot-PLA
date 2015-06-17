@@ -21,7 +21,7 @@ public class Level {
 	private int proc2Limit;
 	//
 	
-	public Level(Grid grid, ArrayList<_Executable> listOfActions, boolean useProc1, boolean useProc2, int proc1Limit,
+	public Level(Grid grid, ArrayList<_Executable> listOfActions, boolean useProc1, boolean useProc2, int mainLimit, int proc1Limit,
 			int proc2Limit) {
 		this.grid = grid;
 		this.listOfActions = listOfActions;
