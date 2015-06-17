@@ -112,7 +112,21 @@ public class ParserJSON {
 				}
 			}
 			
-			level = new Level(grid, listOfActions);
+			
+			// Get informations about the procedures
+			JSONObject procedures = (JSONObject)dataObject.get("proc");
+			int mainLimit = (int)(long)procedures.get("main_limit");
+			int p1Limit = 0;
+			int p2Limit = 0;
+			boolean p1Active = Boolean.parseBoolean((String)procedures.get("p1"));
+			boolean p2Active = Boolean.parseBoolean((String)procedures.get("p2"));
+			
+			if(p1Active)
+				p1Limit = (int)(long)procedures.get("p1_limit");
+			if(p2Active)
+				p1Limit = (int)(long)procedures.get("p2_limit");
+			
+			level = new Level(grid, listOfActions, p1Active, p2Active, mainLimit, p1Limit, p2Limit);
 			
 			inStream.close();
 		} catch (FileNotFoundException e) {
@@ -127,7 +141,7 @@ public class ParserJSON {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static void serialize(String filename, Grid grid, ArrayList<_Executable> listOfActions){
+	public static void serialize(String filename, Level level){
 		OutputStream outStream = null;
 		try {
 			outStream = new FileOutputStream(new File(filename));
@@ -135,10 +149,10 @@ public class ParserJSON {
 			JSONObject dataObject = new JSONObject();
 			JSONArray gridArray = new JSONArray();
 			
-			for(int l=0; l<grid.getSize(); l++){
+			for(int l=0; l<level.getGrid().getSize(); l++){
 				JSONArray lines = new JSONArray();
-				for(int c=0; c<grid.getSize(); c++){
-					Cell cell = grid.getCell(l, c);
+				for(int c=0; c<level.getGrid().getSize(); c++){
+					Cell cell = level.getGrid().getCell(l, c);
 					JSONObject cellObject = new JSONObject();
 					cellObject.put("l", l);
 					cellObject.put("c", c);
@@ -172,7 +186,7 @@ public class ParserJSON {
 			}
 			
 			dataObject.put("grid", gridArray);
-			dataObject.put("size", grid.getSize());
+			dataObject.put("size", level.getGrid().getSize());
 			
 			// Informations about the robot
 			JSONObject robot = new JSONObject();
@@ -182,7 +196,7 @@ public class ParserJSON {
 			
 			// Informations about the list of actions
 			JSONArray actions = new JSONArray();
-			for(_Executable e : listOfActions){
+			for(_Executable e : level.getListOfActions()){
 				String toAdd = getClassName(e);
 				if(toAdd.equals("Turn"))
 					actions.add(toAdd+"_"+((Turn)e).getDirection().toString());
@@ -190,6 +204,18 @@ public class ParserJSON {
 					actions.add(toAdd);
 			}
 			dataObject.put("actions", actions);
+			
+			// Informations about the procedures
+			JSONObject procedures = new JSONObject();
+			procedures.put("P1", Boolean.toString(level.useProc1()));
+			if(level.useProc1())
+				procedures.put("p1_limit", level.getProc1Limit());
+			procedures.put("P2", level.useProc2());
+			if(level.useProc2())
+				procedures.put("p2_limit", level.getProc2Limit());
+			procedures.put("main_limit", level.getMainLimit());
+			
+			dataObject.put("proc", procedures);
 			
 			// writing process
 			byte [] contentToWrite = dataObject.toJSONString().getBytes();

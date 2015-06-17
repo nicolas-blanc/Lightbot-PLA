@@ -1,9 +1,12 @@
 package lightbot.system;
 
 public enum Colour {
-	WHITE,
+	BLUE,
 	GREEN,
-	YELLOW,
+	ORANGE,
+	PURPLE,
 	RED,
+	WHITE,
+	YELLOW,
 	OBSTACLE;
 }

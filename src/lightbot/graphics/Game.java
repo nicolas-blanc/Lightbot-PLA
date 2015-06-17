@@ -7,6 +7,7 @@ import lightbot.system.CardinalDirection;
 import lightbot.system.Colour;
 import lightbot.system.RelativeDirection;
 import lightbot.system.Robot;
+import lightbot.system.action.Forward;
 import lightbot.system.action.Turn;
 import lightbot.system.world.Grid;
 
@@ -23,18 +24,24 @@ public class Game implements DisplayMode{
 	private Button turnLeftButton;
 	private Button turnRightButton;
 	
-	private Display display;
+	private static Button homeButton;
+	
+	public Display display;
 	
 	private int originX;
 	private int originY;
+	
+	private final int MARGIN_LEFT = 15;
+	private final int GRID_DISPLAY_SIZE = 710;
+	private final int WINDOW_HEIGHT = 475;
 	
 	/********************************************************************************************/
 	/*										Constructors										*/
 	/********************************************************************************************/
 	
 	public Game(Grid grid){
-		originX = (750/2)+15;
-		originY = (475-(grid.getSize()*Textures.cellTexture.getSize().y));
+		originX = (GRID_DISPLAY_SIZE/2)+MARGIN_LEFT;
+		originY = (WINDOW_HEIGHT-(grid.getSize()*Textures.cellTexture.getSize().y));
 		
 		toDisplay = new ArrayList<Sprite>();
 	
@@ -56,8 +63,14 @@ public class Game implements DisplayMode{
 		turnLeftButton = new Button(turnLeftSprite, null, null);
 		turnRightButton = new Button(turnRightSprite, null, null);
 		
+		Sprite homeSprite = new Sprite(Textures.homeButtonTextureRelief);
+		homeSprite.setPosition(MARGIN_LEFT, MARGIN_LEFT);
+		
+		homeButton = new Button(homeSprite, null, null);
+		
 		toDisplay.add(turnLeftSprite);
 		toDisplay.add(turnRightSprite);
+		toDisplay.add(homeSprite);
 	}
 	
 	/**
@@ -152,6 +165,12 @@ public class Game implements DisplayMode{
 				}
 				else if(turnRightButton.isInside(mouse.position)){
 					display.rotate(1);
+				}
+				else if(homeButton.isInside(mouse.position)){
+					System.out.println("out");
+					LightCore.game = false;
+					LightCore.random = false;
+					LightCore.menu = true;
 				}
 			}
 		}

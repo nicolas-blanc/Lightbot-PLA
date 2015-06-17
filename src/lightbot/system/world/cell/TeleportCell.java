@@ -1,5 +1,6 @@
 package lightbot.system.world.cell;
 
+import lightbot.system.TeleportColour;
 import lightbot.system.world.Position;
 
 public class TeleportCell extends FullCell {

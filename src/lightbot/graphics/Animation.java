@@ -264,7 +264,7 @@ public class Animation {
 	 * @param direction
 	 * @param upOrDown
 	 */
-	void moveRobot(CardinalDirection direction, int upOrDown){
+	 public void moveRobot(CardinalDirection direction, int upOrDown){
 		boolean finished = false;
 		
 		float movementX = 0;
@@ -303,10 +303,10 @@ public class Animation {
 			}
 		}
 		else if(upOrDown == 1){
-			movementY = (Textures.cubeTexture.getSize().y-Textures.cellTexture.getSize().y) / this.movementTime;
+			movementY = (Textures.cubeTextureWhite.getSize().y-Textures.cellTexture.getSize().y) / this.movementTime;
 		}
 		else
-			movementY = -(Textures.cubeTexture.getSize().y-Textures.cellTexture.getSize().y) / this.movementTime;
+			movementY = -(Textures.cubeTextureWhite.getSize().y-Textures.cellTexture.getSize().y) / this.movementTime;
 		
 		Clock frameClock = new Clock();
 		Clock resetClock = new Clock();

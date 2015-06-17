@@ -95,7 +95,7 @@ public class RobotDisplay implements DisplayPrimitive{
 		
 		float decalX = Textures.cellTexture.getSize().x / 2;
 		float decalY = Textures.cellTexture.getSize().y / 2;
-		float sizeCubeY = Textures.cubeTexture.getSize().y;
+		float sizeCubeY = Textures.cubeTextureWhite.getSize().y;
 		
 		float decalXRobot = (Textures.cellTexture.getSize().x - this.currentTexture.getSize().x)/2;
 		
@@ -113,7 +113,7 @@ public class RobotDisplay implements DisplayPrimitive{
 				decal = new Vector2f((this.column-this.line)*(decalX-1)+decalXRobot, (this.line+this.column+2)*(decalY-1)-(sizeCubeY-2)-(this.level-1)*decalY-this.robotHeight);
 		}
 
-		Vector2f origin = Vector2f.div(new Vector2f(Textures.cubeTexture.getSize()), 2);
+		Vector2f origin = Vector2f.div(new Vector2f(Textures.cubeTextureWhite.getSize()), 2);
 		
 		robot.scale(new Vector2f(1, 1));
 		robot.setOrigin(Vector2f.sub(origin, decal));

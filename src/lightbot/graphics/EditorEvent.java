@@ -3,14 +3,15 @@ package lightbot.graphics;
 public enum EditorEvent {
 	SPLASH_BLUE,
 	SPLASH_ORANGE,
+	SPLASH_PURPLE,
 	SPLASH_RED,
-	SPLASH_GREEN,
 	
 	TELEPORT,
 	LIGHT,
 	SAVE,
 	LOAD,
 	ROBOT,
+	HOME,
 	
 	TURN_LEFT,
 	TURN_RIGHT,
