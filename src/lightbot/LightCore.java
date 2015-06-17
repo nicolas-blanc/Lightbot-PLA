@@ -42,6 +42,9 @@ public class LightCore {
 	public static boolean ifthenelse = false;
 	public static boolean pointeurs = false;
 	public static boolean fork = false;
+	public static boolean levelButtonIsDisplayed = false;
+	
+	public static String path = null;
 
 	public static void main(String[] args) {
 		
@@ -138,6 +141,21 @@ public class LightCore {
 					if(worlds){
 						levels.eventManager(event);
 						if(bases){
+							levels.eventManager(event);
+						}
+						if(procedures){
+							levels.eventManager(event);
+						}
+						if(pointeurs){
+							levels.eventManager(event);
+						}
+						if(fork){
+							levels.eventManager(event);
+						}
+						if(ifthenelse){
+							levels.eventManager(event);
+						}
+						if(breakaction){
 							levels.eventManager(event);
 						}
 					}else if (editor || game || random){

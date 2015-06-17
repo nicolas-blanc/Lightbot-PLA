@@ -1,6 +1,8 @@
 package lightbot.graphics;
 
 import lightbot.LightCore;
+import lightbot.system.ParserJSON;
+import lightbot.system.world.Level;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -173,6 +175,48 @@ public class LevelDisplay {
 			break;
 		case MOUSE_BUTTON_PRESSED:
 			MouseButtonEvent mouse = event.asMouseButtonEvent();
+			if(LightCore.levelButtonIsDisplayed){
+				if(button1.isInside(mouse.position)){
+					LightCore.bases = false;
+					LightCore.procedures = false;
+					LightCore.game = true;
+					LightCore.worlds = false;
+					LightCore.path = LightCore.path + "1.json";
+					Level level = ParserJSON.deserialize(LightCore.path);
+					System.out.println(LightCore.path);
+					LightCore.display = new Game(level.getGrid());
+				}
+				if(button2.isInside(mouse.position)){
+					LightCore.bases = false;
+					LightCore.procedures = false;
+					LightCore.game = true;
+					LightCore.worlds = false;
+					LightCore.path = LightCore.path + "2.json";
+					Level level = ParserJSON.deserialize(LightCore.path);
+					System.out.println(LightCore.path);
+					LightCore.display = new Game(level.getGrid());
+				}
+				if(button3.isInside(mouse.position)){
+					LightCore.bases = false;
+					LightCore.procedures = false;
+					LightCore.game = true;
+					LightCore.worlds = false;
+					LightCore.path = LightCore.path + "3.json";
+					Level level = ParserJSON.deserialize(LightCore.path);
+					System.out.println(LightCore.path);
+					LightCore.display = new Game(level.getGrid());
+				}
+				if(button4.isInside(mouse.position)){
+					LightCore.bases = false;
+					LightCore.procedures = false;
+					LightCore.game = true;
+					LightCore.worlds = false;
+					LightCore.path = LightCore.path + "4.json";
+					Level level = ParserJSON.deserialize(LightCore.path);
+					System.out.println(LightCore.path);
+					LightCore.display = new Game(level.getGrid());
+				}
+			}
 			if(homeButton.isInside(mouse.position)){
 				LightCore.bases = false;
 				LightCore.procedures = false;
@@ -190,6 +234,9 @@ public class LevelDisplay {
 				LightCore.pointeurs = false;
 				LightCore.fork = false;
 				LightCore.bases = true;
+				LightCore.menu = false;
+				LightCore.levelButtonIsDisplayed = true;
+				LightCore.path = "Levels/Basics/Basic";
 			}
 			if(buttonProcedures.isInside(mouse.position)){
 				LightCore.ifthenelse = false;
@@ -198,6 +245,8 @@ public class LevelDisplay {
 				LightCore.fork = false;
 				LightCore.bases = false;
 				LightCore.procedures = true;
+				LightCore.levelButtonIsDisplayed = true;
+				LightCore.path = "Levels/Procedures/Proc";
 			}
 			if(buttonIf.isInside(mouse.position)){
 				LightCore.breakaction = false;
@@ -206,6 +255,8 @@ public class LevelDisplay {
 				LightCore.bases = false;
 				LightCore.procedures = false;
 				LightCore.ifthenelse = true;
+				LightCore.levelButtonIsDisplayed = true;
+				LightCore.path = "Levels/Ifthenelse/Ifthenelse";
 			}
 			if(buttonFork.isInside(mouse.position)){
 				LightCore.ifthenelse = false;
@@ -214,6 +265,8 @@ public class LevelDisplay {
 				LightCore.bases = false;
 				LightCore.procedures = false;
 				LightCore.fork = true;
+				LightCore.levelButtonIsDisplayed = true;
+				LightCore.path = "Levels/Fork/Fork";
 			}
 			if(buttonPointeurs.isInside(mouse.position)){
 				LightCore.ifthenelse = false;
@@ -222,6 +275,8 @@ public class LevelDisplay {
 				LightCore.bases = false;
 				LightCore.procedures = false;
 				LightCore.pointeurs = true;
+				LightCore.levelButtonIsDisplayed = true;
+				LightCore.path = "Levels/Pointeurs/Pointeurs";
 			}
 			if(buttonBreak.isInside(mouse.position)){
 				LightCore.ifthenelse = false;
@@ -230,6 +285,8 @@ public class LevelDisplay {
 				LightCore.bases = false;
 				LightCore.procedures = false;
 				LightCore.breakaction = true;
+				LightCore.levelButtonIsDisplayed = true;
+				LightCore.path = "Levels/Break/Break";
 			}
 		default:
 			break;
