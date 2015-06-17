@@ -191,14 +191,7 @@ public class LevelDisplay {
 					LightCore.worlds = false;
 					LightCore.path = LightCore.path + "1.json";
 					Level level = ParserJSON.deserialize(LightCore.path);
-					/*
-					 * Grid g = new Grid(2); g.setCell(new NormalCell(0, 0, 1));
-					 * g.setCell(new NormalCell(1, 1, 2));
-					 * ArrayList<_Executable> a = new ArrayList<_Executable>();
-					 * a.add(new Forward()); a.add(new Jump()); Level level =
-					 * new Level(g, a, true, true, 10, 5, 5);
-					 */
-					System.out.println(LightCore.path);
+					// System.out.println(LightCore.path);
 					LightCore.display = new Game(level.getGrid());
 					ActionListDisplay.init(level);
 					ProcedureBlockDisplay.init(level);
@@ -210,8 +203,10 @@ public class LevelDisplay {
 					LightCore.worlds = false;
 					LightCore.path = LightCore.path + "2.json";
 					Level level = ParserJSON.deserialize(LightCore.path);
-					System.out.println(LightCore.path);
+					// System.out.println(LightCore.path);
 					LightCore.display = new Game(level.getGrid());
+					ActionListDisplay.init(level);
+					ProcedureBlockDisplay.init(level);
 				}
 				if (button3.isInside(mouse.position)) {
 					LightCore.bases = false;
@@ -220,8 +215,10 @@ public class LevelDisplay {
 					LightCore.worlds = false;
 					LightCore.path = LightCore.path + "3.json";
 					Level level = ParserJSON.deserialize(LightCore.path);
-					System.out.println(LightCore.path);
+					// System.out.println(LightCore.path);
 					LightCore.display = new Game(level.getGrid());
+					ActionListDisplay.init(level);
+					ProcedureBlockDisplay.init(level);
 				}
 				if (button4.isInside(mouse.position)) {
 					LightCore.bases = false;
@@ -230,8 +227,10 @@ public class LevelDisplay {
 					LightCore.worlds = false;
 					LightCore.path = LightCore.path + "4.json";
 					Level level = ParserJSON.deserialize(LightCore.path);
-					System.out.println(LightCore.path);
+					// System.out.println(LightCore.path);
 					LightCore.display = new Game(level.getGrid());
+					ActionListDisplay.init(level);
+					ProcedureBlockDisplay.init(level);
 				}
 			}
 			if (homeButton.isInside(mouse.position)) {
@@ -260,7 +259,7 @@ public class LevelDisplay {
 				LightCore.menu = false;
 				LightCore.levelButtonIsDisplayed = true;
 				LightCore.path = "Levels/Basics/Basic";
-				
+
 				buttonBases.changeTexture();
 				buttonProcedures.reset();
 				buttonFork.reset();
@@ -277,7 +276,7 @@ public class LevelDisplay {
 				LightCore.procedures = true;
 				LightCore.levelButtonIsDisplayed = true;
 				LightCore.path = "Levels/Procedures/Proc";
-				
+
 				buttonProcedures.changeTexture();
 				buttonBases.reset();
 				buttonFork.reset();
@@ -294,7 +293,7 @@ public class LevelDisplay {
 				LightCore.ifthenelse = true;
 				LightCore.levelButtonIsDisplayed = true;
 				LightCore.path = "Levels/Ifthenelse/Ifthenelse";
-				
+
 				buttonIf.changeTexture();
 				buttonBases.reset();
 				buttonProcedures.reset();
@@ -312,7 +311,7 @@ public class LevelDisplay {
 				LightCore.fork = true;
 				LightCore.levelButtonIsDisplayed = true;
 				LightCore.path = "Levels/Fork/Fork";
-				
+
 				buttonFork.changeTexture();
 				buttonBases.reset();
 				buttonProcedures.reset();
@@ -329,7 +328,7 @@ public class LevelDisplay {
 				LightCore.pointeurs = true;
 				LightCore.levelButtonIsDisplayed = true;
 				LightCore.path = "Levels/Pointeurs/Pointeurs";
-				
+
 				buttonPointeurs.changeTexture();
 				buttonBases.reset();
 				buttonProcedures.reset();
@@ -346,7 +345,7 @@ public class LevelDisplay {
 				LightCore.breakaction = true;
 				LightCore.levelButtonIsDisplayed = true;
 				LightCore.path = "Levels/Break/Break";
-				
+
 				buttonBreak.changeTexture();
 				buttonBases.reset();
 				buttonProcedures.reset();
