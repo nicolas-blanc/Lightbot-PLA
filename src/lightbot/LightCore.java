@@ -43,12 +43,16 @@ public class LightCore {
 
 	public static void main(String[] args) {
 		
+		// always at the beginning of the main
+		Textures.initTextures();
+		/***********************************/
+		
 		boolean firstLaunch = true;
 		boolean firstPrintGame = true;
 		MenuDisplay menuD = new MenuDisplay();
 		LevelDisplay levels = new LevelDisplay();
 
-		Textures.initTextures();
+		
 
 		// Create the window
 		window = new RenderWindow();
