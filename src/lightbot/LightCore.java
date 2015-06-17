@@ -42,6 +42,10 @@ public class LightCore {
 	public static boolean ifthenelse = false;
 	public static boolean pointeurs = false;
 	public static boolean fork = false;
+	public static boolean levelButtonIsDisplayed = false;
+	public static boolean firstPrintGame = true;
+	
+	public static String path = null;
 
 	public static void main(String[] args) {
 		
@@ -50,7 +54,6 @@ public class LightCore {
 		/***********************************/
 		
 		boolean firstLaunch = true;
-		boolean firstPrintGame = true;
 		MenuDisplay menuD = new MenuDisplay();
 		LevelDisplay levels = new LevelDisplay();
 
@@ -117,6 +120,10 @@ public class LightCore {
 						levels.displayLevelButtons();
 					}
 				} else if (editor || game || random){
+					if((game || random) && firstPrintGame){
+						display.printGrid();
+						firstPrintGame = false;
+					}
 					display.display();
 				}
 			}
@@ -137,14 +144,25 @@ public class LightCore {
 				}else{
 					if(worlds){
 						levels.eventManager(event);
-						if(bases){
+						if(bases && !worlds){
+							levels.eventManager(event);
+						}
+						else if(procedures && !worlds){
+							levels.eventManager(event);
+						}
+						else if(pointeurs && !worlds){
+							levels.eventManager(event);
+						}
+						else if(fork && !worlds){
+							levels.eventManager(event);
+						}
+						else if(ifthenelse && !worlds){
+							levels.eventManager(event);
+						}
+						else if(breakaction && !worlds){
 							levels.eventManager(event);
 						}
 					}else if (editor || game || random){
-						if((game || random) && firstPrintGame){
-							display.printGrid();
-							firstPrintGame = false;
-						}
 						display.eventManager(event);
 					}
 				}

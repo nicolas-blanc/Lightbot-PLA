@@ -522,6 +522,10 @@ public class Editor implements DisplayMode{
 					  originX = (GRID_DISPLAY_SIZE/2)+MARGIN_LEFT;
 					  originY = (WINDOW_HEIGHT/2-MARGIN_LEFT-(toOpen.getSize()*Textures.cellTexture.getSize().y)/2);
 					  display.reinit(toOpen, originX, originY);
+					  toDisplay = new ArrayList<Sprite>();
+					  canva = new CanvaDisplay(toOpen.getSize(), originX, originY);
+					  initConstantDisplay();
+					  
 					  System.out.println(file.getAbsolutePath());
 					}
 					loadButton.changeTexture();

@@ -27,6 +27,7 @@ public class Button {
 	}
 	
 	public void changeTexture(){
+		System.out.println(pushed);
 		if(pushed){
 			if(pushOff != null)
 				sprite.setTexture(pushOff);
@@ -35,7 +36,7 @@ public class Button {
 		else{
 			if(pushOn != null)
 				sprite.setTexture(pushOn);
-			sprite.setColor(new Color(220, 220, 220, 255));
+			sprite.setColor(new Color(150, 150, 150, 255));
 		}
 		pushed = !pushed;
 	}
@@ -77,18 +78,18 @@ public class Button {
 	}
 	
 	public void changeOnHover(Vector2i coord){
-		if(isInside(coord)){
-			if(!hovered){
+		if(isInside(coord) && !pushed){
+			if(hovered){
 				if(pushOn != null)
 					sprite.setTexture(pushOn);
-				hovered = true;
+				hovered = false;
 			}
 		}
 		else{
-			if(hovered){
+			if(!hovered){
 				if(pushOff != null)
 					sprite.setTexture(pushOff);
-				hovered = false;	
+				hovered = true;	
 			}
 		}
 	}

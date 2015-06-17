@@ -5,9 +5,10 @@ import java.util.List;
 
 import lightbot.system.action._Action;
 import lightbot.system.world.Grid;
+import lightbot.system.world.OutOfGridException;
 
 public class Procedure extends _Executable {
-	
+
 	public static final String MAIN_NAME = "main";
 	public static final String PROCEDURE1_NAME = "proc1";
 	public static final String PROCEDURE2_NAME = "proc2";
@@ -27,13 +28,6 @@ public class Procedure extends _Executable {
 	 */
 	private List<_Executable> actions;
 
-	/*
-	 * The caller of this procedure. if main procedure, caller == null
-	 */
-	private Procedure caller;
-
-	private int nextInLine;
-
 	public Procedure(String name, int actionLimit, Colour colour) {
 		super(colour);
 		this.name = name;
@@ -41,9 +35,6 @@ public class Procedure extends _Executable {
 
 		actions = new ArrayList<_Executable>(this.procSizeLimit);
 
-		this.caller = null;
-
-		this.nextInLine = 0;
 	}
 
 	/**
@@ -53,12 +44,16 @@ public class Procedure extends _Executable {
 		return this.procSizeLimit;
 	}
 
-	public Procedure getCaller() {
-		return this.caller;
+	public int getSize() {
+		return this.actions.size();
 	}
-	
+
 	public String getName() {
 		return this.name;
+	}
+
+	public void setLimit(int limit) {
+		this.procSizeLimit = limit;
 	}
 
 	/**
@@ -69,9 +64,6 @@ public class Procedure extends _Executable {
 	public boolean addAction(_Executable action) {
 		if (this.actions.size() == procSizeLimit)
 			return false;
-
-		if (action instanceof Procedure)
-			((Procedure) action).caller = this;
 
 		this.actions.add(action);
 
@@ -92,9 +84,11 @@ public class Procedure extends _Executable {
 
 	/**
 	 * Executes the next action in the procedure.
+	 * 
+	 * @throws OutOfGridException
 	 */
 	@Override
-	public void execute(Grid grid, Robot robot) {
+	public void execute(Grid grid, Robot robot) throws OutOfGridException {
 
 		for (_Executable e : actions) {
 			if (e instanceof _Action)
@@ -106,17 +100,7 @@ public class Procedure extends _Executable {
 		}
 	}
 
-	public _Executable Next() {
-		int oldNextInLine = this.nextInLine;
-		this.nextInLine += 1;
-
-		_Executable next = this.actions.get(oldNextInLine);
-
-		return next;
+	public void reset() {
+		this.actions.clear();
 	}
-
-	public boolean End() {
-		return this.nextInLine == this.actions.size();
-	}
-
 }

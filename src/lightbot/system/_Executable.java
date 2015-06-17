@@ -1,6 +1,7 @@
 package lightbot.system;
 
 import lightbot.system.world.Grid;
+import lightbot.system.world.OutOfGridException;
 
 public abstract class _Executable {
 
@@ -23,7 +24,8 @@ public abstract class _Executable {
 	 * 
 	 * @param grid
 	 * @param robot
+	 * @throws OutOfGridException 
 	 */
-	public abstract void execute(Grid grid, Robot robot);
+	public abstract void execute(Grid grid, Robot robot) throws OutOfGridException;
 
 }
