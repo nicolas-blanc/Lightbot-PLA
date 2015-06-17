@@ -94,6 +94,8 @@ public class Textures {
 	public static Texture menuChargerH;
 	public static Texture menuBgH;
 	
+	public static Texture blinkTexture; 
+	
 	//Levels
 	public static Texture levelBases;
 	public static Texture levelProcedures;
@@ -191,6 +193,8 @@ public class Textures {
 		menuChargerH = new Texture();
 		menuBgH = new Texture();
 		
+		blinkTexture = new Texture();
+		
 		//Levels
 		levelBases = new Texture();
 		levelProcedures = new Texture();
@@ -286,6 +290,8 @@ public class Textures {
 			menuEditeurH.loadFromFile(Paths.get(MENU_PATH + "editorButtonH.png"));
 			menuChargerH.loadFromFile(Paths.get(MENU_PATH + "loadButtonH.png"));
 			
+			blinkTexture.loadFromFile(Paths.get(MENU_PATH + "blink.png"));
+			
 			//levels
 			levelBases.loadFromFile(Paths.get(LEVELS_PATH + "levelBases.png"));
 			levelProcedures.loadFromFile(Paths.get(LEVELS_PATH + "levelProcedures.png"));
@@ -377,6 +383,8 @@ public class Textures {
 			menuEditeurH.setSmooth(true);
 			menuChargerH.setSmooth(true);
 			menuLogoH.setSmooth(true);
+			
+			blinkTexture.setSmooth(true);
 			
 			// Level
 			levelBases.setSmooth(true);

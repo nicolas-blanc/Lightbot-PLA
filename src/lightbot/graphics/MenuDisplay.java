@@ -1,6 +1,7 @@
 package lightbot.graphics;
 
 import java.io.File;
+import java.util.Random;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -11,8 +12,10 @@ import lightbot.system.world.Grid;
 import lightbot.system.world.Level;
 
 import org.jsfml.graphics.Color;
+import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
+import org.jsfml.system.Clock;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.MouseButtonEvent;
@@ -32,11 +35,20 @@ public class MenuDisplay {
 	static Sprite menuCharger;
 	static Sprite menuBg;
 	
+	static Sprite blink;
+	
 	static Button buttonLogo;	
 	static Button buttonJouer;
 	static Button buttonQuitter;
 	static Button buttonEditeur;
 	static Button buttonCharger;
+	
+	private int frame = 0;
+	private Clock animClock = null;
+	private Clock elapsedTime = null;
+	
+	private Random rand = new Random();
+	private int newTime = 5;
 	
 	public MenuDisplay(){
 		setButtons();
@@ -48,20 +60,43 @@ public class MenuDisplay {
 	 */
 	public void display() {
 		displayButtons();
+		if(elapsedTime == null)
+			elapsedTime = new Clock();
+		if(elapsedTime.getElapsedTime().asSeconds() >= newTime){
+			elapsedTime.restart();
+			animClock = new Clock();
+			newTime = rand.nextInt((7 - 2) + 1) + 2;
+		}
+		
+		if(animClock != null && animClock.getElapsedTime().asMilliseconds() >= 17){
+			animClock.restart();
+			
+			frame++;
+			if(frame > 9)
+				frame = 0;
+			
+			int frameRow = frame / 5;
+			int frameCol = frame % 5;
+			blink.setTextureRect(new IntRect(frameCol * 269, frameRow * 310, 269, 310));
+			if(frame == 0)
+				animClock = null;
+		}
 	}
 	
 	/**
 	 * To set all the buttons of the menu
 	 */
-	public void setButtons(){
-		Textures.initTextures();
-		
+	public void setButtons(){		
 		menuLogo = new Sprite(Textures.menuLogo);
 		menuJouer = new Sprite(Textures.menuJouer);
 		menuQuitter = new Sprite(Textures.menuQuitter);
 		menuEditeur = new Sprite(Textures.menuEditeur);
 		menuCharger = new Sprite(Textures.menuCharger);
 		menuBg = new Sprite(Textures.menuBg);
+		
+		blink = new Sprite(Textures.blinkTexture);
+		blink.setTextureRect(new IntRect(0, 0, 269, 310));
+		blink.setPosition(600, 200);
 		
 		buttonLogo = new Button(menuLogo, null, null);	
 		buttonJouer = new Button(menuJouer, Textures.menuJouerH, Textures.menuJouer);
@@ -87,6 +122,8 @@ public class MenuDisplay {
 	    LightCore.window.draw(menuEditeur);
 	    LightCore.window.draw(menuCharger);
 	    LightCore.window.draw(menuQuitter);
+	    
+	    LightCore.window.draw(blink);
 	}
 	
 	/**
