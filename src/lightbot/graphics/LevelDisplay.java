@@ -226,6 +226,12 @@ public class LevelDisplay {
 				LightCore.breakaction = false;
 				LightCore.worlds = false;
 				LightCore.menu = true;
+				buttonBases.reset();
+				buttonProcedures.reset();
+				buttonFork.reset();
+				buttonPointeurs.reset();
+				buttonIf.reset();
+				buttonBreak.reset();
 			}
 			if(buttonBases.isInside(mouse.position)){
 				LightCore.procedures = false;
@@ -237,6 +243,13 @@ public class LevelDisplay {
 				LightCore.menu = false;
 				LightCore.levelButtonIsDisplayed = true;
 				LightCore.path = "Levels/Basics/Basic";
+				
+				buttonBases.changeTexture();
+				buttonProcedures.reset();
+				buttonFork.reset();
+				buttonPointeurs.reset();
+				buttonBreak.reset();
+				buttonIf.reset();
 			}
 			if(buttonProcedures.isInside(mouse.position)){
 				LightCore.ifthenelse = false;
@@ -247,6 +260,13 @@ public class LevelDisplay {
 				LightCore.procedures = true;
 				LightCore.levelButtonIsDisplayed = true;
 				LightCore.path = "Levels/Procedures/Proc";
+				
+				buttonProcedures.changeTexture();
+				buttonBases.reset();
+				buttonFork.reset();
+				buttonPointeurs.reset();
+				buttonBreak.reset();
+				buttonIf.reset();
 			}
 			if(buttonIf.isInside(mouse.position)){
 				LightCore.breakaction = false;
@@ -257,6 +277,14 @@ public class LevelDisplay {
 				LightCore.ifthenelse = true;
 				LightCore.levelButtonIsDisplayed = true;
 				LightCore.path = "Levels/Ifthenelse/Ifthenelse";
+				
+				buttonIf.changeTexture();
+				buttonBases.reset();
+				buttonProcedures.reset();
+				buttonFork.reset();
+				buttonPointeurs.reset();
+				buttonBreak.reset();
+
 			}
 			if(buttonFork.isInside(mouse.position)){
 				LightCore.ifthenelse = false;
@@ -267,6 +295,13 @@ public class LevelDisplay {
 				LightCore.fork = true;
 				LightCore.levelButtonIsDisplayed = true;
 				LightCore.path = "Levels/Fork/Fork";
+				
+				buttonFork.changeTexture();
+				buttonBases.reset();
+				buttonProcedures.reset();
+				buttonPointeurs.reset();
+				buttonBreak.reset();
+				buttonIf.reset();
 			}
 			if(buttonPointeurs.isInside(mouse.position)){
 				LightCore.ifthenelse = false;
@@ -277,6 +312,13 @@ public class LevelDisplay {
 				LightCore.pointeurs = true;
 				LightCore.levelButtonIsDisplayed = true;
 				LightCore.path = "Levels/Pointeurs/Pointeurs";
+				
+				buttonPointeurs.changeTexture();
+				buttonBases.reset();
+				buttonProcedures.reset();
+				buttonFork.reset();
+				buttonBreak.reset();
+				buttonIf.reset();
 			}
 			if(buttonBreak.isInside(mouse.position)){
 				LightCore.ifthenelse = false;
@@ -287,6 +329,13 @@ public class LevelDisplay {
 				LightCore.breakaction = true;
 				LightCore.levelButtonIsDisplayed = true;
 				LightCore.path = "Levels/Break/Break";
+				
+				buttonBreak.changeTexture();
+				buttonBases.reset();
+				buttonProcedures.reset();
+				buttonFork.reset();
+				buttonPointeurs.reset();
+				buttonIf.reset();
 			}
 		default:
 			break;

@@ -144,22 +144,22 @@ public class LightCore {
 				}else{
 					if(worlds){
 						levels.eventManager(event);
-						if(bases){
+						if(bases && !worlds){
 							levels.eventManager(event);
 						}
-						if(procedures){
+						else if(procedures && !worlds){
 							levels.eventManager(event);
 						}
-						if(pointeurs){
+						else if(pointeurs && !worlds){
 							levels.eventManager(event);
 						}
-						if(fork){
+						else if(fork && !worlds){
 							levels.eventManager(event);
 						}
-						if(ifthenelse){
+						else if(ifthenelse && !worlds){
 							levels.eventManager(event);
 						}
-						if(breakaction){
+						else if(breakaction && !worlds){
 							levels.eventManager(event);
 						}
 					}else if (editor || game || random){
