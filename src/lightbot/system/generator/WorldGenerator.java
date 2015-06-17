@@ -91,22 +91,32 @@ public class WorldGenerator {
 		
 	}
 	
+	/**
+	 * 
+	 */
 	private void finishGeneration() {
 		int[] col = getColWithFullCell();
 		int[] line = getLineWithFullCell();
 		
-		System.out.print("Col :");
+		System.out.print("Col :  ");
 		for (int i = 0; i < col.length; i++) { System.out.print(col[i] + " / "); }
 		System.out.println();
 		
-		System.out.print("Line :");
+		System.out.print("Line : ");
 		for (int i = 0; i < line.length; i++) { System.out.print(line[i] + " / "); }
 		System.out.println();
 		
 		for (int i = 0; i < col.length; i++) {
 			for (int j = 0; j < line.length; j++) {
-				if(line[j] == 0 && col[i] == 0 && grid.getCell(j, i).isEmptyCell()) {
-					grid.setCell(new NormalCell(j, i, rand.nextInt(3)));
+				if(line[j] > 0 && col[i] > 0 && grid.getCell(j, i).isEmptyCell()) {
+					//grid.setCell(new NormalCell(j, i, rand.nextInt(3)));
+					//System.out.println("Rajout -> X : " + grid.getCell(j, i).getX() + " / Y : " + grid.getCell(j, i).getY());
+					
+					if (col[i] < line[j]) {
+						grid.setCell(new NormalCell(j, i, rand.nextInt(col[i])));
+					} else {
+						grid.setCell(new NormalCell(j, i, rand.nextInt(line[j])));
+					}
 				}
 			}
 		}
@@ -289,26 +299,24 @@ public class WorldGenerator {
 	}
 	
 	private int[] getColWithFullCell() {
-		int j = 0;
 		int[] tab = new int[size];
 		for (int i = 0; i < size; i++) {
-			j = 0;
-			while (j < size && (grid.getCell(j, i).isEmptyCell())) { j++; }
-			if (j == size) {
-				tab[i] = 1;
+			for (int j = 0; j < size; j++) {
+				if (!(grid.getCell(j, i).isEmptyCell()) && grid.getCell(j, i).getHeight() >= tab[i]) {
+					tab[i] = grid.getCell(j, i).getHeight() + 1;
+				}
 			}
 		}
 		return tab;
 	}
 	
 	private int[] getLineWithFullCell() {		
-		int j = 0;
 		int[] tab = new int[size];
 		for (int i = 0; i < size; i++) {
-			j = 0;
-			while (j < size && (grid.getCell(i, j).isEmptyCell())) { j++; }
-			if (j == size) {
-				tab[i] = 1;
+			for (int j = 0; j < size; j++) {
+				if (!(grid.getCell(i, j).isEmptyCell()) && grid.getCell(i, j).getHeight() >= tab[i]) {
+						tab[i] = grid.getCell(i, j).getHeight() + 1;
+				}
 			}
 		}
 		return tab;

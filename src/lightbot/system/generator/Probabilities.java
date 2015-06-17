@@ -13,6 +13,7 @@ public class Probabilities {
 	private int probaJump;
 	private int probaRight;
 	private int probaLeft;
+	private int probaPattern;
 
 	final private int range = 12;
 
@@ -59,10 +60,24 @@ public class Probabilities {
 	}
 
 	/**
-	 * @return the range
+	 * @return the probaPattern
+	 */
+	public int getProbaPattern() {
+		return probaPattern;
+	}
+
+	/**
+	 * @return the range if the base
 	 */
 	public int getRange() {
 		return range;
+	}
+	
+	/**
+	 * @return the range if the base
+	 */
+	public int getRangePattern() {
+		return range + 4;
 	}
 
 	/**
@@ -74,6 +89,7 @@ public class Probabilities {
 		probaJump = 10;
 		probaRight= 11;
 		probaLeft = 12;
+		probaPattern = 16;
 	}
 	
 
@@ -104,6 +120,8 @@ public class Probabilities {
 			probaLight++;
 			probaLeft--;
 			break;
+		case 5:
+			break;
 		default:
 			System.out.println("The instruction does not exist!");
 		}
@@ -114,6 +132,7 @@ public class Probabilities {
 	/**
 	 * 
 	 */
+	@SuppressWarnings("unused")
 	private void printProba() {
 		System.out.println("Light : " + probaLight + " / Forward : " + probaForward  + " / Jump : " + probaJump  + " / Left : " + probaLeft + " / Right : " + probaRight);
 	}

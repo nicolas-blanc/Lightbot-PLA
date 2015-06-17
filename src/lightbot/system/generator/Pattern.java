@@ -1,93 +1,132 @@
 package lightbot.system.generator;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Pattern {
 	
-	private ArrayList<ArrayList<Integer>> patternList = new ArrayList<ArrayList<Integer>>();
-	private ArrayList<Integer> patternList1 = new ArrayList<Integer>();
-	private ArrayList<Integer> patternList2 = new ArrayList<Integer>();
-	private ArrayList<Integer> patternList3 = new ArrayList<Integer>();
-	private ArrayList<Integer> patternList4 = new ArrayList<Integer>();
+	private int[] pattern;
 	
-	private Random rand;
+	private int variation;
+	private int numberInstruction;
 	
-	public Pattern(){
-		
-		rand = new Random();
-		patternArray();
+	private int iterate;
+	
+	final private int numberPattern = 6;
+	
+	/**
+	 * 
+	 */
+	public Pattern(int maxInstructions) {
+		iterate = 0;
+		initPattern(maxInstructions);
+		printPattern();
 	}
 
-	private ArrayList<ArrayList<Integer>> patternArray(){
-		
-		pattern1();
-		pattern2();
-		pattern3();
-		pattern4();
-		patternList.add(patternList1);
-		patternList.add(patternList2);
-		patternList.add(patternList3);
-		patternList.add(patternList4);
-		
-		return patternList;
+	/**
+	 * 
+	 */
+	public void resetIteration() {
+		iterate = 0;
 	}
 	
-	public ArrayList<Integer> givePattern(){
-		
-		return patternList.get(rand.nextInt(4));
-	}
-	
-	private ArrayList<Integer> pattern1(){
-		
-		
-		patternList1.add(1);
-		patternList1.add(1);
-		patternList1.add(0);
-		patternList1.add(2);
-		patternList1.add(4);
-		
-		return patternList1;
-	}
-	
-	private ArrayList<Integer> pattern2(){
-		
-		patternList2.add(0);
-		patternList2.add(2);
-		patternList2.add(1);
-		patternList2.add(4);
-		patternList2.add(1);
-		patternList2.add(3);
-		patternList2.add(1);
-		
-		return patternList2;
-	}
-	
-	private ArrayList<Integer> pattern3(){
-		
-		patternList3.add(2);
-		patternList3.add(0);
-		patternList3.add(1);
-		patternList3.add(1);
-		patternList3.add(3);
-		patternList3.add(1);
-		patternList3.add(2);
-		patternList3.add(4);
-		patternList3.add(1);
-		patternList3.add(0);
-		
-		return patternList3;
-	}
-	
-	private ArrayList<Integer> pattern4(){
-		
-		patternList4.add(1);
-		patternList4.add(4);
-		patternList4.add(1);
-		patternList4.add(0);
-		
-		return patternList4;
+	/**
+	 * 
+	 * @return
+	 */
+	public int nextAction() {
+		try {
+			return pattern[iterate++];		
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return -1;
+		}
 	}
 
+	/**
+	 * @return the variation
+	 */
+	public int getVariation() {
+		return variation;
+	}
 
+	/**
+	 * @return the numberInstruction
+	 */
+	public int getNumberInstruction() {
+		return numberInstruction;
+	}
+	
+	public boolean endOfPattern() {
+		return iterate >= numberInstruction;
+	}
+	
+	/**
+	 * 
+	 */
+	private void initPattern(int maxInstructions) {
+		Random rand = new Random();
+		int numPattern = rand.nextInt(numberPattern);
+		
+		switch (numPattern) {
+		case 0:
+			int temp[] = {1,1,0,2,4};
+			pattern = new int[5];
+			pattern = temp;
+			
+			numberInstruction = 5;
+			break;
+		case 1:
+			int temp1[] = {1,1,0};
+			pattern = new int[3];
+			pattern = temp1;
+			
+			numberInstruction = 3;
+			break;
+		case 2:
+			int temp2[] = {1,2,1,0};
+			pattern = new int[4];
+			pattern = temp2;
+			
+			numberInstruction = 4;
+			break;
+		case 3:
+			int temp3[] = {0,2,1,4,1,3,1};
+			pattern = new int[7];
+			pattern = temp3;
+			
+			numberInstruction = 7;
+			break;
+		case 4:
+			int temp4[] = {1,4,1,0};
+			pattern = new int[4];
+			pattern = temp4;
+			
+			numberInstruction = 4;
+			break;
+		case 5:
+			int temp5[] = {2,1,0,3};
+			pattern = new int[4];
+			pattern = temp5;
+			
+			numberInstruction = 4;
+			break;
+		default:
+			numberInstruction = -1;
+			break;
+		}
+		
+		if (numberInstruction == -1) {
+			variation = 0;
+		} else {
+			variation = maxInstructions / (numberInstruction * 2);
+		}
+	}
+	
+	@SuppressWarnings("unused")
+	private void printPattern() {
+		System.out.print("Pattern : ");
+		for (int i = 0; i < pattern.length; i++) {
+			System.out.print(pattern[i] + " - ");
+		}
+		System.out.println();
+	}
 }
