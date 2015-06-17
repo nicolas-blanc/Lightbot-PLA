@@ -9,7 +9,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -21,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
-import javax.swing.text.MaskFormatter;
 
 import lightbot.LightCore;
 import lightbot.system.Colour;
@@ -787,9 +785,9 @@ public class Editor implements DisplayMode{
 		private JLabel labelP1 = new JLabel("Proc1 Limit");
 		private JLabel labelP2 = new JLabel("Proc2 Limit");
 		
-		public JFormattedTextField mainLimit;// = new JFormattedTextField(NumberFormat.getIntegerInstance());
-		public JFormattedTextField p1Limit;// = new JFormattedTextField(NumberFormat.getIntegerInstance());
-		public JFormattedTextField p2Limit;// = new JFormattedTextField(NumberFormat.getPercentInstance());
+		public JFormattedTextField mainLimit;
+		public JFormattedTextField p1Limit;
+		public JFormattedTextField p2Limit;
 		
 		public boolean isValid = false;
 		public boolean isAborted = false;
@@ -859,21 +857,6 @@ public class Editor implements DisplayMode{
 		    this.getContentPane().add(select, BorderLayout.NORTH);
 		    this.getContentPane().add(size, BorderLayout.CENTER);
 		    
-		    
-		    /*this.setLayout(gl);
-		    this.getContentPane().add(checkP1);
-		    this.getContentPane().add(checkP2);
-		    this.getContentPane().add(checkForward);
-		    this.getContentPane().add(checkJump);
-		    this.getContentPane().add(checkTurnRight);
-		    this.getContentPane().add(checkTurnLeft);
-		    
-		    this.getContentPane().add(mainLimit);
-		    this.getContentPane().add(p1Limit);
-		    this.getContentPane().add(p2Limit);
-		    
-		    this.getContentPane().add(valid);
-		    this.getContentPane().add(abort);*/
 		    this.pack();
 		    this.setVisible(true);
 		    
@@ -881,7 +864,6 @@ public class Editor implements DisplayMode{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					isValid = true;
-					System.out.println("buttonpushed");
 				}
 			});
 		    
@@ -889,14 +871,12 @@ public class Editor implements DisplayMode{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					isAborted = true;
-					System.out.println("buttonpushed");
 				}
 		    });
 		    
 		    this.addWindowListener(new WindowAdapter(){
 		    	public void windowClosing(WindowEvent e){
 		    		isAborted = true;
-		    		System.out.println("buttonpushed");
 		    	}
 		    });
 		}
