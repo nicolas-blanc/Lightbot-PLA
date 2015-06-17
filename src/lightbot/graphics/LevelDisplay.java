@@ -6,6 +6,7 @@ import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.MouseButtonEvent;
+import org.jsfml.window.event.MouseEvent;
 
 public class LevelDisplay {
 	
@@ -84,12 +85,12 @@ public class LevelDisplay {
 		/*
 		 * Buttons for the "world page"
 		 */
-		buttonBases = new Button(levelBases, null, null);
-		buttonProcedures = new Button(levelProcedures, null, null);
-		buttonIf = new Button(levelIf, null, null);
-		buttonBreak = new Button(levelBreak, null, null);
-		buttonFork = new Button(levelFork, null, null);
-		buttonPointeurs = new Button(levelPointeurs, null, null);
+		buttonBases = new Button(levelBases, Textures.levelBasesH, Textures.levelBases);
+		buttonProcedures = new Button(levelProcedures, Textures.levelProceduresH, Textures.levelProcedures);
+		buttonIf = new Button(levelIf, Textures.levelIfH, Textures.levelIf);
+		buttonBreak = new Button(levelBreak, Textures.levelBreakH, Textures.levelBreak);
+		buttonFork = new Button(levelFork, Textures.levelForkH, Textures.levelFork);
+		buttonPointeurs = new Button(levelPointeurs, Textures.levelPointeursH, Textures.levelPointeurs);
 		buttonBg = new Button(levelBg, null, null);
 		buttonTitle = new Button(levelTitle, null, null);	
 		
@@ -97,10 +98,10 @@ public class LevelDisplay {
 		 * Buttons for the "level page"
 		 */
 		buttonBlock = new Button(levelBlock, null, null);
-		button1 = new Button(level1, null, null);
-		button2 = new Button(level2, null, null);
-		button3 = new Button(level3, null, null);
-		button4 = new Button(level4, null, null);
+		button1 = new Button(level1, Textures.level1H, Textures.level1);
+		button2 = new Button(level2, Textures.level2H, Textures.level2);
+		button3 = new Button(level3, Textures.level3H, Textures.level3);
+		button4 = new Button(level4, Textures.level4H, Textures.level4);
 		
 		/*
 		 * Set positions
@@ -157,6 +158,19 @@ public class LevelDisplay {
 		case CLOSED:
 			LightCore.window.close();
 			break;
+		case MOUSE_MOVED:
+			MouseEvent mouse1 = event.asMouseEvent();
+			buttonBases.changeOnHover(mouse1.position);
+			buttonProcedures.changeOnHover(mouse1.position);
+			buttonBreak.changeOnHover(mouse1.position);
+			buttonIf.changeOnHover(mouse1.position);
+			buttonPointeurs.changeOnHover(mouse1.position);
+			buttonFork.changeOnHover(mouse1.position);
+			button1.changeOnHover(mouse1.position);
+			button2.changeOnHover(mouse1.position);
+			button3.changeOnHover(mouse1.position);
+			button4.changeOnHover(mouse1.position);
+			break;
 		case MOUSE_BUTTON_PRESSED:
 			MouseButtonEvent mouse = event.asMouseButtonEvent();
 			if(homeButton.isInside(mouse.position)){
@@ -176,6 +190,7 @@ public class LevelDisplay {
 				LightCore.pointeurs = false;
 				LightCore.fork = false;
 				LightCore.bases = true;
+				//buttonBases.changeTexture();
 			}
 			if(buttonProcedures.isInside(mouse.position)){
 				LightCore.ifthenelse = false;

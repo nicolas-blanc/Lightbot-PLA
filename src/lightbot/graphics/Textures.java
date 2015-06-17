@@ -110,6 +110,18 @@ public class Textures {
 	public static Texture level3;
 	public static Texture level4;
 	
+	public static Texture levelBasesH;
+	public static Texture levelProceduresH;
+	public static Texture levelIfH;
+	public static Texture levelBreakH;
+	public static Texture levelForkH;
+	public static Texture levelPointeursH;
+	
+	public static Texture level1H;
+	public static Texture level2H;
+	public static Texture level3H;
+	public static Texture level4H;
+	
 	
 	public static void initTextures(){
 		
@@ -207,6 +219,18 @@ public class Textures {
 		level3 = new Texture();
 		level4 = new Texture();
 		
+		levelBasesH = new Texture();
+		levelProceduresH = new Texture();
+		levelIfH = new Texture();
+		levelBreakH = new Texture();
+		levelForkH = new Texture();
+		levelPointeursH = new Texture();
+		
+		level1H = new Texture();
+		level2H = new Texture();
+		level3H = new Texture();
+		level4H = new Texture();
+		
 		try {
 			
 			/************************ Load the textures ************************/
@@ -302,6 +326,18 @@ public class Textures {
 			level3.loadFromFile(Paths.get(LEVELS_PATH + "levelTrois.png"));
 			level4.loadFromFile(Paths.get(LEVELS_PATH + "levelQuatre.png"));
 			
+			levelBasesH.loadFromFile(Paths.get(LEVELS_PATH + "levelBasesH.png"));
+			levelProceduresH.loadFromFile(Paths.get(LEVELS_PATH + "levelProceduresH.png"));
+			levelIfH.loadFromFile(Paths.get(LEVELS_PATH + "levelIfH.png"));
+			levelBreakH.loadFromFile(Paths.get(LEVELS_PATH + "levelBreakH.png"));
+			levelForkH.loadFromFile(Paths.get(LEVELS_PATH + "levelForkH.png"));
+			levelPointeursH.loadFromFile(Paths.get(LEVELS_PATH + "levelPointeursH.png"));
+			
+			level1H.loadFromFile(Paths.get(LEVELS_PATH + "levelUnH.png"));
+			level2H.loadFromFile(Paths.get(LEVELS_PATH + "levelDeuxH.png"));
+			level3H.loadFromFile(Paths.get(LEVELS_PATH + "levelTroisH.png"));
+			level4H.loadFromFile(Paths.get(LEVELS_PATH + "levelQuatreH.png"));
+			
 			
 			/************************ Set smoothing ************************/
 			
@@ -393,6 +429,18 @@ public class Textures {
 			level2.setSmooth(true);
 			level3.setSmooth(true);
 			level4.setSmooth(true);
+			
+			levelBasesH.setSmooth(true);
+			levelProceduresH.setSmooth(true);
+			levelIfH.setSmooth(true);
+			levelBreakH.setSmooth(true);
+			levelForkH.setSmooth(true);
+			levelPointeursH.setSmooth(true);
+			
+			level1H.setSmooth(true);
+			level2H.setSmooth(true);
+			level3H.setSmooth(true);
+			level4H.setSmooth(true);
 			
 		} catch(IOException ex) {
 		    //Ouch! something went wrong
