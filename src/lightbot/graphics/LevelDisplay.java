@@ -190,7 +190,6 @@ public class LevelDisplay {
 				LightCore.pointeurs = false;
 				LightCore.fork = false;
 				LightCore.bases = true;
-				//buttonBases.changeTexture();
 			}
 			if(buttonProcedures.isInside(mouse.position)){
 				LightCore.ifthenelse = false;
