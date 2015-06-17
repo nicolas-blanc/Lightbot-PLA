@@ -24,9 +24,9 @@ public class WorldGenerator {
 	
 	private CardinalDirection direction;
 	
-	private Random rand;
+	private final Random rand = new Random();
 	
-	final private int size = 7;
+	private final int size = 8;
 	
 	/**
 	 * 
@@ -36,8 +36,17 @@ public class WorldGenerator {
 		numberLight = 0;
 		
 		grid = new Grid(size);
-		rand = new Random();
 		probabilities = new Probabilities();
+
+		if (rand.nextInt(2) == 0){
+			direction = CardinalDirection.EAST;
+		}
+		else {
+			direction = CardinalDirection.SOUTH;
+		}
+		
+		Robot.wheatley.setPosition(0, 0);
+		Robot.wheatley.setDirection(direction);
 		
 		generation();
 		finishGeneration();
