@@ -1,5 +1,6 @@
 package lightbot.graphics;
 
+import java.awt.BorderLayout;
 import java.awt.Checkbox;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -7,13 +8,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.text.MaskFormatter;
 
 import lightbot.LightCore;
 import lightbot.system.Colour;
@@ -27,6 +35,7 @@ import lightbot.system.action.Jump;
 import lightbot.system.action.Light;
 import lightbot.system.action.Turn;
 import lightbot.system.world.Grid;
+import lightbot.system.world.Level;
 import lightbot.system.world.Position;
 import lightbot.system.world.cell.Cell;
 import lightbot.system.world.cell.ColoredCell;
@@ -238,6 +247,21 @@ public class Editor implements DisplayMode{
 		display.print();
 	}
 	
+	public void nextColour(){
+		if(usedColour.size() != TeleportColour.values().length){
+			TeleportColour colour;
+			do{
+				colour = TeleportColour.randomColour();
+			}while(usedColour.contains(colour));
+			nextColour = colour;
+		}
+		else{
+			this.nextColour = null;
+		}
+	}
+
+	public void printGrid() {}
+	
 	/**
 	 * Get if the mouse is inside a cell or not
 	 */
@@ -251,6 +275,10 @@ public class Editor implements DisplayMode{
 		return pos;
 	}
 	
+	
+	/********************************************************************************************/
+	/*										Event Manager										*/
+	/********************************************************************************************/
 	/**
 	 * Event manager for editor
 	 */
@@ -457,7 +485,13 @@ public class Editor implements DisplayMode{
 							  if(selec.checkTurnLeft.getState())
 								  listOfActions.add(new Turn(RelativeDirection.LEFT, Colour.WHITE));
 							  listOfActions.add(new Light());
-							  ParserJSON.serialize(fileName+".json", display.gridDisplay.grid, listOfActions);
+							  
+							  int numbOfMain = Integer.parseInt(selec.mainLimit.getText());
+							  int numbOfProc1 = Integer.parseInt(selec.p1Limit.getText());
+							  int numbOfProc2 = Integer.parseInt(selec.p2Limit.getText());
+							  
+							  Level level = new Level(display.gridDisplay.grid, listOfActions, selec.checkP1.getState(), selec.checkP2.getState(), numbOfMain, numbOfProc1, numbOfProc2);
+							  ParserJSON.serialize(fileName+".json", level);
 							  display.gridDisplay.grid.printGrid();
 						  }
 						  
@@ -584,38 +618,6 @@ public class Editor implements DisplayMode{
 		}
 	}
 	
-	public void disableAllButton(){
-		blueSplash.disable();
- 		orangeSplash.disable();
- 		redSplash.disable();
- 		purpleSplash.disable();
- 		
- 		teleportButton.disable();
- 		lightButton.disable();
- 		saveButton.disable();
- 		loadButton.disable();
- 		robotButton.disable();
- 		
- 		turnLeftButton.disable();
-		turnRightButton.disable();
-	}
-	
-	public void enableAllButton(){
-		blueSplash.enable();
- 		orangeSplash.enable();
- 		redSplash.enable();
- 		purpleSplash.enable();
- 		
- 		teleportButton.enable();
- 		lightButton.enable();
- 		saveButton.enable();
- 		loadButton.enable();
- 		robotButton.enable();
- 		
- 		turnLeftButton.enable();
-		turnRightButton.enable();
-	}
-	
 	public EditorEvent getEvent(MouseButtonEvent mouse){
 		if(mouse.button == Mouse.Button.LEFT){
 			if(blueSplash.isInside(mouse.position))
@@ -652,7 +654,90 @@ public class Editor implements DisplayMode{
 			return null;
 	}
 	
+	/********************************************************************************************/
+	/*								Procedures on Buttons										*/
+	/********************************************************************************************/
+	public void disableAllButton(){
+		blueSplash.disable();
+ 		orangeSplash.disable();
+ 		redSplash.disable();
+ 		purpleSplash.disable();
+ 		
+ 		teleportButton.disable();
+ 		lightButton.disable();
+ 		saveButton.disable();
+ 		loadButton.disable();
+ 		robotButton.disable();
+ 		
+ 		turnLeftButton.disable();
+		turnRightButton.disable();
+	}
 	
+	public void enableAllButton(){
+		blueSplash.enable();
+ 		orangeSplash.enable();
+ 		redSplash.enable();
+ 		purpleSplash.enable();
+ 		
+ 		teleportButton.enable();
+ 		lightButton.enable();
+ 		saveButton.enable();
+ 		loadButton.enable();
+ 		robotButton.enable();
+ 		
+ 		turnLeftButton.enable();
+		turnRightButton.enable();
+	}
+	
+	public void resetButton(EditorEvent event){
+		if(event != EditorEvent.LIGHT)
+			if(light){
+				lightButton.reset();
+				toDisplay.set(lightButton.getId(), lightButton.getSprite());
+				light = false;
+			}
+		if(event != EditorEvent.ROBOT)
+			if(robot){
+ 				robotButton.reset();
+ 				toDisplay.set(robotButton.getId(), robotButton.getSprite());
+ 				robot = false;
+ 			}
+		if(event != EditorEvent.TELEPORT)
+			if(teleport){
+ 				teleportButton.reset();
+ 				toDisplay.set(teleportButton.getId(), teleportButton.getSprite());
+ 				teleport = false;
+			}
+		if(event != EditorEvent.SPLASH_BLUE)
+			if(blue){
+	 			blueSplash.reset();
+				toDisplay.set(blueSplash.getId(), blueSplash.getSprite());
+				blue = false;
+			}
+		if(event != EditorEvent.SPLASH_ORANGE)
+			if(orange){
+	 			orangeSplash.reset();
+				toDisplay.set(orangeSplash.getId(), orangeSplash.getSprite());
+				orange = false;
+			}
+		if(event != EditorEvent.SPLASH_PURPLE)
+			if(purple){
+	 			purpleSplash.reset();
+				toDisplay.set(purpleSplash.getId(), purpleSplash.getSprite());
+				purple = false;
+			}
+	 	if(event != EditorEvent.SPLASH_RED)
+	 		if(red){
+	 			redSplash.reset();
+				toDisplay.set(redSplash.getId(), redSplash.getSprite());
+				red = false;
+			}
+	}
+	
+	
+	/********************************************************************************************/
+	/*										Sub-classes											*/
+	/********************************************************************************************/
 	/**
 	 * Filter for JFileChooser, dialog window
 	 */
@@ -691,15 +776,26 @@ public class Editor implements DisplayMode{
 		}
 	}
 	
+	
 	public class ActionSelector extends JFrame{
 		private static final long serialVersionUID = 1L;
 		
 		private JButton valid = new JButton("Valider");
 		private JButton abort = new JButton("Annuler");
 		
+		private JLabel labelMain = new JLabel("Main Limit");
+		private JLabel labelP1 = new JLabel("Proc1 Limit");
+		private JLabel labelP2 = new JLabel("Proc2 Limit");
+		
+		public JFormattedTextField mainLimit;// = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		public JFormattedTextField p1Limit;// = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		public JFormattedTextField p2Limit;// = new JFormattedTextField(NumberFormat.getPercentInstance());
+		
 		public boolean isValid = false;
 		public boolean isAborted = false;
 		
+		public Checkbox checkP1 = new Checkbox("Proc1 active");
+		public Checkbox checkP2 = new Checkbox("Proc2 active");
 		public Checkbox checkForward = new Checkbox("Avancer");
 		public Checkbox checkJump = new Checkbox("Sauter");
 		public Checkbox checkTurnRight = new Checkbox("Tourner à droite");
@@ -710,18 +806,74 @@ public class Editor implements DisplayMode{
 		    this.setSize(300, 300);
 		    this.setLocationRelativeTo(null);
 		    
-		    GridLayout gl = new GridLayout(3, 1);
+		    this.setLayout(new BorderLayout());
+		    
+		    DecimalFormat format = new DecimalFormat("##");
+			format.setMaximumFractionDigits(0);
+			format.setMaximumIntegerDigits(2);
+			format.setParseIntegerOnly(true);
+			
+			mainLimit = new JFormattedTextField(format);
+			p1Limit = new JFormattedTextField(format);
+			p2Limit = new JFormattedTextField(format);
+		    
+		    GridLayout gl = new GridLayout(2, 2);
 		    gl.setHgap(5);
 		    gl.setVgap(5);
+		    JPanel select = new JPanel();
+		    select.setLayout(gl);
 		    
-		    this.setLayout(gl);
+		    JPanel select1 = new JPanel();
+		    select1.setLayout(new BoxLayout(select1, BoxLayout.LINE_AXIS));
+		    select1.add(checkForward);
+		    select1.add(checkJump);
+		    
+		    JPanel select2 = new JPanel();
+		    select2.setLayout(new BoxLayout(select2, BoxLayout.LINE_AXIS));
+		    select2.add(checkTurnRight);
+		    select2.add(checkTurnLeft);
+		    
+		    select.add(select1);
+		    select.add(select2);
+		    
+		    GridLayout sizeLayout = new GridLayout(4, 2);
+		    sizeLayout.setHgap(5);
+		    sizeLayout.setVgap(5);
+		    JPanel size = new JPanel();
+		    size.setLayout(sizeLayout);
+		    
+		    size.add(checkP1);
+		    size.add(checkP2);
+		    
+		    size.add(labelMain);
+		    size.add(mainLimit);
+		    size.add(labelP1);
+		    size.add(p1Limit);
+		    size.add(labelP2);
+		    size.add(p2Limit);
+		    
+		    JPanel acceptDeny = new JPanel();
+		    acceptDeny.add(valid);
+		    acceptDeny.add(abort);
+		    this.getContentPane().add(acceptDeny, BorderLayout.SOUTH);
+		    this.getContentPane().add(select, BorderLayout.NORTH);
+		    this.getContentPane().add(size, BorderLayout.CENTER);
+		    
+		    
+		    /*this.setLayout(gl);
+		    this.getContentPane().add(checkP1);
+		    this.getContentPane().add(checkP2);
 		    this.getContentPane().add(checkForward);
 		    this.getContentPane().add(checkJump);
 		    this.getContentPane().add(checkTurnRight);
 		    this.getContentPane().add(checkTurnLeft);
 		    
+		    this.getContentPane().add(mainLimit);
+		    this.getContentPane().add(p1Limit);
+		    this.getContentPane().add(p2Limit);
+		    
 		    this.getContentPane().add(valid);
-		    this.getContentPane().add(abort);
+		    this.getContentPane().add(abort);*/
 		    this.pack();
 		    this.setVisible(true);
 		    
@@ -749,71 +901,4 @@ public class Editor implements DisplayMode{
 		    });
 		}
 	}
-	
-	public void nextColour(){
-		if(usedColour.size() != TeleportColour.values().length){
-			TeleportColour colour;
-			do{
-				colour = TeleportColour.randomColour();
-			}while(usedColour.contains(colour));
-			nextColour = colour;
-		}
-		else{
-			this.nextColour = null;
-		}
-	}
-	
-	public void resetButton(EditorEvent event){
-		if(event != EditorEvent.LIGHT){
-			if(light){
-				lightButton.reset();
-				toDisplay.set(lightButton.getId(), lightButton.getSprite());
-				light = false;
-			}
-		}
-		if(event != EditorEvent.ROBOT){
-			if(robot){
- 				robotButton.reset();
- 				toDisplay.set(robotButton.getId(), robotButton.getSprite());
- 				robot = false;
- 			}
-		}
-		if(event != EditorEvent.TELEPORT){
-			if(teleport){
- 				teleportButton.reset();
- 				toDisplay.set(teleportButton.getId(), teleportButton.getSprite());
- 				teleport = false;
-			}
-		}
-		if(event != EditorEvent.SPLASH_BLUE){
-			if(blue){
-	 			blueSplash.reset();
-				toDisplay.set(blueSplash.getId(), blueSplash.getSprite());
-				blue = false;
-			}
-		}
-		if(event != EditorEvent.SPLASH_ORANGE){
-			if(orange){
-	 			orangeSplash.reset();
-				toDisplay.set(orangeSplash.getId(), orangeSplash.getSprite());
-				orange = false;
-			}
-		}
-		if(event != EditorEvent.SPLASH_PURPLE){
-			if(purple){
-	 			purpleSplash.reset();
-				toDisplay.set(purpleSplash.getId(), purpleSplash.getSprite());
-				purple = false;
-			}
-		}
-	 	if(event != EditorEvent.SPLASH_RED){
-	 		if(red){
-	 			redSplash.reset();
-				toDisplay.set(redSplash.getId(), redSplash.getSprite());
-				red = false;
-			}
-	 	}
-	}
-
-	public void printGrid() {}
 }
