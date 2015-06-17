@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import lightbot.LightCore;
 import lightbot.system.ParserJSON;
+import lightbot.system.generator.WorldGenerator;
 import lightbot.system.world.Grid;
 import lightbot.system.world.Level;
 
@@ -33,6 +34,7 @@ public class MenuDisplay {
 	static Sprite menuQuitter;
 	static Sprite menuEditeur;
 	static Sprite menuCharger;
+	static Sprite menuAleatoire;
 	static Sprite menuBg;
 	
 	static Sprite blink;
@@ -42,6 +44,7 @@ public class MenuDisplay {
 	static Button buttonQuitter;
 	static Button buttonEditeur;
 	static Button buttonCharger;
+	static Button buttonAleatoire;
 	
 	private int frame = 0;
 	private Clock animClock = null;
@@ -92,6 +95,7 @@ public class MenuDisplay {
 		menuQuitter = new Sprite(Textures.menuQuitter);
 		menuEditeur = new Sprite(Textures.menuEditeur);
 		menuCharger = new Sprite(Textures.menuCharger);
+		menuAleatoire = new Sprite(Textures.menuAleatoire);
 		menuBg = new Sprite(Textures.menuBg);
 		
 		blink = new Sprite(Textures.blinkTexture);
@@ -103,12 +107,14 @@ public class MenuDisplay {
 		buttonQuitter = new Button(menuQuitter, Textures.menuQuitterH, Textures.menuQuitter);
 		buttonEditeur = new Button(menuEditeur, Textures.menuEditeurH, Textures.menuEditeur);
 		buttonCharger = new Button(menuCharger, Textures.menuChargerH, Textures.menuCharger);
+		buttonAleatoire = new Button(menuAleatoire, Textures.menuAleatoireH, Textures.menuAleatoire);
 		
 		menuLogo.setPosition(35, 27);
 		menuJouer.setPosition(leftMargin, 206);
 		menuEditeur.setPosition(leftMargin, 206 + spaceBtwButtons);
 		menuCharger.setPosition(leftMargin, 206 + 2*spaceBtwButtons);
-		menuQuitter.setPosition(leftMargin, 206 + 3*spaceBtwButtons);
+		menuAleatoire.setPosition(leftMargin, 206 + 3*spaceBtwButtons);
+		menuQuitter.setPosition(leftMargin, 206 + 4*spaceBtwButtons);
 	}
 	
 	/**
@@ -121,6 +127,7 @@ public class MenuDisplay {
 	    LightCore.window.draw(menuJouer);
 	    LightCore.window.draw(menuEditeur);
 	    LightCore.window.draw(menuCharger);
+	    LightCore.window.draw(menuAleatoire);
 	    LightCore.window.draw(menuQuitter);
 	    
 	    LightCore.window.draw(blink);
@@ -140,6 +147,7 @@ public class MenuDisplay {
 				buttonJouer.changeOnHover(mouse1.position);
 				buttonQuitter.changeOnHover(mouse1.position);
 				buttonCharger.changeOnHover(mouse1.position);
+				buttonAleatoire.changeOnHover(mouse1.position);
 				buttonEditeur.changeOnHover(mouse1.position);
 				break;
 			case MOUSE_BUTTON_PRESSED:
@@ -192,11 +200,19 @@ public class MenuDisplay {
 							  int y = (600/2-15-(toOpen.getSize()*Textures.cellTexture.getSize().y)/2);
 							  LightCore.display = new Game(toOpen);
 							  LightCore.menu = false;
-							  LightCore.worlds = true;
+							  LightCore.game = true;
 							  System.out.println(file.getAbsolutePath());
 						}
 					}
 					
+					// Aleatoire
+					if(buttonAleatoire.isInside(mouse.position)){
+						LightCore.menu = false;
+						LightCore.random = true;
+						WorldGenerator newWorld = new WorldGenerator();
+						Grid grid = newWorld.getGrid();
+						LightCore.display = new Game(grid);
+					}
 					// Quitter
 					if(buttonQuitter.isInside(mouse.position)){
 						LightCore.window.close();

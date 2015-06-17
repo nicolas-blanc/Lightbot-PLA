@@ -167,7 +167,9 @@ public class Game implements DisplayMode{
 					display.rotate(1);
 				}
 				else if(homeButton.isInside(mouse.position)){
+					System.out.println("out");
 					LightCore.game = false;
+					LightCore.random = false;
 					LightCore.menu = true;
 				}
 			}
