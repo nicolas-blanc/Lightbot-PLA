@@ -7,6 +7,7 @@ import java.util.Random;
 
 import lightbot.system.CardinalDirection;
 import lightbot.system.RelativeDirection;
+import lightbot.system.Robot;
 import lightbot.system.world.Grid;
 import lightbot.system.world.OutOfGridException;
 import lightbot.system.world.cell.Cell;
@@ -31,9 +32,9 @@ public class WorldGeneratorProcedure {
 	
 	private Pattern pattern;
 	
-	private Random rand;
+	private final Random rand = new Random();
 	
-	final private int size = 8;
+	private final int size = 8;
 	
 	/**
 	 * 
@@ -43,8 +44,17 @@ public class WorldGeneratorProcedure {
 		numberLight = 0;
 			
 		grid = new Grid(size);
-		rand = new Random();
 		probabilities = new Probabilities();
+
+		if (rand.nextInt(2) == 0){
+			direction = CardinalDirection.EAST;
+		}
+		else {
+			direction = CardinalDirection.SOUTH;
+		}
+		
+		Robot.wheatley.setPosition(0, 0);
+		Robot.wheatley.setDirection(direction);
 		
 		generation();
 		finishGeneration();

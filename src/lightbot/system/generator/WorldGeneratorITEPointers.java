@@ -3,10 +3,13 @@
  */
 package lightbot.system.generator;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import lightbot.system.CardinalDirection;
 import lightbot.system.RelativeDirection;
+import lightbot.system.Robot;
+import lightbot.system.TeleportColour;
 import lightbot.system.world.*;
 import lightbot.system.world.cell.*;
 
@@ -27,10 +30,12 @@ public class WorldGeneratorITEPointers {
 	private CardinalDirection direction;
 	
 	private Pattern pattern;
+
+	private ArrayList<TeleportColour> usedColour = new ArrayList<TeleportColour>();
 	
-	private Random rand;
+	private final Random rand = new Random();
 	
-	final private int size = 8;
+	private final int size = 8;
 	
 	/**
 	 * 
@@ -40,11 +45,20 @@ public class WorldGeneratorITEPointers {
 		numberLight = 0;
 			
 		grid = new Grid(size);
-		rand = new Random();
 		probabilities = new Probabilities();
+
+		if (rand.nextInt(2) == 0){
+			direction = CardinalDirection.EAST;
+		}
+		else {
+			direction = CardinalDirection.SOUTH;
+		}
+		
+		Robot.wheatley.setPosition(0, 0);
+		Robot.wheatley.setDirection(direction);
 		
 		generation();
-		finishGeneration();
+		//finishGeneration();
 	}
 
 	/**
@@ -61,7 +75,7 @@ public class WorldGeneratorITEPointers {
 	private void generation() {
 		probabilities.initProba();
 			
-		int maximumInstructions = rand.nextInt(30 - 5 + 1) + 5;
+		int maximumInstructions = rand.nextInt(25 - 5 + 1) + 5;
 		int maximumLight = rand.nextInt((maximumInstructions / 5) + 4) + 1;
 	
 		pattern = new Pattern(maximumInstructions);
@@ -69,7 +83,7 @@ public class WorldGeneratorITEPointers {
 		Cell currentCell = firstCell();
 		Cell newCell;
 		int currentAction;
-		int previousAction = -1;
+		int previousAction = -2;
 		
 		int numLoop = 0;
 		
@@ -90,8 +104,9 @@ public class WorldGeneratorITEPointers {
 			previousAction = currentAction;
 		}
 		
-		grid.changeToLightable(currentCell.getX(),currentCell.getY());
-		
+		if (currentCell instanceof NormalCell) {
+			grid.changeToLightable(currentCell.getX(),currentCell.getY());
+		}
 //			System.out.println("Max - Instruction : " + maximumInstructions + " / LIght : " + maximumLight);
 //			System.out.println("Instruction : " + numberInstruction + " / LIght : " + numberLight);
 		
@@ -103,8 +118,12 @@ public class WorldGeneratorITEPointers {
 	 * @return
 	 */
 	private int giveAction(int maxLight, int prevAction) {
-		int randAction = rand.nextInt(probabilities.getRange());
-		
+		int randAction = -1;
+		if (prevAction == -2) {
+			randAction = rand.nextInt(probabilities.getRangePattern());
+		} else {
+			randAction = rand.nextInt(probabilities.getRange());
+		}
 //			System.out.print("Before while : " + randAction);
 		
 		while (randAction < probabilities.getProbaLight() && numberLight == (maxLight - 1)) {
@@ -169,9 +188,14 @@ public class WorldGeneratorITEPointers {
 		numberInstruction++;	
 		switch (action) {
 		case 0:
-			grid.changeToLightable(cell.getX(), cell.getY());
+			if (cell instanceof NormalCell) {
+				grid.changeToLightable(cell.getX(), cell.getY());
 //				System.out.println("Light !!!! // x : " + cell.getposX() + " - y : " + cell.getposY());
 //				System.out.println("Light ? -> " + cell.getLightable());
+			} else {
+				cell = null;
+				numberInstruction--;
+			}
 			break;
 		case 1:
 			try {
@@ -349,8 +373,43 @@ public class WorldGeneratorITEPointers {
 	 * @return
 	 */
 	private Cell updateCellPointers(Cell cell) {
-		
-		return null;
+		TeleportColour colour = getColour();
+		if ((cell instanceof NormalCell) || colour != null) {
+			int xTp;
+			int yTp;
+			
+			do {
+				xTp = rand.nextInt(size);
+				yTp = rand.nextInt(size);
+			} while (!(grid.getCell(xTp, yTp).isEmptyCell()));
+			
+			TeleportCell cellTp = new TeleportCell(xTp, yTp, height, cell.getX(), cell.getY(), colour);
+			grid.setCell(cellTp);
+			grid.setCell(new TeleportCell(cell.getX(), cell.getY(), height, cellTp.getX(), cellTp.getY(), colour));
+			
+			System.out.println("first cell -> X : " + cell.getX() + " -  Y : " + cell.getY() + " // dest cell -> X : " + cellTp.getX() + " - Y : " + cellTp.getY() + " // Colour : " + colour.toString());
+			
+			return cellTp;
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	private TeleportColour getColour(){
+		if (usedColour.size() != TeleportColour.values().length){
+			TeleportColour colour;
+			do{
+				colour = TeleportColour.randomColour();
+			} while(usedColour.contains(colour));
+			usedColour.add(colour);
+			return colour;
+		}
+		else{
+			return null;
+		}
 	}
 
 	/**
@@ -406,13 +465,6 @@ public class WorldGeneratorITEPointers {
 		
 		Cell firstcell = grid.getCell(0, 0);
 		height = firstcell.getHeight();
-
-		if (rand.nextInt(2) == 0){
-			direction = CardinalDirection.EAST;
-		}
-		else {
-			direction = CardinalDirection.SOUTH;
-		}
 		
 		System.out.println("Direction : " + direction.toString());
 		
@@ -438,7 +490,7 @@ public class WorldGeneratorITEPointers {
 			for (int j = 0; j < line.length; j++) {
 				if(line[j] > 0 && col[i] > 0 && grid.getCell(j, i).isEmptyCell()) {
 					//grid.setCell(new NormalCell(j, i, rand.nextInt(3)));
-					//System.out.println("Rajout -> X : " + grid.getCell(j, i).getX() + " / Y : " + grid.getCell(j, i).getY());
+					System.out.println("Rajout -> X : " + grid.getCell(j, i).getX() + " / Y : " + grid.getCell(j, i).getY());
 					
 					if (col[i] < line[j]) {
 						grid.setCell(new NormalCell(j, i, rand.nextInt(col[i])));
