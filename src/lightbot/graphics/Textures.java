@@ -85,12 +85,14 @@ public class Textures {
 	public static Texture menuEditeur;
 	public static Texture menuQuitter;
 	public static Texture menuCharger;
+	public static Texture menuAleatoire;
 	public static Texture menuBg;
 	
 	public static Texture menuLogoH;
 	public static Texture menuJouerH;
 	public static Texture menuEditeurH;
 	public static Texture menuQuitterH;
+	public static Texture menuAleatoireH;
 	public static Texture menuChargerH;
 	public static Texture menuBgH;
 	
@@ -196,6 +198,7 @@ public class Textures {
 		menuQuitter = new Texture();
 		menuEditeur = new Texture();
 		menuCharger = new Texture();
+		menuAleatoire = new Texture();
 		menuBg = new Texture();
 		
 		menuLogoH = new Texture();
@@ -203,6 +206,7 @@ public class Textures {
 		menuQuitterH = new Texture();
 		menuEditeurH = new Texture();
 		menuChargerH = new Texture();
+		menuAleatoireH = new Texture();
 		menuBgH = new Texture();
 		
 		blinkTexture = new Texture();
@@ -307,11 +311,13 @@ public class Textures {
 			menuQuitter.loadFromFile(Paths.get(MENU_PATH + "exitButton.png"));
 			menuEditeur.loadFromFile(Paths.get(MENU_PATH + "editorButton.png"));
 			menuCharger.loadFromFile(Paths.get(MENU_PATH + "loadButton.png"));
+			menuAleatoire.loadFromFile(Paths.get(MENU_PATH + "randomButton.png"));
 			menuLogo.loadFromFile(Paths.get(MENU_PATH + "logoLightcore.png"));
 			
 			menuJouerH.loadFromFile(Paths.get(MENU_PATH + "playButtonH.png"));
 			menuQuitterH.loadFromFile(Paths.get(MENU_PATH + "exitButtonH.png"));
 			menuEditeurH.loadFromFile(Paths.get(MENU_PATH + "editorButtonH.png"));
+			menuAleatoireH.loadFromFile(Paths.get(MENU_PATH + "randomButtonH.png"));
 			menuChargerH.loadFromFile(Paths.get(MENU_PATH + "loadButtonH.png"));
 			
 			blinkTexture.loadFromFile(Paths.get(MENU_PATH + "blink.png"));
@@ -411,6 +417,7 @@ public class Textures {
 			menuQuitter.setSmooth(true);
 			menuEditeur.setSmooth(true);
 			menuCharger.setSmooth(true);
+			menuAleatoire.setSmooth(true);
 			menuLogo.setSmooth(true);
 			
 			menuBgH.setSmooth(true);
@@ -418,6 +425,7 @@ public class Textures {
 			menuQuitterH.setSmooth(true);
 			menuEditeurH.setSmooth(true);
 			menuChargerH.setSmooth(true);
+			menuAleatoireH.setSmooth(true);
 			menuLogoH.setSmooth(true);
 			
 			blinkTexture.setSmooth(true);

@@ -32,7 +32,9 @@ public class LightCore {
 	public static int originY;
 	
 	public static boolean menu = true;
+	public static boolean random = false;
 	public static boolean worlds = false;
+	public static boolean game = false;
 	public static boolean editor = false;
 	public static boolean bases = false;
 	public static boolean procedures = false;
@@ -114,7 +116,7 @@ public class LightCore {
 					if(fork){
 						levels.displayLevelButtons();
 					}
-				} else if (editor){
+				} else if (editor || game || random){
 					display.display();
 				}
 			}
@@ -138,7 +140,11 @@ public class LightCore {
 						if(bases){
 							levels.eventManager(event);
 						}
-					}else if (editor){
+					}else if (editor || game || random){
+						if((game || random) && firstPrintGame){
+							display.printGrid();
+							firstPrintGame = false;
+						}
 						display.eventManager(event);
 					}
 				}
