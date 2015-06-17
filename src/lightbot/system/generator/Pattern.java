@@ -18,7 +18,14 @@ public class Pattern {
 	 */
 	public Pattern(int maxInstructions) {
 		iterate = 0;
-		initPattern(maxInstructions);
+		initPattern();
+		
+		if (numberInstruction == -1) {
+			variation = 0;
+		} else {
+			variation = maxInstructions / (numberInstruction * 2);
+		}
+		
 		printPattern();
 	}
 
@@ -62,7 +69,7 @@ public class Pattern {
 	/**
 	 * 
 	 */
-	private void initPattern(int maxInstructions) {
+	private void initPattern() {
 		Random rand = new Random();
 		int numPattern = rand.nextInt(numberPattern);
 		
@@ -113,15 +120,9 @@ public class Pattern {
 			numberInstruction = -1;
 			break;
 		}
-		
-		if (numberInstruction == -1) {
-			variation = 0;
-		} else {
-			variation = maxInstructions / (numberInstruction * 2);
-		}
 	}
 	
-	@SuppressWarnings("unused")
+//	@SuppressWarnings("unused")
 	private void printPattern() {
 		System.out.print("Pattern : ");
 		for (int i = 0; i < pattern.length; i++) {

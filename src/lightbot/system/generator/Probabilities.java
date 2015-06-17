@@ -14,9 +14,12 @@ public class Probabilities {
 	private int probaRight;
 	private int probaLeft;
 	private int probaPattern;
-
-	final private int range = 12;
-
+	private int probaPointer;
+	private int probaITE;
+	
+	final private int rangeBase = 12;
+	final private int range = 17;
+	
 	/**
 	 * 
 	 */
@@ -58,7 +61,7 @@ public class Probabilities {
 	public int getProbaLeft() {
 		return probaLeft;
 	}
-
+	
 	/**
 	 * @return the probaPattern
 	 */
@@ -67,17 +70,35 @@ public class Probabilities {
 	}
 
 	/**
-	 * @return the range if the base
+	 * @return the probaPointer
 	 */
-	public int getRange() {
-		return range;
+	public int getProbaPointer() {
+		return probaPointer;
+	}
+
+	/**
+	 * @return the probaITE
+	 */
+	public int getProbaITE() {
+		return probaITE;
+	}
+
+	/**
+	 * @return the range of the base of the game
+	 */
+	public int getRangeBase() {
+		return rangeBase;
 	}
 	
 	/**
-	 * @return the range if the base
+	 * @return the range of the base, plus the pattern
 	 */
 	public int getRangePattern() {
-		return range + 4;
+		return rangeBase + 4;
+	}
+	
+	public int getRange() {
+		return range;
 	}
 
 	/**
@@ -90,6 +111,8 @@ public class Probabilities {
 		probaRight= 11;
 		probaLeft = 12;
 		probaPattern = 16;
+		probaPointer = 17;
+		probaITE = 18;
 	}
 	
 

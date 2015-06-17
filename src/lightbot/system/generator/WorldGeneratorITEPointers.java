@@ -7,17 +7,14 @@ import java.util.Random;
 
 import lightbot.system.CardinalDirection;
 import lightbot.system.RelativeDirection;
-import lightbot.system.world.Grid;
-import lightbot.system.world.OutOfGridException;
-import lightbot.system.world.cell.Cell;
-import lightbot.system.world.cell.LightableCell;
-import lightbot.system.world.cell.NormalCell;
+import lightbot.system.world.*;
+import lightbot.system.world.cell.*;
 
 /**
  * @author Nasheis
  *
  */
-public class WorldGeneratorProcedure {
+public class WorldGeneratorITEPointers {
 	private Grid grid;
 	
 	private int numberInstruction;
@@ -38,7 +35,7 @@ public class WorldGeneratorProcedure {
 	/**
 	 * 
 	 */
-	public WorldGeneratorProcedure() {
+	public WorldGeneratorITEPointers() {
 		numberInstruction = 0;
 		numberLight = 0;
 			
@@ -95,8 +92,8 @@ public class WorldGeneratorProcedure {
 		
 		grid.changeToLightable(currentCell.getX(),currentCell.getY());
 		
-//		System.out.println("Max - Instruction : " + maximumInstructions + " / LIght : " + maximumLight);
-//		System.out.println("Instruction : " + numberInstruction + " / LIght : " + numberLight);
+//			System.out.println("Max - Instruction : " + maximumInstructions + " / LIght : " + maximumLight);
+//			System.out.println("Instruction : " + numberInstruction + " / LIght : " + numberLight);
 		
 	}
 
@@ -106,24 +103,27 @@ public class WorldGeneratorProcedure {
 	 * @return
 	 */
 	private int giveAction(int maxLight, int prevAction) {
-		int randAction = rand.nextInt(probabilities.getRangePattern());
+		int randAction = rand.nextInt(probabilities.getRange());
 		
-//		System.out.print("Before while : " + randAction);
+//			System.out.print("Before while : " + randAction);
 		
 		while (randAction < probabilities.getProbaLight() && numberLight == (maxLight - 1)) {
 			randAction = rand.nextInt(probabilities.getRangePattern());
-//			System.out.println("In while : " + randAction + " instruction : " + numberInstruction);
 		}
 		
 		while((randAction >= probabilities.getProbaJump() && randAction < probabilities.getProbaLeft()) && (prevAction == 3 || prevAction == 4)) {
-			randAction = rand.nextInt(probabilities.getRangePattern());
+			randAction = rand.nextInt(probabilities.getRange());
 		}
 		
 		while(randAction >= probabilities.getProbaLeft() &&  randAction < probabilities.getProbaPattern() && numberPattern > pattern.getVariation()) {
 			randAction = rand.nextInt(probabilities.getRangeBase());			
 		}
 		
-//		System.out.println(" // After while : " + randAction);
+		while(randAction >= probabilities.getProbaPattern() && randAction < probabilities.getProbaPointer() && prevAction == 6) {
+			randAction = rand.nextInt(probabilities.getRange());						
+		}
+		
+//			System.out.println(" // After while : " + randAction);
 		
 		int action = -1;
 		
@@ -146,10 +146,13 @@ public class WorldGeneratorProcedure {
 		} else if (randAction < probabilities.getProbaPattern()) {
 			action = 5;
 			System.out.println("Pattern !!!!");
+		} else if (randAction < probabilities.getProbaPointer()) {
+			action = 6;
+			System.out.println("Pointers !!!");
 		}
 
 		System.out.println();
-//		System.out.println(" // Action : " + action);
+//			System.out.println(" // Action : " + action);
 		
 		return action;
 	}
@@ -161,33 +164,33 @@ public class WorldGeneratorProcedure {
 	 * @return
 	 */
 	private Cell updateGrid(Cell cell, int action) {
-//		System.out.println("Action : " + action);
+//			System.out.println("Action : " + action);
 		
 		numberInstruction++;	
 		switch (action) {
 		case 0:
 			grid.changeToLightable(cell.getX(), cell.getY());
-//			System.out.println("Light !!!! // x : " + cell.getposX() + " - y : " + cell.getposY());
-//			System.out.println("Light ? -> " + cell.getLightable());
+//				System.out.println("Light !!!! // x : " + cell.getposX() + " - y : " + cell.getposY());
+//				System.out.println("Light ? -> " + cell.getLightable());
 			break;
 		case 1:
 			try {
 				Cell emptyCell = grid.getNextCell(cell.getX(), cell.getY(), direction);
-//				System.out.println("Heigh cell : " + emptyCell.getHeight());
+//					System.out.println("Heigh cell : " + emptyCell.getHeight());
 				if (emptyCell.isEmptyCell()) {
 					grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), cell.getHeight()));
 					cell = grid.getCell(emptyCell.getX(), emptyCell.getY());
 				} else {
-//					System.out.println("Not Empty Cell");					
+//						System.out.println("Not Empty Cell");					
 					if (cell.getHeight() <= (height + 1) && cell.getHeight() >= (height - 1)) {
 						cell = emptyCell;
 					} else {
 						if (rand.nextInt(2) == 0) {
 							direction = CardinalDirection.getRotationDirection(direction, RelativeDirection.RIGHT);
-//							System.out.println("Update - Forward - Right !!!!");
+//								System.out.println("Update - Forward - Right !!!!");
 						} else {
 							direction = CardinalDirection.getRotationDirection(direction, RelativeDirection.LEFT);
-//							System.out.println("Update - Forward - Left !!!!");
+//								System.out.println("Update - Forward - Left !!!!");
 						}
 					}
 				}
@@ -204,7 +207,7 @@ public class WorldGeneratorProcedure {
 		case 2:
 			try {
 				Cell emptyCell = grid.getNextCell(cell.getX(), cell.getY(), direction);
-//				System.out.println("Heigh cell : " + emptyCell.getHeight());
+//					System.out.println("Heigh cell : " + emptyCell.getHeight());
 				if (emptyCell.isEmptyCell()) {
 					if(cell.getHeight() == 0) {
 						grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), (cell.getHeight() + rand.nextInt(2))));
@@ -216,16 +219,16 @@ public class WorldGeneratorProcedure {
 					cell = grid.getCell(emptyCell.getX(), emptyCell.getY());
 					height = cell.getHeight();
 				} else {
-//					System.out.println("Not Empty Cell");
+//						System.out.println("Not Empty Cell");
 					if (cell.getHeight() <= (height + 1) && cell.getHeight() >= (height - 1)) {
 						cell = emptyCell;
 					} else {
 						if (rand.nextInt(2) == 0) {
 							direction = CardinalDirection.getRotationDirection(direction, RelativeDirection.RIGHT);
-//							System.out.println("Update - Jump - Right !!!!");
+//								System.out.println("Update - Jump - Right !!!!");
 						} else {
 							direction = CardinalDirection.getRotationDirection(direction, RelativeDirection.LEFT);
-//							System.out.println("Update - Jump - Left !!!!");
+//								System.out.println("Update - Jump - Left !!!!");
 						}
 					}
 				}
@@ -248,6 +251,9 @@ public class WorldGeneratorProcedure {
 		case 5:
 			cell = updateGridWithPattern(cell);
 			break;
+		case 6:
+			cell = updateCellPointers(cell);
+			break;
 		default:
 			cell = null;
 			numberInstruction--;
@@ -268,7 +274,6 @@ public class WorldGeneratorProcedure {
 		
 		if(patternIsPossible(cell)) {
 			System.out.println("Pattern ok, go for while");
-			numberPattern++;
 			while (!(pattern.endOfPattern()) && !(error)) {
 				action = pattern.nextAction(); 
 				System.out.println("action in pattern : " + action);
@@ -340,6 +345,15 @@ public class WorldGeneratorProcedure {
 	}
 
 	/**
+	 * @param cell
+	 * @return
+	 */
+	private Cell updateCellPointers(Cell cell) {
+		
+		return null;
+	}
+
+	/**
 	 * @param cell 
 	 * @return
 	 */
@@ -403,7 +417,7 @@ public class WorldGeneratorProcedure {
 		System.out.println("Direction : " + direction.toString());
 		
 		return firstcell;		
-	}	
+	}
 
 	/**
 	 * 
@@ -460,3 +474,4 @@ public class WorldGeneratorProcedure {
 		return tab;
 	}
 }
+
