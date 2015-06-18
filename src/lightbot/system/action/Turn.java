@@ -13,8 +13,9 @@ public class Turn extends _Action {
 
 	RelativeDirection direction;
 
-	public Turn() {
+	public Turn(RelativeDirection direction) {
 		super(Colour.WHITE);
+		this.direction = direction;
 	}
 
 	public RelativeDirection getDirection() {
