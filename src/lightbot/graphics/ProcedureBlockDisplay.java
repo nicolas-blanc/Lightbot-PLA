@@ -42,8 +42,8 @@ public class ProcedureBlockDisplay {
 	public static boolean useProc2;
 
 	public static boolean mainIsActive = true;
-	public static boolean proc1IsActive;
-	public static boolean proc2IsActive;
+	public static boolean proc1IsActive = false;
+	public static boolean proc2IsActive = false;
 
 	private static RectangleShape mainRect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 	private static RectangleShape proc1Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
@@ -62,9 +62,9 @@ public class ProcedureBlockDisplay {
 		useProc1 = level.useProc1();
 		useProc2 = level.useProc2();
 
-		mainIsActive = true;
-		proc1IsActive = false;
-		proc2IsActive = false;
+		//mainIsActive = true;
+		//proc1IsActive = false;
+		//proc2IsActive = false;
 
 		// setup main
 		// main = new Procedure(Procedure.MAIN_NAME, level.getMainLimit(),
@@ -117,8 +117,8 @@ public class ProcedureBlockDisplay {
 			int whereToAdd = main.getSize();
 			int line = whereToAdd / 4;
 
-			System.out.println("wheretoadd : " + whereToAdd);
-			System.out.println("line : " + line);
+			// System.out.println("wheretoadd : " + whereToAdd);
+			// System.out.println("line : " + line);
 
 			main.addAction(e);
 
@@ -134,6 +134,7 @@ public class ProcedureBlockDisplay {
 		}
 
 		if (proc1IsActive) {
+			System.out.println("HOLAAA");
 			int whereToAdd = proc1.getSize();
 			int line = whereToAdd / 4;
 
@@ -141,11 +142,12 @@ public class ProcedureBlockDisplay {
 
 			Sprite s = new Sprite(b.getSprite().getTexture());
 			int spriteX = 730 + 10 + (whereToAdd % 4) * (50 + 10);
-			int spriteY = 15 + line * (50 + 10);
+			int spriteY = 2 * TOP_MARGIN + BLOCK_HEIGHT + 15 + line * (50 + 10);
 			s.setPosition(spriteX, spriteY);
 
 			Button bnew = new Button(s, null, null);
 			proc1Buttons.add(bnew);
+
 			updateDisplay();
 		}
 
@@ -157,11 +159,12 @@ public class ProcedureBlockDisplay {
 
 			Sprite s = new Sprite(b.getSprite().getTexture());
 			int spriteX = 730 + 10 + (whereToAdd % 4) * (50 + 10);
-			int spriteY = 15 + line * (50 + 10);
+			int spriteY = 3 * TOP_MARGIN + 2 * BLOCK_HEIGHT + 15 + line * (50 + 10);
 			s.setPosition(spriteX, spriteY);
 
 			Button bnew = new Button(s, null, null);
 			proc2Buttons.add(bnew);
+
 			updateDisplay();
 
 		}
@@ -176,22 +179,33 @@ public class ProcedureBlockDisplay {
 			MouseButtonEvent mouse = event.asMouseButtonEvent();
 			if (mouse.button == Mouse.Button.LEFT) {
 				SelectedBox sl = selectedbox(mouse.position);
+				//System.out.println("Selected Box : " + sl.toString());
 				if (sl != null) {
 					switch (sl) {
 					case MAIN:
 						mainIsActive = true;
 						proc1IsActive = false;
 						proc2IsActive = false;
+						System.out.println("main " + mainIsActive);
+						System.out.println("proc1 " + proc1IsActive);
+						System.out.println("proc2 " + proc2IsActive);
 						break;
 					case PROC1:
 						proc1IsActive = true;
 						mainIsActive = false;
 						proc2IsActive = false;
+						System.out.println("main " + mainIsActive);
+						System.out.println("proc1 " + proc1IsActive);
+						System.out.println("proc2 " + proc2IsActive);
 						break;
 					case PROC2:
 						proc2IsActive = true;
 						mainIsActive = false;
 						proc2IsActive = false;
+						System.out.println("main " + mainIsActive);
+						System.out.println("proc1 " + proc1IsActive);
+						System.out.println("proc2 " + proc2IsActive);
+						break;
 					}
 				}
 			}

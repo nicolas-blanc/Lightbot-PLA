@@ -48,9 +48,8 @@ public class ActionListDisplay {
 			actionsL.add(e);
 			buttonsL.add(b);
 		}
-		
+
 		display(125);
-		System.out.println("hey");
 	}
 
 	public static void display(int firstTopLeft) {
