@@ -10,6 +10,7 @@ import lightbot.system._Executable;
 import lightbot.system.world.Level;
 
 import org.jsfml.graphics.Color;
+import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.RectangleShape;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2f;
@@ -49,10 +50,10 @@ public class ProcedureBlockDisplay {
 	private static RectangleShape proc1Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 	private static RectangleShape proc2Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 
-	public static Level l;
+	public static Level lvl;
 
 	public static void init(Level level) {
-		l = level;
+		lvl = level;
 
 		useProc1 = level.useProc1();
 		useProc2 = level.useProc2();
@@ -280,24 +281,19 @@ public class ProcedureBlockDisplay {
 		return null;
 	}
 
-	public static ArrayList<Sprite> getDisplaySprites() {
-		ArrayList<Sprite> toDisplay = new ArrayList<Sprite>();
+	public static ArrayList<Drawable> getDisplaySprites() {
+		ArrayList<Drawable> toDisplay = new ArrayList<Drawable>();
 
-		Sprite s;
-		s = new Sprite(mainRect.getTexture());
-		s.setPosition(mainRect.getPosition());
-
-		toDisplay.add(s);
+		
+		toDisplay.add(mainRect);
 
 		for (Button b : mainButtons) {
 			toDisplay.add(b.getSprite());
 		}
 
 		if (useProc1) {
-			s = new Sprite(proc1Rect.getTexture());
-			s.setPosition(proc1Rect.getPosition());
 
-			toDisplay.add(s);
+			toDisplay.add(proc1Rect);
 
 			for (Button b : proc1Buttons) {
 				toDisplay.add(b.getSprite());
@@ -305,10 +301,8 @@ public class ProcedureBlockDisplay {
 		}
 
 		if (useProc2) {
-			s = new Sprite(proc2Rect.getTexture());
-			s.setPosition(proc2Rect.getPosition());
 
-			toDisplay.add(s);
+			toDisplay.add(proc2Rect);
 
 			for (Button b : proc2Buttons) {
 				toDisplay.add(b.getSprite());
