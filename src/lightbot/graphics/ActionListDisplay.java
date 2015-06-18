@@ -29,17 +29,19 @@ import org.jsfml.window.event.MouseButtonEvent;
 
 public class ActionListDisplay {
 
-	public static final int FIRST_BUTTON_TOP_LEFT = 15;
+	/*public static final int FIRST_BUTTON_TOP_LEFT = 15;
 
 	private static List<_Executable> actionsL = new ArrayList<_Executable>();
 	private static List<Button> buttonsL = new ArrayList<Button>();
 
-	private static Sprite spritePlay = new Sprite(Textures.playTexture);
-	private static Button buttonPlay = new Button(spritePlay, null, null);
+	//private static Sprite spritePlay = new Sprite(Textures.playTexture);
+	//private static Button buttonPlay;// = new Button(spritePlay, null, null);
 
 	public static void init(Level level, int firstTopLeft) {
 
-		buttonPlay.getSprite().setPosition(650, 15);
+		//spritePlay.setPosition(650, 15);
+		//buttonPlay = new Button(spritePlay, null, null);
+		//buttonPlay.getSprite().setPosition(650, 15);
 
 		if (actionsL != null) {
 			actionsL.clear();
@@ -81,18 +83,18 @@ public class ActionListDisplay {
 
 	public static void display() {
 
-		LightCore.window.draw(spritePlay);
+		//LightCore.window.draw(spritePlay);
 
-		for (Button button : buttonsL)
-			LightCore.window.draw(button.getSprite());
-	}
+		/*for (Button button : buttonsL)
+			LightCore.window.draw(button.getSprite());*/
+	//}
 
-	public static void reset() {
+	/*public static void reset() {
 		actionsL.clear();
 		buttonsL.clear();
-	}
+	}*/
 
-	public static void eventManager(Event event) {
+	/*public static void eventManager(Event event) {
 		switch (event.type) {
 		case CLOSED:
 			LightCore.window.close();
@@ -104,7 +106,7 @@ public class ActionListDisplay {
 				int pressedActionIndex = isInsideList(mouse.position);
 
 				if (pressedActionIndex == -1) {
-					if (buttonPlay.isInside(mouse.position)) {
+					/*if (buttonPlay.isInside(mouse.position)) {
 						try {
 							ProcedureBlockDisplay.main.execute(ProcedureBlockDisplay.lvl.getGrid(), Robot.wheatley);
 						} catch (OutOfGridException e) {
@@ -152,9 +154,9 @@ public class ActionListDisplay {
 		default:
 			break;
 		}
-	}
+	}*/
 
-	public static ArrayList<Sprite> getDisplaySprites() {
+	/*public static ArrayList<Sprite> getDisplaySprites() {
 		ArrayList<Sprite> toDisplay = new ArrayList<Sprite>(buttonsL.size() + 1);
 
 		for (Button b : buttonsL) {
@@ -165,9 +167,9 @@ public class ActionListDisplay {
 
 		return toDisplay;
 
-	}
+	}*/
 
-	public static Texture getTextureForAction(_Executable e) {
+	/*public static Texture getTextureForAction(_Executable e) {
 		if (e instanceof Forward)
 			return Textures.forwardTexture;
 		if (e instanceof Jump)
@@ -204,6 +206,6 @@ public class ActionListDisplay {
 		}
 
 		return -1;
-	}
+	}*/
 
 }

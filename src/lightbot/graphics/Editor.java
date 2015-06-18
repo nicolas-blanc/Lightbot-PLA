@@ -46,6 +46,7 @@ import lightbot.system.world.cell.NormalCell;
 import lightbot.system.world.cell.TeleportCell;
 
 import org.jsfml.graphics.Color;
+import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2i;
 import org.jsfml.window.Mouse;
@@ -54,7 +55,7 @@ import org.jsfml.window.event.MouseButtonEvent;
 
 public class Editor implements DisplayMode{
 	
-	public ArrayList<Sprite> toDisplay;
+	public ArrayList<Drawable> toDisplay;
 	
 	public Display display;
 	private CanvaDisplay canva;
@@ -113,7 +114,7 @@ public class Editor implements DisplayMode{
 		
 		display = new Display(size, originX, originY);
 		
-		toDisplay = new ArrayList<Sprite>();
+		toDisplay = new ArrayList<Drawable>();
 		
 		canva = new CanvaDisplay(size, originX, originY);
 		
@@ -129,7 +130,7 @@ public class Editor implements DisplayMode{
 	 * Get the constant display
 	 * @return A list of Sprite
 	 */
-	public ArrayList<Sprite> getConstantDisplay(){return this.toDisplay;}
+	public ArrayList<Drawable> getConstantDisplay(){return this.toDisplay;}
 	
 	/**
 	 * Get the grid from the editor
@@ -243,7 +244,7 @@ public class Editor implements DisplayMode{
 	 * Display the editor
 	 */
 	public void display(){		
-		for(Sprite s : toDisplay)
+		for(Drawable s : toDisplay)
 			LightCore.window.draw(s);
 		display.print();
 	}
@@ -535,7 +536,7 @@ public class Editor implements DisplayMode{
 					  originX = (GRID_DISPLAY_SIZE/2)+MARGIN_LEFT;
 					  originY = (WINDOW_HEIGHT/2-MARGIN_LEFT-(toOpen.getSize()*Textures.cellTexture.getSize().y)/2);
 					  display.reinit(toOpen, originX, originY);
-					  toDisplay = new ArrayList<Sprite>();
+					  toDisplay = new ArrayList<Drawable>();
 					  canva = new CanvaDisplay(toOpen.getSize(), originX, originY);
 					  initConstantDisplay();
 					  

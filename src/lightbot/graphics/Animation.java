@@ -5,6 +5,7 @@ import lightbot.system.CardinalDirection;
 import lightbot.system.Robot;
 
 import org.jsfml.graphics.Color;
+import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Clock;
@@ -117,7 +118,7 @@ public class Animation {
 			
 		    LightCore.window.clear(Color.WHITE);
 		    
-	    	for(Sprite s : LightCore.display.getConstantDisplay())
+	    	for(Drawable s : LightCore.display.getConstantDisplay())
 	    		LightCore.window.draw(s);
 	    	
 	    	if(!block){
@@ -219,7 +220,7 @@ public class Animation {
 			
 		    LightCore.window.clear(Color.WHITE);
 		    
-	    	for(Sprite s : LightCore.display.getConstantDisplay())
+	    	for(Drawable s : LightCore.display.getConstantDisplay())
 	    		LightCore.window.draw(s);
 	    	
 			for(int l = 0; l<cubes.length && !endDisplay; l++)
@@ -364,7 +365,7 @@ public class Animation {
 			
 		    LightCore.window.clear(Color.WHITE);
 		    
-	    	for(Sprite s : LightCore.display.getConstantDisplay())
+	    	for(Drawable s : LightCore.display.getConstantDisplay())
 	    		LightCore.window.draw(s);
 	    	
 	    	for(int l = 0; l < cubes.length; l++){
@@ -519,7 +520,7 @@ public class Animation {
 			
 		    LightCore.window.clear(Color.WHITE);
 		    
-	    	for(Sprite s : LightCore.display.getConstantDisplay())
+	    	for(Drawable s : LightCore.display.getConstantDisplay())
 	    		LightCore.window.draw(s);
 	    	
 			for(int l = 0; l<cubes.length && !endDisplay; l++)

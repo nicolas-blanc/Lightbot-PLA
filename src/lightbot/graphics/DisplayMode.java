@@ -2,7 +2,7 @@ package lightbot.graphics;
 
 import java.util.ArrayList;
 
-import org.jsfml.graphics.Sprite;
+import org.jsfml.graphics.Drawable;
 import org.jsfml.system.Vector2i;
 import org.jsfml.window.event.Event;
 
@@ -10,7 +10,7 @@ public interface DisplayMode {
 	
 	public void initConstantDisplay();
 	
-	public ArrayList<Sprite> getConstantDisplay();
+	public ArrayList<Drawable> getConstantDisplay();
 	
 	public void display();
 	

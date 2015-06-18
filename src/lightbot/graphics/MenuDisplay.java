@@ -8,22 +8,21 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import lightbot.LightCore;
-import lightbot.system.Colour;
 import lightbot.system.ParserJSON;
-import lightbot.system.Procedure;
 import lightbot.system.RelativeDirection;
 import lightbot.system._Executable;
 import lightbot.system.action.Forward;
 import lightbot.system.action.Jump;
 import lightbot.system.action.Light;
 import lightbot.system.action.Turn;
-import lightbot.system.generator.*;
+import lightbot.system.generator.WorldGenerator;
+import lightbot.system.generator.WorldGeneratorBase;
+import lightbot.system.generator.WorldGeneratorITEPointers;
+import lightbot.system.generator.WorldGeneratorProcedure;
 import lightbot.system.world.Grid;
 import lightbot.system.world.Level;
 
-import org.jsfml.graphics.Color;
 import org.jsfml.graphics.IntRect;
-import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Clock;
 import org.jsfml.window.Mouse;
@@ -214,11 +213,9 @@ public class MenuDisplay {
 					if (dialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
 						File file = dialog.getSelectedFile();
 						Level lvl = ParserJSON.deserialize(file.getAbsolutePath());
-						Grid toOpen = lvl.getGrid();
 						//int x = (730 / 2) + 15;
 						//int y = (600 / 2 - 15 - (toOpen.getSize() * Textures.cellTexture.getSize().y) / 2);
-						LightCore.display = new Game(toOpen);
-						initLevelDisplay(lvl);
+						LightCore.display = new Game(lvl);
 						LightCore.menu = false;
 						LightCore.game = true;
 						//System.out.println(file.getAbsolutePath());
@@ -256,8 +253,7 @@ public class MenuDisplay {
 					a.add(new Turn(RelativeDirection.RIGHT));
 					a.add(new Light());
 					Level lvl = new Level(grid, a, true, true, 12, 12, 12);
-					initLevelDisplay(lvl);
-					LightCore.display = new Game(grid);
+					LightCore.display = new Game(lvl);
 					LightCore.firstPrintGame = true;
 				}
 				// Quitter
@@ -271,12 +267,4 @@ public class MenuDisplay {
 			break;
 		}
 	}
-
-	private void initLevelDisplay(Level level) {
-		ActionListDisplay.reset();
-		ProcedureBlockDisplay.reset();
-		ActionListDisplay.init(level, 15);
-		ProcedureBlockDisplay.init(level);
-	}
-
 }

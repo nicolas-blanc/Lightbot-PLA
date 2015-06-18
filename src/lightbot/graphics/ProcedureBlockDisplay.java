@@ -22,7 +22,7 @@ import org.jsfml.window.event.MouseButtonEvent;
 
 public class ProcedureBlockDisplay {
 
-	private static final int BLOCK_WIDTH = 255;
+	/*private static final int BLOCK_WIDTH = 255;
 	private static final int BLOCK_HEIGHT = 182;
 
 	private enum SelectedBox {
@@ -50,11 +50,11 @@ public class ProcedureBlockDisplay {
 
 	private static RectangleShape mainRect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 	private static RectangleShape proc1Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
-	private static RectangleShape proc2Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
+	private static RectangleShape proc2Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));*/
 
 	public static Level lvl;
 
-	public static void init(Level level) {
+	/*public static void init(Level level) {
 		lvl = level;
 
 		useProc1 = level.useProc1();
@@ -97,9 +97,9 @@ public class ProcedureBlockDisplay {
 				&& proc2.getSize() == proc2Buttons.size();
 
 		updateDisplay();
-	}
+	}*/
 
-	public static void reset() {
+	/*public static void reset() {
 		main.reset();
 		proc1.reset();
 		proc2.reset();
@@ -107,9 +107,9 @@ public class ProcedureBlockDisplay {
 		mainButtons.clear();
 		proc1Buttons.clear();
 		proc2Buttons.clear();
-	}
+	}*/
 
-	public static void add(_Executable e, Button b) {
+	/*public static void add(_Executable e, Button b) {
 		if (mainIsActive && main.getSize() == main.getMaxNumOfActions())
 			return;
 
@@ -178,9 +178,9 @@ public class ProcedureBlockDisplay {
 			updateDisplay();
 
 		}
-	}
+	}*/
 
-	public static void eventManager(Event event) {
+	/*public static void eventManager(Event event) {
 		switch (event.type) {
 		case CLOSED:
 			LightCore.window.close();
@@ -282,9 +282,9 @@ public class ProcedureBlockDisplay {
 			return SelectedBox.PROC2;
 
 		return null;
-	}
+	}*/
 
-	public static ArrayList<Sprite> getDisplaySprites() {
+	/*public static ArrayList<Sprite> getDisplaySprites() {
 		ArrayList<Sprite> toDisplay = new ArrayList<Sprite>();
 
 		Texture t = new Texture();
@@ -316,9 +316,9 @@ public class ProcedureBlockDisplay {
 
 		return toDisplay;
 
-	}
+	}*/
 
-	private static void deleteFromProcedureAtIndex(int index, SelectedBox sb) {
+	/*private static void deleteFromProcedureAtIndex(int index, SelectedBox sb) {
 		int lastIndex;
 		Vector2f lastPos;
 
@@ -395,6 +395,6 @@ public class ProcedureBlockDisplay {
 		}
 
 		return -1;
-	}
+	}*/
 
 }

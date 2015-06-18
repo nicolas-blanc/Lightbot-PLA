@@ -203,8 +203,7 @@ public class LevelDisplay {
 					LightCore.path = LightCore.path + "1.json";
 					Level level = ParserJSON.deserialize(LightCore.path);
 					System.out.println(LightCore.path);
-					LightCore.display = new Game(level.getGrid());
-					initLevelDisplay(level);
+					LightCore.display = new Game(level);
 				}
 				if (button2.isInside(mouse.position)) {
 					LightCore.bases = false;
@@ -218,8 +217,7 @@ public class LevelDisplay {
 					LightCore.path = LightCore.path + "2.json";
 					Level level = ParserJSON.deserialize(LightCore.path);
 					// System.out.println(LightCore.path);
-					LightCore.display = new Game(level.getGrid());
-					initLevelDisplay(level);
+					LightCore.display = new Game(level);
 				}
 				if (button3.isInside(mouse.position)) {
 					LightCore.bases = false;
@@ -233,8 +231,7 @@ public class LevelDisplay {
 					LightCore.path = LightCore.path + "3.json";
 					Level level = ParserJSON.deserialize(LightCore.path);
 					// System.out.println(LightCore.path);
-					LightCore.display = new Game(level.getGrid());
-					initLevelDisplay(level);
+					LightCore.display = new Game(level);
 				}
 				if (button4.isInside(mouse.position)) {
 					LightCore.bases = false;
@@ -248,8 +245,7 @@ public class LevelDisplay {
 					LightCore.path = LightCore.path + "4.json";
 					Level level = ParserJSON.deserialize(LightCore.path);
 					// System.out.println(LightCore.path);
-					LightCore.display = new Game(level.getGrid());
-					initLevelDisplay(level);
+					LightCore.display = new Game(level);
 				}
 				if (button5.isInside(mouse.position)) {
 					LightCore.bases = false;
@@ -263,8 +259,7 @@ public class LevelDisplay {
 					LightCore.path = LightCore.path + "5.json";
 					Level level = ParserJSON.deserialize(LightCore.path);
 					// System.out.println(LightCore.path);
-					LightCore.display = new Game(level.getGrid());
-					initLevelDisplay(level);
+					LightCore.display = new Game(level);
 				}
 				if (button6.isInside(mouse.position)) {
 					LightCore.bases = false;
@@ -278,8 +273,7 @@ public class LevelDisplay {
 					LightCore.path = LightCore.path + "6.json";
 					Level level = ParserJSON.deserialize(LightCore.path);
 					// System.out.println(LightCore.path);
-					LightCore.display = new Game(level.getGrid());
-					initLevelDisplay(level);
+					LightCore.display = new Game(level);
 				}
 			}
 			if (homeButton.isInside(mouse.position)) {
@@ -405,13 +399,6 @@ public class LevelDisplay {
 		default:
 			break;
 		}
-	}
-
-	private void initLevelDisplay(Level level) {
-		ActionListDisplay.reset();
-		ProcedureBlockDisplay.reset();
-		ActionListDisplay.init(level, 15);
-		ProcedureBlockDisplay.init(level);
 	}
 	
 }
