@@ -19,6 +19,7 @@ import lightbot.system.action.Wash;
 import lightbot.system.world.Level;
 import lightbot.system.world.OutOfGridException;
 
+import org.jsfml.graphics.Color;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2i;
@@ -36,7 +37,7 @@ public class ActionListDisplay {
 	private static Sprite spritePlay = new Sprite(Textures.playTexture);
 	private static Button buttonPlay = new Button(spritePlay, null, null);
 
-	public static void init(Level level) {
+	public static void init(Level level, int firstTopLeft) {
 
 		buttonPlay.getSprite().setPosition(650, 15);
 
@@ -57,31 +58,33 @@ public class ActionListDisplay {
 		if (level.useProc2())
 			levelActions.add(new Procedure(Procedure.PROCEDURE2_NAME, level.getProc2Limit(), Colour.WHITE));
 
+		int i = 0;
 		for (_Executable e : levelActions) {
 			Texture t = getTextureForAction(e);
 			Sprite s = new Sprite(t);
-			Button b = new Button(s, null, null);
-			actionsL.add(e);
-			buttonsL.add(b);
-		}
-
-		display(FIRST_BUTTON_TOP_LEFT);
-	}
-
-	public static void display(int firstTopLeft) {
-
-		LightCore.window.draw(spritePlay);
-
-		int i = 0;
-		for (Button button : buttonsL) {
-			Sprite s = new Sprite(button.getSprite().getTexture());
+			
 			float x = firstTopLeft + i * (Textures.ACTION_TEXTURE_SIZE + 6);
 			float y = 500;
 			s.setPosition(x, y);
-			buttonsL.get(i).getSprite().setPosition(x, y);
+			
+			Button b = new Button(s, null, null);
+			b.setColor(237, 100, 255, 255);
+			
+			actionsL.add(e);
+			buttonsL.add(b);
+			
 			i++;
-			LightCore.window.draw(s);
 		}
+
+		display();
+	}
+
+	public static void display() {
+
+		LightCore.window.draw(spritePlay);
+
+		for (Button button : buttonsL)
+			LightCore.window.draw(button.getSprite());
 	}
 
 	public static void reset() {

@@ -41,6 +41,10 @@ public class Button {
 		pushed = !pushed;
 	}
 	
+	public void setColor(int R, int G, int B, int alpha){
+		sprite.setColor(new Color(R, G, B, alpha));
+	}
+	
 	public void reset(){
 		if(pushOff != null)
 			sprite.setTexture(pushOff);

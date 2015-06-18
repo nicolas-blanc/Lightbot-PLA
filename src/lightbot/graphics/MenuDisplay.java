@@ -275,7 +275,7 @@ public class MenuDisplay {
 	private void initLevelDisplay(Level level) {
 		ActionListDisplay.reset();
 		ProcedureBlockDisplay.reset();
-		ActionListDisplay.init(level);
+		ActionListDisplay.init(level, 15);
 		ProcedureBlockDisplay.init(level);
 	}
 
