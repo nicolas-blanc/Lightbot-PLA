@@ -12,6 +12,8 @@ public class Procedure extends _Executable {
 	public static final String MAIN_NAME = "main";
 	public static final String PROCEDURE1_NAME = "proc1";
 	public static final String PROCEDURE2_NAME = "proc2";
+	
+	private int currentAction;
 
 	/*
 	 * Procedure name
@@ -32,6 +34,7 @@ public class Procedure extends _Executable {
 		super(colour);
 		this.name = name;
 		this.procSizeLimit = actionLimit;
+		this.currentAction = 0;
 
 		actions = new ArrayList<_Executable>(this.procSizeLimit);
 
@@ -98,6 +101,15 @@ public class Procedure extends _Executable {
 				e.execute(grid, robot);
 
 		}
+	}
+	
+	public void executeOne(Grid grid, Robot robot) throws OutOfGridException{
+		if(actions.get(currentAction) instanceof _Action){
+			actions.get(currentAction).execute(grid, robot);
+			currentAction++;
+		}
+		else if(actions.get(currentAction) instanceof Procedure)
+			((Procedure)actions.get(currentAction)).executeOne(grid, robot);
 	}
 
 	public void reset() {
