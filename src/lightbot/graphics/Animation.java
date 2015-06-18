@@ -25,6 +25,7 @@ public class Animation {
 	private Sprite[][][] cubes;
 	
 	private Sprite robotSprite = null;
+	private Sprite cloneSprite = null;
 	
 	
 	/********************************************************************************************/
@@ -63,6 +64,10 @@ public class Animation {
 		this.robotSprite = robot;
 	}
 	
+	public void updateClone(Sprite clone){
+		this.cloneSprite = clone;
+	}
+	
 	/********************************************************************************************/
 	/*										Animations											*/
 	/********************************************************************************************/
@@ -73,9 +78,10 @@ public class Animation {
 	 * @param column The column of the pillar
 	 */
 	public void printPillar(int line, int column){
-		for(int level=0; level<GridDisplay.maxHeight; level++)
-			if(cubes[line][column][level] != null)
-				LightCore.window.draw(cubes[line][column][level]);
+		if(line > -1 && line < cubes.length && column > -1 && column < cubes.length )
+			for(int level=0; level<GridDisplay.maxHeight; level++)
+				if(cubes[line][column][level] != null)
+					LightCore.window.draw(cubes[line][column][level]);
 	}
 	
 	/**
@@ -117,7 +123,7 @@ public class Animation {
 			    for(int l = 0; l<cubes.length; l++)
 					for(int c = 0; c<cubes[0].length; c++){
 						printPillar(l, c);
-						if(robotSprite != null && l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn())
+						if(robotSprite != null && l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn() && Robot.wheatley.getVisibility())
 							LightCore.window.draw(robotSprite);
 					}
 	    	}
@@ -183,13 +189,13 @@ public class Animation {
 	}
 	
 	/**
-	 * 
+	 * Display Wheatley to the screen or its clone
 	 * @param line
 	 * @param column
 	 * @param level
 	 * @param add
 	 */
-	void displayRobot(int line, int column, int level, boolean add){
+	void displayRobot(int line, int column, int level, boolean add, boolean isClone){
 		boolean finished = false;
 		boolean endDisplay = false;
 		
@@ -200,7 +206,10 @@ public class Animation {
 		float incrementTransparency = 200 / robotArrivalTime;
 		if(add){
 			transparency = 55;
-			robotSprite.setColor(new Color(255, 255, 255, (int)transparency));
+			if(isClone)
+				cloneSprite.setColor(new Color(255, 255, 255, (int)transparency));
+			else
+				robotSprite.setColor(new Color(255, 255, 255, (int)transparency));
 		}
 		else
 			transparency = 255;
@@ -221,7 +230,11 @@ public class Animation {
 			
 			endDisplay = false;
 		    
-			LightCore.window.draw(robotSprite);
+			if(isClone)
+				LightCore.window.draw(cloneSprite);
+			else
+				LightCore.window.draw(robotSprite);
+			
 		    LightCore.window.display();
 
 		    //Handle events
@@ -242,21 +255,35 @@ public class Animation {
 		    //Change the robot's transparency
 		    if(add){
 		    	transparency += incrementTransparency*deltaMilliseconds;
-		    	robotSprite.setColor(new Color(255, 255, 255, (int)transparency));
+		    	if(isClone)
+		    		cloneSprite.setColor(new Color(255, 255, 255, (int)transparency));
+		    	else
+		    		robotSprite.setColor(new Color(255, 255, 255, (int)transparency));
 		    }
 		    else{
 		    	transparency -= incrementTransparency*deltaMilliseconds;
-		    	robotSprite.setColor(new Color(255, 255, 255, (int)transparency));
+		    	if(isClone)
+		    		cloneSprite.setColor(new Color(255, 255, 255, (int)transparency));
+		    	else
+		    		robotSprite.setColor(new Color(255, 255, 255, (int)transparency));
 		    }
 		    
 		    if(resetClock.getElapsedTime().asMilliseconds() >= robotArrivalTime)
 		    	finished = true;
 		}
 			
-		if(!add)
-			robotSprite.setColor(new Color(255, 255, 255, 0));
-		else
-			robotSprite.setColor(new Color(255, 255, 255, 255));
+		if(!add){
+			if(isClone)
+				cloneSprite.setColor(new Color(255, 255, 255, 0));
+			else
+				robotSprite.setColor(new Color(255, 255, 255, 0));
+		}
+		else{
+			if(isClone)
+				cloneSprite.setColor(new Color(255, 255, 255, 255));
+			else
+				robotSprite.setColor(new Color(255, 255, 255, 255));
+		}
 	}
 	
 	/**
@@ -264,14 +291,23 @@ public class Animation {
 	 * @param direction
 	 * @param upOrDown
 	 */
-	 public void moveRobot(CardinalDirection direction, int upOrDown){
+	 public void moveRobot(CardinalDirection direction, int upOrDown, boolean isClone){
 		boolean finished = false;
 		
 		float movementX = 0;
 		float movementY;
 		
-		int nextCellX = Robot.wheatley.getLine();
-		int nextCellY = Robot.wheatley.getColumn();
+		int nextCellX;
+		int nextCellY;
+		
+		if(isClone){
+			nextCellX = Robot.wheatleyClone.getLine();
+			nextCellY = Robot.wheatleyClone.getColumn();
+		}
+		else{
+			nextCellX = Robot.wheatley.getLine();
+			nextCellY = Robot.wheatley.getColumn();
+		}
 		
 		if(upOrDown == 0){
 			switch(direction){
@@ -283,8 +319,16 @@ public class Animation {
 				case NORTH:
 					movementX = (Textures.cellTexture.getSize().x)/2 / this.movementTime;
 					movementY = -((Textures.cellTexture.getSize().y)/2 / this.movementTime);
-					nextCellX = Robot.wheatley.getLine()-1;
-					nextCellY = Robot.wheatley.getColumn()+1;
+					
+					if(isClone){
+						nextCellX = Robot.wheatleyClone.getLine()-1;
+						nextCellY = Robot.wheatleyClone.getColumn()+1;
+					}
+					else{
+						nextCellX = Robot.wheatley.getLine()-1;
+						nextCellY = Robot.wheatley.getColumn()+1;
+					}
+					
 					break;
 				case SOUTH:
 					movementX = -((Textures.cellTexture.getSize().x)/2 / this.movementTime);
@@ -318,27 +362,78 @@ public class Animation {
 	    	for(Sprite s : LightCore.display.getConstantDisplay())
 	    		LightCore.window.draw(s);
 	    	
-	    	for(int l = 0; l < cubes.length; l++)
+	    	for(int l = 0; l < cubes.length; l++){
 				for(int c = 0; c < cubes[0].length; c++){
-					if(!(nextCellY > Robot.wheatley.getColumn() 
-							&& (l >= nextCellX && l <= Robot.wheatley.getLine())
-							&& (c >= nextCellY && c <= Robot.wheatley.getColumn())) 
-							&& (l != nextCellX || c != nextCellY))
-						printPillar(l, c);
-					if(l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn()){
-						if(nextCellY > Robot.wheatley.getColumn() && nextCellX < Robot.wheatley.getLine()){
+					
+					// animate the clone
+					if(isClone){
+						if(Robot.wheatley.getVisibility() && Robot.wheatley.getLine() == l && Robot.wheatley.getColumn() == c){
+							printPillar(l, c);
 							LightCore.window.draw(robotSprite);
-							for(int lin = nextCellX; lin<=Robot.wheatley.getLine(); lin++)
-								for(int cin = nextCellY; cin<cubes[0].length; cin++)
-									if(!(lin == nextCellX && cin < nextCellY))
-										printPillar(lin, cin);
 						}
-						else{
-							printPillar(nextCellX, nextCellY);
-							LightCore.window.draw(robotSprite);
+						
+						if(!(nextCellY > Robot.wheatleyClone.getColumn() 
+								&& (l >= nextCellX && l <= Robot.wheatleyClone.getLine())
+								&& (c >= nextCellY && c <= Robot.wheatleyClone.getColumn())) 
+								&& (l != nextCellX || c != nextCellY)){
+							if(!Robot.wheatley.getVisibility() || (Robot.wheatley.getVisibility() && Robot.wheatley.getLine() != l && Robot.wheatley.getColumn() != c))
+								printPillar(l, c);
+						}
+						
+						if(l == Robot.wheatleyClone.getLine() && c == Robot.wheatleyClone.getColumn()){
+							
+							if(nextCellY > Robot.wheatleyClone.getColumn() && nextCellX < Robot.wheatleyClone.getLine()){
+								LightCore.window.draw(cloneSprite);
+								
+								for(int lin = nextCellX; lin<=Robot.wheatleyClone.getLine(); lin++){
+									for(int cin = nextCellY; cin<cubes[0].length; cin++){
+										if(!(lin == nextCellX && cin < nextCellY)){
+											printPillar(lin, cin);
+										}
+									}
+								}
+							}
+							else{
+								printPillar(nextCellX, nextCellY);
+								LightCore.window.draw(cloneSprite);
+							}
+						}
+					}
+					else{
+						if(Robot.wheatleyClone.getVisibility() && Robot.wheatleyClone.getLine() == l && Robot.wheatleyClone.getColumn() == c){
+							printPillar(l, c);
+							LightCore.window.draw(cloneSprite);
+						}
+						
+						if(!(nextCellY > Robot.wheatley.getColumn() 
+								&& (l >= nextCellX && l <= Robot.wheatley.getLine())
+								&& (c >= nextCellY && c <= Robot.wheatley.getColumn())) 
+								&& (l != nextCellX || c != nextCellY)){
+							if(!Robot.wheatleyClone.getVisibility() || (Robot.wheatleyClone.getVisibility() && Robot.wheatleyClone.getLine() != l && Robot.wheatleyClone.getColumn() != c))
+								printPillar(l, c);
+						}
+						
+						if(l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn()){
+							
+							if(nextCellY > Robot.wheatley.getColumn() && nextCellX < Robot.wheatley.getLine()){
+								LightCore.window.draw(robotSprite);
+								
+								for(int lin = nextCellX; lin<=Robot.wheatley.getLine(); lin++){
+									for(int cin = nextCellY; cin<cubes[0].length; cin++){
+										if(!(lin == nextCellX && cin < nextCellY)){
+											printPillar(lin, cin);
+										}
+									}
+								}
+							}
+							else{
+								printPillar(nextCellX, nextCellY);
+								LightCore.window.draw(robotSprite);
+							}
 						}
 					}
 				}
+	    	}
 	    	
 		    LightCore.window.display();
 
@@ -358,7 +453,10 @@ public class Animation {
 		    float deltaMilliseconds = deltaTime.asMilliseconds();
 			    
 		    //Move the robot
-		    robotSprite.move(movementX*deltaMilliseconds, movementY*deltaMilliseconds);
+		    if(isClone)
+		    	cloneSprite.move(movementX*deltaMilliseconds, movementY*deltaMilliseconds);
+		    else
+		    	robotSprite.move(movementX*deltaMilliseconds, movementY*deltaMilliseconds);
 
 		    if(resetClock.getElapsedTime().asMilliseconds() >= movementTime)
 		    	finished = true;

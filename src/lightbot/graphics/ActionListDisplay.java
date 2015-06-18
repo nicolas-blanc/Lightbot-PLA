@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lightbot.LightCore;
+import lightbot.system.Colour;
 import lightbot.system.Procedure;
 import lightbot.system.RelativeDirection;
+import lightbot.system.Robot;
 import lightbot.system._Executable;
 import lightbot.system.action.Forward;
 import lightbot.system.action.Jump;
@@ -13,6 +15,7 @@ import lightbot.system.action.Light;
 import lightbot.system.action.Turn;
 import lightbot.system.action.Wash;
 import lightbot.system.world.Level;
+import lightbot.system.world.OutOfGridException;
 
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
@@ -23,13 +26,17 @@ import org.jsfml.window.event.MouseButtonEvent;
 
 public class ActionListDisplay {
 
-	// private static List<Button> actionButtons;
-	// private static Map<_Executable, Button> actionButtons;
+	public static final int FIRST_BUTTON_TOP_LEFT = 15;
 
 	private static List<_Executable> actionsL = new ArrayList<_Executable>();
 	private static List<Button> buttonsL = new ArrayList<Button>();
 
+	private static Sprite spritePlay = new Sprite(Textures.playTexture);
+	private static Button buttonPlay = new Button(spritePlay, null, null);
+
 	public static void init(Level level) {
+
+		buttonPlay.getSprite().setPosition(650, 15);
 
 		if (actionsL != null) {
 			actionsL.clear();
@@ -41,6 +48,13 @@ public class ActionListDisplay {
 
 		List<_Executable> levelActions = level.getListOfActions();
 
+		// add buttons for proc1 or proc2
+		if (level.useProc1())
+			levelActions.add(new Procedure(Procedure.PROCEDURE1_NAME, level.getProc1Limit(), Colour.WHITE));
+
+		if (level.useProc2())
+			levelActions.add(new Procedure(Procedure.PROCEDURE2_NAME, level.getProc2Limit(), Colour.WHITE));
+
 		for (_Executable e : levelActions) {
 			Texture t = getTextureForAction(e);
 			Sprite s = new Sprite(t);
@@ -49,10 +63,12 @@ public class ActionListDisplay {
 			buttonsL.add(b);
 		}
 
-		display(125);
+		display(FIRST_BUTTON_TOP_LEFT);
 	}
 
 	public static void display(int firstTopLeft) {
+
+		LightCore.window.draw(spritePlay);
 
 		int i = 0;
 		for (Button button : buttonsL) {
@@ -66,6 +82,11 @@ public class ActionListDisplay {
 		}
 	}
 
+	public static void reset() {
+		actionsL.clear();
+		buttonsL.clear();
+	}
+
 	public static void eventManager(Event event) {
 		switch (event.type) {
 		case CLOSED:
@@ -77,9 +98,16 @@ public class ActionListDisplay {
 
 				int pressedActionIndex = isInsideList(mouse.position);
 
-				if (pressedActionIndex == -1)
-					break;
-				else {
+				if (pressedActionIndex == -1) {
+					if (buttonPlay.isInside(mouse.position)) {
+						try {
+							ProcedureBlockDisplay.main.execute(ProcedureBlockDisplay.lvl.getGrid(), Robot.wheatley);
+						} catch (OutOfGridException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				} else {
 					_Executable e = null;
 					Button b = null;
 
@@ -97,6 +125,19 @@ public class ActionListDisplay {
 		default:
 			break;
 		}
+	}
+
+	public static ArrayList<Sprite> getDisplaySprites() {
+		ArrayList<Sprite> toDisplay = new ArrayList<Sprite>(buttonsL.size() + 1);
+
+		for (Button b : buttonsL) {
+			toDisplay.add(b.getSprite());
+		}
+
+		toDisplay.add(spritePlay);
+
+		return toDisplay;
+
 	}
 
 	public static Texture getTextureForAction(_Executable e) {
