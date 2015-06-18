@@ -4,12 +4,14 @@ package lightbot.system;
 public class Robot {
 	
 	public static Robot wheatley = new Robot(0, 0, Colour.WHITE, CardinalDirection.EAST);
+	public static Robot wheatleyClone = new Robot(0, 0, Colour.WHITE, CardinalDirection.EAST);
 	
 	/* TODO : might change posX and posY to cellNb afterwards */
 	private int line;
 	private int column;
 	private Colour colour;
 	private CardinalDirection direction;
+	private boolean visible;
 	
 	/**
 	 * Default constructor for a Robot
@@ -19,6 +21,7 @@ public class Robot {
 		this.column = 0;
 		colour = Colour.WHITE;
 		direction = CardinalDirection.NORTH;
+		this.visible = true;
 	}
 	
 	/**
@@ -32,6 +35,7 @@ public class Robot {
 		this.column = y;
 		this.colour = colour;
 		this.direction = direction;
+		this.visible = true;
 	}
 	
 	/**
@@ -77,6 +81,14 @@ public class Robot {
 	}
 	
 	/**
+	 * Visibility setter
+	 * @param visible : true or false
+	 */
+	public void setVisibility(boolean visible){
+		this.visible = visible;
+	}
+	
+	/**
 	 * Gets a robot's X position
 	 * @return posX
 	 */
@@ -106,6 +118,14 @@ public class Robot {
 	 */
 	public CardinalDirection getDirection(){
 		return this.direction;
+	}
+	
+	/**
+	 * Gets the visibility of the robot
+	 * @return true is the robot is visible
+	 */
+	public boolean getVisibility(){
+		return this.visible;
 	}
 
 }

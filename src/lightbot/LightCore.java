@@ -141,33 +141,31 @@ public class LightCore {
 			for (Event event : window.pollEvents()) {
 				if(menu){
 					menuD.eventManager(event);
-				}else{
-					if(worlds){
+				}else if(worlds){
+					levels.eventManager(event);
+					if(bases && !worlds){
 						levels.eventManager(event);
-						if(bases && !worlds){
-							levels.eventManager(event);
-						}
-						else if(procedures && !worlds){
-							levels.eventManager(event);
-						}
-						else if(pointeurs && !worlds){
-							levels.eventManager(event);
-						}
-						else if(fork && !worlds){
-							levels.eventManager(event);
-						}
-						else if(ifthenelse && !worlds){
-							levels.eventManager(event);
-						}
-						else if(breakaction && !worlds){
-							levels.eventManager(event);
-						}
-					}else if (editor || game || random){
-						display.eventManager(event);
 					}
+					else if(procedures && !worlds){
+						levels.eventManager(event);
+					}
+					else if(pointeurs && !worlds){
+						levels.eventManager(event);
+					}
+					else if(fork && !worlds){
+						levels.eventManager(event);
+					}
+					else if(ifthenelse && !worlds){
+						levels.eventManager(event);
+					}
+					else if(breakaction && !worlds){
+						levels.eventManager(event);
+					}
+				}else if (editor || game || random){
+					display.eventManager(event);
 				}
-				switch (event.type) {
-				case CLOSED:
+				//switch (event.type) {
+				/*case CLOSED:
 					System.out.println("The user pressed the close button!");
 					window.close();
 					break;
@@ -180,9 +178,9 @@ public class LightCore {
 				 * System.out.println("The user moved the mouse wheel!"); break;
 				 */
 				
-				default:
+				/*default:
 					break;
-				}
+				}*/
 			}
 
 			//window.display();

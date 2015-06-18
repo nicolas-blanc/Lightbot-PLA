@@ -281,7 +281,11 @@ public class Editor implements DisplayMode{
 	 * Event manager for editor
 	 */
 	public void eventManager(Event event){
-		if(event.type == Event.Type.MOUSE_BUTTON_PRESSED){
+		if(event.type == Event.Type.CLOSED){
+			System.out.println("The user pressed the close button!");
+			LightCore.window.close();
+		}
+		else if(event.type == Event.Type.MOUSE_BUTTON_PRESSED){
 			
 			JFileChooser dialog;
 			LoadSaveFilter filter;
