@@ -246,7 +246,17 @@ public class ParserJSON {
 		case "RED":
 			colour = Colour.RED;
 			break;
-		default:
+		case "BLUE":
+			colour = Colour.BLUE;
+			break;
+		case "ORANGE":
+			colour = Colour.ORANGE;
+			break;
+		case "PURPLE":
+			colour = Colour.PURPLE;
+			break;
+		case "OBSTACLE":
+			colour = Colour.OBSTACLE;
 			break;
 		}
 		return colour;
