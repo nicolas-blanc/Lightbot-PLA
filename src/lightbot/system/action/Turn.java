@@ -1,11 +1,12 @@
 package lightbot.system.action;
 
 import lightbot.LightCore;
+import lightbot.graphics.Editor;
 import lightbot.graphics.Game;
 import lightbot.system.CardinalDirection;
 import lightbot.system.Colour;
-import lightbot.system.Robot;
 import lightbot.system.RelativeDirection;
+import lightbot.system.Robot;
 import lightbot.system.world.Grid;
 
 public class Turn extends _Action {
@@ -32,58 +33,114 @@ public class Turn extends _Action {
 
 		if (robot.getDirection() == CardinalDirection.NORTH && direction == RelativeDirection.LEFT) {
 			robot.setDirection(CardinalDirection.WEST);
-			((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-			((Game) LightCore.display).display.anim
-					.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+			if(LightCore.display instanceof Game){
+				((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+				((Game) LightCore.display).display.anim
+						.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+			}
+			else{
+				((Editor) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+				((Editor) LightCore.display).display.anim
+						.updateRobot(((Editor) LightCore.display).display.robotDisplay.robotSprite);
+			}
 			return;
 		}
 		if (robot.getDirection() == CardinalDirection.NORTH && direction == RelativeDirection.RIGHT) {
 			robot.setDirection(CardinalDirection.EAST);
-			((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-			((Game) LightCore.display).display.anim
+			if(LightCore.display instanceof Game){
+				((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+				((Game) LightCore.display).display.anim
 					.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+			}
+			else{
+				((Editor) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+				((Editor) LightCore.display).display.anim
+						.updateRobot(((Editor) LightCore.display).display.robotDisplay.robotSprite);
+			}
 			return;
 		}
 		if (robot.getDirection() == CardinalDirection.SOUTH && direction == RelativeDirection.LEFT) {
 			robot.setDirection(CardinalDirection.EAST);
-			((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-			((Game) LightCore.display).display.anim
+			if(LightCore.display instanceof Game){
+				((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+				((Game) LightCore.display).display.anim
 					.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+			}
+			else{
+				((Editor) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+				((Editor) LightCore.display).display.anim
+						.updateRobot(((Editor) LightCore.display).display.robotDisplay.robotSprite);
+			}
 			return;
 		}
 		if (robot.getDirection() == CardinalDirection.SOUTH && direction == RelativeDirection.RIGHT) {
 			robot.setDirection(CardinalDirection.WEST);
-			((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-			((Game) LightCore.display).display.anim
+			if(LightCore.display instanceof Game){
+				((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+				((Game) LightCore.display).display.anim
 					.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+			}
+			else{
+				((Editor) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+				((Editor) LightCore.display).display.anim
+						.updateRobot(((Editor) LightCore.display).display.robotDisplay.robotSprite);
+			}
 			return;
 		}
 		if (robot.getDirection() == CardinalDirection.EAST && direction == RelativeDirection.LEFT) {
 			robot.setDirection(CardinalDirection.NORTH);
-			((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-			((Game) LightCore.display).display.anim
+			if(LightCore.display instanceof Game){
+				((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+				((Game) LightCore.display).display.anim
 					.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+			}
+			else{
+				((Editor) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+				((Editor) LightCore.display).display.anim
+						.updateRobot(((Editor) LightCore.display).display.robotDisplay.robotSprite);
+			}
 			return;
 		}
 		if (robot.getDirection() == CardinalDirection.EAST && direction == RelativeDirection.RIGHT) {
 			robot.setDirection(CardinalDirection.SOUTH);
-			((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-			((Game) LightCore.display).display.anim
+			if(LightCore.display instanceof Game){
+				((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+				((Game) LightCore.display).display.anim
 					.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+			}
+			else{
+				((Editor) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+				((Editor) LightCore.display).display.anim
+						.updateRobot(((Editor) LightCore.display).display.robotDisplay.robotSprite);
+			}
 			return;
 		}
 		if (robot.getDirection() == CardinalDirection.WEST && direction == RelativeDirection.LEFT) {
 			robot.setDirection(CardinalDirection.SOUTH);
-			((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-			((Game) LightCore.display).display.anim
+			if(LightCore.display instanceof Game){
+				((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+				((Game) LightCore.display).display.anim
 					.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+			}
+			else{
+				((Editor) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+				((Editor) LightCore.display).display.anim
+						.updateRobot(((Editor) LightCore.display).display.robotDisplay.robotSprite);
+			}
 			return;
 		}
 		if (robot.getDirection() == CardinalDirection.WEST && direction == RelativeDirection.RIGHT) {
 			robot.setDirection(CardinalDirection.NORTH);
-			((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-			((Game) LightCore.display).display.anim
+			if(LightCore.display instanceof Game){
+				((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+				((Game) LightCore.display).display.anim
 					.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+			}
+			else{
+				((Editor) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+				((Editor) LightCore.display).display.anim
+						.updateRobot(((Editor) LightCore.display).display.robotDisplay.robotSprite);
+			}
 			return;
 		}
 

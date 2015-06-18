@@ -53,7 +53,7 @@ public class Editor implements DisplayMode{
 	
 	public ArrayList<Sprite> toDisplay;
 	
-	private Display display;
+	public Display display;
 	private CanvaDisplay canva;
 	
 	private static Button blueSplash;

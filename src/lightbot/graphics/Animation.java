@@ -362,30 +362,78 @@ public class Animation {
 	    	for(Sprite s : LightCore.display.getConstantDisplay())
 	    		LightCore.window.draw(s);
 	    	
-	    	for(int l = 0; l < cubes.length; l++)
-				for(int c = 0; c < cubes[0].length; c++)
-					if(nextCellY <= Robot.wheatley.getColumn() 
-							|| l < nextCellX 
-							|| l > Robot.wheatley.getLine() 
-							|| c < nextCellY 
-							|| c > Robot.wheatley.getColumn() 
-							|| l == nextCellX 
-							|| c == nextCellY){
-						printPillar(l, c);
-					if(l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn()){
-						if(nextCellY > Robot.wheatley.getColumn() && nextCellX < Robot.wheatley.getLine()){
+	    	for(int l = 0; l < cubes.length; l++){
+				for(int c = 0; c < cubes[0].length; c++){
+					
+					// animate the clone
+					if(isClone){
+						if(Robot.wheatley.getVisibility() && Robot.wheatley.getLine() == l && Robot.wheatley.getColumn() == c){
+							printPillar(l, c);
 							LightCore.window.draw(robotSprite);
-							for(int lin = nextCellX; lin<=Robot.wheatley.getLine(); lin++)
-								for(int cin = nextCellY; cin<cubes[0].length; cin++)
-									if(!(lin == nextCellX && cin < nextCellY))
-										printPillar(lin, cin);
 						}
-						else{
-							printPillar(nextCellX, nextCellY);
-							LightCore.window.draw(robotSprite);
+						
+						if(!(nextCellY > Robot.wheatleyClone.getColumn() 
+								&& (l >= nextCellX && l <= Robot.wheatleyClone.getLine())
+								&& (c >= nextCellY && c <= Robot.wheatleyClone.getColumn())) 
+								&& (l != nextCellX || c != nextCellY)){
+							if(!Robot.wheatley.getVisibility() || (Robot.wheatley.getVisibility() && Robot.wheatley.getLine() != l && Robot.wheatley.getColumn() != c))
+								printPillar(l, c);
+						}
+						
+						if(l == Robot.wheatleyClone.getLine() && c == Robot.wheatleyClone.getColumn()){
+							
+							if(nextCellY > Robot.wheatleyClone.getColumn() && nextCellX < Robot.wheatleyClone.getLine()){
+								LightCore.window.draw(cloneSprite);
+								
+								for(int lin = nextCellX; lin<=Robot.wheatleyClone.getLine(); lin++){
+									for(int cin = nextCellY; cin<cubes[0].length; cin++){
+										if(!(lin == nextCellX && cin < nextCellY)){
+											printPillar(lin, cin);
+										}
+									}
+								}
+							}
+							else{
+								printPillar(nextCellX, nextCellY);
+								LightCore.window.draw(cloneSprite);
+							}
+						}
+					}
+					else{
+						if(Robot.wheatleyClone.getVisibility() && Robot.wheatleyClone.getLine() == l && Robot.wheatleyClone.getColumn() == c){
+							printPillar(l, c);
+							LightCore.window.draw(cloneSprite);
+						}
+						
+						if(!(nextCellY > Robot.wheatley.getColumn() 
+								&& (l >= nextCellX && l <= Robot.wheatley.getLine())
+								&& (c >= nextCellY && c <= Robot.wheatley.getColumn())) 
+								&& (l != nextCellX || c != nextCellY)){
+							if(!Robot.wheatleyClone.getVisibility() || (Robot.wheatleyClone.getVisibility() && Robot.wheatleyClone.getLine() != l && Robot.wheatleyClone.getColumn() != c))
+								printPillar(l, c);
+						}
+						
+						if(l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn()){
+							
+							if(nextCellY > Robot.wheatley.getColumn() && nextCellX < Robot.wheatley.getLine()){
+								LightCore.window.draw(robotSprite);
+								
+								for(int lin = nextCellX; lin<=Robot.wheatley.getLine(); lin++){
+									for(int cin = nextCellY; cin<cubes[0].length; cin++){
+										if(!(lin == nextCellX && cin < nextCellY)){
+											printPillar(lin, cin);
+										}
+									}
+								}
+							}
+							else{
+								printPillar(nextCellX, nextCellY);
+								LightCore.window.draw(robotSprite);
+							}
 						}
 					}
 				}
+	    	}
 	    	
 		    LightCore.window.display();
 
@@ -405,7 +453,10 @@ public class Animation {
 		    float deltaMilliseconds = deltaTime.asMilliseconds();
 			    
 		    //Move the robot
-		    robotSprite.move(movementX*deltaMilliseconds, movementY*deltaMilliseconds);
+		    if(isClone)
+		    	cloneSprite.move(movementX*deltaMilliseconds, movementY*deltaMilliseconds);
+		    else
+		    	robotSprite.move(movementX*deltaMilliseconds, movementY*deltaMilliseconds);
 
 		    if(resetClock.getElapsedTime().asMilliseconds() >= movementTime)
 		    	finished = true;

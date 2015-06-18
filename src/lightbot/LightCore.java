@@ -10,6 +10,7 @@ import lightbot.graphics.LevelDisplay;
 import lightbot.graphics.MenuDisplay;
 import lightbot.graphics.Textures;
 import lightbot.system.ParserJSON;
+import lightbot.system.Robot;
 import lightbot.system._Executable;
 import lightbot.system.generator.WorldGenerator;
 import lightbot.system.world.Grid;
@@ -52,6 +53,8 @@ public class LightCore {
 		// always at the beginning of the main
 		Textures.initTextures();
 		/***********************************/
+		
+		Robot.wheatleyClone.setVisibility(false);
 		
 		boolean firstLaunch = true;
 		MenuDisplay menuD = new MenuDisplay();
