@@ -310,11 +310,15 @@ public class WorldGeneratorProcedure {
 						Cell emptyCell = grid.getNextCell(cell.getX(), cell.getY(), direction);
 						if (emptyCell.isEmptyCell()) {
 							if(cell.getHeight() == 0) {
-								grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), (cell.getHeight() + rand.nextInt(2))));
+								grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), 1));
 								} else if (height == 4) {
-									grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), (cell.getHeight() + (rand.nextInt(2) - 1))));
+									grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), 3));
 								} else {
-									grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), (cell.getHeight() + (rand.nextInt(3) - 1))));
+									int jump = 0;
+									while (jump == 0) {
+										jump = rand.nextInt(3) - 1;
+									}
+									grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), (cell.getHeight() + jump)));
 							}
 							cell = grid.getCell(emptyCell.getX(), emptyCell.getY());
 							height = cell.getHeight();

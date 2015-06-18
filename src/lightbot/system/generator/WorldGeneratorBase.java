@@ -13,7 +13,7 @@ import lightbot.system.world.cell.*;
  * @author Nasheis
  *
  */
-public class WorldGenerator {
+public class WorldGeneratorBase {
 	private Grid grid;
 	
 	private int numberInstruction;
@@ -31,7 +31,7 @@ public class WorldGenerator {
 	/**
 	 * 
 	 */
-	public WorldGenerator() {
+	public WorldGeneratorBase() {
 		numberInstruction = 0;
 		numberLight = 0;
 		

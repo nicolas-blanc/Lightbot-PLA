@@ -144,7 +144,10 @@ public class Probabilities {
 			probaLeft--;
 			break;
 		case 5:
+			System.out.println("Utilisation d'un pattern");
 			break;
+		case 6:
+			System.out.println("Utilisation d'un pointers");
 		default:
 			System.out.println("The instruction does not exist!");
 		}
