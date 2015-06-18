@@ -48,8 +48,11 @@ public class ProcedureBlockDisplay {
 	private static RectangleShape mainRect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 	private static RectangleShape proc1Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 	private static RectangleShape proc2Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
+	
+	public static Level l;
 
 	public static void init(Level level) {
+		l = level;
 
 		useProc1 = level.useProc1();
 		useProc2 = level.useProc2();

@@ -73,9 +73,10 @@ public class Animation {
 	 * @param column The column of the pillar
 	 */
 	public void printPillar(int line, int column){
-		for(int level=0; level<GridDisplay.maxHeight; level++)
-			if(cubes[line][column][level] != null)
-				LightCore.window.draw(cubes[line][column][level]);
+		if(line > -1 && line < cubes.length && column > -1 && column < cubes.length )
+			for(int level=0; level<GridDisplay.maxHeight; level++)
+				if(cubes[line][column][level] != null)
+					LightCore.window.draw(cubes[line][column][level]);
 	}
 	
 	/**
