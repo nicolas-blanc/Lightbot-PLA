@@ -97,6 +97,10 @@ public class Probabilities {
 		return rangeBase + 4;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public int getRange() {
 		return range;
 	}
@@ -144,12 +148,16 @@ public class Probabilities {
 			probaLeft--;
 			break;
 		case 5:
+//			System.out.println("Utilisation d'un pattern");
+			break;
+		case 6:
+//			System.out.println("Utilisation d'un pointers");
 			break;
 		default:
-			System.out.println("The instruction does not exist!");
+//			System.out.println("The instruction does not exist!");
 		}
 		
-		//printProba();
+//		printProba();
 	}
 	
 	/**
