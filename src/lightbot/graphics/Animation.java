@@ -320,11 +320,14 @@ public class Animation {
 	    		LightCore.window.draw(s);
 	    	
 	    	for(int l = 0; l < cubes.length; l++)
-				for(int c = 0; c < cubes[0].length; c++){
-					if(!(nextCellY > Robot.wheatley.getColumn() 
-							&& (l >= nextCellX && l <= Robot.wheatley.getLine())
-							&& (c >= nextCellY && c <= Robot.wheatley.getColumn())) 
-							&& (l != nextCellX || c != nextCellY))
+				for(int c = 0; c < cubes[0].length; c++)
+					if(nextCellY <= Robot.wheatley.getColumn() 
+							|| l < nextCellX 
+							|| l > Robot.wheatley.getLine() 
+							|| c < nextCellY 
+							|| c > Robot.wheatley.getColumn() 
+							|| l == nextCellX 
+							|| c == nextCellY){
 						printPillar(l, c);
 					if(l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn()){
 						if(nextCellY > Robot.wheatley.getColumn() && nextCellX < Robot.wheatley.getLine()){
