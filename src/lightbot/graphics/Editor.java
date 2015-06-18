@@ -484,9 +484,9 @@ public class Editor implements DisplayMode{
 								  listOfActions.add(new Turn(RelativeDirection.LEFT, Colour.WHITE));
 							  listOfActions.add(new Light());
 							  
-							  int numbOfMain = Integer.parseInt(selec.mainLimit.getText());
-							  int numbOfProc1 = Integer.parseInt(selec.p1Limit.getText());
-							  int numbOfProc2 = Integer.parseInt(selec.p2Limit.getText());
+							  int numbOfMain = (selec.mainLimit.getText().equals(""))? 12 : Integer.parseInt(selec.mainLimit.getText());
+							  int numbOfProc1 = (selec.p1Limit.getText().equals(""))? 0 : Integer.parseInt(selec.p1Limit.getText());
+							  int numbOfProc2 = (selec.p2Limit.getText().equals(""))? 0 : Integer.parseInt(selec.p2Limit.getText());
 							  
 							  Level level = new Level(display.gridDisplay.grid, listOfActions, selec.checkP1.getState(), selec.checkP2.getState(), numbOfMain, numbOfProc1, numbOfProc2);
 							  ParserJSON.serialize(fileName+".json", level);

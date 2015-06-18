@@ -169,12 +169,14 @@ public class ParserJSON {
 					switch (getClassName(cell)) {
 					case "ColoredCell":
 						cellObject.put("colour", ((ColoredCell) cell).getColour().toString());
+						break;
 					case "TeleportCell":
 						JSONArray dest = new JSONArray();
 						dest.add(((TeleportCell) cell).getDestX());
 						dest.add(((TeleportCell) cell).getDestY());
 						cellObject.put("dest", dest);
 						cellObject.put("colour", ((TeleportCell) cell).getColour().toString());
+						break;
 					default:
 						break;
 					}
