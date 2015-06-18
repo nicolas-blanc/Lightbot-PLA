@@ -95,7 +95,7 @@ public class Game implements DisplayMode {
 	 * Display the game interface
 	 */
 	public void display() {
-		ActionListDisplay.display(ActionListDisplay.FIRST_BUTTON_TOP_LEFT);
+		ActionListDisplay.display();
 		ProcedureBlockDisplay.updateDisplay();
 		for (Sprite s : toDisplay)
 			LightCore.window.draw(s);
