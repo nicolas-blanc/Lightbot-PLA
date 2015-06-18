@@ -26,6 +26,7 @@ public class Game implements DisplayMode {
 	private Button turnRightButton;
 
 	private static Button homeButton;
+	private static Button returnButton;
 
 	public Display display;
 
@@ -67,13 +68,17 @@ public class Game implements DisplayMode {
 
 		Sprite homeSprite = new Sprite(Textures.homeButtonTextureRelief);
 		homeSprite.setPosition(MARGIN_LEFT, MARGIN_LEFT);
+		
+		Sprite returnSprite = new Sprite(Textures.returnTexture);
+		returnSprite.setPosition(MARGIN_LEFT+50, MARGIN_LEFT);
 
 		homeButton = new Button(homeSprite, null, null);
+		returnButton = new Button(returnSprite, null, null);
 
 		toDisplay.add(turnLeftSprite);
 		toDisplay.add(turnRightSprite);
 		toDisplay.add(homeSprite);
-		
+		toDisplay.add(returnSprite);
 
 	}
 
@@ -181,6 +186,17 @@ public class Game implements DisplayMode {
 					LightCore.random = false;
 					LightCore.menu = true;
 					resetButtons();
+				} else if (returnButton.isInside(mouse.position)){
+					LightCore.game = false;
+					LightCore.firstPrintGame = true;
+					if(LightCore.random == true){
+						LightCore.random = false;
+						LightCore.menu = true;
+					} else {
+						LightCore.worlds = true;
+						resetButtons();
+						
+					}
 				}
 			}
 		}

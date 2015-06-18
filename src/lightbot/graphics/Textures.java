@@ -44,6 +44,7 @@ public class Textures {
 	
 	public static Texture rotateLeft;
 	public static Texture rotateRight;
+	public static Texture returnTexture;
 	
 	// Actions
 	public static final int ACTION_TEXTURE_SIZE = 50;
@@ -157,6 +158,7 @@ public class Textures {
 		// Game
 		playTexture = new Texture();
 		resetTexture = new Texture();
+		returnTexture = new Texture();
 		
 		rotateLeft = new Texture();
 		rotateRight = new Texture();
@@ -273,6 +275,7 @@ public class Textures {
 		    // Game
 		    playTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconPlay.png"));
 		    resetTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconReset.png"));
+		    returnTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "returnRelief.png"));
 		    
 		    rotateLeft.loadFromFile(Paths.get(NEW_ICONS_PATH + "rotateL.png"));
 		    rotateRight.loadFromFile(Paths.get(NEW_ICONS_PATH + "rotateR.png"));
@@ -383,6 +386,7 @@ public class Textures {
 			// Game
 			playTexture.setSmooth(true);
 			resetTexture.setSmooth(true);
+			returnTexture.setSmooth(true);
 			
 			rotateLeft.setSmooth(true);
 			rotateRight.setSmooth(true);
