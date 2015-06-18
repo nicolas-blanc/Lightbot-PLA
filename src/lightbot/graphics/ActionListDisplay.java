@@ -127,6 +127,19 @@ public class ActionListDisplay {
 		}
 	}
 
+	public static ArrayList<Sprite> getDisplaySprites() {
+		ArrayList<Sprite> toDisplay = new ArrayList<Sprite>(buttonsL.size() + 1);
+
+		for (Button b : buttonsL) {
+			toDisplay.add(b.getSprite());
+		}
+
+		toDisplay.add(spritePlay);
+
+		return toDisplay;
+
+	}
+
 	public static Texture getTextureForAction(_Executable e) {
 		if (e instanceof Forward)
 			return Textures.forwardTexture;

@@ -44,25 +44,25 @@ public class Forward extends _Action {
 				int posY = robot.getColumn();
 
 				if (robot.getDirection() == CardinalDirection.NORTH) {
-					((Game)LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 0);
+					((Game)LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 0, false);
 					robot.setLine(posX - 1);
 					takeColour(robot, grid);
 					teleport(robot, grid);
 				}
 				if (robot.getDirection() == CardinalDirection.SOUTH) {
-					((Game)LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 0);
+					((Game)LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 0, false);
 					robot.setLine(posX + 1);
 					takeColour(robot, grid);
 					teleport(robot, grid);
 				}
 				if (robot.getDirection() == CardinalDirection.WEST) {
-					((Game)LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 0);
+					((Game)LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 0, false);
 					robot.setColumn(posY - 1);
 					takeColour(robot, grid);
 					teleport(robot, grid);
 				}
 				if (robot.getDirection() == CardinalDirection.EAST) {
-					((Game)LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 0);
+					((Game)LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 0, false);
 					robot.setColumn(posY + 1);
 					takeColour(robot, grid);
 					teleport(robot, grid);
