@@ -115,10 +115,32 @@ public class ActionListDisplay {
 						if (i == pressedActionIndex) {
 							e = actionsL.get(i);
 							b = buttonsL.get(i);
+
+							_Executable toAdd;
+
+							if (e instanceof Procedure) {
+								Procedure p = (Procedure) e;
+								switch (p.getName()) {
+								case Procedure.MAIN_NAME:
+									toAdd = ProcedureBlockDisplay.main;
+									break;
+								case Procedure.PROCEDURE1_NAME:
+									toAdd = ProcedureBlockDisplay.proc1;
+									break;
+								case Procedure.PROCEDURE2_NAME:
+									toAdd = ProcedureBlockDisplay.proc2;
+									break;
+								default:
+									toAdd = null;
+								}
+
+								ProcedureBlockDisplay.add(toAdd, b);
+							} else {
+								ProcedureBlockDisplay.add(e, b);
+							}
 						}
 					}
 
-					ProcedureBlockDisplay.add(e, b);
 				}
 			}
 

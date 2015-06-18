@@ -50,7 +50,6 @@ public class ProcedureBlockDisplay {
 	private static RectangleShape mainRect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 	private static RectangleShape proc1Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 	private static RectangleShape proc2Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
-	
 
 	public static Level lvl;
 
@@ -287,9 +286,9 @@ public class ProcedureBlockDisplay {
 		ArrayList<Sprite> toDisplay = new ArrayList<Sprite>();
 
 		Texture t = new Texture();
-		//Sprite s = new 
-		
-		//toDisplay.add(mainRect);
+		// Sprite s = new
+
+		// toDisplay.add(mainRect);
 
 		for (Button b : mainButtons) {
 			toDisplay.add(b.getSprite());
@@ -297,7 +296,7 @@ public class ProcedureBlockDisplay {
 
 		if (useProc1) {
 
-			//toDisplay.add(proc1Rect);
+			// toDisplay.add(proc1Rect);
 
 			for (Button b : proc1Buttons) {
 				toDisplay.add(b.getSprite());
@@ -306,7 +305,7 @@ public class ProcedureBlockDisplay {
 
 		if (useProc2) {
 
-			//toDisplay.add(proc2Rect);
+			// toDisplay.add(proc2Rect);
 
 			for (Button b : proc2Buttons) {
 				toDisplay.add(b.getSprite());
