@@ -53,7 +53,7 @@ public class ProcedureBlockDisplay {
 
 		useProc1 = level.useProc1();
 		useProc2 = level.useProc2();
-		
+
 		mainIsActive = true;
 		proc1IsActive = false;
 		proc2IsActive = false;
@@ -86,6 +86,9 @@ public class ProcedureBlockDisplay {
 			proc2Rect.setFillColor(new Color(171, 171, 171));
 			proc2Rect.setPosition(730, 3 * TOP_MARGIN + 2 * BLOCK_HEIGHT);
 		}
+
+		assert main.getSize() == mainButtons.size() && proc1.getSize() == proc1Buttons.size()
+				&& proc2.getSize() == proc2Buttons.size();
 
 		updateDisplay();
 	}
@@ -125,6 +128,8 @@ public class ProcedureBlockDisplay {
 			Button bnew = new Button(s, null, null);
 			mainButtons.add(bnew);
 
+			assert main.getSize() == mainButtons.size();
+
 			updateDisplay();
 		}
 
@@ -141,6 +146,8 @@ public class ProcedureBlockDisplay {
 
 			Button bnew = new Button(s, null, null);
 			proc1Buttons.add(bnew);
+
+			assert proc1.getSize() == proc1Buttons.size();
 
 			updateDisplay();
 		}
@@ -159,6 +166,8 @@ public class ProcedureBlockDisplay {
 			Button bnew = new Button(s, null, null);
 			proc2Buttons.add(bnew);
 
+			assert proc2.getSize() == proc2Buttons.size();
+
 			updateDisplay();
 
 		}
@@ -174,7 +183,6 @@ public class ProcedureBlockDisplay {
 			if (mouse.button == Mouse.Button.LEFT) {
 
 				SelectedBox sl = selectedbox(mouse.position);
-				// System.out.println(sl.toString());
 
 				if (sl != null) {
 					switch (sl) {
@@ -285,8 +293,8 @@ public class ProcedureBlockDisplay {
 				Vector2f oldPos = mainButtons.get(i).getSprite().getPosition();
 				mainButtons.get(i).getSprite().setPosition(lastPos);
 				lastPos = oldPos;
-
 			}
+			assert main.getSize() == mainButtons.size();
 			break;
 
 		case PROC1:
@@ -300,8 +308,8 @@ public class ProcedureBlockDisplay {
 				Vector2f oldPos = proc1Buttons.get(i).getSprite().getPosition();
 				proc1Buttons.get(i).getSprite().setPosition(lastPos);
 				lastPos = oldPos;
-
 			}
+			assert proc1.getSize() == proc1Buttons.size();
 			break;
 
 		case PROC2:
@@ -315,8 +323,8 @@ public class ProcedureBlockDisplay {
 				Vector2f oldPos = proc2Buttons.get(i).getSprite().getPosition();
 				proc2Buttons.get(i).getSprite().setPosition(lastPos);
 				lastPos = oldPos;
-
 			}
+			assert proc2.getSize() == proc2Buttons.size();
 			break;
 		}
 	}
