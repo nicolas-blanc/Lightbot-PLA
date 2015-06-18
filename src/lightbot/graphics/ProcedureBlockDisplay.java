@@ -51,27 +51,11 @@ public class ProcedureBlockDisplay {
 
 	public static void init(Level level) {
 
-		// main.reset();
-		// proc1.reset();
-		// proc2.reset();
-
-		// mainButtons.clear();
-		// proc1Buttons.clear();
-		// proc2Buttons.clear();
-
 		useProc1 = level.useProc1();
 		useProc2 = level.useProc2();
 
-		// mainIsActive = true;
-		// proc1IsActive = false;
-		// proc2IsActive = false;
-
 		// setup main
-		// main = new Procedure(Procedure.MAIN_NAME, level.getMainLimit(),
-		// Colour.WHITE);
 		main.setLimit(level.getMainLimit());
-
-		// mainButtons = new ArrayList<Button>();
 
 		mainRect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 		mainRect.setFillColor(new Color(79, 179, 201));
@@ -116,9 +100,6 @@ public class ProcedureBlockDisplay {
 
 			int whereToAdd = main.getSize();
 			int line = whereToAdd / 4;
-
-			// System.out.println("wheretoadd : " + whereToAdd);
-			// System.out.println("line : " + line);
 
 			main.addAction(e);
 
