@@ -6,9 +6,9 @@ import lightbot.system.world.Grid;
 
 public class Wash extends _Action {
 
-	public Wash(Colour colour) {
+	/*public Wash(Colour colour) {
 		super(colour);
-	}
+	}*/
 	
 	public Wash(){
 		super(Colour.WHITE);
