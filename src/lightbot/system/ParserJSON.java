@@ -125,7 +125,7 @@ public class ParserJSON {
 			if (p1Active)
 				p1Limit = (int) (long) procedures.get("p1_limit");
 			if (p2Active)
-				p1Limit = (int) (long) procedures.get("p2_limit");
+				p2Limit = (int) (long) procedures.get("p2_limit");
 
 			level = new Level(grid, listOfActions, p1Active, p2Active, mainLimit, p1Limit, p2Limit);
 

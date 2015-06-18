@@ -160,6 +160,7 @@ public class ProcedureBlockDisplay {
 			if (mouse.button == Mouse.Button.LEFT) {
 
 				SelectedBox sl = selectedbox(mouse.position);
+				// System.out.println(sl.toString());
 
 				if (sl != null) {
 					switch (sl) {
@@ -178,7 +179,7 @@ public class ProcedureBlockDisplay {
 					case PROC2:
 						proc2IsActive = true;
 						mainIsActive = false;
-						proc2IsActive = false;
+						proc1IsActive = false;
 						break;
 					}
 				}
@@ -295,7 +296,7 @@ public class ProcedureBlockDisplay {
 			break;
 
 		case PROC2:
-			proc1.removeActionAtIndex(index);
+			proc2.removeActionAtIndex(index);
 
 			lastIndex = index;
 			lastPos = proc2Buttons.get(index).getSprite().getPosition();
