@@ -39,32 +39,36 @@ public class Jump extends _Action {
 			int posY = robot.getColumn();
 
 			if (robot.getDirection() == CardinalDirection.NORTH) {
+				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 2);
+				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 0);
 				robot.setLine(posX - 1);
 				takeColour(robot, grid);
 				teleport(robot, grid);
-				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 2);
-				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 0);
+				
 			}
 			if (robot.getDirection() == CardinalDirection.EAST) {
+				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 2);
+				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 0);
 				robot.setColumn(posY + 1);
 				takeColour(robot, grid);
 				teleport(robot, grid);
-				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 2);
-				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 0);
+				
 			}
 			if (robot.getDirection() == CardinalDirection.SOUTH) {
+				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 2);
+				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 0);
 				robot.setLine(posX + 1);
 				takeColour(robot, grid);
 				teleport(robot, grid);
-				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 2);
-				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 0);
+				
 			}
 			if (robot.getDirection() == CardinalDirection.WEST) {
+				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 2);
+				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 0);
 				robot.setColumn(posY - 1);
 				takeColour(robot, grid);
 				teleport(robot, grid);
-				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 2);
-				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 0);
+				
 			}
 		}
 
