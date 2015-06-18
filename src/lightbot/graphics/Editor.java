@@ -28,10 +28,13 @@ import lightbot.system.RelativeDirection;
 import lightbot.system.Robot;
 import lightbot.system.TeleportColour;
 import lightbot.system._Executable;
+import lightbot.system.action.Break;
+import lightbot.system.action.Clone;
 import lightbot.system.action.Forward;
 import lightbot.system.action.Jump;
 import lightbot.system.action.Light;
 import lightbot.system.action.Turn;
+import lightbot.system.action.Wash;
 import lightbot.system.world.Grid;
 import lightbot.system.world.Level;
 import lightbot.system.world.Position;
@@ -369,7 +372,7 @@ public class Editor implements DisplayMode{
 		       	 			else{
 			       	 			if(display.gridDisplay.grid.getCell(pos.getLine(), pos.getColumn()) instanceof NormalCell 
 			       	 					|| display.gridDisplay.grid.getCell(pos.getLine(), pos.getColumn()) instanceof EmptyCell
-			       	 					|| display.gridDisplay.grid.getCell(pos.getLine(), pos.getColumn()) instanceof ColoredCell){
+			       	 					|| (display.gridDisplay.grid.getCell(pos.getLine(), pos.getColumn()) instanceof ColoredCell && (blue || orange || purple || red))){
 			       	 				if(blue || orange || purple || red){
 				       	 				if(pos.getLevel() > -1){
 				       	 					ColoredCell cell = new ColoredCell(pos.getLine(), pos.getColumn(), pos.getLevel(), colour);
@@ -486,6 +489,12 @@ public class Editor implements DisplayMode{
 								  listOfActions.add(new Turn(RelativeDirection.RIGHT, Colour.WHITE));
 							  if(selec.checkTurnLeft.getState())
 								  listOfActions.add(new Turn(RelativeDirection.LEFT, Colour.WHITE));
+							  if(selec.checkWash.getState())
+								  listOfActions.add(new Wash());
+							  if(selec.checkClone.getState())
+								  listOfActions.add(new Clone());
+							  if(selec.checkBreak.getState())
+								  listOfActions.add(new Break());
 							  listOfActions.add(new Light());
 							  
 							  int numbOfMain = (selec.mainLimit.getText().equals(""))? 12 : Integer.parseInt(selec.mainLimit.getText());
@@ -806,6 +815,9 @@ public class Editor implements DisplayMode{
 		public Checkbox checkJump = new Checkbox("Sauter");
 		public Checkbox checkTurnRight = new Checkbox("Tourner à droite");
 		public Checkbox checkTurnLeft = new Checkbox("Tourner à gauche");
+		public Checkbox checkWash = new Checkbox("Se laver");
+		public Checkbox checkClone = new Checkbox("Clone");
+		public Checkbox checkBreak = new Checkbox("Break");
 		
 		public ActionSelector(){
 			this.setTitle("Sélection des actions");
@@ -823,7 +835,7 @@ public class Editor implements DisplayMode{
 			p1Limit = new JFormattedTextField(format);
 			p2Limit = new JFormattedTextField(format);
 		    
-		    GridLayout gl = new GridLayout(2, 2);
+		    GridLayout gl = new GridLayout(3, 2);
 		    gl.setHgap(5);
 		    gl.setVgap(5);
 		    JPanel select = new JPanel();
@@ -839,8 +851,15 @@ public class Editor implements DisplayMode{
 		    select2.add(checkTurnRight);
 		    select2.add(checkTurnLeft);
 		    
+		    JPanel select3 = new JPanel();
+		    select3.setLayout(new BoxLayout(select3, BoxLayout.LINE_AXIS));
+		    select3.add(checkWash);
+		    select3.add(checkClone);
+		    select3.add(checkBreak);
+		    
 		    select.add(select1);
 		    select.add(select2);
+		    select.add(select3);
 		    
 		    GridLayout sizeLayout = new GridLayout(4, 2);
 		    sizeLayout.setHgap(5);

@@ -65,6 +65,18 @@ public class ParserJSON {
 				case "Turn_RIGHT":
 					listOfActions.add(new Turn(RelativeDirection.RIGHT, Colour.WHITE));
 					break;
+					
+				case "Clone":
+					listOfActions.add(new Clone());
+					break;
+					
+				case "Wash":
+					listOfActions.add(new Wash());
+					break;
+				
+				case "Break":
+					listOfActions.add(new Break());
+					break;
 				}
 			}
 
@@ -98,6 +110,7 @@ public class ParserJSON {
 						JSONArray dest = (JSONArray) column.get("dest");
 						cell = new TeleportCell(lineAttribut, columnAttribut, levelAttribut, (int) (long) dest.get(0),
 								(int) (long) dest.get(1), teleportColour);
+						System.out.println(((TeleportCell)cell).getColour());
 						break;
 
 					case "NormalCell":
@@ -234,30 +247,30 @@ public class ParserJSON {
 	private static Colour stringToColour(String colourIn) {
 		Colour colour = null;
 		switch (colourIn) {
-		case "WHITE":
-			colour = Colour.WHITE;
-			break;
-		case "GREEN":
-			colour = Colour.GREEN;
-			break;
-		case "YELLOW":
-			colour = Colour.YELLOW;
-			break;
-		case "RED":
-			colour = Colour.RED;
-			break;
-		case "BLUE":
-			colour = Colour.BLUE;
-			break;
-		case "ORANGE":
-			colour = Colour.ORANGE;
-			break;
-		case "PURPLE":
-			colour = Colour.PURPLE;
-			break;
-		case "OBSTACLE":
-			colour = Colour.OBSTACLE;
-			break;
+			case "WHITE":
+				colour = Colour.WHITE;
+				break;
+			case "GREEN":
+				colour = Colour.GREEN;
+				break;
+			case "YELLOW":
+				colour = Colour.YELLOW;
+				break;
+			case "RED":
+				colour = Colour.RED;
+				break;
+			case "BLUE":
+				colour = Colour.BLUE;
+				break;
+			case "ORANGE":
+				colour = Colour.ORANGE;
+				break;
+			case "PURPLE":
+				colour = Colour.PURPLE;
+				break;
+			case "OBSTACLE":
+				colour = Colour.OBSTACLE;
+				break;
 		}
 		return colour;
 	}
@@ -265,18 +278,27 @@ public class ParserJSON {
 	private static TeleportColour stringToTeleportColour(String colourIn) {
 		TeleportColour colour = null;
 		switch (colourIn) {
-		case "TELEPORT":
-			colour = TeleportColour.TELEPORT;
-			break;
-		case "TELEPORTGREEN":
-			colour = TeleportColour.TELEPORTGREEN;
-			break;
-		case "TELEPORTYELLOW":
-			colour = TeleportColour.TELEPORTYELLOW;
-			break;
-		case "TELEPORTRED":
-			colour = TeleportColour.TELEPORTRED;
-			break;
+			case "TELEPORT":
+				colour = TeleportColour.TELEPORT;
+				break;
+			case "TELEPORTBLUE":
+				colour = TeleportColour.TELEPORTBLUE;
+				break;
+			case "TELEPORTGREEN":
+				colour = TeleportColour.TELEPORTGREEN;
+				break;
+			case "TELEPORTORANGE":
+				colour = TeleportColour.TELEPORTORANGE;
+				break;
+			case "TELEPORTPURPLE":
+				colour = TeleportColour.TELEPORTPURPLE;
+				break;
+			case "TELEPORTRED":
+				colour = TeleportColour.TELEPORTRED;
+				break;
+			case "TELEPORTYELLOW":
+				colour = TeleportColour.TELEPORTYELLOW;
+				break;
 		}
 		return colour;
 	}
