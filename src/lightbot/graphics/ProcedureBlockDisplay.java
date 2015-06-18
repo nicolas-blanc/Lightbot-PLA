@@ -13,6 +13,7 @@ import org.jsfml.graphics.Color;
 import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.RectangleShape;
 import org.jsfml.graphics.Sprite;
+import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 import org.jsfml.window.Mouse;
@@ -49,6 +50,7 @@ public class ProcedureBlockDisplay {
 	private static RectangleShape mainRect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 	private static RectangleShape proc1Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 	private static RectangleShape proc2Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
+	
 
 	public static Level lvl;
 
@@ -281,11 +283,13 @@ public class ProcedureBlockDisplay {
 		return null;
 	}
 
-	public static ArrayList<Drawable> getDisplaySprites() {
-		ArrayList<Drawable> toDisplay = new ArrayList<Drawable>();
+	public static ArrayList<Sprite> getDisplaySprites() {
+		ArrayList<Sprite> toDisplay = new ArrayList<Sprite>();
 
+		Texture t = new Texture();
+		//Sprite s = new 
 		
-		toDisplay.add(mainRect);
+		//toDisplay.add(mainRect);
 
 		for (Button b : mainButtons) {
 			toDisplay.add(b.getSprite());
@@ -293,7 +297,7 @@ public class ProcedureBlockDisplay {
 
 		if (useProc1) {
 
-			toDisplay.add(proc1Rect);
+			//toDisplay.add(proc1Rect);
 
 			for (Button b : proc1Buttons) {
 				toDisplay.add(b.getSprite());
@@ -302,7 +306,7 @@ public class ProcedureBlockDisplay {
 
 		if (useProc2) {
 
-			toDisplay.add(proc2Rect);
+			//toDisplay.add(proc2Rect);
 
 			for (Button b : proc2Buttons) {
 				toDisplay.add(b.getSprite());

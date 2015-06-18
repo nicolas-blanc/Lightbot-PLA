@@ -1,20 +1,10 @@
 package lightbot.graphics;
 
-import java.sql.PreparedStatement;
-import java.util.ArrayList;
-import java.util.List;
-
 import lightbot.LightCore;
 import lightbot.system.ParserJSON;
-import lightbot.system._Executable;
-import lightbot.system.action.Forward;
-import lightbot.system.action.Jump;
-import lightbot.system.world.Grid;
 import lightbot.system.world.Level;
-import lightbot.system.world.cell.NormalCell;
 
 import org.jsfml.graphics.Sprite;
-import org.jsfml.graphics.Texture;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.MouseButtonEvent;
 import org.jsfml.window.event.MouseEvent;
@@ -189,6 +179,9 @@ public class LevelDisplay {
 					LightCore.bases = false;
 					LightCore.procedures = false;
 					LightCore.ifthenelse = false;
+					LightCore.pointeurs = false;
+					LightCore.fork = false;
+					LightCore.breakaction = false;
 					LightCore.game = true;
 					LightCore.worlds = false;
 					LightCore.path = LightCore.path + "1.json";
@@ -201,6 +194,9 @@ public class LevelDisplay {
 					LightCore.bases = false;
 					LightCore.procedures = false;
 					LightCore.ifthenelse = false;
+					LightCore.pointeurs = false;
+					LightCore.fork = false;
+					LightCore.breakaction = false;
 					LightCore.game = true;
 					LightCore.worlds = false;
 					LightCore.path = LightCore.path + "2.json";
@@ -213,6 +209,9 @@ public class LevelDisplay {
 					LightCore.bases = false;
 					LightCore.procedures = false;
 					LightCore.ifthenelse = false;
+					LightCore.pointeurs = false;
+					LightCore.fork = false;
+					LightCore.breakaction = false;
 					LightCore.game = true;
 					LightCore.worlds = false;
 					LightCore.path = LightCore.path + "3.json";
@@ -224,6 +223,9 @@ public class LevelDisplay {
 				if (button4.isInside(mouse.position)) {
 					LightCore.bases = false;
 					LightCore.procedures = false;
+					LightCore.pointeurs = false;
+					LightCore.fork = false;
+					LightCore.breakaction = false;
 					LightCore.ifthenelse = false;
 					LightCore.game = true;
 					LightCore.worlds = false;
