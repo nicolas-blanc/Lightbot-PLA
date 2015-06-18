@@ -88,11 +88,12 @@ public class Game implements DisplayMode {
 	 * Display the game interface
 	 */
 	public void display() {
+		ActionListDisplay.display(ActionListDisplay.FIRST_BUTTON_TOP_LEFT);
+		ProcedureBlockDisplay.updateDisplay();
 		for (Sprite s : toDisplay)
 			LightCore.window.draw(s);
 		display.print();
-		ActionListDisplay.display(ActionListDisplay.FIRST_BUTTON_TOP_LEFT);
-		ProcedureBlockDisplay.updateDisplay();
+		
 	}
 
 	public void printGrid() {
