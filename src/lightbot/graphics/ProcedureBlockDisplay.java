@@ -48,7 +48,7 @@ public class ProcedureBlockDisplay {
 	private static RectangleShape mainRect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 	private static RectangleShape proc1Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 	private static RectangleShape proc2Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
-	
+
 	public static Level l;
 
 	public static void init(Level level) {
@@ -278,6 +278,45 @@ public class ProcedureBlockDisplay {
 			return SelectedBox.PROC2;
 
 		return null;
+	}
+
+	public static ArrayList<Sprite> getDisplaySprites() {
+		ArrayList<Sprite> toDisplay = new ArrayList<Sprite>();
+
+		Sprite s;
+		s = new Sprite(mainRect.getTexture());
+		s.setPosition(mainRect.getPosition());
+
+		toDisplay.add(s);
+
+		for (Button b : mainButtons) {
+			toDisplay.add(b.getSprite());
+		}
+
+		if (useProc1) {
+			s = new Sprite(proc1Rect.getTexture());
+			s.setPosition(proc1Rect.getPosition());
+
+			toDisplay.add(s);
+
+			for (Button b : proc1Buttons) {
+				toDisplay.add(b.getSprite());
+			}
+		}
+
+		if (useProc2) {
+			s = new Sprite(proc2Rect.getTexture());
+			s.setPosition(proc2Rect.getPosition());
+
+			toDisplay.add(s);
+
+			for (Button b : proc2Buttons) {
+				toDisplay.add(b.getSprite());
+			}
+		}
+
+		return toDisplay;
+
 	}
 
 	private static void deleteFromProcedureAtIndex(int index, SelectedBox sb) {

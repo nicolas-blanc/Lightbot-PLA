@@ -125,7 +125,7 @@ public class Display {
 				for(int level = 0; level < 50; level++){
 					if(l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn() && level == GridDisplay.levelMax[l][c]){
 						anim.addRemoveCube(l, c, level, true, true);
-						anim.displayRobot(l, c, level, true);
+						anim.displayRobot(l, c, level, true, false);
 					}
 					else{
 						if(grid[l][c][level] != null)

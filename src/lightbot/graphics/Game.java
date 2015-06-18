@@ -11,6 +11,7 @@ import lightbot.system.action.Forward;
 import lightbot.system.action.Turn;
 import lightbot.system.world.Grid;
 
+import org.jsfml.graphics.RectangleShape;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Vector2i;
 import org.jsfml.window.Mouse;
@@ -72,6 +73,7 @@ public class Game implements DisplayMode {
 		toDisplay.add(turnLeftSprite);
 		toDisplay.add(turnRightSprite);
 		toDisplay.add(homeSprite);
+		
 
 	}
 
@@ -122,34 +124,34 @@ public class Game implements DisplayMode {
 		if (event.type == Event.Type.KEY_PRESSED) {
 			switch (event.asKeyEvent().key) {
 			case UP:
-				display.anim.moveRobot(CardinalDirection.NORTH, 0);
+				display.anim.moveRobot(CardinalDirection.NORTH, 0, false);
 				Robot.wheatley.setLine(Robot.wheatley.getLine() - 1);
 				break;
 
 			case DOWN:
-				display.anim.moveRobot(CardinalDirection.SOUTH, 0);
+				display.anim.moveRobot(CardinalDirection.SOUTH, 0, false);
 				Robot.wheatley.setLine(Robot.wheatley.getLine() + 1);
 				break;
 
 			case LEFT:
-				display.anim.moveRobot(CardinalDirection.WEST, 0);
+				display.anim.moveRobot(CardinalDirection.WEST, 0, false);
 				Robot.wheatley.setColumn(Robot.wheatley.getColumn() - 1);
 				break;
 
 			case RIGHT:
 
-				display.anim.moveRobot(CardinalDirection.EAST, 0);
+				display.anim.moveRobot(CardinalDirection.EAST, 0, false);
 				Robot.wheatley.setColumn(Robot.wheatley.getColumn() + 1);
 				break;
 
 			case PAGEUP:
 
-				display.anim.moveRobot(CardinalDirection.EAST, 2);
+				display.anim.moveRobot(CardinalDirection.EAST, 2, false);
 				break;
 
 			case PAGEDOWN:
 
-				display.anim.moveRobot(CardinalDirection.EAST, 1);
+				display.anim.moveRobot(CardinalDirection.EAST, 1, false);
 				break;
 
 			case NUMPAD6:
