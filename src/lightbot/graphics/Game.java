@@ -177,8 +177,18 @@ public class Game implements DisplayMode {
 					LightCore.game = false;
 					LightCore.random = false;
 					LightCore.menu = true;
+					resetButtons();
 				}
 			}
 		}
+	}
+	
+	public void resetButtons(){
+		LevelDisplay.buttonBases.reset();
+		LevelDisplay.buttonProcedures.reset();
+		LevelDisplay.buttonFork.reset();
+		LevelDisplay.buttonPointeurs.reset();
+		LevelDisplay.buttonIf.reset();
+		LevelDisplay.buttonBreak.reset();
 	}
 }
