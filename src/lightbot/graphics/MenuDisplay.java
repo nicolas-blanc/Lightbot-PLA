@@ -1,13 +1,22 @@
 package lightbot.graphics;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import lightbot.LightCore;
+import lightbot.system.Colour;
 import lightbot.system.ParserJSON;
+import lightbot.system.Procedure;
+import lightbot.system.RelativeDirection;
+import lightbot.system._Executable;
+import lightbot.system.action.Forward;
+import lightbot.system.action.Jump;
+import lightbot.system.action.Light;
+import lightbot.system.action.Turn;
 import lightbot.system.generator.*;
 import lightbot.system.world.Grid;
 import lightbot.system.world.Level;
@@ -230,6 +239,14 @@ public class MenuDisplay {
 						}
 						
 						Grid grid = newWorld.getGrid();
+						ArrayList<_Executable> a = new ArrayList<_Executable>();
+						a.add(new Forward());
+						a.add(new Jump());
+						a.add(new Turn(RelativeDirection.LEFT));
+						a.add(new Turn(RelativeDirection.RIGHT));
+						a.add(new Light());
+						Level lvl = new Level(grid, a, true, true, 12, 12, 12);
+						initLevelDisplay(lvl);
 						LightCore.display = new Game(grid);
 						LightCore.firstPrintGame = true;
 					}
@@ -244,6 +261,13 @@ public class MenuDisplay {
 				break;
 			}
 		}
+	
+	private void initLevelDisplay(Level level) {
+		ActionListDisplay.reset();
+		ProcedureBlockDisplay.reset();
+		ActionListDisplay.init(level);
+		ProcedureBlockDisplay.init(level);
+	}
 	
 	
 	
