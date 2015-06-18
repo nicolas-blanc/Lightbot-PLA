@@ -482,9 +482,9 @@ public class Animation {
 		Clock animClock = new Clock();
 		
 		Vector2f initialPosition = cubes[line][column][level].getPosition();
+		System.out.println(initialPosition.x + " " + initialPosition.y);
 		
-		cubes[line][column][level] = new Sprite(Textures.cubeTextureWhite);
-		cubes[line][column][level].setPosition(initialPosition);
+		cubes[line][column][level].setTexture(Textures.cubeTextureWhite);
 		
 		
 		blackHole = new Sprite(Textures.teleportAnimTexture);
@@ -492,7 +492,9 @@ public class Animation {
 				frameRow * Textures.cellTexture.getSize().y, 
 				Textures.cellTexture.getSize().x, 
 				Textures.cellTexture.getSize().y));
+		blackHole.setOrigin(cubes[line][column][level].getOrigin());
 		blackHole.setPosition(initialPosition);
+		
 
 		while(LightCore.window.isOpen() && !finished) {
 			
