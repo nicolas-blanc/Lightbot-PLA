@@ -62,9 +62,9 @@ public class ProcedureBlockDisplay {
 		useProc1 = level.useProc1();
 		useProc2 = level.useProc2();
 
-		//mainIsActive = true;
-		//proc1IsActive = false;
-		//proc2IsActive = false;
+		// mainIsActive = true;
+		// proc1IsActive = false;
+		// proc2IsActive = false;
 
 		// setup main
 		// main = new Procedure(Procedure.MAIN_NAME, level.getMainLimit(),
@@ -134,7 +134,6 @@ public class ProcedureBlockDisplay {
 		}
 
 		if (proc1IsActive) {
-			System.out.println("HOLAAA");
 			int whereToAdd = proc1.getSize();
 			int line = whereToAdd / 4;
 
@@ -178,33 +177,27 @@ public class ProcedureBlockDisplay {
 		case MOUSE_BUTTON_PRESSED:
 			MouseButtonEvent mouse = event.asMouseButtonEvent();
 			if (mouse.button == Mouse.Button.LEFT) {
+
 				SelectedBox sl = selectedbox(mouse.position);
-				//System.out.println("Selected Box : " + sl.toString());
+
 				if (sl != null) {
 					switch (sl) {
 					case MAIN:
 						mainIsActive = true;
 						proc1IsActive = false;
 						proc2IsActive = false;
-						System.out.println("main " + mainIsActive);
-						System.out.println("proc1 " + proc1IsActive);
-						System.out.println("proc2 " + proc2IsActive);
 						break;
+
 					case PROC1:
 						proc1IsActive = true;
 						mainIsActive = false;
 						proc2IsActive = false;
-						System.out.println("main " + mainIsActive);
-						System.out.println("proc1 " + proc1IsActive);
-						System.out.println("proc2 " + proc2IsActive);
 						break;
+
 					case PROC2:
 						proc2IsActive = true;
 						mainIsActive = false;
 						proc2IsActive = false;
-						System.out.println("main " + mainIsActive);
-						System.out.println("proc1 " + proc1IsActive);
-						System.out.println("proc2 " + proc2IsActive);
 						break;
 					}
 				}
@@ -230,9 +223,9 @@ public class ProcedureBlockDisplay {
 						}
 						break;
 					case PROC2:
-						index = isInsideBox(mouse.position, SelectedBox.PROC1);
+						index = isInsideBox(mouse.position, SelectedBox.PROC2);
 						if (index != -1) {
-							deleteFromProcedureAtIndex(index, SelectedBox.PROC1);
+							deleteFromProcedureAtIndex(index, SelectedBox.PROC2);
 							updateDisplay();
 						}
 						break;
@@ -265,21 +258,21 @@ public class ProcedureBlockDisplay {
 				if (mainButtons.get(i).isInside(coords))
 					return i;
 			}
-			return -1;
+			break;
 
 		case PROC1:
 			for (int i = 0; i < proc1Buttons.size(); i++) {
 				if (proc1Buttons.get(i).isInside(coords))
 					return i;
 			}
-			return -1;
+			break;
 
 		case PROC2:
 			for (int i = 0; i < proc2Buttons.size(); i++) {
 				if (proc2Buttons.get(i).isInside(coords))
 					return i;
 			}
-			return -1;
+			break;
 		}
 
 		return -1;
@@ -309,12 +302,12 @@ public class ProcedureBlockDisplay {
 			proc1.removeActionAtIndex(index);
 
 			lastIndex = index;
-			lastPos = mainButtons.get(index).getSprite().getPosition();
-			mainButtons.remove(index);
+			lastPos = proc1Buttons.get(index).getSprite().getPosition();
+			proc1Buttons.remove(index);
 
-			for (int i = lastIndex; i < mainButtons.size(); i++) {
-				Vector2f oldPos = mainButtons.get(i).getSprite().getPosition();
-				mainButtons.get(i).getSprite().setPosition(lastPos);
+			for (int i = lastIndex; i < proc1Buttons.size(); i++) {
+				Vector2f oldPos = proc1Buttons.get(i).getSprite().getPosition();
+				proc1Buttons.get(i).getSprite().setPosition(lastPos);
 				lastPos = oldPos;
 
 			}
@@ -324,12 +317,12 @@ public class ProcedureBlockDisplay {
 			proc1.removeActionAtIndex(index);
 
 			lastIndex = index;
-			lastPos = mainButtons.get(index).getSprite().getPosition();
-			mainButtons.remove(index);
+			lastPos = proc2Buttons.get(index).getSprite().getPosition();
+			proc2Buttons.remove(index);
 
-			for (int i = lastIndex; i < mainButtons.size(); i++) {
-				Vector2f oldPos = mainButtons.get(i).getSprite().getPosition();
-				mainButtons.get(i).getSprite().setPosition(lastPos);
+			for (int i = lastIndex; i < proc2Buttons.size(); i++) {
+				Vector2f oldPos = proc2Buttons.get(i).getSprite().getPosition();
+				proc2Buttons.get(i).getSprite().setPosition(lastPos);
 				lastPos = oldPos;
 
 			}
