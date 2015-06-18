@@ -9,6 +9,8 @@ import lightbot.system.Procedure;
 import lightbot.system.RelativeDirection;
 import lightbot.system.Robot;
 import lightbot.system._Executable;
+import lightbot.system.action.Break;
+import lightbot.system.action.Clone;
 import lightbot.system.action.Forward;
 import lightbot.system.action.Jump;
 import lightbot.system.action.Light;
@@ -177,6 +179,11 @@ public class ActionListDisplay {
 		}
 		if (e instanceof Wash)
 			return Textures.showerTexture;
+		if (e instanceof Break)
+			return Textures.breakTexture;
+		if (e instanceof Clone)
+			return Textures.cloneTexture;
+
 		if (e instanceof Procedure) {
 			if (((Procedure) e).getName().equals(Procedure.PROCEDURE1_NAME))
 				return Textures.procedure1Texture;

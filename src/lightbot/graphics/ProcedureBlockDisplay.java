@@ -30,7 +30,8 @@ public class ProcedureBlockDisplay {
 
 	}
 
-	private static final int TOP_MARGIN = 10;
+	private static final int TOP_MARGIN_OUTSIDE_BOX = 10;
+	private static final int TOP_MARGIN_INSIDE_BOX = 5;
 
 	public static Procedure main = new Procedure(Procedure.MAIN_NAME, 12, Colour.WHITE);
 	public static Procedure proc1 = new Procedure(Procedure.PROCEDURE1_NAME, 12, Colour.WHITE);
@@ -68,7 +69,7 @@ public class ProcedureBlockDisplay {
 
 		mainRect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 		mainRect.setFillColor(new Color(79, 179, 201));
-		mainRect.setPosition(730, TOP_MARGIN);
+		mainRect.setPosition(730, TOP_MARGIN_OUTSIDE_BOX);
 
 		// setup proc1 if available in level
 		if (useProc1) {
@@ -78,7 +79,7 @@ public class ProcedureBlockDisplay {
 
 			proc1Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 			proc1Rect.setFillColor(new Color(171, 171, 171));
-			proc1Rect.setPosition(730, 2 * TOP_MARGIN + BLOCK_HEIGHT);
+			proc1Rect.setPosition(730, 2 * TOP_MARGIN_OUTSIDE_BOX + BLOCK_HEIGHT);
 		}
 
 		// setup proc2 if available in level
@@ -89,7 +90,7 @@ public class ProcedureBlockDisplay {
 
 			proc2Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 			proc2Rect.setFillColor(new Color(171, 171, 171));
-			proc2Rect.setPosition(730, 3 * TOP_MARGIN + 2 * BLOCK_HEIGHT);
+			proc2Rect.setPosition(730, 3 * TOP_MARGIN_OUTSIDE_BOX + 2 * BLOCK_HEIGHT);
 		}
 
 		assert main.getSize() == mainButtons.size() && proc1.getSize() == proc1Buttons.size()
@@ -127,7 +128,8 @@ public class ProcedureBlockDisplay {
 
 			Sprite s = new Sprite(b.getSprite().getTexture());
 			int spriteX = 730 + 10 + (whereToAdd % 4) * (50 + 10);
-			int spriteY = 15 + line * (50 + 10);
+			//int spriteY = 15 + line * (50 + 10);
+			int spriteY = TOP_MARGIN_OUTSIDE_BOX + TOP_MARGIN_INSIDE_BOX + line * (50 + 10);
 			s.setPosition(spriteX, spriteY);
 
 			Button bnew = new Button(s, null, null);
@@ -146,7 +148,7 @@ public class ProcedureBlockDisplay {
 
 			Sprite s = new Sprite(b.getSprite().getTexture());
 			int spriteX = 730 + 10 + (whereToAdd % 4) * (50 + 10);
-			int spriteY = 2 * TOP_MARGIN + BLOCK_HEIGHT + 15 + line * (50 + 10);
+			int spriteY = 2 * TOP_MARGIN_OUTSIDE_BOX + BLOCK_HEIGHT + TOP_MARGIN_INSIDE_BOX + line * (50 + 10);
 			s.setPosition(spriteX, spriteY);
 
 			Button bnew = new Button(s, null, null);
@@ -165,7 +167,7 @@ public class ProcedureBlockDisplay {
 
 			Sprite s = new Sprite(b.getSprite().getTexture());
 			int spriteX = 730 + 10 + (whereToAdd % 4) * (50 + 10);
-			int spriteY = 3 * TOP_MARGIN + 2 * BLOCK_HEIGHT + 15 + line * (50 + 10);
+			int spriteY = 3 * TOP_MARGIN_OUTSIDE_BOX + 2 * BLOCK_HEIGHT + TOP_MARGIN_INSIDE_BOX + line * (50 + 10);
 			s.setPosition(spriteX, spriteY);
 
 			Button bnew = new Button(s, null, null);
