@@ -21,7 +21,7 @@ public class Animation {
 	private final float fallTime = 200;
 	
 	private final float robotArrivalTime = 500; 
-	private final float movementTime = 800;
+	private final float movementTime = 1000;
 	
 	private Sprite[][][] cubes;
 	
@@ -301,6 +301,9 @@ public class Animation {
 		int nextCellX;
 		int nextCellY;
 		
+		int frame = 0;
+		boolean rotate = true;
+		
 		if(isClone){
 			nextCellX = Robot.wheatleyClone.getLine();
 			nextCellY = Robot.wheatleyClone.getColumn();
@@ -355,6 +358,7 @@ public class Animation {
 		
 		Clock frameClock = new Clock();
 		Clock resetClock = new Clock();
+		Clock animClock = new Clock();
 
 		while(LightCore.window.isOpen() && !finished) {
 			
@@ -449,6 +453,21 @@ public class Animation {
 						break;
 		    	}
 		    }
+		    
+		    if(animClock.getElapsedTime().asMilliseconds() >= 50 && rotate && upOrDown == 0){
+				animClock.restart();
+				
+				frame++;
+				if(frame > 14)
+					frame = 0;
+			
+				int frameRow = frame / 5;
+				int frameCol = frame % 5;
+				robotSprite.setTextureRect(new IntRect(frameCol * 38, frameRow * 50, 38, 50));
+				
+				if(frame == 0)
+					rotate = false;
+			}
 
 		    Time deltaTime = frameClock.restart();
 		    float deltaMilliseconds = deltaTime.asMilliseconds();

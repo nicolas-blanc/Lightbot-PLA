@@ -6,6 +6,7 @@ import lightbot.system.Colour;
 import lightbot.system.Robot;
 
 import org.jsfml.graphics.Color;
+import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
@@ -92,12 +93,13 @@ public class RobotDisplay implements DisplayPrimitive{
 	 */
 	public Sprite create(){
 		Sprite robot = new Sprite(currentTexture);
+		robot.setTextureRect(new IntRect(0, 0, 38, 50));
 		
 		float decalX = Textures.cellTexture.getSize().x / 2;
 		float decalY = Textures.cellTexture.getSize().y / 2;
 		float sizeCubeY = Textures.cubeTextureWhite.getSize().y;
 		
-		float decalXRobot = (Textures.cellTexture.getSize().x - this.currentTexture.getSize().x)/2;
+		float decalXRobot = (Textures.cellTexture.getSize().x - 38)/2;
 		
 		Vector2f decal;
 		if(this.level == 0){
@@ -127,7 +129,7 @@ public class RobotDisplay implements DisplayPrimitive{
 	
 	// TODO
 	/************ Maybe to suppress *************/
-	public void turnLeft(){
+	/*public void turnLeft(){
 		if(currentTexture == Textures.robotNorth)
 			currentTexture = Textures.robotWest;
 		else if(currentTexture == Textures.robotWest)
@@ -151,7 +153,7 @@ public class RobotDisplay implements DisplayPrimitive{
 			currentTexture = Textures.robotNorth;
 		
 		this.robotSprite.setTexture(currentTexture);
-	}
+	}*/
 	
 	/*public void setLine(int line){
 		this.line = line;

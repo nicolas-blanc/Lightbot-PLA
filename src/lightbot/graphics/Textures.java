@@ -64,7 +64,7 @@ public class Textures {
 	public static Texture robotNorth;
 	public static Texture robotSouth;
 	public static Texture robotWest;
-	public static Texture robotEast;	
+	public static Texture robotEast;
 	
 	// Editor
 	public static Texture lightButtonTexture;
@@ -184,8 +184,7 @@ public class Textures {
 		robotNorth = new Texture();
 		robotSouth = new Texture();
 		robotWest = new Texture();
-		robotEast = new Texture();
-		
+		robotEast = new Texture();		
 		
 		// Editor
 		lightButtonTexture = new Texture();

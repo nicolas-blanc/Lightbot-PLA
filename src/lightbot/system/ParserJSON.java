@@ -110,7 +110,6 @@ public class ParserJSON {
 						JSONArray dest = (JSONArray) column.get("dest");
 						cell = new TeleportCell(lineAttribut, columnAttribut, levelAttribut, (int) (long) dest.get(0),
 								(int) (long) dest.get(1), teleportColour);
-						System.out.println(((TeleportCell)cell).getColour());
 						break;
 
 					case "NormalCell":

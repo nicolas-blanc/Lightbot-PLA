@@ -8,6 +8,8 @@ import lightbot.system.Colour;
 import lightbot.system.RelativeDirection;
 import lightbot.system.Robot;
 import lightbot.system.world.Grid;
+import lightbot.system.world.cell.Cell;
+import lightbot.system.world.cell.TeleportCell;
 
 public class Turn extends _Action {
 
@@ -144,6 +146,5 @@ public class Turn extends _Action {
 			}
 			return;
 		}
-
 	}
 }
