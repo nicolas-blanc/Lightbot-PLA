@@ -56,6 +56,8 @@ public class Textures {
 	public static Texture procedure1Texture;
 	public static Texture procedure2Texture;
 	public static Texture showerTexture;
+	public static Texture breakTexture;
+	public static Texture cloneTexture;
 	
 	
 	// Robot
@@ -116,6 +118,8 @@ public class Textures {
 	public static Texture level2;
 	public static Texture level3;
 	public static Texture level4;
+	public static Texture level5;	
+	public static Texture level6;
 	
 	public static Texture levelBasesH;
 	public static Texture levelProceduresH;
@@ -128,7 +132,8 @@ public class Textures {
 	public static Texture level2H;
 	public static Texture level3H;
 	public static Texture level4H;
-	
+	public static Texture level5H;
+	public static Texture level6H;
 	
 	public static void initTextures(){
 		
@@ -172,6 +177,8 @@ public class Textures {
 		procedure1Texture = new Texture();
 		procedure2Texture = new Texture();
 		showerTexture = new Texture();
+		cloneTexture = new Texture();
+		breakTexture = new Texture();
 		
 		// Robot
 		robotNorth = new Texture();
@@ -232,6 +239,8 @@ public class Textures {
 		level2 = new Texture();
 		level3 = new Texture();
 		level4 = new Texture();
+		level5 = new Texture();
+		level6 = new Texture();
 		
 		levelBasesH = new Texture();
 		levelProceduresH = new Texture();
@@ -244,6 +253,8 @@ public class Textures {
 		level2H = new Texture();
 		level3H = new Texture();
 		level4H = new Texture();
+		level5H = new Texture();
+		level6H = new Texture();
 		
 		try {
 			
@@ -289,6 +300,8 @@ public class Textures {
 		    procedure1Texture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconProcedure1.png"));
 		    procedure2Texture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconProcedure2.png"));
 		    showerTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconShower.png"));
+		    cloneTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconClone.png"));
+		    breakTexture.loadFromFile(Paths.get(NEW_ICONS_PATH + "iconBreak.png"));
 		    
 		    // Robot
 		    robotNorth.loadFromFile(Paths.get(ROBOT_PATH + "white_north.png"));
@@ -346,6 +359,8 @@ public class Textures {
 			level2.loadFromFile(Paths.get(LEVELS_PATH + "levelDeux.png"));
 			level3.loadFromFile(Paths.get(LEVELS_PATH + "levelTrois.png"));
 			level4.loadFromFile(Paths.get(LEVELS_PATH + "levelQuatre.png"));
+			level5.loadFromFile(Paths.get(LEVELS_PATH + "levelCinq.png"));
+			level6.loadFromFile(Paths.get(LEVELS_PATH + "levelSix.png"));
 			
 			levelBasesH.loadFromFile(Paths.get(LEVELS_PATH + "levelBasesH.png"));
 			levelProceduresH.loadFromFile(Paths.get(LEVELS_PATH + "levelProceduresH.png"));
@@ -358,6 +373,8 @@ public class Textures {
 			level2H.loadFromFile(Paths.get(LEVELS_PATH + "levelDeuxH.png"));
 			level3H.loadFromFile(Paths.get(LEVELS_PATH + "levelTroisH.png"));
 			level4H.loadFromFile(Paths.get(LEVELS_PATH + "levelQuatreH.png"));
+			level5H.loadFromFile(Paths.get(LEVELS_PATH + "levelCinqH.png"));
+			level6H.loadFromFile(Paths.get(LEVELS_PATH + "levelSixH.png"));
 			
 			
 			/************************ Set smoothing ************************/
@@ -400,6 +417,8 @@ public class Textures {
 			procedure1Texture.setSmooth(true);
 			procedure2Texture.setSmooth(true);
 			showerTexture.setSmooth(true);
+			cloneTexture.setSmooth(true);
+			breakTexture.setSmooth(true);
 			
 			// Robot
 			robotNorth.setSmooth(true);
@@ -455,6 +474,8 @@ public class Textures {
 			level2.setSmooth(true);
 			level3.setSmooth(true);
 			level4.setSmooth(true);
+			level5.setSmooth(true);
+			level6.setSmooth(true);
 			
 			levelBasesH.setSmooth(true);
 			levelProceduresH.setSmooth(true);
@@ -467,6 +488,8 @@ public class Textures {
 			level2H.setSmooth(true);
 			level3H.setSmooth(true);
 			level4H.setSmooth(true);
+			level5H.setSmooth(true);
+			level6H.setSmooth(true);
 			
 		} catch(IOException ex) {
 		    //Ouch! something went wrong
