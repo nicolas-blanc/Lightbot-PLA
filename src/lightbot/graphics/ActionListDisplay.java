@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lightbot.LightCore;
+import lightbot.system.Colour;
 import lightbot.system.Procedure;
 import lightbot.system.RelativeDirection;
 import lightbot.system._Executable;
@@ -39,6 +40,13 @@ public class ActionListDisplay {
 		}
 
 		List<_Executable> levelActions = level.getListOfActions();
+		
+		// add buttons for proc1 or proc2
+		if(level.useProc1())
+			levelActions.add(new Procedure(Procedure.PROCEDURE1_NAME, level.getProc1Limit(), Colour.WHITE));
+		
+		if(level.useProc2())
+			levelActions.add(new Procedure(Procedure.PROCEDURE2_NAME, level.getProc2Limit(), Colour.WHITE));
 
 		for (_Executable e : levelActions) {
 			Texture t = getTextureForAction(e);
