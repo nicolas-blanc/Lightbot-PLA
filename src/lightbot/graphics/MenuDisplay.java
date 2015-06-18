@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 import lightbot.LightCore;
 import lightbot.system.ParserJSON;
-import lightbot.system.generator.WorldGenerator;
+import lightbot.system.generator.*;
 import lightbot.system.world.Grid;
 import lightbot.system.world.Level;
 
@@ -211,7 +211,24 @@ public class MenuDisplay {
 					if(buttonAleatoire.isInside(mouse.position)){
 						LightCore.menu = false;
 						LightCore.random = true;
-						WorldGenerator newWorld = new WorldGenerator();
+						WorldGenerator newWorld;
+						
+						switch (rand.nextInt(3)) {
+//						switch (0) {
+						case 0:
+							newWorld = new WorldGeneratorBase();
+							break;
+						case 1:
+							newWorld = new WorldGeneratorProcedure();
+							break;
+						case 2:
+							newWorld = new WorldGeneratorITEPointers();
+							break;
+						default:
+							newWorld = null;
+							break;
+						}
+						
 						Grid grid = newWorld.getGrid();
 						LightCore.display = new Game(grid);
 						LightCore.firstPrintGame = true;

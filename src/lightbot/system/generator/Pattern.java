@@ -26,7 +26,7 @@ public class Pattern {
 			variation = maxInstructions / (numberInstruction * 2);
 		}
 		
-		printPattern();
+//		printPattern();
 	}
 
 	/**
@@ -62,6 +62,10 @@ public class Pattern {
 		return numberInstruction;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean endOfPattern() {
 		return iterate >= numberInstruction;
 	}
@@ -122,7 +126,10 @@ public class Pattern {
 		}
 	}
 	
-//	@SuppressWarnings("unused")
+	/**
+	 * 
+	 */
+	@SuppressWarnings("unused")
 	private void printPattern() {
 		System.out.print("Pattern : ");
 		for (int i = 0; i < pattern.length; i++) {
