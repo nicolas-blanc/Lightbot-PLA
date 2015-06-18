@@ -7,6 +7,7 @@ import lightbot.system.Colour;
 import lightbot.system.Robot;
 import lightbot.system.world.cell.Cell;
 import lightbot.system.world.cell.ColoredCell;
+import lightbot.system.world.cell.EmptyCell;
 import lightbot.system.world.cell.ObstacleCell;
 import lightbot.system.world.cell.TeleportCell;
 import lightbot.system.world.Grid;
@@ -45,8 +46,8 @@ public class Jump extends _Action {
 						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 2, false);
 						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 0, false);
 					} else {
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 1, false);
 						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 0, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 1, false);
 					}
 				} catch (OutOfGridException oge) {
 					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 2, false);
@@ -64,8 +65,8 @@ public class Jump extends _Action {
 						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 2, false);
 						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 0, false);
 					} else {
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 1, false);
 						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 0, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 1, false);
 					}
 				} catch (OutOfGridException oge) {
 					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 2, false);
@@ -80,11 +81,12 @@ public class Jump extends _Action {
 				try {
 					if (grid.getNextCell(posX, posY, CardinalDirection.SOUTH).getHeight() > grid.getCell(posX, posY)
 							.getHeight()) {
+
 						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 2, false);
 						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 0, false);
 					} else {
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 1, false);
 						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 0, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 1, false);
 					}
 				} catch (OutOfGridException oge) {
 					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 2, false);
@@ -102,8 +104,8 @@ public class Jump extends _Action {
 						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 2, false);
 						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 0, false);
 					} else {
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 1, false);
 						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 0, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 1, false);
 					}
 				} catch (OutOfGridException oge) {
 					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 2, false);
@@ -115,7 +117,8 @@ public class Jump extends _Action {
 
 			}
 		} else {
-			// faire sauter en place
+			((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 2, false);
+			((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 1, false);
 		}
 
 	}
@@ -140,7 +143,7 @@ public class Jump extends _Action {
 		} catch (OutOfGridException e) {
 			return false;
 		}
-		return (nextCell.getHeight() != 0
+		return (!(nextCell instanceof EmptyCell)
 				&& (currentCell.getHeight() == nextCell.getHeight() - 1 || currentCell.getHeight() == nextCell
 						.getHeight() + 1) && !(nextCell instanceof ObstacleCell));
 	}
