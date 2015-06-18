@@ -93,7 +93,9 @@ public class Game implements DisplayMode {
 		reset();
 		this.level = level;
 		originX = (GRID_DISPLAY_SIZE / 2) + MARGIN_LEFT;
-		originY = (WINDOW_HEIGHT - (level.getGrid().getSize() * Textures.cellTexture.getSize().y));
+		originY = MARGIN_LEFT + ((WINDOW_HEIGHT - (level.getGrid().getSize() * Textures.cellTexture.getSize().y))/2);
+		
+		System.out.println(originY);
 
 		toDisplay = new ArrayList<Drawable>();
 
@@ -153,11 +155,11 @@ public class Game implements DisplayMode {
 		buttonPlay = new Button(spritePlay, null, null);
 		
 		Sprite turnLeftSprite = new Sprite(Textures.rotateLeft);
-		turnLeftSprite.setPosition(50, (490 - 30 - Textures.rotateLeft.getSize().y));
+		turnLeftSprite.setPosition(50, (WINDOW_HEIGHT + MARGIN_LEFT - 30 - Textures.rotateLeft.getSize().y));
 
 		Sprite turnRightSprite = new Sprite(Textures.rotateRight);
-		turnRightSprite.setPosition((765 - 35 - Textures.rotateRight.getSize().y),
-				(490 - 30 - Textures.rotateRight.getSize().y));
+		turnRightSprite.setPosition((GRID_DISPLAY_SIZE - MARGIN_LEFT - 35 - Textures.rotateRight.getSize().y),
+				(WINDOW_HEIGHT + MARGIN_LEFT - 30 - Textures.rotateRight.getSize().y));
 
 		turnLeftButton = new Button(turnLeftSprite, null, null);
 		turnRightButton = new Button(turnRightSprite, null, null);
