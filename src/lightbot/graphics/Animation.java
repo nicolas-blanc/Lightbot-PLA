@@ -5,6 +5,7 @@ import lightbot.system.CardinalDirection;
 import lightbot.system.Robot;
 
 import org.jsfml.graphics.Color;
+import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Clock;
 import org.jsfml.system.Time;
@@ -463,7 +464,98 @@ public class Animation {
 		}
 	}
 	
-	public void animeBlackHole(boolean open){
+	public void animeBlackHole(int line, int column, int level, boolean open){
+		boolean finished = false;
+		boolean endDisplay = false;
+		Sprite blackHole;
 		
+		int frame;
+		
+		if(open)
+			frame = 0;
+		else
+			frame = 19;
+		
+		int frameRow = frame / 5;
+		int frameCol = frame % 5;
+		
+		Clock animClock = new Clock();
+		
+		Vector2f initialPosition = cubes[line][column][level].getPosition();
+		
+		cubes[line][column][level] = new Sprite(Textures.cubeTextureWhite);
+		cubes[line][column][level].setPosition(initialPosition);
+		
+		
+		blackHole = new Sprite(Textures.teleportAnimTexture);
+		blackHole.setTextureRect(new IntRect(frameCol * Textures.cellTexture.getSize().x, 
+				frameRow * Textures.cellTexture.getSize().y, 
+				Textures.cellTexture.getSize().x, 
+				Textures.cellTexture.getSize().y));
+		blackHole.setPosition(initialPosition);
+
+		while(LightCore.window.isOpen() && !finished) {
+			
+		    LightCore.window.clear(Color.WHITE);
+		    
+	    	for(Sprite s : LightCore.display.getConstantDisplay())
+	    		LightCore.window.draw(s);
+	    	
+			for(int l = 0; l<cubes.length && !endDisplay; l++)
+				for(int c = 0; c<cubes[0].length && !endDisplay; c++){
+					printPillar(l, c);
+					if(l == line && c == column)
+						LightCore.window.draw(blackHole);
+					if(robotSprite != null && l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn() && Robot.wheatley.getVisibility())
+						LightCore.window.draw(robotSprite);
+					if(cloneSprite != null && l == Robot.wheatleyClone.getLine() && c == Robot.wheatleyClone.getColumn() && Robot.wheatleyClone.getVisibility())
+						LightCore.window.draw(cloneSprite);
+				}
+			
+		    LightCore.window.display();
+
+		    //Handle events
+		    for(Event event : LightCore.window.pollEvents()) {
+		    	switch(event.type) {
+		    		case CLOSED:
+		    			System.out.println("The user pressed the close button!");
+		    			LightCore.window.close();
+		    			break;
+					default:
+						break;
+		    	}
+		    }
+		    
+		    if(animClock.getElapsedTime().asMilliseconds() >= 17){
+				animClock.restart();
+				
+				if(open){
+					frame++;
+					if(frame > 19)
+						frame = 0;
+				}
+				else{
+					frame--;
+					if(frame < 0)
+						frame = 19;
+				}
+				
+				frameRow = frame / 5;
+				frameCol = frame % 5;
+				blackHole.setTextureRect(new IntRect(frameCol * Textures.cellTexture.getSize().x, 
+						frameRow * Textures.cellTexture.getSize().y, 
+						Textures.cellTexture.getSize().x, 
+						Textures.cellTexture.getSize().y));
+				
+				if(open){
+					if(frame == 0)
+						finished = true;
+				}
+				else{
+					if(frame == 19)
+						finished = true;
+				}
+			}
+		}
 	}
 }

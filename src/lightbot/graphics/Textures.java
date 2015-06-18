@@ -24,6 +24,8 @@ public class Textures {
 	public static Texture cubeTextureWhite;
 	public static Texture cubeTextureYellow;
 	
+	public static Texture teleportAnimTexture;
+	
 	// Teleport
 	public static Texture cubeTextureTeleportBlue;
 	public static Texture cubeTextureTeleportGreen;
@@ -138,6 +140,8 @@ public class Textures {
 		cubeTextureWhite = new Texture();
 		cubeTextureYellow = new Texture();
 		
+		teleportAnimTexture = new Texture();
+		
 		// Teleport
 		cubeTextureTeleportBlue = new Texture();
 		cubeTextureTeleportGreen = new Texture();
@@ -251,6 +255,8 @@ public class Textures {
 		    cubeTextureRed.loadFromFile(Paths.get(CUBE_PATH+"redcube.png"));
 		    cubeTextureWhite.loadFromFile(Paths.get(CUBE_PATH+"whitecube.png"));
 		    cubeTextureYellow.loadFromFile(Paths.get(CUBE_PATH+"yellowcube.png"));
+		    
+		    teleportAnimTexture.loadFromFile(Paths.get(CUBE_PATH+"teleportAnim.png"));
 		    
 		    // Teleport
 		    cubeTextureTeleportBlue.loadFromFile(Paths.get(CUBE_PATH+"blueteleport.png"));

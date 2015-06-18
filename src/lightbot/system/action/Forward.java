@@ -138,9 +138,21 @@ public class Forward extends _Action {
 		cell = grid.getCell(line, column);
 
 		if (cell instanceof TeleportCell) {
-			robot.setPosition(((TeleportCell) cell).getDestX(), ((TeleportCell) cell).getDestY());
+			TeleportCell arrivalCell= (TeleportCell)grid.getCell(((TeleportCell) cell).getDestX(), ((TeleportCell) cell).getDestY());
+			
+			robot.setPosition(arrivalCell.getX(), arrivalCell.getY());
+			((Game) LightCore.display).display.robotDisplay.updateRobot(robot, 255);
+			((Game)LightCore.display).display.anim.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+			
+			((Game)LightCore.display).display.anim.animeBlackHole(cell.getX(), cell.getY(), ((TeleportCell) cell).getHeight(), false);
 			grid.changeToNormal(line, column);
-			grid.changeToNormal(((TeleportCell) cell).getDestX(), ((TeleportCell) cell).getDestY());
+			((Game)LightCore.display).display.gridDisplay.addCube(grid.getCell(line, column));
+			((Game)LightCore.display).display.anim.updateSprite(((Game)LightCore.display).display.gridDisplay.getGridSprites());
+			
+			((Game)LightCore.display).display.anim.animeBlackHole(arrivalCell.getX(), arrivalCell.getY(), arrivalCell.getHeight(), false);
+			grid.changeToNormal(arrivalCell.getX(), arrivalCell.getY());
+			((Game)LightCore.display).display.gridDisplay.addCube(grid.getCell(arrivalCell.getX(), arrivalCell.getY()));
+			((Game)LightCore.display).display.anim.updateSprite(((Game)LightCore.display).display.gridDisplay.getGridSprites());
 		}
 	}
 }
