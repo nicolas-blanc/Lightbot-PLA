@@ -11,9 +11,29 @@ public class Textures {
 	public static final String MENU_PATH = RESSOURCE_PATH + "menu/";
 	public static final String LEVELS_PATH = RESSOURCE_PATH + "levels/";
 	public static final String ROBOT_PATH = RESSOURCE_PATH + "robot/";
+	public static final String TAGS_PATH = RESSOURCE_PATH + "tags/";
 	
 	public static final String EDITOR_PATH = RESSOURCE_PATH + "editor/";
 	public static final String CUBE_PATH = RESSOURCE_PATH + "cube/";
+	
+	// Background
+	public static Texture backgroundTexture;
+	
+	// Congrats
+	public static Texture congratsTexture;
+	
+	// Blocks + tags
+	public static Texture mainTagTextureG;
+	public static Texture p1TagTextureG;
+	public static Texture p2TagTextureG;
+	public static Texture robot1TagTextureG;
+	public static Texture robot2TagTextureG;
+	
+	public static Texture mainTagTexture;
+	public static Texture p1TagTexture;
+	public static Texture p2TagTexture;
+	public static Texture robot1TagTexture;
+	public static Texture robot2TagTexture;
 	
 	// Cubes
 	public static Texture cubeTextureBlue;
@@ -137,6 +157,25 @@ public class Textures {
 	
 	public static void initTextures(){
 		
+		// Background
+		backgroundTexture = new Texture();
+		
+		// Congrats
+		congratsTexture = new Texture();
+		
+		// Blocks + tags
+		mainTagTexture = new Texture();
+		p1TagTexture = new Texture();		
+		p2TagTexture = new Texture();
+		robot1TagTexture = new Texture();
+		robot2TagTexture = new Texture();
+		
+		mainTagTextureG = new Texture();
+		p1TagTextureG = new Texture();		
+		p2TagTextureG = new Texture();
+		robot1TagTextureG = new Texture();
+		robot2TagTextureG = new Texture();
+		
 		// Cubes
 		cubeTextureBlue = new Texture();
 		cubeTextureGreen = new Texture();
@@ -259,6 +298,25 @@ public class Textures {
 			
 			/************************ Load the textures ************************/
 			
+			// Background
+			backgroundTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"background.png"));
+			
+			// Congrats
+			congratsTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"congrats.png"));
+			
+			// Blocks + tags
+			mainTagTexture.loadFromFile(Paths.get(TAGS_PATH+"mainTag.png"));
+			p1TagTexture.loadFromFile(Paths.get(TAGS_PATH+"p1Tag.png"));
+			p2TagTexture.loadFromFile(Paths.get(TAGS_PATH+"p2Tag.png"));
+			robot1TagTexture.loadFromFile(Paths.get(TAGS_PATH+"robot1Tag.png"));
+			robot2TagTexture.loadFromFile(Paths.get(TAGS_PATH+"robot2Tag.png"));
+			
+			mainTagTextureG.loadFromFile(Paths.get(TAGS_PATH+"mainTagG.png"));
+			p1TagTextureG.loadFromFile(Paths.get(TAGS_PATH+"p1TagG.png"));
+			p2TagTextureG.loadFromFile(Paths.get(TAGS_PATH+"p2TagG.png"));
+			robot1TagTextureG.loadFromFile(Paths.get(TAGS_PATH+"robot1TagG.png"));
+			robot2TagTextureG.loadFromFile(Paths.get(TAGS_PATH+"robot2TagG.png"));
+			
 			// Cubes
 		    cubeTextureBlue.loadFromFile(Paths.get(CUBE_PATH+"bluecube.png"));
 		    cubeTextureGreen.loadFromFile(Paths.get(CUBE_PATH+"greencube.png"));
@@ -377,6 +435,25 @@ public class Textures {
 			
 			
 			/************************ Set smoothing ************************/
+			
+			// Background
+			backgroundTexture.setSmooth(true);
+			
+			// Congrats
+			congratsTexture.setSmooth(true);
+			
+			// Blocks + tags
+			mainTagTexture.setSmooth(true);
+			p1TagTexture.setSmooth(true);
+			p2TagTexture.setSmooth(true);
+			robot1TagTexture.setSmooth(true);
+			robot2TagTexture.setSmooth(true);
+			
+			mainTagTextureG.setSmooth(true);
+			p1TagTextureG.setSmooth(true);
+			p2TagTextureG.setSmooth(true);
+			robot1TagTextureG.setSmooth(true);
+			robot2TagTextureG.setSmooth(true);
 			
 			// Cubes
 			cubeTextureBlue.setSmooth(true);
