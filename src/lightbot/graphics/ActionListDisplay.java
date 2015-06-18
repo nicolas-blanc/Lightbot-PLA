@@ -101,7 +101,7 @@ public class ActionListDisplay {
 				if (pressedActionIndex == -1) {
 					if (buttonPlay.isInside(mouse.position)) {
 						try {
-							ProcedureBlockDisplay.main.execute(ProcedureBlockDisplay.l.getGrid(), Robot.wheatley);
+							ProcedureBlockDisplay.main.execute(ProcedureBlockDisplay.lvl.getGrid(), Robot.wheatley);
 						} catch (OutOfGridException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
