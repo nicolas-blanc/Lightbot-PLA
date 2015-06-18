@@ -31,7 +31,9 @@ public class LevelDisplay {
 	static Sprite level2;
 	static Sprite level3;
 	static Sprite level4;
-
+	static Sprite level5;
+	static Sprite level6;
+	
 	/*
 	 * Buttons for the "world page"
 	 */
@@ -53,7 +55,9 @@ public class LevelDisplay {
 	static Button button2;
 	static Button button3;
 	static Button button4;
-
+	static Button button5;
+	static Button button6;
+	
 	public LevelDisplay() {
 		setButtons();
 	}
@@ -81,6 +85,8 @@ public class LevelDisplay {
 		level2 = new Sprite(Textures.level2);
 		level3 = new Sprite(Textures.level3);
 		level4 = new Sprite(Textures.level4);
+		level5 = new Sprite(Textures.level5);
+		level6 = new Sprite(Textures.level6);
 
 		/*
 		 * Buttons for the "world page"
@@ -102,6 +108,8 @@ public class LevelDisplay {
 		button2 = new Button(level2, Textures.level2H, Textures.level2);
 		button3 = new Button(level3, Textures.level3H, Textures.level3);
 		button4 = new Button(level4, Textures.level4H, Textures.level4);
+		button5 = new Button(level5, Textures.level5H, Textures.level5);
+		button6 = new Button(level6, Textures.level6H, Textures.level6);
 
 		/*
 		 * Set positions
@@ -118,9 +126,10 @@ public class LevelDisplay {
 		levelBlock.setPosition(530, 70);
 		level1.setPosition(590, 180);
 		level2.setPosition(590, 240);
-		;
 		level3.setPosition(590, 300);
 		level4.setPosition(590, 360);
+		level5.setPosition(590, 420);
+		level6.setPosition(590, 480);
 
 		/*
 		 * Sprite & button for home icon
@@ -148,6 +157,11 @@ public class LevelDisplay {
 		LightCore.window.draw(level2);
 		LightCore.window.draw(level3);
 		LightCore.window.draw(level4);
+		if(LightCore.bases || LightCore.procedures){
+			LightCore.window.draw(level5);
+			if(LightCore.procedures)
+				LightCore.window.draw(level6);	
+		}
 	}
 
 	public void display() {
@@ -171,6 +185,8 @@ public class LevelDisplay {
 			button2.changeOnHover(mouse1.position);
 			button3.changeOnHover(mouse1.position);
 			button4.changeOnHover(mouse1.position);
+			button5.changeOnHover(mouse1.position);
+			button6.changeOnHover(mouse1.position);
 			break;
 		case MOUSE_BUTTON_PRESSED:
 			MouseButtonEvent mouse = event.asMouseButtonEvent();
@@ -230,6 +246,36 @@ public class LevelDisplay {
 					LightCore.game = true;
 					LightCore.worlds = false;
 					LightCore.path = LightCore.path + "4.json";
+					Level level = ParserJSON.deserialize(LightCore.path);
+					// System.out.println(LightCore.path);
+					LightCore.display = new Game(level.getGrid());
+					initLevelDisplay(level);
+				}
+				if (button5.isInside(mouse.position)) {
+					LightCore.bases = false;
+					LightCore.procedures = false;
+					LightCore.pointeurs = false;
+					LightCore.fork = false;
+					LightCore.breakaction = false;
+					LightCore.ifthenelse = false;
+					LightCore.game = true;
+					LightCore.worlds = false;
+					LightCore.path = LightCore.path + "5.json";
+					Level level = ParserJSON.deserialize(LightCore.path);
+					// System.out.println(LightCore.path);
+					LightCore.display = new Game(level.getGrid());
+					initLevelDisplay(level);
+				}
+				if (button6.isInside(mouse.position)) {
+					LightCore.bases = false;
+					LightCore.procedures = false;
+					LightCore.pointeurs = false;
+					LightCore.fork = false;
+					LightCore.breakaction = false;
+					LightCore.ifthenelse = false;
+					LightCore.game = true;
+					LightCore.worlds = false;
+					LightCore.path = LightCore.path + "6.json";
 					Level level = ParserJSON.deserialize(LightCore.path);
 					// System.out.println(LightCore.path);
 					LightCore.display = new Game(level.getGrid());
