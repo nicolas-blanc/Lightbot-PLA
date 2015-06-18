@@ -39,37 +39,83 @@ public class Jump extends _Action {
 			int posY = robot.getColumn();
 
 			if (robot.getDirection() == CardinalDirection.NORTH) {
-				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 2, false);
-				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 0, false);
+				try {
+					if (grid.getNextCell(posX, posY, CardinalDirection.NORTH).getHeight() > grid.getCell(posX, posY)
+							.getHeight()) {
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 2, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 0, false);
+					} else {
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 1, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 0, false);
+					}
+				} catch (OutOfGridException oge) {
+					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 2, false);
+					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 1, false);
+				}
 				robot.setLine(posX - 1);
 				takeColour(robot, grid);
 				teleport(robot, grid);
-				
+
 			}
 			if (robot.getDirection() == CardinalDirection.EAST) {
-				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 2, false);
-				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 0, false);
+				try {
+					if (grid.getNextCell(posX, posY, CardinalDirection.EAST).getHeight() > grid.getCell(posX, posY)
+							.getHeight()) {
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 2, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 0, false);
+					} else {
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 1, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 0, false);
+					}
+				} catch (OutOfGridException oge) {
+					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 2, false);
+					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 1, false);
+				}
 				robot.setColumn(posY + 1);
 				takeColour(robot, grid);
 				teleport(robot, grid);
-				
+
 			}
 			if (robot.getDirection() == CardinalDirection.SOUTH) {
-				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 2, false);
-				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 0, false);
+				try {
+					if (grid.getNextCell(posX, posY, CardinalDirection.SOUTH).getHeight() > grid.getCell(posX, posY)
+							.getHeight()) {
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 2, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 0, false);
+					} else {
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 1, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 0, false);
+					}
+				} catch (OutOfGridException oge) {
+					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 2, false);
+					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 1, false);
+				}
 				robot.setLine(posX + 1);
 				takeColour(robot, grid);
 				teleport(robot, grid);
-				
+
 			}
 			if (robot.getDirection() == CardinalDirection.WEST) {
-				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 2, false);
-				((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 0, false);
+				try {
+					if (grid.getNextCell(posX, posY, CardinalDirection.WEST).getHeight() > grid.getCell(posX, posY)
+							.getHeight()) {
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 2, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 0, false);
+					} else {
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 1, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 0, false);
+					}
+				} catch (OutOfGridException oge) {
+					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 2, false);
+					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 1, false);
+				}
 				robot.setColumn(posY - 1);
 				takeColour(robot, grid);
 				teleport(robot, grid);
-				
+
 			}
+		} else {
+			// faire sauter en place
 		}
 
 	}
