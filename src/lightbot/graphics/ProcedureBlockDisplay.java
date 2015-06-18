@@ -53,6 +53,10 @@ public class ProcedureBlockDisplay {
 
 		useProc1 = level.useProc1();
 		useProc2 = level.useProc2();
+		
+		mainIsActive = true;
+		proc1IsActive = false;
+		proc2IsActive = false;
 
 		// setup main
 		main.setLimit(level.getMainLimit());
@@ -84,6 +88,16 @@ public class ProcedureBlockDisplay {
 		}
 
 		updateDisplay();
+	}
+
+	public static void reset() {
+		main.reset();
+		proc1.reset();
+		proc2.reset();
+
+		mainButtons.clear();
+		proc1Buttons.clear();
+		proc2Buttons.clear();
 	}
 
 	public static void add(_Executable e, Button b) {
@@ -220,6 +234,28 @@ public class ProcedureBlockDisplay {
 		}
 	}
 
+	public static void updateDisplay() {
+		LightCore.window.draw(mainRect);
+
+		for (int i = 0; i < mainButtons.size(); i++) {
+			LightCore.window.draw(mainButtons.get(i).getSprite());
+		}
+
+		if (useProc1) {
+			LightCore.window.draw(proc1Rect);
+			for (Button button : proc1Buttons) {
+				LightCore.window.draw(button.getSprite());
+			}
+		}
+
+		if (useProc2) {
+			LightCore.window.draw(proc2Rect);
+			for (Button button : proc2Buttons) {
+				LightCore.window.draw(button.getSprite());
+			}
+		}
+	}
+
 	private static SelectedBox selectedbox(Vector2i coords) {
 		if (mainRect.getGlobalBounds().contains(coords.x, coords.y))
 			return SelectedBox.MAIN;
@@ -231,33 +267,6 @@ public class ProcedureBlockDisplay {
 			return SelectedBox.PROC2;
 
 		return null;
-	}
-
-	private static int isInsideBox(Vector2i coords, SelectedBox sb) {
-		switch (sb) {
-		case MAIN:
-			for (int i = 0; i < mainButtons.size(); i++) {
-				if (mainButtons.get(i).isInside(coords))
-					return i;
-			}
-			break;
-
-		case PROC1:
-			for (int i = 0; i < proc1Buttons.size(); i++) {
-				if (proc1Buttons.get(i).isInside(coords))
-					return i;
-			}
-			break;
-
-		case PROC2:
-			for (int i = 0; i < proc2Buttons.size(); i++) {
-				if (proc2Buttons.get(i).isInside(coords))
-					return i;
-			}
-			break;
-		}
-
-		return -1;
 	}
 
 	private static void deleteFromProcedureAtIndex(int index, SelectedBox sb) {
@@ -312,26 +321,31 @@ public class ProcedureBlockDisplay {
 		}
 	}
 
-	public static void updateDisplay() {
-		LightCore.window.draw(mainRect);
-
-		for (int i = 0; i < mainButtons.size(); i++) {
-			LightCore.window.draw(mainButtons.get(i).getSprite());
-		}
-
-		if (useProc1) {
-			LightCore.window.draw(proc1Rect);
-			for (Button button : proc1Buttons) {
-				LightCore.window.draw(button.getSprite());
+	private static int isInsideBox(Vector2i coords, SelectedBox sb) {
+		switch (sb) {
+		case MAIN:
+			for (int i = 0; i < mainButtons.size(); i++) {
+				if (mainButtons.get(i).isInside(coords))
+					return i;
 			}
+			break;
+
+		case PROC1:
+			for (int i = 0; i < proc1Buttons.size(); i++) {
+				if (proc1Buttons.get(i).isInside(coords))
+					return i;
+			}
+			break;
+
+		case PROC2:
+			for (int i = 0; i < proc2Buttons.size(); i++) {
+				if (proc2Buttons.get(i).isInside(coords))
+					return i;
+			}
+			break;
 		}
 
-		if (useProc2) {
-			LightCore.window.draw(proc2Rect);
-			for (Button button : proc2Buttons) {
-				LightCore.window.draw(button.getSprite());
-			}
-		}
+		return -1;
 	}
 
 }

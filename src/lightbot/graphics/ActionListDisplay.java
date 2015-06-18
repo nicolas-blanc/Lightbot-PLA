@@ -22,9 +22,8 @@ import org.jsfml.window.event.Event;
 import org.jsfml.window.event.MouseButtonEvent;
 
 public class ActionListDisplay {
-
-	// private static List<Button> actionButtons;
-	// private static Map<_Executable, Button> actionButtons;
+	
+	public static final int FIRST_BUTTON_TOP_LEFT = 15;
 
 	private static List<_Executable> actionsL = new ArrayList<_Executable>();
 	private static List<Button> buttonsL = new ArrayList<Button>();
@@ -49,7 +48,7 @@ public class ActionListDisplay {
 			buttonsL.add(b);
 		}
 
-		display(125);
+		display(FIRST_BUTTON_TOP_LEFT);
 	}
 
 	public static void display(int firstTopLeft) {
@@ -64,6 +63,11 @@ public class ActionListDisplay {
 			i++;
 			LightCore.window.draw(s);
 		}
+	}
+	
+	public static void reset() {
+		actionsL.clear();
+		buttonsL.clear();
 	}
 
 	public static void eventManager(Event event) {
