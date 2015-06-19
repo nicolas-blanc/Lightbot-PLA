@@ -73,6 +73,9 @@ public class Editor implements DisplayMode{
 	private static Button robotButton;
 	private static Button homeButton;
 	
+	private static Button turnRobotLeft;
+	private static Button turnRobotRight;
+	
 	private Button turnLeftButton;
 	private Button turnRightButton;
 	
@@ -191,6 +194,17 @@ public class Editor implements DisplayMode{
 		
 		robotButton = new Button(robotSprite, Textures.robotButtonTexture, Textures.robotButtonTextureRelief);
 		
+		
+		// Button for the robot's rotation
+		Sprite turnRobotLeftSprite = new Sprite(Textures.rotateLeft);
+		Sprite turnRobotRightSprite = new Sprite(Textures.rotateRight);
+		turnRobotLeftSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+((235-2*Textures.rotateLeft.getSize().x)/3)), 300);
+		turnRobotRightSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+((235-2*Textures.rotateLeft.getSize().x)/3)*2+Textures.rotateLeft.getSize().y), 300);
+		
+		turnRobotLeft = new Button(turnRobotLeftSprite, null, null);
+		turnRobotRight = new Button(turnRobotRightSprite, null, null);
+		
+		// Button for grid rotation
 		Sprite turnLeftSprite = new Sprite(Textures.rotateLeft);
 		turnLeftSprite.setPosition(MARGIN_LEFT+35, (WINDOW_HEIGHT-MARGIN_LEFT-30-Textures.rotateLeft.getSize().y));
 		
@@ -205,6 +219,7 @@ public class Editor implements DisplayMode{
 		
 		homeButton = new Button(homeSprite, null, null);
 		
+		toDisplay.add(new Sprite(Textures.backgroundTexture));
 		canva.initCanva();
 		toDisplay.addAll(canva.getCanva());
 		toDisplay.add(turnLeftSprite);
@@ -226,6 +241,9 @@ public class Editor implements DisplayMode{
 		
 		toDisplay.add(homeSprite);
 		
+		toDisplay.add(turnRobotLeftSprite);
+		toDisplay.add(turnRobotRightSprite);
+		
 		blueSplash.setId(id);
 		orangeSplash.setId(id+1);
 		purpleSplash.setId(id+2);
@@ -238,6 +256,9 @@ public class Editor implements DisplayMode{
 		robotButton.setId(id+8);
 		
 		homeButton.setId(id+9);
+		
+		turnRobotLeft.setId(id+10);
+		turnRobotRight.setId(id+11);
 	}
 	
 	/**
@@ -304,7 +325,7 @@ public class Editor implements DisplayMode{
 								display.displayRobot(pos.getLine(), pos.getColumn(), originX, originY);
 						}
 						else{
-							System.out.println("Add cube on : \t\tLine : " + pos.getLine() + ", column : " + pos.getColumn() + ", level : " + pos.getLevel());
+							//System.out.println("Add cube on : \t\tLine : " + pos.getLine() + ", column : " + pos.getColumn() + ", level : " + pos.getLevel());
 		       	 			if(light){
 		       	 				if(!(display.gridDisplay.grid.getCell(pos.getLine(), pos.getColumn()) instanceof TeleportCell) 
 		       	 							&& !(display.gridDisplay.grid.getCell(pos.getLine(), pos.getColumn()) instanceof ColoredCell)
@@ -407,7 +428,7 @@ public class Editor implements DisplayMode{
 					if(pos.isFound() && pos.getLevel() > -1){
 						Cell cell = display.gridDisplay.grid.getCell(pos.getLine(), pos.getColumn());
 						
-						System.out.println("Remove cube on : \tLine : " + pos.getLine() + ", column : " + pos.getColumn() + ", level : " + pos.getLevel());
+						//System.out.println("Remove cube on : \tLine : " + pos.getLine() + ", column : " + pos.getColumn() + ", level : " + pos.getLevel());
 	       	 			display.anim.addRemoveCube(pos.getLine(), pos.getColumn(), pos.getLevel(), false, false);
 	       	 			display.gridDisplay.removeCube(pos.getLine(), pos.getColumn(), pos.getLevel()+1);
 	       	 			display.anim.updateSprite(display.gridDisplay.getGridSprites());
@@ -569,6 +590,14 @@ public class Editor implements DisplayMode{
 					display.rotate(1);
 					break;
 					
+				case TURN_ROBOT_LEFT:
+					display.rotateRobot(RelativeDirection.LEFT);
+					break;
+					
+				case TURN_ROBOT_RIGHT:
+					display.rotateRobot(RelativeDirection.RIGHT);
+					break;
+					
 				case SPLASH_BLUE:
 					blueSplash.changeTexture();
 					toDisplay.set(blueSplash.getId(), blueSplash.getSprite());
@@ -660,6 +689,10 @@ public class Editor implements DisplayMode{
 				return EditorEvent.TURN_LEFT;
 			else if(turnRightButton.isInside(mouse.position))
 				return EditorEvent.TURN_RIGHT;
+			else if(turnRobotLeft.isInside(mouse.position))
+				return EditorEvent.TURN_ROBOT_LEFT;
+			else if(turnRobotRight.isInside(mouse.position))
+				return EditorEvent.TURN_ROBOT_RIGHT;
 			else
 				return EditorEvent.GRID_ADD;
 		}

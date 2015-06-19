@@ -30,6 +30,10 @@ public class Animation {
 	private Sprite cloneSprite = null;
 	
 	
+	private int currentCellX = Robot.wheatley.getLine();
+	private int currentCellY = Robot.wheatley.getColumn();
+	
+	
 	/********************************************************************************************/
 	/*										Constructors										*/
 	/********************************************************************************************/
@@ -327,11 +331,11 @@ public class Animation {
 					
 					if(isClone){
 						nextCellX = Robot.wheatleyClone.getLine()-1;
-						nextCellY = Robot.wheatleyClone.getColumn()+1;
+						//nextCellY = Robot.wheatleyClone.getColumn()+1;
 					}
 					else{
 						nextCellX = Robot.wheatley.getLine()-1;
-						nextCellY = Robot.wheatley.getColumn()+1;
+						//nextCellY = Robot.wheatley.getColumn()+1;
 					}
 					
 					break;
@@ -351,11 +355,15 @@ public class Animation {
 					break;
 			}
 		}
-		else if(upOrDown == 1){
+		else if(upOrDown == 1)
 			movementY = (Textures.cubeTextureWhite.getSize().y-Textures.cellTexture.getSize().y) / this.movementTime;
-		}
 		else
 			movementY = -(Textures.cubeTextureWhite.getSize().y-Textures.cellTexture.getSize().y) / this.movementTime;
+		
+		if(upOrDown != 0){
+			nextCellX = currentCellX;
+			nextCellY = currentCellY;
+		}
 		
 		Clock frameClock = new Clock();
 		Clock resetClock = new Clock();
@@ -378,30 +386,28 @@ public class Animation {
 							LightCore.window.draw(robotSprite);
 						}
 						
-						if(!(nextCellY > Robot.wheatleyClone.getColumn() 
-								&& (l >= nextCellX && l <= Robot.wheatleyClone.getLine())
-								&& (c >= nextCellY && c <= Robot.wheatleyClone.getColumn())) 
-								&& (l != nextCellX || c != nextCellY)){
-							if(!Robot.wheatley.getVisibility() || (Robot.wheatley.getVisibility() && Robot.wheatley.getLine() != l && Robot.wheatley.getColumn() != c))
-								printPillar(l, c);
+						if(nextCellX < Robot.wheatleyClone.getLine() && l == nextCellX && c == nextCellY){
+							printPillar(nextCellX, nextCellY);
 						}
-						
-						if(l == Robot.wheatleyClone.getLine() && c == Robot.wheatleyClone.getColumn()){
-							
-							if(nextCellY > Robot.wheatleyClone.getColumn() && nextCellX < Robot.wheatleyClone.getLine()){
-								LightCore.window.draw(cloneSprite);
-								
-								for(int lin = nextCellX; lin<=Robot.wheatleyClone.getLine(); lin++){
-									for(int cin = nextCellY; cin<cubes[0].length; cin++){
-										if(!(lin == nextCellX && cin < nextCellY)){
-											printPillar(lin, cin);
-										}
-									}
+						else if(l == Robot.wheatleyClone.getLine() && c == Robot.wheatleyClone.getColumn()){
+							printPillar(l, c);
+							if(nextCellY > Robot.wheatleyClone.getColumn()){
+								printPillar(l, nextCellY);
+							}
+							else if(nextCellX > Robot.wheatleyClone.getLine()){
+								for(int cin = 0; cin <= c; cin++){
+									printPillar(nextCellX, cin);
 								}
 							}
-							else{
-								printPillar(nextCellX, nextCellY);
-								LightCore.window.draw(cloneSprite);
+							LightCore.window.draw(cloneSprite);
+						}
+						else{
+							if(nextCellX > Robot.wheatleyClone.getLine()){
+								if((l == nextCellX && c > Robot.wheatleyClone.getColumn()) || l != nextCellX)
+									printPillar(l, c);
+							}
+							else if(l != nextCellX || c != nextCellY){
+									printPillar(l, c);
 							}
 						}
 					}
@@ -411,30 +417,28 @@ public class Animation {
 							LightCore.window.draw(cloneSprite);
 						}
 						
-						if(!(nextCellY > Robot.wheatley.getColumn() 
-								&& (l >= nextCellX && l <= Robot.wheatley.getLine())
-								&& (c >= nextCellY && c <= Robot.wheatley.getColumn())) 
-								&& (l != nextCellX || c != nextCellY)){
-							if(!Robot.wheatleyClone.getVisibility() || (Robot.wheatleyClone.getVisibility() && Robot.wheatleyClone.getLine() != l && Robot.wheatleyClone.getColumn() != c))
-								printPillar(l, c);
+						if(nextCellX < Robot.wheatley.getLine() && l == nextCellX && c == nextCellY){
+							printPillar(nextCellX, nextCellY);
 						}
-						
-						if(l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn()){
-							
-							if(nextCellY > Robot.wheatley.getColumn() && nextCellX < Robot.wheatley.getLine()){
-								LightCore.window.draw(robotSprite);
-								
-								for(int lin = nextCellX; lin<=Robot.wheatley.getLine(); lin++){
-									for(int cin = nextCellY; cin<cubes[0].length; cin++){
-										if(!(lin == nextCellX && cin < nextCellY)){
-											printPillar(lin, cin);
-										}
-									}
+						else if(l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn()){
+							printPillar(l, c);
+							if(nextCellY > Robot.wheatley.getColumn()){
+								printPillar(l, nextCellY);
+							}
+							else if(nextCellX > Robot.wheatley.getLine()){
+								for(int cin = 0; cin <= c; cin++){
+									printPillar(nextCellX, cin);
 								}
 							}
-							else{
-								printPillar(nextCellX, nextCellY);
-								LightCore.window.draw(robotSprite);
+							LightCore.window.draw(robotSprite);
+						}
+						else{
+							if(nextCellX > Robot.wheatley.getLine()){
+								if((l == nextCellX && c > Robot.wheatley.getColumn()) || l != nextCellX)
+									printPillar(l, c);
+							}
+							else if(l != nextCellX || c != nextCellY){
+									printPillar(l, c);
 							}
 						}
 					}
@@ -464,7 +468,11 @@ public class Animation {
 			
 				int frameRow = frame / 5;
 				int frameCol = frame % 5;
-				robotSprite.setTextureRect(new IntRect(frameCol * 38, frameRow * 50, 38, 50));
+				
+				if(isClone)
+					cloneSprite.setTextureRect(new IntRect(frameCol * 38, frameRow * 50, 38, 50));
+				else
+					robotSprite.setTextureRect(new IntRect(frameCol * 38, frameRow * 50, 38, 50));
 				
 				if(frame == 0)
 					rotate = false;
@@ -482,8 +490,17 @@ public class Animation {
 		    if(resetClock.getElapsedTime().asMilliseconds() >= movementTime)
 		    	finished = true;
 		}
+		currentCellX = nextCellX;
+	    currentCellY = nextCellY;
 	}
 	
+	 /**
+	  * 
+	  * @param line
+	  * @param column
+	  * @param level
+	  * @param open
+	  */
 	public void animeBlackHole(int line, int column, int level, boolean open){
 		boolean finished = false;
 		boolean endDisplay = false;
@@ -502,7 +519,6 @@ public class Animation {
 		Clock animClock = new Clock();
 		
 		Vector2f initialPosition = cubes[line][column][level].getPosition();
-		System.out.println(initialPosition.x + " " + initialPosition.y);
 		
 		cubes[line][column][level].setTexture(Textures.cubeTextureWhite);
 		

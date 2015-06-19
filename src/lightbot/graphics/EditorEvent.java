@@ -13,6 +13,9 @@ public enum EditorEvent {
 	ROBOT,
 	HOME,
 	
+	TURN_ROBOT_LEFT,
+	TURN_ROBOT_RIGHT,
+	
 	TURN_LEFT,
 	TURN_RIGHT,
 	

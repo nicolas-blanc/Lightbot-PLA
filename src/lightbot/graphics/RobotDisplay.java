@@ -1,5 +1,8 @@
 package lightbot.graphics;
 
+import java.io.IOException;
+import java.nio.file.Paths;
+
 import lightbot.LightCore;
 import lightbot.system.CardinalDirection;
 import lightbot.system.Colour;
@@ -22,8 +25,6 @@ public class RobotDisplay implements DisplayPrimitive{
 	private int originX;
 	private int originY;
 	
-	private Colour colour;
-	private CardinalDirection direction;
 	private int transparency;
 	
 	private final float robotHeight = 20;
@@ -54,31 +55,41 @@ public class RobotDisplay implements DisplayPrimitive{
 		this.line = this.robot.getLine();
 		this.column = this.robot.getColumn();
 		this.level = GridDisplay.levelMax[this.line][this.column];
-		this.colour = this.robot.getColour();
-		this.direction = this.robot.getDirection();
 		
 		this.transparency = transparency;
 		
-		System.out.println("Line : " + line + ", column : " + column + ", level : " + level + " " + direction.toString());
+		//System.out.println("Line : " + line + ", column : " + column + ", level : " + level + " " + direction.toString());
 		
-		
-		switch(this.robot.getDirection()){
-			case EAST:
-				currentTexture = Textures.robotEast;
+		String colour = "";
+		switch(this.robot.getColour()){
+			case BLUE:
+				colour = "blue";
 				break;
-			case NORTH:
-				currentTexture = Textures.robotNorth;
+			case ORANGE:
+				colour = "orange";
 				break;
-			case SOUTH:
-				currentTexture = Textures.robotSouth;
+			case PURPLE:
+				colour = "purple";
 				break;
-			case WEST:
-				currentTexture = Textures.robotWest;
+			case RED:
+				colour = "red";
 				break;
 			default:
-				currentTexture = Textures.robotNorth;
+				colour = "white";
 				break;
 		}
+		
+		String direction = this.robot.getDirection().toString().toLowerCase();
+		
+		String path = "ressources/robot/" + colour + "_" + direction + ".png";
+		
+		currentTexture = new Texture();
+		try {
+			currentTexture.loadFromFile(Paths.get(path));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		currentTexture.setSmooth(true);
 		
 		this.robotSprite = create();
 	}
