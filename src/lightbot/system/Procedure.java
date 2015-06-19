@@ -3,6 +3,9 @@ package lightbot.system;
 import java.util.ArrayList;
 import java.util.List;
 
+import lightbot.system.action.Forward;
+import lightbot.system.action.Jump;
+import lightbot.system.action.Light;
 import lightbot.system.action._Action;
 import lightbot.system.world.Grid;
 import lightbot.system.world.OutOfGridException;
@@ -12,7 +15,7 @@ public class Procedure extends _Executable {
 	public static final String MAIN_NAME = "main";
 	public static final String PROCEDURE1_NAME = "proc1";
 	public static final String PROCEDURE2_NAME = "proc2";
-	
+
 	private int currentAction;
 
 	/*
@@ -92,24 +95,34 @@ public class Procedure extends _Executable {
 	 */
 	@Override
 	public void execute(Grid grid, Robot robot) throws OutOfGridException {
+		System.out.println("This procedure's colour: " + this.getColour() + ", robot's colour: " + robot.getColour());
+		System.out.println(this.toString());
+		System.out.println(this.actions.size());
 
-		for (_Executable e : actions) {
-			if (e instanceof _Action)
-				e.execute(grid, robot);
+		for (int i = 0; i < this.actions.size(); i++) {
+			System.out.println(this.actions.get(0).getClass());
+			if (this.actions.get(i) instanceof _Action) {
+				System.out.println("found an action");
+				this.actions.get(i).execute(grid, robot);
+			}
 
-			if (e instanceof Procedure)
-				e.execute(grid, robot);
-
+			if (this.actions.get(i) instanceof Procedure) {
+				System.out.println("Found a procedure");
+				System.out.println(this.actions.get(i).getColour() == robot.getColour());
+				if (this.actions.get(i).getColour() == robot.getColour()) {
+					System.out.println("same color");
+					this.actions.get(i).execute(grid, robot);
+				}
+			}
 		}
 	}
-	
-	public void executeOne(Grid grid, Robot robot) throws OutOfGridException{
-		if(actions.get(currentAction) instanceof _Action){
+
+	public void executeOne(Grid grid, Robot robot) throws OutOfGridException {
+		if (actions.get(currentAction) instanceof _Action) {
 			actions.get(currentAction).execute(grid, robot);
 			currentAction++;
-		}
-		else if(actions.get(currentAction) instanceof Procedure)
-			((Procedure)actions.get(currentAction)).executeOne(grid, robot);
+		} else if (actions.get(currentAction) instanceof Procedure)
+			((Procedure) actions.get(currentAction)).executeOne(grid, robot);
 	}
 
 	public void reset() {
@@ -121,5 +134,47 @@ public class Procedure extends _Executable {
 	 */
 	public _Executable getAction(int index) {
 		return actions.get(index);
+	}
+
+	@Override
+	public _Executable cloneWithNewColor(_Executable e, Colour newColor) {
+		Procedure p = null;
+		if (e instanceof Procedure) {
+			switch (((Procedure) e).getName()) {
+			case MAIN_NAME:
+				p = new Procedure(MAIN_NAME, procSizeLimit, newColor);
+				for (int i = 0; i < actions.size(); i++) {
+					p.addAction(cloneWithNewColor(actions.get(i), newColor));
+				}
+				return p;
+			case PROCEDURE1_NAME:
+				p = new Procedure(PROCEDURE1_NAME, procSizeLimit, newColor);
+				for (int i = 0; i < actions.size(); i++) {
+					p.addAction(cloneWithNewColor(actions.get(i), newColor));
+				}
+
+				return p;
+			case PROCEDURE2_NAME:
+				p = new Procedure(PROCEDURE1_NAME, procSizeLimit, newColor);
+				for (int i = 0; i < actions.size(); i++) {
+					p.addAction(cloneWithNewColor(actions.get(i), newColor));
+				}
+				return p;
+			}
+		}
+		if (e instanceof _Action) {
+			if (e instanceof Forward)
+				return new Forward(newColor);
+			if (e instanceof Jump)
+				return new Jump();
+			if (e instanceof Light)
+				return new Light();
+		}
+		return p;
+
+	}
+
+	public String toString() {
+		return this.name;
 	}
 }

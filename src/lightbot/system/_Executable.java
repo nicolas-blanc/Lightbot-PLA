@@ -18,6 +18,8 @@ public abstract class _Executable {
 	public Colour getColour() {
 		return this.colour;
 	}
+	
+	public abstract _Executable cloneWithNewColor(_Executable e, Colour newColor);
 
 	/**
 	 * executes a process given a grid and a robot
