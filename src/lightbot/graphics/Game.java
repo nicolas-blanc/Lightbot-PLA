@@ -43,6 +43,25 @@ public class Game implements DisplayMode {
 	private static Button buttonPlay;
 	private static Button buttonReset;
 
+	private static Button noSplash;
+	private static Button blueSplash;
+	private static Button orangeSplash;
+	private static Button purpleSplash;
+	private static Button redSplash;
+
+	private final static Color blueSplashColor = new Color(0, 102, 204, 255);
+	private final static Color orangeSplashColor = new Color(255, 128, 0, 255);
+	private final static Color purpleSplashColor = new Color(51, 0, 102, 255);
+	private final static Color redSplashColor = new Color(153, 0, 0, 255);
+
+	private boolean noSplashActivated;
+	private boolean blueSplashActivated;
+	private boolean orangeSplashActivated;
+	private boolean purpleSplashActivated;
+	private boolean redSplashActivated;
+
+	private boolean splashActivated;
+
 	public Display display;
 
 	private Level level;
@@ -57,8 +76,8 @@ public class Game implements DisplayMode {
 	private final int WINDOW_HEIGHT = 475;
 	public static final int FIRST_BUTTON_TOP_LEFT = 15;
 
-	private ArrayList<_Executable> actionsL = new ArrayList<_Executable>();
-	private ArrayList<Button> buttonsL = new ArrayList<Button>();
+	private static ArrayList<_Executable> actionsL = new ArrayList<_Executable>();
+	private static ArrayList<Button> buttonsL = new ArrayList<Button>();
 
 	/************************************** Procedures **************************************/
 	private static final int BLOCK_WIDTH = 255;
@@ -101,7 +120,13 @@ public class Game implements DisplayMode {
 		originX = (GRID_DISPLAY_SIZE / 2) + MARGIN_LEFT;
 		originY = MARGIN_LEFT + ((WINDOW_HEIGHT - (level.getGrid().getSize() * Textures.cellTexture.getSize().y)) / 2);
 
-		System.out.println(originY);
+		noSplashActivated = true;
+		blueSplashActivated = false;
+		orangeSplashActivated = false;
+		purpleSplashActivated = false;
+		redSplashActivated = false;
+
+		// System.out.println(originY);
 
 		toDisplay = new ArrayList<Drawable>();
 
@@ -119,13 +144,15 @@ public class Game implements DisplayMode {
 	 */
 	public void initConstantDisplay() {
 
-		/*
-		 * if (actionsL != null) { Game.actionsL.clear(); Game.buttonsL.clear();
-		 * } else { Game.actionsL = new ArrayList<_Executable>(); Game.buttonsL
-		 * = new ArrayList<Button>(); }
-		 */
 		mainIsActive = true;
-		resetProcs();
+
+		noSplashActivated = true;
+		blueSplashActivated = false;
+		orangeSplashActivated = false;
+		purpleSplashActivated = false;
+		redSplashActivated = false;
+
+		// resetProcs();
 
 		List<_Executable> levelActions = level.getListOfActions();
 
@@ -146,7 +173,8 @@ public class Game implements DisplayMode {
 			s.setPosition(x, y);
 
 			Button b = new Button(s, null, null);
-			b.setColor(237, 100, 255, 255);
+			// System.out.println(b.getColor());
+			// b.setColor(237, 100, 255, 255);
 
 			actionsL.add(e);
 			buttonsL.add(b);
@@ -155,6 +183,54 @@ public class Game implements DisplayMode {
 
 			i++;
 		}
+
+		// just added
+
+		if ((levelActions.get(levelActions.size() - 1) instanceof Wash)
+				|| (levelActions.get(levelActions.size() - 2) instanceof Wash)
+				|| (levelActions.get(levelActions.size() - 3) instanceof Wash)
+				|| (levelActions.get(levelActions.size() - 4) instanceof Wash)) {
+			splashActivated = true;
+
+			Texture t;
+			Sprite s;
+
+			t = new Texture(Textures.noSplash);
+			s = new Sprite(t);
+			s.setPosition(FIRST_BUTTON_TOP_LEFT, 500 + Textures.ACTION_TEXTURE_SIZE);
+			noSplash = new Button(s, null, null);
+			toDisplay.add(s);
+
+			t = new Texture(Textures.blueSplash);
+			s = new Sprite(t);
+			s.setPosition(FIRST_BUTTON_TOP_LEFT + Textures.ACTION_TEXTURE_SIZE + 6,
+					500 + 2 + Textures.ACTION_TEXTURE_SIZE);
+			blueSplash = new Button(s, null, null);
+			toDisplay.add(s);
+
+			t = new Texture(Textures.orangeSplash);
+			s = new Sprite(t);
+			s.setPosition(FIRST_BUTTON_TOP_LEFT + 2 * Textures.ACTION_TEXTURE_SIZE + 12,
+					500 + 2 + Textures.ACTION_TEXTURE_SIZE);
+			orangeSplash = new Button(s, null, null);
+			toDisplay.add(s);
+
+			t = new Texture(Textures.purpleSplash);
+			s = new Sprite(t);
+			s.setPosition(FIRST_BUTTON_TOP_LEFT + 3 * Textures.ACTION_TEXTURE_SIZE + 18,
+					500 + 2 + Textures.ACTION_TEXTURE_SIZE);
+			purpleSplash = new Button(s, null, null);
+			toDisplay.add(s);
+
+			t = new Texture(Textures.redSplash);
+			s = new Sprite(t);
+			s.setPosition(FIRST_BUTTON_TOP_LEFT + 4 * Textures.ACTION_TEXTURE_SIZE + 24,
+					500 + 2 + Textures.ACTION_TEXTURE_SIZE);
+			redSplash = new Button(s, null, null);
+			toDisplay.add(s);
+
+		}
+		//
 
 		Sprite spritePlay = new Sprite(Textures.playTexture);
 		spritePlay.setPosition(GRID_DISPLAY_SIZE - MARGIN_LEFT - 35 - Textures.resetTexture.getSize().y
@@ -287,26 +363,32 @@ public class Game implements DisplayMode {
 			break;
 		case MOUSE_BUTTON_PRESSED:
 			MouseButtonEvent mouse = event.asMouseButtonEvent();
+			handleSplashClick(mouse);
 			int pressedActionIndex = isInsideList(mouse.position);
 			SelectedBox sl = selectedbox(mouse.position);
 
 			if (mouse.button == Mouse.Button.LEFT) {
 
 				if (buttonPlay.isInside(mouse.position)) {
-					// System.out.println("Play");
+					System.out.println("Play");
 					try {
+						System.out.println(main.getSize());
 						main.execute(level.getGrid(), Robot.wheatley);
 					} catch (OutOfGridException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				} else if (buttonReset.isInside(mouse.position)) {
-					resetProcs();
-					initProcedures();
-					Robot.wheatley.setLine(level.getRobotInitialX());
-					Robot.wheatley.setColumn(level.getRobotInitialY());
-					((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-					display = new Display(initialGrid, originX, originY);
+					/*
+					 * resetProcs(); initProcedures();
+					 * Robot.wheatley.setLine(level.getRobotInitialX());
+					 * Robot.wheatley.setColumn(level.getRobotInitialY());
+					 * ((Game)
+					 * LightCore.display).display.robotDisplay.updateRobot
+					 * (Robot.wheatley, 255); display = new Display(initialGrid,
+					 * originX, originY); display.gridDisplay.initGrid();
+					 */
+					System.out.println("proc1 size from reset : " + proc1.getSize());
 				} else if (turnLeftButton.isInside(mouse.position)) {
 					display.rotate(0);
 				} else if (turnRightButton.isInside(mouse.position)) {
@@ -335,28 +417,66 @@ public class Game implements DisplayMode {
 						if (i == pressedActionIndex) {
 							e = actionsL.get(i);
 							b = buttonsL.get(i);
-
-							_Executable toAdd;
+							System.out.println(b.getColor());
 
 							if (e instanceof Procedure) {
 								Procedure p = (Procedure) e;
 								switch (p.getName()) {
 								case Procedure.MAIN_NAME:
-									toAdd = main;
+									if (b.getColor().equals(blueSplashColor)) {
+										// System.out.println("GKGKGGKGKK");
+										add(main.cloneWithNewColor(main, Colour.BLUE), b);
+									} else if (b.getColor().equals(orangeSplashColor)) {
+										add(main.cloneWithNewColor(main, Colour.ORANGE), b);
+									} else if (b.getColor().equals(purpleSplashColor)) {
+										add(main.cloneWithNewColor(main, Colour.PURPLE), b);
+									} else if (b.getColor().equals(redSplashColor)) {
+										add(main.cloneWithNewColor(main, Colour.RED), b);
+									} else {
+										add(main.cloneWithNewColor(main, Colour.WHITE), b);
+									}
 									break;
 								case Procedure.PROCEDURE1_NAME:
-									toAdd = proc1;
+									if (b.getColor().equals(blueSplashColor)) {
+										add(proc1.cloneWithNewColor(proc1, Colour.BLUE), b);
+									} else if (b.getColor().equals(orangeSplashColor)) {
+										add(proc1.cloneWithNewColor(proc1, Colour.ORANGE), b);
+									} else if (b.getColor().equals(purpleSplashColor)) {
+										add(proc1.cloneWithNewColor(proc1, Colour.PURPLE), b);
+									} else if (b.getColor().equals(redSplashColor)) {
+										add(proc1.cloneWithNewColor(proc1, Colour.RED), b);
+									} else {
+										add(proc1.cloneWithNewColor(proc1, Colour.WHITE), b);
+									}
 									break;
 								case Procedure.PROCEDURE2_NAME:
-									toAdd = proc2;
+									if (b.getColor().equals(blueSplashColor)) {
+										add(e.cloneWithNewColor(proc2, Colour.BLUE), b);
+									} else if (b.getColor().equals(orangeSplashColor)) {
+										add(e.cloneWithNewColor(proc2, Colour.ORANGE), b);
+									} else if (b.getColor().equals(purpleSplashColor)) {
+										add(e.cloneWithNewColor(proc2, Colour.PURPLE), b);
+									} else if (b.getColor().equals(redSplashColor)) {
+										add(e.cloneWithNewColor(proc2, Colour.RED), b);
+									} else {
+										add(e, b);
+									}
 									break;
 								default:
-									toAdd = null;
+									break;
 								}
-
-								add(toAdd, b);
 							} else {
-								add(e, b);
+								if (b.getColor().equals(blueSplashColor)) {
+									add(e.cloneWithNewColor(e, Colour.BLUE), b);
+								} else if (b.getColor().equals(orangeSplashColor)) {
+									add(e.cloneWithNewColor(e, Colour.ORANGE), b);
+								} else if (b.getColor().equals(purpleSplashColor)) {
+									add(e.cloneWithNewColor(e, Colour.PURPLE), b);
+								} else if (b.getColor().equals(redSplashColor)) {
+									add(e.cloneWithNewColor(e, Colour.RED), b);
+								} else {
+									add(e, b);
+								}
 							}
 						}
 					}
@@ -426,12 +546,17 @@ public class Game implements DisplayMode {
 		if (useProc2 && proc2IsActive && proc2.getSize() == proc2.getMaxNumOfActions())
 			return;
 
+		if (e instanceof Procedure)
+			System.out.println(((Procedure) e).getName() + " " + ((Procedure) e).getSize());
+
 		if (mainIsActive) {
 
 			int whereToAdd = main.getSize();
 			int line = whereToAdd / 4;
 
 			main.addAction(e);
+
+			System.out.println(main.getSize());
 
 			Sprite s = new Sprite(b.getSprite().getTexture());
 			int spriteX = 730 + 10 + (whereToAdd % 4) * (50 + 10);
@@ -440,6 +565,7 @@ public class Game implements DisplayMode {
 			s.setPosition(spriteX, spriteY);
 
 			Button bnew = new Button(s, null, null);
+			bnew.setColor(b.getColor());
 			mainButtons.add(bnew);
 			toDisplay.add(mainButtons.get(mainButtons.indexOf(bnew)).getSprite());
 
@@ -458,10 +584,13 @@ public class Game implements DisplayMode {
 			s.setPosition(spriteX, spriteY);
 
 			Button bnew = new Button(s, null, null);
+			bnew.setColor(b.getColor());
 			proc1Buttons.add(bnew);
 			toDisplay.add(proc1Buttons.get(proc1Buttons.indexOf(bnew)).getSprite());
 
 			assert proc1.getSize() == proc1Buttons.size();
+
+			System.out.println("proc1 size : " + proc1.getSize());
 		}
 
 		else if (proc2IsActive) {
@@ -476,6 +605,7 @@ public class Game implements DisplayMode {
 			s.setPosition(spriteX, spriteY);
 
 			Button bnew = new Button(s, null, null);
+			bnew.setColor(b.getColor());
 			proc2Buttons.add(bnew);
 			toDisplay.add(proc2Buttons.get(proc2Buttons.indexOf(bnew)).getSprite());
 
@@ -671,5 +801,67 @@ public class Game implements DisplayMode {
 		mainButtons.clear();
 		proc1Buttons.clear();
 		proc2Buttons.clear();
+	}
+
+	private void handleSplashClick(MouseButtonEvent mouse) {
+		if (splashActivated) {
+			if (noSplash.isInside(mouse.position)) {
+				noSplashActivated = true;
+				blueSplashActivated = false;
+				orangeSplashActivated = false;
+				purpleSplashActivated = false;
+				redSplashActivated = false;
+				for (int i = 0; i < buttonsL.size(); i++)
+					buttonsL.get(i).setColor(255, 255, 255, 255);
+			}
+			if (blueSplash.isInside(mouse.position)) {
+				noSplashActivated = false;
+				blueSplashActivated = true;
+				orangeSplashActivated = false;
+				purpleSplashActivated = false;
+				redSplashActivated = false;
+				for (int i = 0; i < buttonsL.size(); i++) {
+					if (isColorable((actionsL.get(i))))
+						buttonsL.get(i).setColor(blueSplashColor);
+				}
+			}
+			if (orangeSplash.isInside(mouse.position)) {
+				noSplashActivated = false;
+				blueSplashActivated = false;
+				orangeSplashActivated = true;
+				purpleSplashActivated = false;
+				redSplashActivated = false;
+				for (int i = 0; i < buttonsL.size(); i++) {
+					if (isColorable((actionsL.get(i))))
+						buttonsL.get(i).setColor(orangeSplashColor);
+				}
+			}
+			if (purpleSplash.isInside(mouse.position)) {
+				noSplashActivated = false;
+				blueSplashActivated = false;
+				orangeSplashActivated = false;
+				purpleSplashActivated = true;
+				redSplashActivated = false;
+				for (int i = 0; i < buttonsL.size(); i++) {
+					if (isColorable((actionsL.get(i))))
+						buttonsL.get(i).setColor(purpleSplashColor);
+				}
+			}
+			if (redSplash.isInside(mouse.position)) {
+				noSplashActivated = false;
+				blueSplashActivated = false;
+				orangeSplashActivated = false;
+				purpleSplashActivated = false;
+				redSplashActivated = true;
+				for (int i = 0; i < buttonsL.size(); i++) {
+					if (isColorable((actionsL.get(i))))
+						buttonsL.get(i).setColor(redSplashColor);
+				}
+			}
+		}
+	}
+
+	private boolean isColorable(_Executable e) {
+		return !(e instanceof Wash) && !(e instanceof Light) && !(e instanceof Break) && !(e instanceof Clone);
 	}
 }
