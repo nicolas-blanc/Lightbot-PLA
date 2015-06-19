@@ -40,11 +40,15 @@ public class Light extends _Action {
 		if (canLight(robot, grid)) {
 			int posX = robot.getLine();
 			int posY = robot.getColumn();
-
-			(grid.getCell(posX, posY)).setLight(true);
-			((Game) LightCore.display).display.gridDisplay.addCube(grid.getCell(posX, posY));
-			((Game) LightCore.display).display.anim.updateSprite(((Game) LightCore.display).display.gridDisplay
-					.getGridSprites());
+			
+			if(grid.getCell(posX, posY).isLightON()){
+				(grid.getCell(posX, posY)).setLight(false);
+			} else {
+				(grid.getCell(posX, posY)).setLight(true);
+			}
+				((Game) LightCore.display).display.gridDisplay.addCube(grid.getCell(posX, posY));
+				((Game) LightCore.display).display.anim.updateSprite(((Game) LightCore.display).display.gridDisplay
+						.getGridSprites());
 		}
 	}
 
@@ -65,9 +69,9 @@ public class Light extends _Action {
 		if (!(currentCell instanceof LightableCell)) {
 			return false;
 		}
-		if ((currentCell instanceof LightableCell) && (currentCell.isLightON())) {
+		/*if ((currentCell instanceof LightableCell) && (currentCell.isLightON())) {
 			return false;
-		}
+		}*/
 
 		return true;
 	}
