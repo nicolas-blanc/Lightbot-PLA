@@ -98,6 +98,8 @@ public class Textures {
 	public static Texture robotButtonTexture;
 	public static Texture robotButtonTextureRelief;
 	public static Texture homeButtonTextureRelief;
+	public static Texture rotationRobotL;
+	public static Texture rotationRobotR;
 	
 	public static Texture noSplash;
 	public static Texture blueSplash;
@@ -238,6 +240,8 @@ public class Textures {
 		robotButtonTexture = new Texture();
 		robotButtonTextureRelief = new Texture();
 		homeButtonTextureRelief = new Texture();
+		rotationRobotR = new Texture();
+		rotationRobotL = new Texture();
 		
 		noSplash = new Texture();
 		blueSplash = new Texture();
@@ -380,6 +384,8 @@ public class Textures {
 			robotButtonTexture.loadFromFile(Paths.get(EDITOR_PATH+"robot.png"));
 			robotButtonTextureRelief.loadFromFile(Paths.get(EDITOR_PATH+"robotRelief.png"));
 			homeButtonTextureRelief.loadFromFile(Paths.get(EDITOR_PATH+"homeRelief.png"));
+			rotationRobotL.loadFromFile(Paths.get(EDITOR_PATH+"RobotRotationL.png"));
+			rotationRobotR.loadFromFile(Paths.get(EDITOR_PATH+"RobotRotationR.png"));
 			
 			noSplash.loadFromFile(Paths.get(EDITOR_PATH+"nosplash.png"));
 			blueSplash.loadFromFile(Paths.get(EDITOR_PATH+"bluesplash.png"));
@@ -513,6 +519,8 @@ public class Textures {
 			robotButtonTexture.setSmooth(true);
 			robotButtonTextureRelief.setSmooth(true);
 			homeButtonTextureRelief.setSmooth(true);
+			rotationRobotL.setSmooth(true);
+			rotationRobotR.setSmooth(true);
 			
 			blueSplash.setSmooth(true);
 			orangeSplash.setSmooth(true);
