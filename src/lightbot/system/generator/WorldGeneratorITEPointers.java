@@ -379,7 +379,7 @@ public class WorldGeneratorITEPointers extends WorldGenerator{
 			grid.setCell(cellTp);
 			grid.setCell(new TeleportCell(cell.getX(), cell.getY(), height, cellTp.getX(), cellTp.getY(), colour));
 			
-//			System.out.println("first cell -> X : " + cell.getX() + " -  Y : " + cell.getY() + " // dest cell -> X : " + cellTp.getX() + " - Y : " + cellTp.getY() + " // Colour : " + colour.toString());
+			System.out.println("first cell -> X : " + cell.getX() + " -  Y : " + cell.getY() + " // dest cell -> X : " + cellTp.getX() + " - Y : " + cellTp.getY() + " // Colour : " + colour.toString());
 			
 			return cellTp;
 		} else {

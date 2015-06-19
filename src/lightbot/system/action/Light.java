@@ -5,6 +5,7 @@ import lightbot.graphics.Game;
 import lightbot.system.CardinalDirection;
 import lightbot.system.Colour;
 import lightbot.system.Robot;
+import lightbot.system._Executable;
 import lightbot.system.world.cell.Cell;
 import lightbot.system.world.cell.LightableCell;
 import lightbot.system.world.Grid;
@@ -73,6 +74,11 @@ public class Light extends _Action {
 		}*/
 
 		return true;
+	}
+
+	@Override
+	public _Executable cloneWithNewColor(_Executable e, Colour newColor) {
+		return new Light();
 	}
 
 }

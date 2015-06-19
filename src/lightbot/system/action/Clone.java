@@ -2,6 +2,7 @@ package lightbot.system.action;
 
 import lightbot.system.Colour;
 import lightbot.system.Robot;
+import lightbot.system._Executable;
 import lightbot.system.world.Grid;
 import lightbot.system.world.OutOfGridException;
 import lightbot.system.world.Position;
@@ -202,6 +203,11 @@ public class Clone extends _Action{
 				break;
 		}
 		return clonePos;
+	}
+
+	@Override
+	public _Executable cloneWithNewColor(_Executable e, Colour newColor) {
+		return new Clone();
 	}
 	
 	

@@ -5,6 +5,7 @@ import lightbot.graphics.Game;
 import lightbot.system.CardinalDirection;
 import lightbot.system.Colour;
 import lightbot.system.Robot;
+import lightbot.system._Executable;
 import lightbot.system.world.cell.Cell;
 import lightbot.system.world.cell.ColoredCell;
 import lightbot.system.world.cell.EmptyCell;
@@ -199,6 +200,11 @@ public class Jump extends _Action {
 			((Game)LightCore.display).display.gridDisplay.addCube(grid.getCell(arrivalCell.getX(), arrivalCell.getY()));
 			((Game)LightCore.display).display.anim.updateSprite(((Game)LightCore.display).display.gridDisplay.getGridSprites());
 		}
+	}
+
+	@Override
+	public _Executable cloneWithNewColor(_Executable e, Colour newColor) {
+		return new Jump(newColor);
 	}
 
 }

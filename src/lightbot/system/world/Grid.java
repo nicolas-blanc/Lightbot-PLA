@@ -2,9 +2,11 @@ package lightbot.system.world;
 
 import lightbot.system.CardinalDirection;
 import lightbot.system.world.cell.Cell;
+import lightbot.system.world.cell.ColoredCell;
 import lightbot.system.world.cell.EmptyCell;
 import lightbot.system.world.cell.LightableCell;
 import lightbot.system.world.cell.NormalCell;
+import lightbot.system.world.cell.ObstacleCell;
 import lightbot.system.world.cell.TeleportCell;
 
 public class Grid {
@@ -38,10 +40,38 @@ public class Grid {
 	 */
 	public Grid(Grid gridToCopy) {
 		this.size = gridToCopy.getSize();
+		this.grid = new Cell[size][size];
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-				Cell cellToCopy = gridToCopy.grid[i][j];
-				this.setCell(cellToCopy);
+				Cell c = gridToCopy.getCell(i, j);
+				if (c == null) {
+					this.grid[i][j] = new EmptyCell(i, j);
+				} else {
+					if (c instanceof EmptyCell) {
+						System.out.println(c == null);
+						this.grid[i][j] = new EmptyCell(i, j);
+					}
+					if (c instanceof NormalCell) {
+						this.grid[i][j] = new NormalCell(i, j, ((NormalCell) c).getHeight());
+					}
+					if (c instanceof ColoredCell) {
+						this.grid[i][j] = new ColoredCell(i, j, ((ColoredCell) c).getHeight(),
+								((ColoredCell) c).getColour());
+					}
+					if (c instanceof LightableCell) {
+						this.grid[i][j] = new LightableCell(i, j, ((LightableCell) c).getHeight());
+					}
+					if (c instanceof ObstacleCell) {
+						this.grid[i][j] = new ObstacleCell(i, j, ((ObstacleCell) c).getHeight());
+					}
+					if (c instanceof TeleportCell) {
+						this.grid[i][j] = new TeleportCell(i, j, ((TeleportCell) c).getHeight(),
+								((TeleportCell) c).getDestX(), ((TeleportCell) c).getDestY(),
+								((TeleportCell) c).getColour());
+
+					}
+				}
+
 			}
 		}
 	}
@@ -49,7 +79,8 @@ public class Grid {
 	/**
 	 * Constructs a grid from a matrix
 	 * 
-	 * @param m: matrix
+	 * @param m
+	 *            : matrix
 	 */
 	public Grid(Cell[][] m) {
 		this(m.length);
@@ -67,13 +98,13 @@ public class Grid {
 				tmp[l][c] = grid[l][c];
 
 		for (int l = 0; l < grid.length; l++)
-			for (int c = 0; c < grid.length; c++){
+			for (int c = 0; c < grid.length; c++) {
 				grid[l][c] = tmp[grid.length - c - 1][l];
 				grid[l][c].setX(l);
 				grid[l][c].setY(c);
-				if(tmp[grid.length - c - 1][l] instanceof TeleportCell){
-					Position teleport = ((TeleportCell)grid[l][c]).getDestinationPosition();
-					((TeleportCell)grid[l][c]).setDestXY(teleport.getY(), grid.length - teleport.getX() -1);
+				if (tmp[grid.length - c - 1][l] instanceof TeleportCell) {
+					Position teleport = ((TeleportCell) grid[l][c]).getDestinationPosition();
+					((TeleportCell) grid[l][c]).setDestXY(teleport.getY(), grid.length - teleport.getX() - 1);
 				}
 			}
 	}
@@ -83,22 +114,22 @@ public class Grid {
 		for (int l = 0; l < grid.length; l++)
 			for (int c = 0; c < grid.length; c++)
 				tmp[l][c] = grid[l][c];
-		
+
 		for (int l = 0; l < grid.length; l++)
-			for (int c = 0; c < grid.length; c++){
+			for (int c = 0; c < grid.length; c++) {
 				grid[l][c] = tmp[c][grid.length - l - 1];
 				grid[l][c].setX(l);
 				grid[l][c].setY(c);
-				if(tmp[c][grid.length - l - 1] instanceof TeleportCell){
-					Position teleport = ((TeleportCell)grid[l][c]).getDestinationPosition();
-					((TeleportCell)grid[l][c]).setDestXY(grid.length - teleport.getY() -1, teleport.getX());
+				if (tmp[c][grid.length - l - 1] instanceof TeleportCell) {
+					Position teleport = ((TeleportCell) grid[l][c]).getDestinationPosition();
+					((TeleportCell) grid[l][c]).setDestXY(grid.length - teleport.getY() - 1, teleport.getX());
 				}
 			}
 	}
 
 	/**
-	 * changeToLightable
-	 * Changes any cell to a LightableCell
+	 * changeToLightable Changes any cell to a LightableCell
+	 * 
 	 * @param l
 	 * @param c
 	 */
@@ -108,14 +139,14 @@ public class Grid {
 		else
 			this.grid[l][c] = new LightableCell(l, c, grid[l][c].getHeight());
 	}
-	
+
 	/**
-	 * changeToNormal
-	 * Changes any cell to a NormalCell
+	 * changeToNormal Changes any cell to a NormalCell
+	 * 
 	 * @param l
 	 * @param c
 	 */
-	public void changeToNormal(int l, int c){
+	public void changeToNormal(int l, int c) {
 		if (grid[l][c] instanceof EmptyCell)
 			this.grid[l][c] = new NormalCell(l, c, 1);
 		else
@@ -124,8 +155,11 @@ public class Grid {
 
 	/**
 	 * getCell
-	 * @param l: line
-	 * @param c: column
+	 * 
+	 * @param l
+	 *            : line
+	 * @param c
+	 *            : column
 	 * @return the (l,c) cell of the grid
 	 */
 	public Cell getCell(int l, int c) {
@@ -134,8 +168,11 @@ public class Grid {
 
 	/**
 	 * setCell sets the level of the (l,c) cell
-	 * @param l: line
-	 * @param c: column
+	 * 
+	 * @param l
+	 *            : line
+	 * @param c
+	 *            : column
 	 * @param level
 	 */
 	public void setCell(Cell c) {
@@ -144,14 +181,18 @@ public class Grid {
 
 	/**
 	 * getNextCell
-	 * @param currentL: current l position (line) of the robot
-	 * @param currentC: current c position (column) of the robot
-	 * @param direction: the current direction of the robot
-	 * @return the next cell, according to the current position and the direction of the robot
+	 * 
+	 * @param currentL
+	 *            : current l position (line) of the robot
+	 * @param currentC
+	 *            : current c position (column) of the robot
+	 * @param direction
+	 *            : the current direction of the robot
+	 * @return the next cell, according to the current position and the
+	 *         direction of the robot
 	 * @throws OutOfGridException
 	 */
-	public Cell getNextCell(int currentL, int currentC,
-			CardinalDirection direction) throws OutOfGridException {
+	public Cell getNextCell(int currentL, int currentC, CardinalDirection direction) throws OutOfGridException {
 
 		switch (direction) {
 		case NORTH:
@@ -181,13 +222,12 @@ public class Grid {
 	}
 
 	/**
-	 * printGrid
-	 * Prints a grid
+	 * printGrid Prints a grid
 	 */
-	public void printGrid(){
-		for(int i=0; i<grid.length; i++){
-			for(int j=0; j<grid[i].length; j++){
-				if(grid[i][j].isEmptyCell()) {
+	public void printGrid() {
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[i].length; j++) {
+				if (grid[i][j].isEmptyCell()) {
 					System.out.print("* / ");
 				} else {
 					System.out.print(grid[i][j].getHeight() + " /");
@@ -195,10 +235,9 @@ public class Grid {
 				if (grid[i][j] instanceof LightableCell) {
 					System.out.print("L\t");
 				} else {
-					if (grid[i][j] instanceof TeleportCell){
+					if (grid[i][j] instanceof TeleportCell) {
 						System.out.print("T\t");
-					}
-					else
+					} else
 						System.out.print("  \t");
 				}
 			}
@@ -208,6 +247,7 @@ public class Grid {
 
 	/**
 	 * getSize
+	 * 
 	 * @return the size of a size*size grid
 	 */
 	public int getSize() {

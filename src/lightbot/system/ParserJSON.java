@@ -40,8 +40,12 @@ public class ParserJSON {
 			String fileStringified = build.toString();
 			JSONObject dataObject = (JSONObject) parser.parse(fileStringified);
 			JSONObject robot = (JSONObject) dataObject.get("robot");
-			Robot.wheatley.setLine((int) (long) robot.get("l"));
-			Robot.wheatley.setColumn((int) (long) robot.get("c"));
+			
+			int initialX = (int) (long) robot.get("l");
+			int initialY = (int) (long) robot.get("c");
+			
+			Robot.wheatley.setLine(initialX);
+			Robot.wheatley.setColumn(initialY);
 
 			JSONArray actions = (JSONArray) dataObject.get("actions");
 			for (Object o : actions) {
@@ -65,15 +69,15 @@ public class ParserJSON {
 				case "Turn_RIGHT":
 					listOfActions.add(new Turn(RelativeDirection.RIGHT, Colour.WHITE));
 					break;
-					
+
 				case "Clone":
 					listOfActions.add(new Clone());
 					break;
-					
+
 				case "Wash":
 					listOfActions.add(new Wash());
 					break;
-				
+
 				case "Break":
 					listOfActions.add(new Break());
 					break;
@@ -131,8 +135,8 @@ public class ParserJSON {
 			int p2Limit = 0;
 			boolean p1Active = Boolean.parseBoolean((String) procedures.get("P1"));
 			boolean p2Active = Boolean.parseBoolean((String) procedures.get("P2"));
-			//System.out.println("proc1: " + p1Active);
-			//System.out.println("proc2: " + p2Active);
+			// System.out.println("proc1: " + p1Active);
+			// System.out.println("proc2: " + p2Active);
 
 			if (p1Active)
 				p1Limit = (int) (long) procedures.get("p1_limit");
@@ -140,6 +144,8 @@ public class ParserJSON {
 				p2Limit = (int) (long) procedures.get("p2_limit");
 
 			level = new Level(grid, listOfActions, p1Active, p2Active, mainLimit, p1Limit, p2Limit);
+			level.setRobotInitialX(initialX);
+			level.setRobotInitialY(initialY);
 
 			inStream.close();
 		} catch (FileNotFoundException e) {
@@ -246,30 +252,30 @@ public class ParserJSON {
 	private static Colour stringToColour(String colourIn) {
 		Colour colour = null;
 		switch (colourIn) {
-			case "WHITE":
-				colour = Colour.WHITE;
-				break;
-			case "GREEN":
-				colour = Colour.GREEN;
-				break;
-			case "YELLOW":
-				colour = Colour.YELLOW;
-				break;
-			case "RED":
-				colour = Colour.RED;
-				break;
-			case "BLUE":
-				colour = Colour.BLUE;
-				break;
-			case "ORANGE":
-				colour = Colour.ORANGE;
-				break;
-			case "PURPLE":
-				colour = Colour.PURPLE;
-				break;
-			case "OBSTACLE":
-				colour = Colour.OBSTACLE;
-				break;
+		case "WHITE":
+			colour = Colour.WHITE;
+			break;
+		case "GREEN":
+			colour = Colour.GREEN;
+			break;
+		case "YELLOW":
+			colour = Colour.YELLOW;
+			break;
+		case "RED":
+			colour = Colour.RED;
+			break;
+		case "BLUE":
+			colour = Colour.BLUE;
+			break;
+		case "ORANGE":
+			colour = Colour.ORANGE;
+			break;
+		case "PURPLE":
+			colour = Colour.PURPLE;
+			break;
+		case "OBSTACLE":
+			colour = Colour.OBSTACLE;
+			break;
 		}
 		return colour;
 	}
@@ -277,27 +283,27 @@ public class ParserJSON {
 	private static TeleportColour stringToTeleportColour(String colourIn) {
 		TeleportColour colour = null;
 		switch (colourIn) {
-			case "TELEPORT":
-				colour = TeleportColour.TELEPORT;
-				break;
-			case "TELEPORTBLUE":
-				colour = TeleportColour.TELEPORTBLUE;
-				break;
-			case "TELEPORTGREEN":
-				colour = TeleportColour.TELEPORTGREEN;
-				break;
-			case "TELEPORTORANGE":
-				colour = TeleportColour.TELEPORTORANGE;
-				break;
-			case "TELEPORTPURPLE":
-				colour = TeleportColour.TELEPORTPURPLE;
-				break;
-			case "TELEPORTRED":
-				colour = TeleportColour.TELEPORTRED;
-				break;
-			case "TELEPORTYELLOW":
-				colour = TeleportColour.TELEPORTYELLOW;
-				break;
+		case "TELEPORT":
+			colour = TeleportColour.TELEPORT;
+			break;
+		case "TELEPORTBLUE":
+			colour = TeleportColour.TELEPORTBLUE;
+			break;
+		case "TELEPORTGREEN":
+			colour = TeleportColour.TELEPORTGREEN;
+			break;
+		case "TELEPORTORANGE":
+			colour = TeleportColour.TELEPORTORANGE;
+			break;
+		case "TELEPORTPURPLE":
+			colour = TeleportColour.TELEPORTPURPLE;
+			break;
+		case "TELEPORTRED":
+			colour = TeleportColour.TELEPORTRED;
+			break;
+		case "TELEPORTYELLOW":
+			colour = TeleportColour.TELEPORTYELLOW;
+			break;
 		}
 		return colour;
 	}

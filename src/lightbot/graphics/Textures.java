@@ -99,6 +99,7 @@ public class Textures {
 	public static Texture robotButtonTextureRelief;
 	public static Texture homeButtonTextureRelief;
 	
+	public static Texture noSplash;
 	public static Texture blueSplash;
 	public static Texture orangeSplash;
 	public static Texture purpleSplash;
@@ -238,6 +239,7 @@ public class Textures {
 		robotButtonTextureRelief = new Texture();
 		homeButtonTextureRelief = new Texture();
 		
+		noSplash = new Texture();
 		blueSplash = new Texture();
 		orangeSplash = new Texture();
 		purpleSplash = new Texture();
@@ -379,6 +381,7 @@ public class Textures {
 			robotButtonTextureRelief.loadFromFile(Paths.get(EDITOR_PATH+"robotRelief.png"));
 			homeButtonTextureRelief.loadFromFile(Paths.get(EDITOR_PATH+"homeRelief.png"));
 			
+			noSplash.loadFromFile(Paths.get(EDITOR_PATH+"nosplash.png"));
 			blueSplash.loadFromFile(Paths.get(EDITOR_PATH+"bluesplash.png"));
 			orangeSplash.loadFromFile(Paths.get(EDITOR_PATH+"orangesplash.png"));
 			purpleSplash.loadFromFile(Paths.get(EDITOR_PATH+"purplesplash.png"));
