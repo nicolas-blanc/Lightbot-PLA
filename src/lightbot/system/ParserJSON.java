@@ -46,6 +46,7 @@ public class ParserJSON {
 			
 			Robot.wheatley.setLine(initialX);
 			Robot.wheatley.setColumn(initialY);
+			Robot.wheatley.setDirection(stringToCardinalDirection((String)robot.get("dir")));
 
 			JSONArray actions = (JSONArray) dataObject.get("actions");
 			for (Object o : actions) {
@@ -211,6 +212,7 @@ public class ParserJSON {
 			JSONObject robot = new JSONObject();
 			robot.put("l", Robot.wheatley.getLine());
 			robot.put("c", Robot.wheatley.getColumn());
+			robot.put("dir", Robot.wheatley.getDirection().toString());
 			dataObject.put("robot", robot);
 
 			// Informations about the list of actions
@@ -306,6 +308,21 @@ public class ParserJSON {
 			break;
 		}
 		return colour;
+	}
+	
+	private static CardinalDirection stringToCardinalDirection(String directionIn){
+		switch(directionIn){
+		case "EAST":
+			return CardinalDirection.EAST;
+		case "WEST":
+			return CardinalDirection.WEST;
+		case "NORTH":
+			return CardinalDirection.NORTH;
+		case "SOUTH":
+			return CardinalDirection.SOUTH;
+		default:
+			return CardinalDirection.EAST;
+		}
 	}
 
 	public static String getClassName(Cell cell) {
