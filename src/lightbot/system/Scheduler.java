@@ -46,8 +46,11 @@ public class Scheduler {
 		robot = Robot.wheatley;
 
 		currentRobot = 0;
+
+		for (int i = procMain.getSize() - 1; i >= 0; i--) {
+			executionMain.push(procMain.getAction(i));
+		}
 		
-		pile(procMain);
 		while (!executionMain.isEmpty()) { // Changer pour une condition : tant que toutes les lumi�res ne sont pas allum�
 			action = nextAction(robot);
 			
