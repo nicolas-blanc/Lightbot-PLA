@@ -120,7 +120,10 @@ public class Forward extends _Action {
 
 		if (cell instanceof ColoredCell) {
 			robot.setColour(((ColoredCell) cell).getColour());
+			System.out.println(Robot.wheatley.getColour());
 		}
+		
+		
 	}
 
 	/**
