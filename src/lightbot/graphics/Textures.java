@@ -384,8 +384,8 @@ public class Textures {
 			robotButtonTexture.loadFromFile(Paths.get(EDITOR_PATH+"robot.png"));
 			robotButtonTextureRelief.loadFromFile(Paths.get(EDITOR_PATH+"robotRelief.png"));
 			homeButtonTextureRelief.loadFromFile(Paths.get(EDITOR_PATH+"homeRelief.png"));
-			rotationRobotL.loadFromFile(Paths.get(EDITOR_PATH+"RobotRotationL.png"));
-			rotationRobotR.loadFromFile(Paths.get(EDITOR_PATH+"RobotRotationR.png"));
+			rotationRobotL.loadFromFile(Paths.get(EDITOR_PATH+"RotationRobotL.png"));
+			rotationRobotR.loadFromFile(Paths.get(EDITOR_PATH+"RotationRobotR.png"));
 			
 			noSplash.loadFromFile(Paths.get(EDITOR_PATH+"nosplash.png"));
 			blueSplash.loadFromFile(Paths.get(EDITOR_PATH+"bluesplash.png"));
