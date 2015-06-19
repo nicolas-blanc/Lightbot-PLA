@@ -130,6 +130,13 @@ public class Procedure extends _Executable {
 		this.actions.clear();
 	}
 
+	/**
+	 * @return the actions
+	 */
+	public _Executable getAction(int index) {
+		return actions.get(index);
+	}
+
 	@Override
 	public _Executable cloneWithNewColor(_Executable e, Colour newColor) {
 		Procedure p = null;
