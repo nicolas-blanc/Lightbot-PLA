@@ -49,7 +49,7 @@ public class Scheduler {
 		
 		pile(procMain);
 		
-		while (true) { // Changer pour une condition : tant que toutes les lumières ne sont pas allumé
+		while (!executionMain.isEmpty()) { // Changer pour une condition : tant que toutes les lumiï¿½res ne sont pas allumï¿½
 			action = nextAction();
 			robot = giveRobot();
 			
@@ -108,11 +108,11 @@ public class Scheduler {
 	 */
 	private void pile(Procedure proc) {
 		if (currentRobot == 0) {
-			for (int i = proc.getSize(); i >= 0; i--) {
+			for (int i = proc.getSize() - 1; i >= 0; i--) {
 				executionMain.push(proc.getAction(i));
 			}
 		} else {
-			for (int i = proc.getSize(); i >= 0; i--) {
+			for (int i = proc.getSize() - 1; i >= 0; i--) {
 				executionClone.push(proc.getAction(i));
 			}
 		}
