@@ -8,6 +8,7 @@ import lightbot.system.Colour;
 import lightbot.system.Procedure;
 import lightbot.system.RelativeDirection;
 import lightbot.system.Robot;
+import lightbot.system.Scheduler;
 import lightbot.system._Executable;
 import lightbot.system.action.Break;
 import lightbot.system.action.Clone;
@@ -370,14 +371,15 @@ public class Game implements DisplayMode {
 			if (mouse.button == Mouse.Button.LEFT) {
 
 				if (buttonPlay.isInside(mouse.position)) {
-					System.out.println("Play");
-					try {
-						System.out.println(main.getSize());
-						main.execute(level.getGrid(), Robot.wheatley);
-					} catch (OutOfGridException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					/*
+					 * System.out.println("Play"); try {
+					 * System.out.println(main.getSize());
+					 * main.execute(level.getGrid(), Robot.wheatley); } catch
+					 * (OutOfGridException e) { // TODO Auto-generated catch
+					 * block e.printStackTrace(); }
+					 */
+					Scheduler sched = new Scheduler(main, proc1, proc2, level.getGrid());
+					sched.execute();
 				} else if (buttonReset.isInside(mouse.position)) {
 
 					resetProcs();
@@ -388,7 +390,8 @@ public class Game implements DisplayMode {
 					display = new Display(initialGrid, originX, originY);
 					display.gridDisplay.initGrid();
 
-					//System.out.println("proc1 size from reset : " + proc1.getSize());
+					// System.out.println("proc1 size from reset : " +
+					// proc1.getSize());
 				} else if (turnLeftButton.isInside(mouse.position)) {
 					display.rotate(0);
 				} else if (turnRightButton.isInside(mouse.position)) {
@@ -422,44 +425,106 @@ public class Game implements DisplayMode {
 							if (e instanceof Procedure) {
 								Procedure p = (Procedure) e;
 								switch (p.getName()) {
+								/*
+								 * case Procedure.MAIN_NAME: if
+								 * (b.getColor().equals(blueSplashColor)) { //
+								 * System.out.println("GKGKGGKGKK");
+								 * add(main.cloneWithNewColor(main,
+								 * Colour.BLUE), b); } else if
+								 * (b.getColor().equals(orangeSplashColor)) {
+								 * add(main.cloneWithNewColor(main,
+								 * Colour.ORANGE), b); } else if
+								 * (b.getColor().equals(purpleSplashColor)) {
+								 * add(main.cloneWithNewColor(main,
+								 * Colour.PURPLE), b); } else if
+								 * (b.getColor().equals(redSplashColor)) {
+								 * add(main.cloneWithNewColor(main, Colour.RED),
+								 * b); } else { add(main.cloneWithNewColor(main,
+								 * Colour.WHITE), b); } break; case
+								 * Procedure.PROCEDURE1_NAME: if
+								 * (b.getColor().equals(blueSplashColor)) {
+								 * add(proc1.cloneWithNewColor(proc1,
+								 * Colour.BLUE), b); } else if
+								 * (b.getColor().equals(orangeSplashColor)) {
+								 * add(proc1.cloneWithNewColor(proc1,
+								 * Colour.ORANGE), b); } else if
+								 * (b.getColor().equals(purpleSplashColor)) {
+								 * add(proc1.cloneWithNewColor(proc1,
+								 * Colour.PURPLE), b); } else if
+								 * (b.getColor().equals(redSplashColor)) {
+								 * add(proc1.cloneWithNewColor(proc1,
+								 * Colour.RED), b); } else {
+								 * add(proc1.cloneWithNewColor(proc1,
+								 * Colour.WHITE), b); } break; case
+								 * Procedure.PROCEDURE2_NAME: if
+								 * (b.getColor().equals(blueSplashColor)) {
+								 * add(e.cloneWithNewColor(proc2, Colour.BLUE),
+								 * b); } else if
+								 * (b.getColor().equals(orangeSplashColor)) {
+								 * add(e.cloneWithNewColor(proc2,
+								 * Colour.ORANGE), b); } else if
+								 * (b.getColor().equals(purpleSplashColor)) {
+								 * add(e.cloneWithNewColor(proc2,
+								 * Colour.PURPLE), b); } else if
+								 * (b.getColor().equals(redSplashColor)) {
+								 * add(e.cloneWithNewColor(proc2, Colour.RED),
+								 * b); } else {
+								 * add(proc2.cloneWithNewColor(proc1,
+								 * Colour.WHITE), b); }
+								 */
 								case Procedure.MAIN_NAME:
 									if (b.getColor().equals(blueSplashColor)) {
 										// System.out.println("GKGKGGKGKK");
-										add(main.cloneWithNewColor(main, Colour.BLUE), b);
+										add(new Procedure(Procedure.MAIN_NAME, main.getMaxNumOfActions(), Colour.BLUE),
+												b);
 									} else if (b.getColor().equals(orangeSplashColor)) {
-										add(main.cloneWithNewColor(main, Colour.ORANGE), b);
+										add(new Procedure(Procedure.MAIN_NAME, main.getMaxNumOfActions(), Colour.ORANGE),
+												b);
 									} else if (b.getColor().equals(purpleSplashColor)) {
-										add(main.cloneWithNewColor(main, Colour.PURPLE), b);
+										add(new Procedure(Procedure.MAIN_NAME, main.getMaxNumOfActions(), Colour.PURPLE),
+												b);
 									} else if (b.getColor().equals(redSplashColor)) {
-										add(main.cloneWithNewColor(main, Colour.RED), b);
+										add(new Procedure(Procedure.MAIN_NAME, main.getMaxNumOfActions(), Colour.RED),
+												b);
 									} else {
-										add(main.cloneWithNewColor(main, Colour.WHITE), b);
+										add(new Procedure(Procedure.MAIN_NAME, main.getMaxNumOfActions(), Colour.WHITE),
+												b);
 									}
 									break;
 								case Procedure.PROCEDURE1_NAME:
 									if (b.getColor().equals(blueSplashColor)) {
-										add(proc1.cloneWithNewColor(proc1, Colour.BLUE), b);
+										add(new Procedure(Procedure.PROCEDURE1_NAME, proc1.getMaxNumOfActions(),
+												Colour.BLUE), b);
 									} else if (b.getColor().equals(orangeSplashColor)) {
-										add(proc1.cloneWithNewColor(proc1, Colour.ORANGE), b);
+										add(new Procedure(Procedure.PROCEDURE1_NAME, proc1.getMaxNumOfActions(),
+												Colour.ORANGE), b);
 									} else if (b.getColor().equals(purpleSplashColor)) {
-										add(proc1.cloneWithNewColor(proc1, Colour.PURPLE), b);
+										add(new Procedure(Procedure.PROCEDURE1_NAME, proc1.getMaxNumOfActions(),
+												Colour.PURPLE), b);
 									} else if (b.getColor().equals(redSplashColor)) {
-										add(proc1.cloneWithNewColor(proc1, Colour.RED), b);
+										add(new Procedure(Procedure.PROCEDURE1_NAME, proc1.getMaxNumOfActions(),
+												Colour.RED), b);
 									} else {
-										add(proc1.cloneWithNewColor(proc1, Colour.WHITE), b);
+										add(new Procedure(Procedure.PROCEDURE1_NAME, proc1.getMaxNumOfActions(),
+												Colour.WHITE), b);
 									}
 									break;
 								case Procedure.PROCEDURE2_NAME:
 									if (b.getColor().equals(blueSplashColor)) {
-										add(e.cloneWithNewColor(proc2, Colour.BLUE), b);
+										add(new Procedure(Procedure.PROCEDURE2_NAME, proc2.getMaxNumOfActions(),
+												Colour.BLUE), b);
 									} else if (b.getColor().equals(orangeSplashColor)) {
-										add(e.cloneWithNewColor(proc2, Colour.ORANGE), b);
+										add(new Procedure(Procedure.PROCEDURE2_NAME, proc2.getMaxNumOfActions(),
+												Colour.ORANGE), b);
 									} else if (b.getColor().equals(purpleSplashColor)) {
-										add(e.cloneWithNewColor(proc2, Colour.PURPLE), b);
+										add(new Procedure(Procedure.PROCEDURE2_NAME, proc2.getMaxNumOfActions(),
+												Colour.PURPLE), b);
 									} else if (b.getColor().equals(redSplashColor)) {
-										add(e.cloneWithNewColor(proc2, Colour.RED), b);
+										add(new Procedure(Procedure.PROCEDURE2_NAME, proc2.getMaxNumOfActions(),
+												Colour.RED), b);
 									} else {
-										add(proc2.cloneWithNewColor(proc1, Colour.WHITE), b);
+										add(new Procedure(Procedure.PROCEDURE2_NAME, proc2.getMaxNumOfActions(),
+												Colour.WHITE), b);
 									}
 									break;
 								default:

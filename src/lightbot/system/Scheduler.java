@@ -46,8 +46,7 @@ public class Scheduler {
 		currentRobot = 0;
 		
 		pile(procMain);
-		
-		while (true) { // Changer pour une condition : tant que toutes les lumières ne sont pas allumé
+		while (!executionMain.isEmpty()) { // Changer pour une condition : tant que toutes les lumiï¿½res ne sont pas allumï¿½
 			action = nextAction(robot);
 			
 			try {
