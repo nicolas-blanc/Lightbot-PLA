@@ -11,6 +11,9 @@ public class Level {
 	private Grid grid;
 
 	private ArrayList<_Executable> listOfActions;
+	
+	private int robotInitialX;
+	private int robotInitialY;
 
 	// TODO: add these to the json parser
 	private boolean useProc1;
@@ -66,6 +69,22 @@ public class Level {
 
 	public void setGrid(Grid grid) {
 		this.grid = grid;
+	}
+	
+	public int getRobotInitialX() {
+		return this.robotInitialX;
+	}
+	
+	public int getRobotInitialY() {
+		return this.robotInitialY;
+	}
+	
+	public void setRobotInitialX(int initialX) {
+		this.robotInitialX = initialX;
+	}
+	
+	public void setRobotInitialY(int initialY) {
+		this.robotInitialY = initialY;
 	}
 
 	public void setListOfActions(ArrayList<_Executable> actions) {
