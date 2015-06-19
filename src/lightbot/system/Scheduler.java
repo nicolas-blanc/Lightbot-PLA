@@ -2,6 +2,7 @@ package lightbot.system;
 
 import java.util.Stack;
 
+import lightbot.system.action.Break;
 import lightbot.system.action._Action;
 import lightbot.system.world.Grid;
 import lightbot.system.world.OutOfGridException;
@@ -89,8 +90,22 @@ public class Scheduler {
 			action = executionClone.pop();
 		}
 		
+		if (action == null) {
+			return nextAction(robot);
+		}
+		
 		if (action.getColour() != Colour.WHITE && action.getColour() != robot.getColour()) {
 			action = nextAction(robot);
+		}
+		
+		if (action instanceof Break) {
+			if (currentRobot == 0) {
+				while (executionMain.pop() != null);
+				action = nextAction(robot);
+			} else {
+				while (executionClone.pop() != null);
+				action = nextAction(robot);
+			}
 		}
 		
 		if (action instanceof Procedure) {
@@ -111,10 +126,12 @@ public class Scheduler {
 	 */
 	private void pile(Procedure proc) {
 		if (currentRobot == 0) {
+			executionMain.push(null);
 			for (int i = proc.getSize() - 1; i >= 0; i--) {
 				executionMain.push(proc.getAction(i));
 			}
 		} else {
+			executionClone.push(null);
 			for (int i = proc.getSize() - 1; i >= 0; i--) {
 				executionClone.push(proc.getAction(i));
 			}
