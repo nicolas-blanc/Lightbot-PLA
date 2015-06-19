@@ -5,6 +5,7 @@ import java.util.List;
 
 import lightbot.LightCore;
 import lightbot.system.Colour;
+import lightbot.system.LevelEndException;
 import lightbot.system.Procedure;
 import lightbot.system.RelativeDirection;
 import lightbot.system.Robot;
@@ -110,6 +111,9 @@ public class Game implements DisplayMode {
 	private static RectangleShape proc1Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 	private static RectangleShape proc2Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 
+	private int initialX;
+	private int initialY;
+
 	/********************************************************************************************/
 	/* Constructors */
 	/********************************************************************************************/
@@ -134,6 +138,9 @@ public class Game implements DisplayMode {
 		initConstantDisplay();
 
 		display = new Display(level.getGrid(), originX, originY);
+
+		initialX = Robot.wheatley.getLine();
+		initialY = Robot.wheatley.getColumn();
 	}
 
 	/********************************************************************************************/
@@ -152,8 +159,6 @@ public class Game implements DisplayMode {
 		orangeSplashActivated = false;
 		purpleSplashActivated = false;
 		redSplashActivated = false;
-
-		// resetProcs();
 
 		List<_Executable> levelActions = level.getListOfActions();
 
@@ -174,8 +179,6 @@ public class Game implements DisplayMode {
 			s.setPosition(x, y);
 
 			Button b = new Button(s, null, null);
-			// System.out.println(b.getColor());
-			// b.setColor(237, 100, 255, 255);
 
 			actionsL.add(e);
 			buttonsL.add(b);
@@ -185,12 +188,7 @@ public class Game implements DisplayMode {
 			i++;
 		}
 
-		// just added
-
-		if ((levelActions.get(levelActions.size() - 1) instanceof Wash)
-				|| (levelActions.get(levelActions.size() - 2) instanceof Wash)
-				|| (levelActions.get(levelActions.size() - 3) instanceof Wash)
-				|| (levelActions.get(levelActions.size() - 4) instanceof Wash)) {
+		if (hasSplash()) {
 			splashActivated = true;
 
 			Texture t;
@@ -371,31 +369,34 @@ public class Game implements DisplayMode {
 			if (mouse.button == Mouse.Button.LEFT) {
 
 				if (buttonPlay.isInside(mouse.position)) {
-					/*
-					 * System.out.println("Play"); try {
-					 * System.out.println(main.getSize());
-					 * main.execute(level.getGrid(), Robot.wheatley); } catch
-					 * (OutOfGridException e) { // TODO Auto-generated catch
-					 * block e.printStackTrace(); }
-					 */
-					Scheduler sched = new Scheduler(main, proc1, proc2, level.getGrid());
-					sched.execute();
+					Scheduler sched = new Scheduler(main, proc1, proc2, level);
+					try {
+						sched.execute();
+					} catch (LevelEndException exception) {
+
+					}
 				} else if (buttonReset.isInside(mouse.position)) {
 
-					resetProcs();
-					initProcedures();
-					Robot.wheatley.setLine(level.getRobotInitialX());
-					Robot.wheatley.setColumn(level.getRobotInitialY());
-					((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-					display = new Display(initialGrid, originX, originY);
-					display.gridDisplay.initGrid();
+					reset();
+					toDisplay = new ArrayList<Drawable>();
 
-					// System.out.println("proc1 size from reset : " +
-					// proc1.getSize());
+					display = new Display(level.getGrid(), originX, originY);
+					Robot.wheatley.setLine(initialX);
+					Robot.wheatley.setColumn(initialY);
+					((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+					toDisplay.clear();
+
+					initConstantDisplay();
 				} else if (turnLeftButton.isInside(mouse.position)) {
 					display.rotate(0);
+					int tmp = initialX;
+					initialX = level.getGrid().getSize() - initialX - 1;
+					initialY = tmp;
 				} else if (turnRightButton.isInside(mouse.position)) {
 					display.rotate(1);
+					int tmp = initialX;
+					initialX = initialY;
+					initialY = level.getGrid().getSize() - tmp - 1;
 				} else if (homeButton.isInside(mouse.position)) {
 					LightCore.game = false;
 					LightCore.random = false;
@@ -425,56 +426,8 @@ public class Game implements DisplayMode {
 							if (e instanceof Procedure) {
 								Procedure p = (Procedure) e;
 								switch (p.getName()) {
-								/*
-								 * case Procedure.MAIN_NAME: if
-								 * (b.getColor().equals(blueSplashColor)) { //
-								 * System.out.println("GKGKGGKGKK");
-								 * add(main.cloneWithNewColor(main,
-								 * Colour.BLUE), b); } else if
-								 * (b.getColor().equals(orangeSplashColor)) {
-								 * add(main.cloneWithNewColor(main,
-								 * Colour.ORANGE), b); } else if
-								 * (b.getColor().equals(purpleSplashColor)) {
-								 * add(main.cloneWithNewColor(main,
-								 * Colour.PURPLE), b); } else if
-								 * (b.getColor().equals(redSplashColor)) {
-								 * add(main.cloneWithNewColor(main, Colour.RED),
-								 * b); } else { add(main.cloneWithNewColor(main,
-								 * Colour.WHITE), b); } break; case
-								 * Procedure.PROCEDURE1_NAME: if
-								 * (b.getColor().equals(blueSplashColor)) {
-								 * add(proc1.cloneWithNewColor(proc1,
-								 * Colour.BLUE), b); } else if
-								 * (b.getColor().equals(orangeSplashColor)) {
-								 * add(proc1.cloneWithNewColor(proc1,
-								 * Colour.ORANGE), b); } else if
-								 * (b.getColor().equals(purpleSplashColor)) {
-								 * add(proc1.cloneWithNewColor(proc1,
-								 * Colour.PURPLE), b); } else if
-								 * (b.getColor().equals(redSplashColor)) {
-								 * add(proc1.cloneWithNewColor(proc1,
-								 * Colour.RED), b); } else {
-								 * add(proc1.cloneWithNewColor(proc1,
-								 * Colour.WHITE), b); } break; case
-								 * Procedure.PROCEDURE2_NAME: if
-								 * (b.getColor().equals(blueSplashColor)) {
-								 * add(e.cloneWithNewColor(proc2, Colour.BLUE),
-								 * b); } else if
-								 * (b.getColor().equals(orangeSplashColor)) {
-								 * add(e.cloneWithNewColor(proc2,
-								 * Colour.ORANGE), b); } else if
-								 * (b.getColor().equals(purpleSplashColor)) {
-								 * add(e.cloneWithNewColor(proc2,
-								 * Colour.PURPLE), b); } else if
-								 * (b.getColor().equals(redSplashColor)) {
-								 * add(e.cloneWithNewColor(proc2, Colour.RED),
-								 * b); } else {
-								 * add(proc2.cloneWithNewColor(proc1,
-								 * Colour.WHITE), b); }
-								 */
 								case Procedure.MAIN_NAME:
 									if (b.getColor().equals(blueSplashColor)) {
-										// System.out.println("GKGKGGKGKK");
 										add(new Procedure(Procedure.MAIN_NAME, main.getMaxNumOfActions(), Colour.BLUE),
 												b);
 									} else if (b.getColor().equals(orangeSplashColor)) {
@@ -928,5 +881,14 @@ public class Game implements DisplayMode {
 
 	private boolean isColorable(_Executable e) {
 		return !(e instanceof Wash) && !(e instanceof Light) && !(e instanceof Break) && !(e instanceof Clone);
+	}
+
+	private boolean hasSplash() {
+		ArrayList<_Executable> lvlActions = level.getListOfActions();
+		for (_Executable e : lvlActions) {
+			if (e instanceof Wash)
+				return true;
+		}
+		return false;
 	}
 }
