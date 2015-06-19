@@ -3,11 +3,19 @@
  */
 package lightbot.system.generator;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import lightbot.system.CardinalDirection;
+import lightbot.system.RelativeDirection;
 import lightbot.system.Robot;
+import lightbot.system._Executable;
+import lightbot.system.action.Forward;
+import lightbot.system.action.Jump;
+import lightbot.system.action.Light;
+import lightbot.system.action.Turn;
 import lightbot.system.world.Grid;
+import lightbot.system.world.Level;
 import lightbot.system.world.cell.Cell;
 import lightbot.system.world.cell.LightableCell;
 import lightbot.system.world.cell.NormalCell;
@@ -58,6 +66,20 @@ public abstract class WorldGenerator {
 		return grid;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public Level getLevel() {
+		ArrayList<_Executable> a = new ArrayList<_Executable>();
+		a.add(new Forward());
+		a.add(new Jump());
+		a.add(new Turn(RelativeDirection.LEFT));
+		a.add(new Turn(RelativeDirection.RIGHT));
+		a.add(new Light());
+		
+		return new Level(grid, a, true, true, 12, 12, 12);
+	}
 	/**
 	 * 
 	 */
