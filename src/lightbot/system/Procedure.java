@@ -103,6 +103,7 @@ public class Procedure extends _Executable {
 			System.out.println(this.actions.get(0).getClass());
 			if (this.actions.get(i) instanceof _Action) {
 				System.out.println("found an action");
+				System.out.println(this.actions.get(i).getClass());
 				this.actions.get(i).execute(grid, robot);
 			}
 
