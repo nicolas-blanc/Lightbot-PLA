@@ -7,6 +7,7 @@ import javax.sound.sampled.ReverbType;
 import lightbot.graphics.ProcedureBlockDisplay;
 import lightbot.system.action._Action;
 import lightbot.system.world.Grid;
+import lightbot.system.world.Level;
 import lightbot.system.world.OutOfGridException;
 
 public class Scheduler {
@@ -17,7 +18,7 @@ public class Scheduler {
 	private int currentRobot;
 	private int numberOfRobots;
 	
-	private Grid grid;
+	private Level level;
 	
 	private Stack<_Executable> executionMain;
 	private Stack<_Executable> executionClone;
@@ -28,12 +29,12 @@ public class Scheduler {
 	 * @param procP2
 	 * @param grid
 	 */
-	public Scheduler(Procedure procMain, Procedure procP1, Procedure procP2, Grid grid) {
+	public Scheduler(Procedure procMain, Procedure procP1, Procedure procP2, Level level) {
 		super();
 		this.procMain = procMain;
 		this.procP1 = procP1;
 		this.procP2 = procP2;
-		this.grid = grid;
+		this.level = level;
 		
 		numberOfRobots = 1;
 
@@ -41,7 +42,7 @@ public class Scheduler {
 		executionClone = new Stack<_Executable>();
 	}
 	
-	public void execute() {
+	public void execute() throws LevelEndException {
 		_Action action;
 		Robot robot;
 		
@@ -54,7 +55,10 @@ public class Scheduler {
 			robot = giveRobot();
 			
 			try {
-				action.execute(grid, robot);
+				action.execute(level.getGrid(), robot);
+				if(level.isCompleted()) {
+					throw new LevelEndException();
+				}
 			} catch (OutOfGridException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
