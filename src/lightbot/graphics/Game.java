@@ -379,16 +379,16 @@ public class Game implements DisplayMode {
 						e.printStackTrace();
 					}
 				} else if (buttonReset.isInside(mouse.position)) {
-					/*
-					 * resetProcs(); initProcedures();
-					 * Robot.wheatley.setLine(level.getRobotInitialX());
-					 * Robot.wheatley.setColumn(level.getRobotInitialY());
-					 * ((Game)
-					 * LightCore.display).display.robotDisplay.updateRobot
-					 * (Robot.wheatley, 255); display = new Display(initialGrid,
-					 * originX, originY); display.gridDisplay.initGrid();
-					 */
-					System.out.println("proc1 size from reset : " + proc1.getSize());
+
+					resetProcs();
+					initProcedures();
+					Robot.wheatley.setLine(level.getRobotInitialX());
+					Robot.wheatley.setColumn(level.getRobotInitialY());
+					((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+					display = new Display(initialGrid, originX, originY);
+					display.gridDisplay.initGrid();
+
+					//System.out.println("proc1 size from reset : " + proc1.getSize());
 				} else if (turnLeftButton.isInside(mouse.position)) {
 					display.rotate(0);
 				} else if (turnRightButton.isInside(mouse.position)) {
@@ -459,7 +459,7 @@ public class Game implements DisplayMode {
 									} else if (b.getColor().equals(redSplashColor)) {
 										add(e.cloneWithNewColor(proc2, Colour.RED), b);
 									} else {
-										add(e, b);
+										add(proc2.cloneWithNewColor(proc1, Colour.WHITE), b);
 									}
 									break;
 								default:
