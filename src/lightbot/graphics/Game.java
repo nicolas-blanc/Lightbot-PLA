@@ -107,10 +107,15 @@ public class Game implements DisplayMode {
 	public boolean proc1IsActive = false;
 	public boolean proc2IsActive = false;
 
-	private static RectangleShape mainRect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
-	private static RectangleShape proc1Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
-	private static RectangleShape proc2Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
+	//private static RectangleShape mainRect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
+	//private static RectangleShape proc1Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
+	//private static RectangleShape proc2Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
 
+	
+	private static Button mainRect;
+	private static Button proc1Rect;
+	private static Button proc2Rect;
+	
 	private int initialX;
 	private int initialY;
 
@@ -152,6 +157,7 @@ public class Game implements DisplayMode {
 	 */
 	public void initConstantDisplay() {
 
+		toDisplay.add(new Sprite(Textures.backgroundGameTexture));
 		mainIsActive = true;
 
 		noSplashActivated = true;
@@ -229,7 +235,6 @@ public class Game implements DisplayMode {
 			toDisplay.add(s);
 
 		}
-		//
 
 		Sprite spritePlay = new Sprite(Textures.playTexture);
 		spritePlay.setPosition(GRID_DISPLAY_SIZE - MARGIN_LEFT - 35 - Textures.resetTexture.getSize().y
@@ -281,22 +286,24 @@ public class Game implements DisplayMode {
 		// setup main
 		main.setLimit(level.getMainLimit());
 
-		mainRect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
-		mainRect.setFillColor(new Color(79, 179, 201));
-		mainRect.setPosition(730, TOP_MARGIN_OUTSIDE_BOX);
-
-		toDisplay.add(mainRect);
-
+		Sprite mainSprite = new Sprite(Textures.mainTagTextureG);
+		mainSprite.setPosition(710, TOP_MARGIN_OUTSIDE_BOX);
+		mainRect = new Button(mainSprite, Textures.mainTagTexture, Textures.mainTagTextureG);
+		mainRect.changeTexture();
+		
+		toDisplay.add(mainRect.getSprite());
+		
 		// setup proc1 if available in level
 		if (useProc1) {
 			proc1.setLimit(level.getProc1Limit());
 
 			proc1Buttons = new ArrayList<Button>();
-
-			proc1Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
-			proc1Rect.setFillColor(new Color(171, 171, 171));
-			proc1Rect.setPosition(730, 2 * TOP_MARGIN_OUTSIDE_BOX + BLOCK_HEIGHT);
-			toDisplay.add(proc1Rect);
+			
+			Sprite proc1Sprite = new Sprite(Textures.p1TagTextureG);
+			proc1Sprite.setPosition(710, 2 * TOP_MARGIN_OUTSIDE_BOX + BLOCK_HEIGHT);
+			proc1Rect = new Button(proc1Sprite, Textures.p1TagTexture, Textures.p1TagTextureG);
+			
+			toDisplay.add(proc1Sprite);
 		}
 
 		// setup proc2 if available in level
@@ -304,11 +311,12 @@ public class Game implements DisplayMode {
 			proc2.setLimit(level.getProc2Limit());
 
 			proc2Buttons = new ArrayList<Button>();
-
-			proc2Rect = new RectangleShape(new Vector2f(BLOCK_WIDTH, BLOCK_HEIGHT));
-			proc2Rect.setFillColor(new Color(171, 171, 171));
-			proc2Rect.setPosition(730, 3 * TOP_MARGIN_OUTSIDE_BOX + 2 * BLOCK_HEIGHT);
-			toDisplay.add(proc2Rect);
+			
+			Sprite proc2Sprite = new Sprite(Textures.p2TagTextureG);
+			proc2Sprite.setPosition(710, 3 * TOP_MARGIN_OUTSIDE_BOX + 2 * BLOCK_HEIGHT);
+			proc2Rect = new Button(proc2Sprite, Textures.p2TagTexture, Textures.p2TagTextureG);
+			
+			toDisplay.add(proc2Sprite);
 		}
 
 		assert main.getSize() == mainButtons.size() && proc1.getSize() == proc1Buttons.size()
@@ -501,18 +509,45 @@ public class Game implements DisplayMode {
 				} else if (sl != null) {
 					switch (sl) {
 					case MAIN:
+						if (!mainIsActive){
+							mainRect.changeTexture();
+						}
+						if (proc1IsActive){
+							proc1Rect.changeTexture();
+						}
+						if (proc2IsActive){
+							proc2Rect.changeTexture();
+						}
 						mainIsActive = true;
 						proc1IsActive = false;
 						proc2IsActive = false;
 						break;
 
 					case PROC1:
+						if (mainIsActive){
+							mainRect.changeTexture();
+						}
+						if (!proc1IsActive){
+							proc1Rect.changeTexture();
+						}
+						if (proc2IsActive){
+							proc2Rect.changeTexture();
+						}
 						proc1IsActive = true;
 						mainIsActive = false;
 						proc2IsActive = false;
 						break;
 
 					case PROC2:
+						if (mainIsActive){
+							mainRect.changeTexture();
+						}
+						if (proc1IsActive){
+							proc1Rect.changeTexture();
+						}
+						if (!proc2IsActive){
+							proc2Rect.changeTexture();
+						}
 						proc2IsActive = true;
 						mainIsActive = false;
 						proc1IsActive = false;
@@ -725,14 +760,16 @@ public class Game implements DisplayMode {
 	}
 
 	private SelectedBox selectedbox(Vector2i coords) {
-		if (mainRect.getGlobalBounds().contains(coords.x, coords.y))
+		if (mainRect.isInside(coords))
 			return SelectedBox.MAIN;
 
-		if (proc1Rect.getGlobalBounds().contains(coords.x, coords.y))
-			return SelectedBox.PROC1;
+		if(useProc1)
+			if (proc1Rect.isInside(coords))
+				return SelectedBox.PROC1;
 
-		if (proc2Rect.getGlobalBounds().contains(coords.x, coords.y))
-			return SelectedBox.PROC2;
+		if(useProc2)
+			if (proc2Rect.isInside(coords))
+				return SelectedBox.PROC2;
 
 		return null;
 	}

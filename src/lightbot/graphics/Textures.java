@@ -18,6 +18,7 @@ public class Textures {
 	
 	// Background
 	public static Texture backgroundTexture;
+	public static Texture backgroundGameTexture;	
 	
 	// Congrats
 	public static Texture congratsTexture;
@@ -162,6 +163,7 @@ public class Textures {
 		
 		// Background
 		backgroundTexture = new Texture();
+		backgroundGameTexture = new Texture();
 		
 		// Congrats
 		congratsTexture = new Texture();
@@ -306,6 +308,7 @@ public class Textures {
 			
 			// Background
 			backgroundTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"background.png"));
+			backgroundGameTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"background_game.png"));
 			
 			// Congrats
 			congratsTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"congrats.png"));
@@ -447,6 +450,7 @@ public class Textures {
 			
 			// Background
 			backgroundTexture.setSmooth(true);
+			backgroundGameTexture.setSmooth(true);
 			
 			// Congrats
 			congratsTexture.setSmooth(true);
