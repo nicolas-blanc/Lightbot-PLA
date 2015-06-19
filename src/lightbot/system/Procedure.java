@@ -115,4 +115,11 @@ public class Procedure extends _Executable {
 	public void reset() {
 		this.actions.clear();
 	}
+
+	/**
+	 * @return the actions
+	 */
+	public _Executable getAction(int index) {
+		return actions.get(index);
+	}
 }
