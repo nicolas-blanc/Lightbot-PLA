@@ -2,17 +2,14 @@ package lightbot.system;
 
 import java.util.Stack;
 
-import javax.sound.sampled.ReverbType;
-
-import lightbot.graphics.ProcedureBlockDisplay;
 import lightbot.system.action._Action;
 import lightbot.system.world.Grid;
 import lightbot.system.world.OutOfGridException;
 
 public class Scheduler {
-	private Procedure procMain;
-	private Procedure procP1;
-	private Procedure procP2;
+	final private Procedure procMain;
+	final private Procedure procP1;
+	final private Procedure procP2;
 	
 	private int currentRobot;
 	private int numberOfRobots;
@@ -44,14 +41,14 @@ public class Scheduler {
 	public void execute() {
 		_Action action;
 		Robot robot;
-		
+		robot = Robot.wheatley;
+
 		currentRobot = 0;
 		
 		pile(procMain);
 		
 		while (true) { // Changer pour une condition : tant que toutes les lumières ne sont pas allumé
-			action = nextAction();
-			robot = giveRobot();
+			action = nextAction(robot);
 			
 			try {
 				action.execute(grid, robot);
@@ -59,13 +56,15 @@ public class Scheduler {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			robot = giveNextRobot();
 		}
 	}
 
 	/**
 	 * @return
 	 */
-	private Robot giveRobot() {
+	private Robot giveNextRobot() {
 		Robot temp;
 		if (currentRobot == 0) {
 			temp = Robot.wheatley;
@@ -79,9 +78,10 @@ public class Scheduler {
 	}
 
 	/**
+	 * @param robot 
 	 * @return
 	 */
-	private _Action nextAction() {
+	private _Action nextAction(Robot robot) {
 		_Executable action;
 		
 		if (currentRobot == 0) {
@@ -90,14 +90,18 @@ public class Scheduler {
 			action = executionClone.pop();
 		}
 		
+		if (action.getColour() != Colour.WHITE && action.getColour() != robot.getColour()) {
+			action = nextAction(robot);
+		}
+		
 		if (action instanceof Procedure) {
-			if (((Procedure) action).getName().equals("proc1")) {
+			if (((Procedure) action).getName().equals(Procedure.PROCEDURE1_NAME)) {
 				pile(procP1);
 			} else {
 				pile(procP2);
 			}
 			
-			return nextAction();
+			return nextAction(robot);
 		} else {
 			return (_Action) action; // Cast ???
 		}
@@ -108,11 +112,11 @@ public class Scheduler {
 	 */
 	private void pile(Procedure proc) {
 		if (currentRobot == 0) {
-			for (int i = proc.getSize(); i >= 0; i--) {
+			for (int i = proc.getSize() - 1; i >= 0; i--) {
 				executionMain.push(proc.getAction(i));
 			}
 		} else {
-			for (int i = proc.getSize(); i >= 0; i--) {
+			for (int i = proc.getSize() - 1; i >= 0; i--) {
 				executionClone.push(proc.getAction(i));
 			}
 		}
