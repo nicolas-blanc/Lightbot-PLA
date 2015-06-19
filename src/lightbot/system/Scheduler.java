@@ -1,10 +1,11 @@
 package lightbot.system;
 
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 import lightbot.system.action.Break;
+import lightbot.system.action.Clone;
 import lightbot.system.action._Action;
-import lightbot.system.world.Grid;
 import lightbot.system.world.Level;
 import lightbot.system.world.OutOfGridException;
 
@@ -22,10 +23,10 @@ public class Scheduler {
 	private Stack<_Executable> executionClone;
 	
 	/**
-	 * @param procMain
-	 * @param procP1
-	 * @param procP2
-	 * @param grid
+	 * @param procMain The main procedure, generally, the procedure of the first Robot
+	 * @param procP1 An others procedure, to represent fonction
+	 * @param procP2 The last procedure, a fonction or the procedure for the second Robot
+	 * @param grid The grid of the game
 	 */
 	public Scheduler(Procedure procMain, Procedure procP1, Procedure procP2, Level level) {
 		super();
@@ -40,36 +41,50 @@ public class Scheduler {
 		executionClone = new Stack<_Executable>();
 	}
 	
+	/**
+	 * Execute the action of Robots in parallele
+	 * @throws LevelEndException Exception if the level is finish
+	 */
 	public void execute() throws LevelEndException {
+		boolean notEnd = true;
+		
 		_Action action;
 		Robot robot;
 		robot = Robot.wheatley;
-
+		
 		currentRobot = 0;
 
 		for (int i = procMain.getSize() - 1; i >= 0; i--) {
 			executionMain.push(procMain.getAction(i));
 		}
 		
-		while (!executionMain.isEmpty()) { // Changer pour une condition : tant que toutes les lumiï¿½res ne sont pas allumï¿½
-			action = nextAction(robot);
-			
+		while (!executionMain.isEmpty() && notEnd) { // Changer pour une condition : tant que toutes les lumières ne sont pas allumé
 			try {
-				action.execute(level.getGrid(), robot);
-				if(level.isCompleted()) {
-					throw new LevelEndException();
-				}
-			} catch (OutOfGridException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				action = nextAction(robot);
+			} catch (EmptyStackException e) {
+				action = null;
+				notEnd = false;
 			}
 			
-			robot = giveNextRobot();
+			if (notEnd) {
+				try {
+					action.execute(level.getGrid(), robot);
+					if(level.isCompleted()) {
+						throw new LevelEndException();
+					}
+				} catch (OutOfGridException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				robot = giveNextRobot();			
+			}
 		}
 	}
 
 	/**
-	 * @return
+	 * Return the next robot who execute the next action
+	 * @return the next Robot
 	 */
 	private Robot giveNextRobot() {
 		Robot temp;
@@ -85,16 +100,25 @@ public class Scheduler {
 	}
 
 	/**
-	 * @param robot 
-	 * @return
+	 * The next action who is executed, if the next is a procedure, this function return the first action of this procedure
+	 * @param robot The current robot who execute the action
+	 * @return The next action
 	 */
 	private _Action nextAction(Robot robot) {
 		_Executable action;
-		
-		if (currentRobot == 0) {
-			action = executionMain.pop();
-		} else {
-			action = executionClone.pop();
+		try {
+			if (currentRobot == 0) {
+				action = executionMain.pop();
+			} else {
+				action = executionClone.pop();
+			}
+		} catch (EmptyStackException e) {
+			robot = giveNextRobot();
+			if (currentRobot == 0) {
+				action = executionMain.pop();
+			} else {
+				action = executionClone.pop();
+			}
 		}
 		
 		if (action == null) {
@@ -124,12 +148,17 @@ public class Scheduler {
 			
 			return nextAction(robot);
 		} else {
+			if (action instanceof  Clone) {
+				numberOfRobots++;
+			}
+			
 			return (_Action) action; // Cast ???
 		}
 	}
 
 	/**
-	 * @param proc
+	 * Stack on the pile the procedure give in parameters
+	 * @param proc The procedure who add in the execution
 	 */
 	private void pile(Procedure proc) {
 		if (currentRobot == 0) {
