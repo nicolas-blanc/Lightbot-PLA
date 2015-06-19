@@ -189,4 +189,13 @@ public class Display {
 		else
 			anim.updateSprite(gridDisplay.getGridSprites());
 	}
+	
+	public void rotateRobot(RelativeDirection direction){
+		if(robotIsDisplayed){
+			Turn turn = new Turn(direction, Colour.WHITE);
+			turn.execute(null, Robot.wheatley);
+			robotDisplay.updateRobot(Robot.wheatley, robotTransparency);
+			anim.updateSprite(gridDisplay.getGridSprites(), robotDisplay.getSprite());
+		}
+	}
 }
