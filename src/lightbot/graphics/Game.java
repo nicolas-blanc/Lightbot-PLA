@@ -408,11 +408,15 @@ public class Game implements DisplayMode {
 					initialX = initialY;
 					initialY = level.getGrid().getSize() - tmp - 1;
 				} else if (homeButton.isInside(mouse.position)) {
+					if(Robot.wheatleyClone.getVisibility())
+						Robot.wheatleyClone.setVisibility(false);
 					LightCore.game = false;
 					LightCore.random = false;
 					LightCore.menu = true;
 					resetButtons();
 				} else if (returnButton.isInside(mouse.position)) {
+					if(Robot.wheatleyClone.getVisibility())
+						Robot.wheatleyClone.setVisibility(false);
 					LightCore.game = false;
 					LightCore.firstPrintGame = true;
 					if (LightCore.random == true) {

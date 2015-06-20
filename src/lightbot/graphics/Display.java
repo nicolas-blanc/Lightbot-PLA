@@ -43,7 +43,7 @@ public class Display {
 		
 		this.gridDisplay = new GridDisplay(grid, originX, originY);
 		this.gridDisplay.initGrid();
-		this.robotDisplay = new RobotDisplay(Robot.wheatley, 255, originX, originY);
+		this.robotDisplay = new RobotDisplay(Robot.wheatley, robotTransparency, originX, originY);
 		this.cloneDisplay = new RobotDisplay(Robot.wheatleyClone, cloneTransparency, originX, originY);
 		
 		anim = new Animation(gridDisplay.getGridSprites(), robotDisplay.robotSprite);

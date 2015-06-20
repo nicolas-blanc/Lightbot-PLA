@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 import lightbot.LightCore;
-import lightbot.system.CardinalDirection;
-import lightbot.system.Colour;
 import lightbot.system.Robot;
 
 import org.jsfml.graphics.Color;
@@ -136,43 +134,4 @@ public class RobotDisplay implements DisplayPrimitive{
 	}
 	
 	public Sprite getSprite(){return this.robotSprite;}
-	
-	
-	// TODO
-	/************ Maybe to suppress *************/
-	/*public void turnLeft(){
-		if(currentTexture == Textures.robotNorth)
-			currentTexture = Textures.robotWest;
-		else if(currentTexture == Textures.robotWest)
-			currentTexture = Textures.robotSouth;
-		else if(currentTexture == Textures.robotSouth)
-			currentTexture = Textures.robotEast;
-		else if(currentTexture == Textures.robotEast)
-			currentTexture = Textures.robotNorth;
-		
-		this.robotSprite.setTexture(currentTexture);
-	}
-	
-	public void turnRight(){
-		if(currentTexture == Textures.robotNorth)
-			currentTexture = Textures.robotEast;
-		else if(currentTexture == Textures.robotEast)
-			currentTexture = Textures.robotSouth;
-		else if(currentTexture == Textures.robotSouth)
-			currentTexture = Textures.robotWest;
-		else if(currentTexture == Textures.robotWest)
-			currentTexture = Textures.robotNorth;
-		
-		this.robotSprite.setTexture(currentTexture);
-	}*/
-	
-	/*public void setLine(int line){
-		this.line = line;
-	}
-	
-	public void setColumn(int column){
-		this.column = column;
-	}*/
-	
-	/***************************************************/
 }
