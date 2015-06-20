@@ -58,6 +58,10 @@ public class Scheduler {
 			executionMain.push(procMain.getAction(i));
 		}
 		
+		for (int i = procP2.getSize() - 1; i >= 0; i--) {
+			executionClone.push(procP2.getAction(i));
+		}
+		
 		while (!executionMain.isEmpty() && notEnd) { // Changer pour une condition : tant que toutes les lumières ne sont pas allumé
 			try {
 				action = nextAction(robot);
@@ -68,6 +72,7 @@ public class Scheduler {
 			
 			if (notEnd) {
 				try {
+					System.out.println("Action effectuer : " + action.toString() + " // Robot : " + currentRobot + " // number of robot : " + numberOfRobots);
 					action.execute(level.getGrid(), robot);
 					if(level.isCompleted()) {
 						throw new LevelEndException();
@@ -90,11 +95,15 @@ public class Scheduler {
 		Robot temp;
 		if (currentRobot == 0) {
 			temp = Robot.wheatley;
+			System.out.println("Current robot : wheatley");
 		} else {
 			temp = Robot.wheatleyClone;
+			System.out.println("Current robot : wheatleyClone");
 		}
 		
+		System.out.print("Previous robot : " + currentRobot);
 		currentRobot = ++currentRobot % numberOfRobots;
+		System.out.println(" // current robot : " + currentRobot);
 		
 		return temp;
 	}
@@ -113,6 +122,7 @@ public class Scheduler {
 				action = executionClone.pop();
 			}
 		} catch (EmptyStackException e) {
+			System.out.println("Changed robot, excetption");
 			robot = giveNextRobot();
 			if (currentRobot == 0) {
 				action = executionMain.pop();
