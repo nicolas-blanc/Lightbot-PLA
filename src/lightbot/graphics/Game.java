@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lightbot.LightCore;
+import lightbot.system.CardinalDirection;
 import lightbot.system.Colour;
 import lightbot.system.LevelEndException;
 import lightbot.system.Procedure;
@@ -20,11 +21,9 @@ import lightbot.system.action.Turn;
 import lightbot.system.action.Wash;
 import lightbot.system.world.Grid;
 import lightbot.system.world.Level;
-import lightbot.system.world.OutOfGridException;
 
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.Drawable;
-import org.jsfml.graphics.RectangleShape;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
 import org.jsfml.system.Vector2f;
@@ -67,6 +66,7 @@ public class Game implements DisplayMode {
 	public Display display;
 
 	private Level level;
+	private Level levelInit;
 
 	private Grid initialGrid;
 
@@ -118,6 +118,7 @@ public class Game implements DisplayMode {
 	
 	private int initialX;
 	private int initialY;
+	private CardinalDirection initialDir;
 
 	/********************************************************************************************/
 	/* Constructors */
@@ -126,6 +127,7 @@ public class Game implements DisplayMode {
 	public Game(Level level) {
 		reset();
 		this.level = level;
+		this.levelInit = level;
 		this.initialGrid = new Grid(this.level.getGrid());
 		originX = (GRID_DISPLAY_SIZE / 2) + MARGIN_LEFT;
 		originY = MARGIN_LEFT + ((WINDOW_HEIGHT - (level.getGrid().getSize() * Textures.cellTexture.getSize().y)) / 2);
@@ -146,6 +148,7 @@ public class Game implements DisplayMode {
 
 		initialX = Robot.wheatley.getLine();
 		initialY = Robot.wheatley.getColumn();
+		initialDir = Robot.wheatley.getDirection();
 	}
 
 	/********************************************************************************************/
@@ -387,12 +390,15 @@ public class Game implements DisplayMode {
 
 					reset();
 					toDisplay = new ArrayList<Drawable>();
+					
+					level = levelInit;
 
 					display = new Display(level.getGrid(), originX, originY);
 					Robot.wheatley.setLine(initialX);
 					Robot.wheatley.setColumn(initialY);
+					Robot.wheatley.setDirection(initialDir);
 					((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-					((Game) LightCore.display).display.anim.updateRobot(((Game) LightCore.display).display.robotDisplay.getSprite());
+					((Game) LightCore.display).display.anim.updateSprite(((Game) LightCore.display).display.gridDisplay.getGridSprites(), ((Game) LightCore.display).display.robotDisplay.getSprite());
 					if(Robot.wheatleyClone.getVisibility())
 						Robot.wheatleyClone.setVisibility(false);
 					toDisplay.clear();

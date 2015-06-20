@@ -1,5 +1,6 @@
 package lightbot.system;
 
+
 import lightbot.system.world.Grid;
 import lightbot.system.world.OutOfGridException;
 
