@@ -13,20 +13,27 @@ public class Scheduler {
 	final private Procedure procMain;
 	final private Procedure procP1;
 	final private Procedure procP2;
-	
+
 	private int currentRobot;
+	private Robot robot;
 	private int numberOfRobots;
-	
+
 	private Level level;
-	
+
 	private Stack<_Executable> executionMain;
 	private Stack<_Executable> executionClone;
-	
+
 	/**
-	 * @param procMain The main procedure, generally, the procedure of the first Robot
-	 * @param procP1 An others procedure, to represent fonction
-	 * @param procP2 The last procedure, a fonction or the procedure for the second Robot
-	 * @param grid The grid of the game
+	 * @param procMain
+	 *            The main procedure, generally, the procedure of the first
+	 *            Robot
+	 * @param procP1
+	 *            An others procedure, to represent fonction
+	 * @param procP2
+	 *            The last procedure, a fonction or the procedure for the second
+	 *            Robot
+	 * @param grid
+	 *            The grid of the game
 	 */
 	public Scheduler(Procedure procMain, Procedure procP1, Procedure procP2, Level level) {
 		super();
@@ -34,86 +41,105 @@ public class Scheduler {
 		this.procP1 = procP1;
 		this.procP2 = procP2;
 		this.level = level;
-		
+
 		numberOfRobots = 1;
 
 		executionMain = new Stack<_Executable>();
 		executionClone = new Stack<_Executable>();
 	}
-	
+
 	/**
 	 * Execute the action of Robots in parallele
-	 * @throws LevelEndException Exception if the level is finish
+	 * 
+	 * @throws LevelEndException
+	 *             Exception if the level is finish
 	 */
 	public void execute() throws LevelEndException {
 		boolean notEnd = true;
-		
+		boolean clone = false;
+
 		_Action action;
-		Robot robot;
-		robot = Robot.wheatley;
 		
+		robot = Robot.wheatley;
 		currentRobot = 0;
 
 		for (int i = procMain.getSize() - 1; i >= 0; i--) {
 			executionMain.push(procMain.getAction(i));
 		}
-		
+
 		for (int i = procP2.getSize() - 1; i >= 0; i--) {
 			executionClone.push(procP2.getAction(i));
 		}
-		
-		while (!executionMain.isEmpty() && notEnd) { // Changer pour une condition : tant que toutes les lumières ne sont pas allumé
+
+		while (notEnd && !level.isCompleted()) { // Changer pour une
+														// condition : tant que
+														// toutes les lumiï¿½res
+														// ne sont pas allumï¿½
 			try {
-				action = nextAction(robot);
+				action = nextAction();
+				if (action instanceof Clone) {
+					clone = true;
+				}
 			} catch (EmptyStackException e) {
 				action = null;
 				notEnd = false;
 			}
-			
+
 			if (notEnd) {
 				try {
-					System.out.println("Action effectuer : " + action.toString() + " // Robot : " + currentRobot + " // number of robot : " + numberOfRobots);
+					if (robot == Robot.wheatley) {
+						System.out.println("Action effectuer : " + action.toString() + " // Robot : weathley -> " + currentRobot +" // number of robot : " + numberOfRobots);
+					} else {
+						System.out.println("Action effectuer : " + action.toString() + " // Robot : weathleyClone -> " + currentRobot +" // number of robot : " + numberOfRobots);
+					}
 					action.execute(level.getGrid(), robot);
-					if(level.isCompleted()) {
+					if (level.isCompleted()) {
+						System.out.println("finished!!!");
 						throw new LevelEndException();
 					}
-				} catch (OutOfGridException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (OutOfGridException ge) {
+					
+					ge.printStackTrace();
 				}
-				
-				robot = giveNextRobot();			
+				robot = giveNextRobot(clone);
+				clone = false;
 			}
 		}
 	}
 
 	/**
 	 * Return the next robot who execute the next action
+	 * @param clone 
+	 * 
 	 * @return the next Robot
 	 */
-	private Robot giveNextRobot() {
+	private Robot giveNextRobot(boolean clone) {
 		Robot temp;
-		if (currentRobot == 0) {
-			temp = Robot.wheatley;
-			System.out.println("Current robot : wheatley");
+		if (numberOfRobots == 2) {
+			if (currentRobot == 1) {
+				temp = Robot.wheatley;
+				System.out.println("Current robot : wheatley");
+			} else {
+				temp = Robot.wheatleyClone;
+				System.out.println("Current robot : wheatleyClone");
+			}
+			currentRobot = ++currentRobot % numberOfRobots;
 		} else {
-			temp = Robot.wheatleyClone;
-			System.out.println("Current robot : wheatleyClone");
+			temp = Robot.wheatley;
 		}
-		
-		System.out.print("Previous robot : " + currentRobot);
-		currentRobot = ++currentRobot % numberOfRobots;
-		System.out.println(" // current robot : " + currentRobot);
 		
 		return temp;
 	}
 
 	/**
-	 * The next action who is executed, if the next is a procedure, this function return the first action of this procedure
-	 * @param robot The current robot who execute the action
+	 * The next action who is executed, if the next is a procedure, this
+	 * function return the first action of this procedure
+	 * 
+	 * @param robot
+	 *            The current robot who execute the action
 	 * @return The next action
 	 */
-	private _Action nextAction(Robot robot) {
+	private _Action nextAction() {
 		_Executable action;
 		try {
 			if (currentRobot == 0) {
@@ -123,52 +149,55 @@ public class Scheduler {
 			}
 		} catch (EmptyStackException e) {
 			System.out.println("Changed robot, excetption");
-			robot = giveNextRobot();
+			robot = giveNextRobot(false);
 			if (currentRobot == 0) {
 				action = executionMain.pop();
 			} else {
 				action = executionClone.pop();
 			}
 		}
-		
+
 		if (action == null) {
-			return nextAction(robot);
+			return nextAction();
 		}
-		
+
 		if (action.getColour() != Colour.WHITE && action.getColour() != robot.getColour()) {
-			action = nextAction(robot);
+			action = nextAction();
 		}
-		
+
 		if (action instanceof Break) {
 			if (currentRobot == 0) {
 				while (executionMain.pop() != null);
-				action = nextAction(robot);
+				action = nextAction();
 			} else {
 				while (executionClone.pop() != null);
-				action = nextAction(robot);
+				action = nextAction();
 			}
 		}
-		
+
 		if (action instanceof Procedure) {
 			if (((Procedure) action).getName().equals(Procedure.PROCEDURE1_NAME)) {
 				pile(procP1);
 			} else {
 				pile(procP2);
 			}
-			
-			return nextAction(robot);
+
+			return nextAction();
 		} else {
-			if (action instanceof  Clone) {
+			if (action instanceof Clone) {
 				numberOfRobots++;
+				
 			}
-			
+
 			return (_Action) action; // Cast ???
 		}
 	}
 
 	/**
 	 * Stack on the pile the procedure give in parameters
-	 * @param proc The procedure who add in the execution
+	 * 
+	 * @param proc
+	 *            The procedure who add in the execution
 	 */
 	private void pile(Procedure proc) {
 		if (currentRobot == 0) {

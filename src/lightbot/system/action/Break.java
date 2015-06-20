@@ -6,12 +6,12 @@ import lightbot.system._Executable;
 import lightbot.system.world.Grid;
 import lightbot.system.world.OutOfGridException;
 
-public class Break extends _Action{
+public class Break extends _Action {
 
 	public Break() {
 		super(Colour.WHITE);
 	}
-	
+
 	public Break(Colour colour) {
 		super(colour);
 	}
@@ -23,7 +23,7 @@ public class Break extends _Action{
 
 	@Override
 	public _Executable cloneWithNewColor(_Executable e, Colour newColor) {
-		return new Break();
+		return null;
 	}
-	
+
 }
