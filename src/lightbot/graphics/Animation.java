@@ -33,6 +33,9 @@ public class Animation {
 	private int currentCellX = Robot.wheatley.getLine();
 	private int currentCellY = Robot.wheatley.getColumn();
 	
+	private int currentCellXClone = Robot.wheatleyClone.getLine();
+	private int currentCellYClone = Robot.wheatleyClone.getColumn();
+	
 	
 	/********************************************************************************************/
 	/*										Constructors										*/
@@ -359,8 +362,14 @@ public class Animation {
 			movementY = -(Textures.cubeTextureWhite.getSize().y-Textures.cellTexture.getSize().y) / this.movementTime;
 		
 		if(upOrDown != 0){
-			nextCellX = currentCellX;
-			nextCellY = currentCellY;
+			if(isClone){
+				nextCellX = currentCellXClone;
+				nextCellY = currentCellYClone;
+			}
+			else{
+				nextCellX = currentCellX;
+				nextCellY = currentCellY;
+			}
 		}
 		
 		Clock frameClock = new Clock();
@@ -492,8 +501,14 @@ public class Animation {
 		    if(resetClock.getElapsedTime().asMilliseconds() >= movementTime)
 		    	finished = true;
 		}
-		currentCellX = nextCellX;
-	    currentCellY = nextCellY;
+		if(isClone){
+			currentCellXClone = nextCellX;
+		    currentCellYClone = nextCellY;
+		}
+		else{
+			currentCellX = nextCellX;
+		    currentCellY = nextCellY;
+		}
 	}
 	
 	 /**
