@@ -24,8 +24,10 @@ import lightbot.system.world.Level;
 
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.Drawable;
+import org.jsfml.graphics.Image;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
+import org.jsfml.graphics.TextureCreationException;
 import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 import org.jsfml.window.Mouse;
@@ -62,6 +64,8 @@ public class Game implements DisplayMode {
 	private boolean redSplashActivated;
 
 	private boolean splashActivated;
+	
+	private boolean firstInit = true;
 
 	public Display display;
 
@@ -170,10 +174,10 @@ public class Game implements DisplayMode {
 		List<_Executable> levelActions = level.getListOfActions();
 
 		// add buttons for proc1 or proc2
-		if (level.useProc1())
+		if (level.useProc1() && firstInit)
 			levelActions.add(new Procedure(Procedure.PROCEDURE1_NAME, level.getProc1Limit(), Colour.WHITE));
 
-		if (level.useProc2())
+		if (level.useProc2() && firstInit)
 			levelActions.add(new Procedure(Procedure.PROCEDURE2_NAME, level.getProc2Limit(), Colour.WHITE));
 
 		int i = 0;
@@ -273,6 +277,8 @@ public class Game implements DisplayMode {
 		toDisplay.add(returnSprite);
 
 		initProcedures();
+		
+		firstInit = false;
 
 	}
 
@@ -304,7 +310,8 @@ public class Game implements DisplayMode {
 			proc1Sprite.setPosition(710, 2 * TOP_MARGIN_OUTSIDE_BOX + BLOCK_HEIGHT);
 			proc1Rect = new Button(proc1Sprite, Textures.p1TagTexture, Textures.p1TagTextureG);
 			
-			toDisplay.add(proc1Sprite);
+			if(toDisplay.indexOf(proc1Sprite) == -1)
+				toDisplay.add(proc1Sprite);
 		}
 
 		// setup proc2 if available in level
@@ -317,7 +324,8 @@ public class Game implements DisplayMode {
 			proc2Sprite.setPosition(710, 3 * TOP_MARGIN_OUTSIDE_BOX + 2 * BLOCK_HEIGHT);
 			proc2Rect = new Button(proc2Sprite, Textures.p2TagTexture, Textures.p2TagTextureG);
 			
-			toDisplay.add(proc2Sprite);
+			if(toDisplay.indexOf(proc2Sprite) == -1)
+				toDisplay.add(proc2Sprite);
 		}
 
 		assert main.getSize() == mainButtons.size() && proc1.getSize() == proc1Buttons.size()
@@ -382,11 +390,31 @@ public class Game implements DisplayMode {
 					try {
 						sched.execute();
 					} catch (LevelEndException exception) {
+						
+						// print the last action
+						for (Drawable s : toDisplay)
+							LightCore.window.draw(s);
+						display.print();
+						
 						boolean finished = false;
 						Sprite winGame = new Sprite(Textures.congratsTexture);
 						winGame.setPosition(275,142);
-						LightCore.window.draw(winGame);
+						
+						Image levelEnd = LightCore.window.capture();
+						Texture lastDisplaySprite = new Texture();
+						try {
+							lastDisplaySprite.loadFromImage(levelEnd);
+						} catch (TextureCreationException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						Sprite lastDisplay = new Sprite(lastDisplaySprite); 
+						
 						while(LightCore.window.isOpen() && !finished){
+							
+							LightCore.window.clear(Color.WHITE);
+							LightCore.window.draw(lastDisplay);
+							LightCore.window.draw(winGame);
 							LightCore.window.display();
 							
 							//event manager
@@ -421,7 +449,6 @@ public class Game implements DisplayMode {
 					((Game) LightCore.display).display.anim.updateSprite(((Game) LightCore.display).display.gridDisplay.getGridSprites(), ((Game) LightCore.display).display.robotDisplay.getSprite());
 					if(Robot.wheatleyClone.getVisibility())
 						Robot.wheatleyClone.setVisibility(false);
-					toDisplay.clear();
 
 					initConstantDisplay();
 				} else if (turnLeftButton.isInside(mouse.position)) {
