@@ -75,6 +75,7 @@ public class Scheduler {
 					System.out.println("Action effectuer : " + action.toString() + " // Robot : " + currentRobot + " // number of robot : " + numberOfRobots);
 					action.execute(level.getGrid(), robot);
 					if(level.isCompleted()) {
+						System.out.println("End of level");
 						throw new LevelEndException();
 					}
 				} catch (OutOfGridException e) {
@@ -160,6 +161,7 @@ public class Scheduler {
 		} else {
 			if (action instanceof  Clone) {
 				numberOfRobots++;
+				currentRobot = 1;
 			}
 			
 			return (_Action) action; // Cast ???
