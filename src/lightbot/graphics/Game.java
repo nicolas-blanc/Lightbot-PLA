@@ -430,6 +430,7 @@ public class Game implements DisplayMode {
 									LightCore.game = false;
 									LightCore.random = false;
 									LightCore.worlds = true;
+									LightCore.firstPrintGame = true;
 									resetButtons();
 									break;
 								default:
