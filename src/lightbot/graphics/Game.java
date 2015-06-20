@@ -66,7 +66,6 @@ public class Game implements DisplayMode {
 	public Display display;
 
 	private Level level;
-	private Level levelInit;
 
 	private Grid initialGrid;
 
@@ -127,7 +126,6 @@ public class Game implements DisplayMode {
 	public Game(Level level) {
 		reset();
 		this.level = level;
-		this.levelInit = level;
 		this.initialGrid = new Grid(this.level.getGrid());
 		originX = (GRID_DISPLAY_SIZE / 2) + MARGIN_LEFT;
 		originY = MARGIN_LEFT + ((WINDOW_HEIGHT - (level.getGrid().getSize() * Textures.cellTexture.getSize().y)) / 2);
@@ -390,10 +388,8 @@ public class Game implements DisplayMode {
 
 					reset();
 					toDisplay = new ArrayList<Drawable>();
-					
-					level = levelInit;
 
-					display = new Display(level.getGrid(), originX, originY);
+					display = new Display(initialGrid, originX, originY);
 					Robot.wheatley.setLine(initialX);
 					Robot.wheatley.setColumn(initialY);
 					Robot.wheatley.setDirection(initialDir);
