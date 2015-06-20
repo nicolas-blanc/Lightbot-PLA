@@ -384,7 +384,31 @@ public class Game implements DisplayMode {
 					try {
 						sched.execute();
 					} catch (LevelEndException exception) {
-
+						boolean finished = false;
+						Sprite winGame = new Sprite(Textures.congratsTexture);
+						winGame.setPosition(275,142);
+						LightCore.window.draw(winGame);
+						while(LightCore.window.isOpen() && !finished){
+							LightCore.window.display();
+							
+							//event manager
+							for (Event e : LightCore.window.pollEvents()) {
+								switch(e.type){
+								case CLOSED:
+									LightCore.window.close();
+									break;
+								case MOUSE_BUTTON_PRESSED:
+									finished = true;
+									LightCore.game = false;
+									LightCore.random = false;
+									LightCore.worlds = true;
+									resetButtons();
+									break;
+								default:
+									break;
+								}
+							}
+						}
 					}
 				} else if (buttonReset.isInside(mouse.position)) {
 
