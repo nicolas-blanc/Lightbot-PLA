@@ -1,5 +1,7 @@
 package lightbot.system.action;
 
+import lightbot.LightCore;
+import lightbot.graphics.Game;
 import lightbot.system.Colour;
 import lightbot.system.Robot;
 import lightbot.system._Executable;
@@ -37,8 +39,12 @@ public class Clone extends _Action{
 		Position clonePosition = findClonePosition(grid, robot);
 		if(clonePosition == null)
 			throw new OutOfGridException();
+		System.out.println(clonePosition.getX() + " " + clonePosition.getY() + "Miamiam");
 		Robot.wheatleyClone.setPosition(clonePosition.getX(), clonePosition.getY());
 		Robot.wheatleyClone.setVisibility(true);
+		Robot.wheatleyClone.setDirection(Robot.wheatley.getDirection());
+		((Game)LightCore.display).display.cloneDisplay.updateRobot(Robot.wheatleyClone, 150);
+		((Game)LightCore.display).display.anim.updateClone(((Game)LightCore.display).display.cloneDisplay.getSprite());
 		
 	}
 	

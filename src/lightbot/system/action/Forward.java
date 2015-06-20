@@ -70,6 +70,15 @@ public class Forward extends _Action {
 					takeColour(robot, grid);
 					teleport(robot, grid);
 				}
+				
+				if(isClone){
+					((Game)LightCore.display).display.cloneDisplay.updateRobot(robot, 150);
+					((Game)LightCore.display).display.anim.updateClone(((Game)LightCore.display).display.cloneDisplay.getSprite());
+				}
+				else{
+					((Game)LightCore.display).display.robotDisplay.updateRobot(robot, 255);
+					((Game)LightCore.display).display.anim.updateRobot(((Game)LightCore.display).display.robotDisplay.getSprite());
+				}
 			}
 		} catch (OutOfGridException oge) {
 			throw new OutOfGridException();
