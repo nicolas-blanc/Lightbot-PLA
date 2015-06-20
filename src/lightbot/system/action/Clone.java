@@ -1,5 +1,7 @@
 package lightbot.system.action;
 
+import lightbot.LightCore;
+import lightbot.graphics.Game;
 import lightbot.system.Colour;
 import lightbot.system.Robot;
 import lightbot.system._Executable;
@@ -202,6 +204,7 @@ public class Clone extends _Action{
 			default:
 				break;
 		}
+		
 		return clonePos;
 	}
 

@@ -21,13 +21,14 @@ public class Probabilities {
 	final private int range = 17;
 	
 	/**
-	 * 
+	 * Create Probabilities for the random generation
 	 */
 	public Probabilities() {
 		initProba();
 	}
 	
 	/**
+	 * The probabilities of light, initialization : 2/range
 	 * @return the probaLight
 	 */
 	public int getProbaLight() {
@@ -35,6 +36,7 @@ public class Probabilities {
 	}
 
 	/**
+	 * The probabilities of forward, initialization : 4/range
 	 * @return the probaForward
 	 */
 	public int getProbaForward() {
@@ -42,6 +44,7 @@ public class Probabilities {
 	}
 
 	/**
+	 * The probabilities of jump, initialization : 4/range
 	 * @return the probaJump
 	 */
 	public int getProbaJump() {
@@ -49,6 +52,7 @@ public class Probabilities {
 	}
 
 	/**
+	 * The probabilities of right turn, initialization : 1/range
 	 * @return the probaRight
 	 */
 	public int getProbaRight() {
@@ -56,6 +60,7 @@ public class Probabilities {
 	}
 
 	/**
+	 * The probabilities of left turn, initialization : 1/range
 	 * @return the probaLeft
 	 */
 	public int getProbaLeft() {
@@ -63,6 +68,7 @@ public class Probabilities {
 	}
 	
 	/**
+	 * The probabilities of use the pattern, initialization : 4/range
 	 * @return the probaPattern
 	 */
 	public int getProbaPattern() {
@@ -70,6 +76,7 @@ public class Probabilities {
 	}
 
 	/**
+	 * The probabilities of use pointers, initialization : 1/range
 	 * @return the probaPointer
 	 */
 	public int getProbaPointer() {
@@ -77,6 +84,7 @@ public class Probabilities {
 	}
 
 	/**
+	 * The probabilities of if then else, initialization : 1/range
 	 * @return the probaITE
 	 */
 	public int getProbaITE() {
@@ -84,6 +92,7 @@ public class Probabilities {
 	}
 
 	/**
+	 * The range of the base of the game (Light, Forward, Jump, Turn), current : 12
 	 * @return the range of the base of the game
 	 */
 	public int getRangeBase() {
@@ -91,6 +100,7 @@ public class Probabilities {
 	}
 	
 	/**
+	 * The range of the base plus the pattern, current : 16
 	 * @return the range of the base, plus the pattern
 	 */
 	public int getRangePattern() {
@@ -98,15 +108,15 @@ public class Probabilities {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * The range with all extension, current : 18
+	 * @return the range with all extension in the generator
 	 */
 	public int getRange() {
 		return range;
 	}
 
 	/**
-	 * 
+	 * Initialize the probabilities, see getters for the probabilities
 	 */
 	public void initProba() {
 		probaLight = 2;
@@ -161,7 +171,7 @@ public class Probabilities {
 	}
 	
 	/**
-	 * 
+	 * Print the probabilities in the console
 	 */
 	@SuppressWarnings("unused")
 	private void printProba() {

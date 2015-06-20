@@ -14,7 +14,7 @@ public class Pattern {
 	final private int numberPattern = 6;
 	
 	/**
-	 * 
+	 * Create a new Pattern with a random pattern for the random generation
 	 */
 	public Pattern(int maxInstructions) {
 		iterate = 0;
@@ -30,15 +30,15 @@ public class Pattern {
 	}
 
 	/**
-	 * 
+	 * Reset the iteration in the pattern
 	 */
 	public void resetIteration() {
 		iterate = 0;
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Return the next action of the pattern
+	 * @return a action with with the code of the generation, -1 if the pattern is finish
 	 */
 	public int nextAction() {
 		try {
@@ -49,6 +49,7 @@ public class Pattern {
 	}
 
 	/**
+	 * Return the number maximum of appearance in the generation 
 	 * @return the variation
 	 */
 	public int getVariation() {
@@ -56,6 +57,7 @@ public class Pattern {
 	}
 
 	/**
+	 * Return the number of instruction in the pattern
 	 * @return the numberInstruction
 	 */
 	public int getNumberInstruction() {
@@ -63,15 +65,15 @@ public class Pattern {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Return the end of the pattern
+	 * @return true is the pattern is finish, else false
 	 */
 	public boolean endOfPattern() {
 		return iterate >= numberInstruction;
 	}
 	
 	/**
-	 * 
+	 * Initialize the pattern of the object
 	 */
 	private void initPattern() {
 		Random rand = new Random();
@@ -127,7 +129,7 @@ public class Pattern {
 	}
 	
 	/**
-	 * 
+	 * Print in the console the pattern
 	 */
 	@SuppressWarnings("unused")
 	private void printPattern() {

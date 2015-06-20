@@ -40,7 +40,7 @@ public abstract class WorldGenerator {
 	protected final int size = 8;
 
 	/**
-	 * 
+	 * Create a new random grid
 	 */
 	public WorldGenerator() {
 		initVariable();
@@ -59,16 +59,14 @@ public abstract class WorldGenerator {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * @return the grid
 	 */
 	public Grid getGrid() {
 		return grid;
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * @return action present for the utilisateur
 	 */
 	public Level getLevel() {
 		ArrayList<_Executable> a = new ArrayList<_Executable>();
@@ -80,8 +78,9 @@ public abstract class WorldGenerator {
 		
 		return new Level(grid, a, true, true, 12, 12, 12);
 	}
+	
 	/**
-	 * 
+	 * The main function, start the generation of the grid 
 	 */
 	protected abstract void generation();
 	
@@ -102,7 +101,7 @@ public abstract class WorldGenerator {
 	protected abstract Cell updateGrid(Cell cell, int action);
 	
 	/**
-	 * 
+	 * Initialize global variable use in the generation
 	 */
 	protected void initVariable() {
 		numberInstruction = 0;
@@ -136,7 +135,7 @@ public abstract class WorldGenerator {
 	}
 	
 	/**
-	 * 
+	 * Generate all cell to create a rectangular in function of the generated world
 	 */
 	protected void finishGeneration() {
 		int[] col = getColWithFullCell();
@@ -167,8 +166,8 @@ public abstract class WorldGenerator {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Represent where there are cell in the grid, the number is the maximum height in the column
+	 * @return tab of int
 	 */
 	private int[] getColWithFullCell() {
 		int[] tab = new int[size];
@@ -183,8 +182,8 @@ public abstract class WorldGenerator {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Represent where there are cell in the grid, the number is the maximum height in the line
+	 * @return tab of int
 	 */
 	private int[] getLineWithFullCell() {		
 		int[] tab = new int[size];
