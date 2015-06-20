@@ -70,6 +70,7 @@ public class Game implements DisplayMode {
 	public Display display;
 
 	private Level level;
+	private Level levelInit;
 
 	private Grid initialGrid;
 
@@ -130,6 +131,7 @@ public class Game implements DisplayMode {
 	public Game(Level level) {
 		reset();
 		this.level = level;
+		this.levelInit = level;
 		this.initialGrid = new Grid(this.level.getGrid());
 		originX = (GRID_DISPLAY_SIZE / 2) + MARGIN_LEFT;
 		originY = MARGIN_LEFT + ((WINDOW_HEIGHT - (level.getGrid().getSize() * Textures.cellTexture.getSize().y)) / 2);
@@ -400,12 +402,12 @@ public class Game implements DisplayMode {
 						Sprite winGame = new Sprite(Textures.congratsTexture);
 						winGame.setPosition(275,142);
 						
+						// take a screenshot of the last window and convert to sprite
 						Image levelEnd = LightCore.window.capture();
 						Texture lastDisplaySprite = new Texture();
 						try {
 							lastDisplaySprite.loadFromImage(levelEnd);
 						} catch (TextureCreationException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 						Sprite lastDisplay = new Sprite(lastDisplaySprite); 
@@ -439,6 +441,8 @@ public class Game implements DisplayMode {
 				} else if (buttonReset.isInside(mouse.position)) {
 
 					reset();
+					level = new Level(initialGrid, level.getListOfActions(), level.useProc1(), level.useProc2(), level.getMainLimit(), level.getProc1Limit(), level.getProc2Limit());
+					initialGrid = new Grid(this.level.getGrid());
 					toDisplay = new ArrayList<Drawable>();
 
 					display = new Display(initialGrid, originX, originY);
