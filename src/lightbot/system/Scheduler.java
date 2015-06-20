@@ -15,6 +15,7 @@ public class Scheduler {
 	final private Procedure procP2;
 
 	private int currentRobot;
+	private Robot robot;
 	private int numberOfRobots;
 
 	private Level level;
@@ -55,11 +56,11 @@ public class Scheduler {
 	 */
 	public void execute() throws LevelEndException {
 		boolean notEnd = true;
+		boolean clone = false;
 
 		_Action action;
-		Robot robot;
+		
 		robot = Robot.wheatley;
-
 		currentRobot = 0;
 
 		for (int i = procMain.getSize() - 1; i >= 0; i--) {
@@ -75,7 +76,10 @@ public class Scheduler {
 														// toutes les lumi�res
 														// ne sont pas allum�
 			try {
-				action = nextAction(robot);
+				action = nextAction();
+				if (action instanceof Clone) {
+					clone = true;
+				}
 			} catch (EmptyStackException e) {
 				action = null;
 				notEnd = false;
@@ -83,8 +87,11 @@ public class Scheduler {
 
 			if (notEnd) {
 				try {
-					System.out.println("Action effectuer : " + action.toString() + " // Robot : " + currentRobot
-							+ " // number of robot : " + numberOfRobots);
+					if (robot == Robot.wheatley) {
+						System.out.println("Action effectuer : " + action.toString() + " // Robot : weathley -> " + currentRobot +" // number of robot : " + numberOfRobots);
+					} else {
+						System.out.println("Action effectuer : " + action.toString() + " // Robot : weathleyClone -> " + currentRobot +" // number of robot : " + numberOfRobots);
+					}
 					action.execute(level.getGrid(), robot);
 					if (level.isCompleted()) {
 						System.out.println("finished!!!");
@@ -94,30 +101,33 @@ public class Scheduler {
 					
 					ge.printStackTrace();
 				}
-				robot = giveNextRobot();
+				robot = giveNextRobot(clone);
+				clone = false;
 			}
 		}
 	}
 
 	/**
 	 * Return the next robot who execute the next action
+	 * @param clone 
 	 * 
 	 * @return the next Robot
 	 */
-	private Robot giveNextRobot() {
+	private Robot giveNextRobot(boolean clone) {
 		Robot temp;
-		if (currentRobot == 0) {
-			temp = Robot.wheatley;
-			System.out.println("Current robot : wheatley");
+		if (numberOfRobots == 2) {
+			if (currentRobot == 1) {
+				temp = Robot.wheatley;
+				System.out.println("Current robot : wheatley");
+			} else {
+				temp = Robot.wheatleyClone;
+				System.out.println("Current robot : wheatleyClone");
+			}
+			currentRobot = ++currentRobot % numberOfRobots;
 		} else {
-			temp = Robot.wheatleyClone;
-			System.out.println("Current robot : wheatleyClone");
+			temp = Robot.wheatley;
 		}
-
-		System.out.print("Previous robot : " + currentRobot);
-		currentRobot = ++currentRobot % numberOfRobots;
-		System.out.println(" // current robot : " + currentRobot);
-
+		
 		return temp;
 	}
 
@@ -129,7 +139,7 @@ public class Scheduler {
 	 *            The current robot who execute the action
 	 * @return The next action
 	 */
-	private _Action nextAction(Robot robot) {
+	private _Action nextAction() {
 		_Executable action;
 		try {
 			if (currentRobot == 0) {
@@ -139,7 +149,7 @@ public class Scheduler {
 			}
 		} catch (EmptyStackException e) {
 			System.out.println("Changed robot, excetption");
-			robot = giveNextRobot();
+			robot = giveNextRobot(false);
 			if (currentRobot == 0) {
 				action = executionMain.pop();
 			} else {
@@ -148,22 +158,20 @@ public class Scheduler {
 		}
 
 		if (action == null) {
-			return nextAction(robot);
+			return nextAction();
 		}
 
 		if (action.getColour() != Colour.WHITE && action.getColour() != robot.getColour()) {
-			action = nextAction(robot);
+			action = nextAction();
 		}
 
 		if (action instanceof Break) {
 			if (currentRobot == 0) {
-				while (executionMain.pop() != null)
-					;
-				action = nextAction(robot);
+				while (executionMain.pop() != null);
+				action = nextAction();
 			} else {
-				while (executionClone.pop() != null)
-					;
-				action = nextAction(robot);
+				while (executionClone.pop() != null);
+				action = nextAction();
 			}
 		}
 
@@ -174,11 +182,11 @@ public class Scheduler {
 				pile(procP2);
 			}
 
-			return nextAction(robot);
+			return nextAction();
 		} else {
 			if (action instanceof Clone) {
 				numberOfRobots++;
-				currentRobot = 1;
+				
 			}
 
 			return (_Action) action; // Cast ???
