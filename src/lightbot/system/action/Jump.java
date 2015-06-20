@@ -35,6 +35,8 @@ public class Jump extends _Action {
 		if (robot.getColour() != this.colour && this.colour != Colour.WHITE) {
 			return;
 		}
+		
+		boolean isClone = robot == Robot.wheatleyClone;
 
 		if (canJump(robot, grid)) {
 			int posX = robot.getLine();
@@ -44,15 +46,15 @@ public class Jump extends _Action {
 				try {
 					if (grid.getNextCell(posX, posY, CardinalDirection.NORTH).getHeight() > grid.getCell(posX, posY)
 							.getHeight()) {
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 2, false);
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 0, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 2, isClone);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 0, isClone);
 					} else {
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 0, false);
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 1, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 0, isClone);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 1, isClone);
 					}
 				} catch (OutOfGridException oge) {
-					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 2, false);
-					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 1, false);
+					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 2, isClone);
+					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.NORTH, 1, isClone);
 				}
 				robot.setLine(posX - 1);
 				takeColour(robot, grid);
@@ -63,15 +65,15 @@ public class Jump extends _Action {
 				try {
 					if (grid.getNextCell(posX, posY, CardinalDirection.EAST).getHeight() > grid.getCell(posX, posY)
 							.getHeight()) {
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 2, false);
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 0, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 2, isClone);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 0, isClone);
 					} else {
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 0, false);
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 1, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 0, isClone);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 1, isClone);
 					}
 				} catch (OutOfGridException oge) {
-					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 2, false);
-					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 1, false);
+					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 2, isClone);
+					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.EAST, 1, isClone);
 				}
 				robot.setColumn(posY + 1);
 				takeColour(robot, grid);
@@ -83,15 +85,15 @@ public class Jump extends _Action {
 					if (grid.getNextCell(posX, posY, CardinalDirection.SOUTH).getHeight() > grid.getCell(posX, posY)
 							.getHeight()) {
 
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 2, false);
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 0, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 2, isClone);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 0, isClone);
 					} else {
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 0, false);
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 1, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 0, isClone);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 1, isClone);
 					}
 				} catch (OutOfGridException oge) {
-					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 2, false);
-					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 1, false);
+					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 2, isClone);
+					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.SOUTH, 1, isClone);
 				}
 				robot.setLine(posX + 1);
 				takeColour(robot, grid);
@@ -102,15 +104,15 @@ public class Jump extends _Action {
 				try {
 					if (grid.getNextCell(posX, posY, CardinalDirection.WEST).getHeight() > grid.getCell(posX, posY)
 							.getHeight()) {
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 2, false);
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 0, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 2, isClone);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 0, isClone);
 					} else {
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 0, false);
-						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 1, false);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 0, isClone);
+						((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 1, isClone);
 					}
 				} catch (OutOfGridException oge) {
-					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 2, false);
-					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 1, false);
+					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 2, isClone);
+					((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 1, isClone);
 				}
 				robot.setColumn(posY - 1);
 				takeColour(robot, grid);
@@ -118,8 +120,8 @@ public class Jump extends _Action {
 
 			}
 		} else {
-			((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 2, false);
-			((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 1, false);
+			((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 2, isClone);
+			((Game) LightCore.display).display.anim.moveRobot(CardinalDirection.WEST, 1, isClone);
 		}
 
 	}
@@ -187,8 +189,15 @@ public class Jump extends _Action {
 			TeleportCell arrivalCell= (TeleportCell)grid.getCell(((TeleportCell) cell).getDestX(), ((TeleportCell) cell).getDestY());
 			
 			robot.setPosition(arrivalCell.getX(), arrivalCell.getY());
-			((Game) LightCore.display).display.robotDisplay.updateRobot(robot, 255);
-			((Game)LightCore.display).display.anim.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+			
+			if(robot == Robot.wheatley){
+				((Game) LightCore.display).display.robotDisplay.updateRobot(robot, 255);
+				((Game)LightCore.display).display.anim.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+			}
+			else{
+				((Game) LightCore.display).display.cloneDisplay.updateRobot(robot, 150);
+				((Game)LightCore.display).display.anim.updateClone(((Game) LightCore.display).display.cloneDisplay.robotSprite);
+			}
 			
 			((Game)LightCore.display).display.anim.animeBlackHole(cell.getX(), cell.getY(), ((TeleportCell) cell).getHeight(), false);
 			grid.changeToNormal(line, column);

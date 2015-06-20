@@ -104,6 +104,7 @@ public class Editor implements DisplayMode{
 	private final int MARGIN_LEFT = 15;
 	private final int GRID_DISPLAY_SIZE = 730;
 	private final int WINDOW_HEIGHT = 600;
+	private final int MARGIN_TOP_BUTTONS = 50;
 	
 	
 	/********************************************************************************************/
@@ -160,10 +161,10 @@ public class Editor implements DisplayMode{
 		Sprite purpleSprite = new Sprite(Textures.purpleSplash);
 		Sprite redSprite = new Sprite(Textures.redSplash);
 		
-		blueSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+7), 20);
-		orangeSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+(7*2)+Textures.blueSplash.getSize().y), 20);
-		purpleSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+(7*3)+Textures.blueSplash.getSize().y*2), 20);
-		redSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+(7*4)+Textures.blueSplash.getSize().y*3), 20);
+		blueSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+7), MARGIN_TOP_BUTTONS);
+		orangeSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+(7*2)+Textures.blueSplash.getSize().y), MARGIN_TOP_BUTTONS);
+		purpleSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+(7*3)+Textures.blueSplash.getSize().y*2), MARGIN_TOP_BUTTONS);
+		redSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+(7*4)+Textures.blueSplash.getSize().y*3), MARGIN_TOP_BUTTONS);
 		
 		blueSplash = new Button(blueSprite, null, null);
 		orangeSplash = new Button(orangeSprite, null, null);
@@ -173,8 +174,8 @@ public class Editor implements DisplayMode{
 		// Add lightable button and teleport button
 		Sprite teleportSprite = new Sprite(Textures.teleportButtonTextureRelief);
 		Sprite lightSprite = new Sprite(Textures.lightButtonTextureRelief);
-		teleportSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+(135/3)), 90);
-		lightSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+(135/3)*2+Textures.lightButtonTextureRelief.getSize().y), 90);
+		teleportSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+(135/3)), MARGIN_TOP_BUTTONS+85);
+		lightSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+(135/3)*2+Textures.lightButtonTextureRelief.getSize().y), MARGIN_TOP_BUTTONS+85);
 		
 		teleportButton = new Button(teleportSprite, Textures.teleportButtonTexture, Textures.teleportButtonTextureRelief);
 		lightButton = new Button(lightSprite, Textures.lightButtonTexture, Textures.lightButtonTextureRelief);
@@ -182,24 +183,24 @@ public class Editor implements DisplayMode{
 		// Add save button
 		Sprite saveSprite = new Sprite(Textures.saveButtonTextureRelief);
 		Sprite loadSprite = new Sprite(Textures.loadButtonTextureRelief);
-		saveSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+(135/3)), 160);
-		loadSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+(135/3)*2+Textures.loadButtonTextureRelief.getSize().y), 160);
+		saveSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+(135/3)), MARGIN_TOP_BUTTONS+170);
+		loadSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+(135/3)*2+Textures.loadButtonTextureRelief.getSize().y), MARGIN_TOP_BUTTONS+170);
 		
 		saveButton = new Button(saveSprite, Textures.saveButtonTexture, Textures.saveButtonTextureRelief);
 		loadButton = new Button(loadSprite, Textures.loadButtonTexture, Textures.loadButtonTextureRelief);
 		
 		// Robot button
 		Sprite robotSprite = new Sprite(Textures.robotButtonTextureRelief);
-		robotSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+(185/2)), 230);
+		robotSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+(185/2)), MARGIN_TOP_BUTTONS+255);
 		
 		robotButton = new Button(robotSprite, Textures.robotButtonTexture, Textures.robotButtonTextureRelief);
 		
 		
 		// Button for the robot's rotation
-		Sprite turnRobotLeftSprite = new Sprite(Textures.rotateLeft);
-		Sprite turnRobotRightSprite = new Sprite(Textures.rotateRight);
-		turnRobotLeftSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+((235-2*Textures.rotateLeft.getSize().x)/3)), 300);
-		turnRobotRightSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+((235-2*Textures.rotateLeft.getSize().x)/3)*2+Textures.rotateLeft.getSize().y), 300);
+		Sprite turnRobotLeftSprite = new Sprite(Textures.rotationRobotL);
+		Sprite turnRobotRightSprite = new Sprite(Textures.rotationRobotR);
+		turnRobotLeftSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+((235-2*Textures.rotationRobotR.getSize().x)/3)), MARGIN_TOP_BUTTONS+340);
+		turnRobotRightSprite.setPosition((float)(GRID_DISPLAY_SIZE+MARGIN_LEFT+((235-2*Textures.rotationRobotR.getSize().x)/3)*2+Textures.rotationRobotR.getSize().y), MARGIN_TOP_BUTTONS+340);
 		
 		turnRobotLeft = new Button(turnRobotLeftSprite, null, null);
 		turnRobotRight = new Button(turnRobotRightSprite, null, null);

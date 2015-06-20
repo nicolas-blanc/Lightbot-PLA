@@ -38,9 +38,16 @@ public class Turn extends _Action {
 		if (robot.getDirection() == CardinalDirection.NORTH && direction == RelativeDirection.LEFT) {
 			robot.setDirection(CardinalDirection.WEST);
 			if (LightCore.display instanceof Game) {
-				((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-				((Game) LightCore.display).display.anim
+				if(robot == Robot.wheatley){
+					((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+					((Game) LightCore.display).display.anim
 						.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+				}
+				else{
+					((Game) LightCore.display).display.cloneDisplay.updateRobot(Robot.wheatleyClone, 150);
+					((Game) LightCore.display).display.anim
+						.updateClone(((Game) LightCore.display).display.cloneDisplay.robotSprite);
+				}
 			} else {
 				((Editor) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
 				((Editor) LightCore.display).display.anim
@@ -51,9 +58,16 @@ public class Turn extends _Action {
 		if (robot.getDirection() == CardinalDirection.NORTH && direction == RelativeDirection.RIGHT) {
 			robot.setDirection(CardinalDirection.EAST);
 			if (LightCore.display instanceof Game) {
-				((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-				((Game) LightCore.display).display.anim
+				if(robot == Robot.wheatley){
+					((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+					((Game) LightCore.display).display.anim
 						.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+				}
+				else{
+					((Game) LightCore.display).display.cloneDisplay.updateRobot(Robot.wheatleyClone, 150);
+					((Game) LightCore.display).display.anim
+						.updateClone(((Game) LightCore.display).display.cloneDisplay.robotSprite);
+				}
 			} else {
 				((Editor) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
 				((Editor) LightCore.display).display.anim
@@ -64,9 +78,16 @@ public class Turn extends _Action {
 		if (robot.getDirection() == CardinalDirection.SOUTH && direction == RelativeDirection.LEFT) {
 			robot.setDirection(CardinalDirection.EAST);
 			if (LightCore.display instanceof Game) {
-				((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-				((Game) LightCore.display).display.anim
+				if(robot == Robot.wheatley){
+					((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+					((Game) LightCore.display).display.anim
 						.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+				}
+				else{
+					((Game) LightCore.display).display.cloneDisplay.updateRobot(Robot.wheatleyClone, 150);
+					((Game) LightCore.display).display.anim
+						.updateClone(((Game) LightCore.display).display.cloneDisplay.robotSprite);
+				}
 			} else {
 				((Editor) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
 				((Editor) LightCore.display).display.anim
@@ -77,9 +98,16 @@ public class Turn extends _Action {
 		if (robot.getDirection() == CardinalDirection.SOUTH && direction == RelativeDirection.RIGHT) {
 			robot.setDirection(CardinalDirection.WEST);
 			if (LightCore.display instanceof Game) {
-				((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-				((Game) LightCore.display).display.anim
+				if(robot == Robot.wheatley){
+					((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+					((Game) LightCore.display).display.anim
 						.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+				}
+				else{
+					((Game) LightCore.display).display.cloneDisplay.updateRobot(Robot.wheatleyClone, 150);
+					((Game) LightCore.display).display.anim
+						.updateClone(((Game) LightCore.display).display.cloneDisplay.robotSprite);
+				}
 			} else {
 				((Editor) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
 				((Editor) LightCore.display).display.anim
@@ -90,9 +118,16 @@ public class Turn extends _Action {
 		if (robot.getDirection() == CardinalDirection.EAST && direction == RelativeDirection.LEFT) {
 			robot.setDirection(CardinalDirection.NORTH);
 			if (LightCore.display instanceof Game) {
-				((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-				((Game) LightCore.display).display.anim
+				if(robot == Robot.wheatley){
+					((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+					((Game) LightCore.display).display.anim
 						.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+				}
+				else{
+					((Game) LightCore.display).display.cloneDisplay.updateRobot(Robot.wheatleyClone, 150);
+					((Game) LightCore.display).display.anim
+						.updateClone(((Game) LightCore.display).display.cloneDisplay.robotSprite);
+				}
 			} else {
 				((Editor) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
 				((Editor) LightCore.display).display.anim
@@ -103,9 +138,16 @@ public class Turn extends _Action {
 		if (robot.getDirection() == CardinalDirection.EAST && direction == RelativeDirection.RIGHT) {
 			robot.setDirection(CardinalDirection.SOUTH);
 			if (LightCore.display instanceof Game) {
-				((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-				((Game) LightCore.display).display.anim
+				if(robot == Robot.wheatley){
+					((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+					((Game) LightCore.display).display.anim
 						.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+				}
+				else{
+					((Game) LightCore.display).display.cloneDisplay.updateRobot(Robot.wheatleyClone, 150);
+					((Game) LightCore.display).display.anim
+						.updateClone(((Game) LightCore.display).display.cloneDisplay.robotSprite);
+				}
 			} else {
 				((Editor) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
 				((Editor) LightCore.display).display.anim
@@ -116,9 +158,16 @@ public class Turn extends _Action {
 		if (robot.getDirection() == CardinalDirection.WEST && direction == RelativeDirection.LEFT) {
 			robot.setDirection(CardinalDirection.SOUTH);
 			if (LightCore.display instanceof Game) {
-				((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-				((Game) LightCore.display).display.anim
+				if(robot == Robot.wheatley){
+					((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+					((Game) LightCore.display).display.anim
 						.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+				}
+				else{
+					((Game) LightCore.display).display.cloneDisplay.updateRobot(Robot.wheatleyClone, 150);
+					((Game) LightCore.display).display.anim
+						.updateClone(((Game) LightCore.display).display.cloneDisplay.robotSprite);
+				}
 			} else {
 				((Editor) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
 				((Editor) LightCore.display).display.anim
@@ -129,9 +178,16 @@ public class Turn extends _Action {
 		if (robot.getDirection() == CardinalDirection.WEST && direction == RelativeDirection.RIGHT) {
 			robot.setDirection(CardinalDirection.NORTH);
 			if (LightCore.display instanceof Game) {
-				((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-				((Game) LightCore.display).display.anim
+				if(robot == Robot.wheatley){
+					((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+					((Game) LightCore.display).display.anim
 						.updateRobot(((Game) LightCore.display).display.robotDisplay.robotSprite);
+				}
+				else{
+					((Game) LightCore.display).display.cloneDisplay.updateRobot(Robot.wheatleyClone, 150);
+					((Game) LightCore.display).display.anim
+						.updateClone(((Game) LightCore.display).display.cloneDisplay.robotSprite);
+				}
 			} else {
 				((Editor) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
 				((Editor) LightCore.display).display.anim

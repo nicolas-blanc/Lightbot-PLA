@@ -384,6 +384,8 @@ public class Game implements DisplayMode {
 					Robot.wheatley.setLine(initialX);
 					Robot.wheatley.setColumn(initialY);
 					((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+					if(Robot.wheatleyClone.getVisibility())
+						Robot.wheatleyClone.setVisibility(false);
 					toDisplay.clear();
 
 					initConstantDisplay();
