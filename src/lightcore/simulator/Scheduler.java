@@ -70,14 +70,7 @@ public class Scheduler {
 			executionClone.push(procP2.getAction(i));
 		}
 
-<<<<<<< HEAD
 		while (notEnd && !level.isCompleted()) {
-=======
-		while (notEnd && !level.isCompleted()) { // Changer pour une
-													// condition : tant que
-													// toutes les lumi�res
-													// ne sont pas allum�
->>>>>>> 4d39293eedf120ff4c706e46ca1e8d4a12c093cc
 			try {
 				action = nextAction();
 			} catch (EmptyStackException e) {
