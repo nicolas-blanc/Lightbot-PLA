@@ -59,7 +59,7 @@ public class Scheduler {
 		boolean clone = false;
 
 		_Action action;
-		
+
 		robot = Robot.wheatley;
 		currentRobot = 0;
 
@@ -72,9 +72,9 @@ public class Scheduler {
 		}
 
 		while (notEnd && !level.isCompleted()) { // Changer pour une
-														// condition : tant que
-														// toutes les lumi�res
-														// ne sont pas allum�
+													// condition : tant que
+													// toutes les lumi�res
+													// ne sont pas allum�
 			try {
 				action = nextAction();
 				if (action instanceof Clone) {
@@ -88,9 +88,11 @@ public class Scheduler {
 			if (notEnd) {
 				try {
 					if (robot == Robot.wheatley) {
-						System.out.println("Action effectuer : " + action.toString() + " // Robot : weathley -> " + currentRobot +" // number of robot : " + numberOfRobots);
+						System.out.println("Action effectuer : " + action.toString() + " // Robot : weathley -> "
+								+ currentRobot + " // number of robot : " + numberOfRobots);
 					} else {
-						System.out.println("Action effectuer : " + action.toString() + " // Robot : weathleyClone -> " + currentRobot +" // number of robot : " + numberOfRobots);
+						System.out.println("Action effectuer : " + action.toString() + " // Robot : weathleyClone -> "
+								+ currentRobot + " // number of robot : " + numberOfRobots);
 					}
 					action.execute(level.getGrid(), robot);
 					if (level.isCompleted()) {
@@ -98,7 +100,7 @@ public class Scheduler {
 						throw new LevelEndException();
 					}
 				} catch (OutOfGridException ge) {
-					
+
 					throw new OutOfGridException();
 				}
 				robot = giveNextRobot(clone);
@@ -109,7 +111,8 @@ public class Scheduler {
 
 	/**
 	 * Return the next robot who execute the next action
-	 * @param clone 
+	 * 
+	 * @param clone
 	 * 
 	 * @return the next Robot
 	 */
@@ -127,7 +130,7 @@ public class Scheduler {
 		} else {
 			temp = Robot.wheatley;
 		}
-		
+
 		return temp;
 	}
 
@@ -148,7 +151,7 @@ public class Scheduler {
 				action = executionClone.pop();
 			}
 		} catch (EmptyStackException e) {
-			//System.out.println("Changed robot, exception");
+			// System.out.println("Changed robot, exception");
 			robot = giveNextRobot(false);
 			if (currentRobot == 0) {
 				action = executionMain.pop();
@@ -167,10 +170,12 @@ public class Scheduler {
 
 		if (action instanceof Break) {
 			if (currentRobot == 0) {
-				while (executionMain.pop() != null);
+				while (executionMain.pop() != null)
+					;
 				action = nextAction();
 			} else {
-				while (executionClone.pop() != null);
+				while (executionClone.pop() != null)
+					;
 				action = nextAction();
 			}
 		}
@@ -186,7 +191,7 @@ public class Scheduler {
 		} else {
 			if (action instanceof Clone) {
 				numberOfRobots++;
-				
+
 			}
 
 			return (_Action) action; // Cast ???
