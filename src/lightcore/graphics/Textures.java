@@ -125,7 +125,8 @@ public class Textures {
 	public static Texture menuChargerH;
 	public static Texture menuBgH;
 	
-	public static Texture blinkTexture; 
+	public static Texture blinkTexture;
+	public static Texture rollTexture;
 	
 	//Levels
 	public static Texture levelBases;
@@ -269,6 +270,7 @@ public class Textures {
 		menuBgH = new Texture();
 		
 		blinkTexture = new Texture();
+		rollTexture = new Texture();
 		
 		//Levels
 		levelBases = new Texture();
@@ -412,6 +414,7 @@ public class Textures {
 			menuChargerH.loadFromFile(Paths.get(MENU_PATH + "loadButtonH.png"));
 			
 			blinkTexture.loadFromFile(Paths.get(MENU_PATH + "blink.png"));
+			rollTexture.loadFromFile(Paths.get(MENU_PATH + "roll.png"));
 			
 			//levels
 			levelBases.loadFromFile(Paths.get(LEVELS_PATH + "levelBases.png"));
