@@ -18,14 +18,17 @@ public class Wash extends _Action {
 	}
 	
 	public void execute(Grid grid, Robot robot){
-		robot.setColour(Colour.WHITE);
-		if(robot == Robot.wheatley){
-			((Game)(LightCore.display)).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-			((Game)(LightCore.display)).display.anim.updateRobot(((Game)LightCore.display).display.robotDisplay.getSprite());
-		}
-		else{
-			((Game)(LightCore.display)).display.cloneDisplay.updateRobot(Robot.wheatleyClone, 150);
-			((Game)(LightCore.display)).display.anim.updateClone(((Game)LightCore.display).display.cloneDisplay.getSprite());
+		if(robot.getColour() != Colour.WHITE){
+			robot.setColour(Colour.WHITE);
+			if(robot == Robot.wheatley){
+				((Game)(LightCore.display)).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+				((Game)(LightCore.display)).display.anim.updateRobot(((Game)LightCore.display).display.robotDisplay.getSprite());
+			}
+			else{
+				((Game)(LightCore.display)).display.cloneDisplay.updateRobot(Robot.wheatleyClone, 150);
+				((Game)(LightCore.display)).display.anim.updateClone(((Game)LightCore.display).display.cloneDisplay.getSprite());
+			}
+			((Game)(LightCore.display)).display.anim.changeColor();
 		}
 	}
 

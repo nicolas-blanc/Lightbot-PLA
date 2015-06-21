@@ -295,6 +295,41 @@ public class Animation {
 		}
 	}
 	
+	public void changeColor(){
+		Clock wait = new Clock();
+		
+		while(LightCore.window.isOpen() && wait.getElapsedTime().asMilliseconds() <= 750) {
+			
+		    LightCore.window.clear(Color.WHITE);
+		    
+	    	for(Drawable s : LightCore.display.getConstantDisplay())
+	    		LightCore.window.draw(s);
+	    	
+	    	for(int l = 0; l<cubes.length; l++)
+				for(int c = 0; c<cubes[0].length; c++){
+					printPillar(l, c);
+					if(robotSprite != null && l == Robot.wheatley.getLine() && c == Robot.wheatley.getColumn() && Robot.wheatley.getVisibility())
+						LightCore.window.draw(robotSprite);
+					if(cloneSprite != null && l == Robot.wheatleyClone.getLine() && c == Robot.wheatleyClone.getColumn() && Robot.wheatleyClone.getVisibility())
+						LightCore.window.draw(cloneSprite);
+				}
+	    	
+		    LightCore.window.display();
+
+		    //Handle events
+		    for(Event event : LightCore.window.pollEvents()) {
+		    	switch(event.type) {
+		    		case CLOSED:
+		    			//System.out.println("The user pressed the close button!");
+		    			LightCore.window.close();
+		    			break;
+					default:
+						break;
+		    	}
+		    }
+		}
+	}
+	
 	/**
 	 * 
 	 * @param direction
