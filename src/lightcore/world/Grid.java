@@ -47,7 +47,7 @@ public class Grid {
 					this.grid[i][j] = new EmptyCell(i, j);
 				} else {
 					if (c instanceof EmptyCell) {
-						System.out.println(c == null);
+						//System.out.println(c == null);
 						this.grid[i][j] = new EmptyCell(i, j);
 					}
 					if (c instanceof NormalCell) {
@@ -198,22 +198,36 @@ public class Grid {
 			if (currentL == 0) {
 				throw new OutOfGridException();
 			}
-			return this.grid[currentL - 1][currentC];
+			if (!(this.grid[currentL - 1][currentC] instanceof EmptyCell)) {
+				return this.grid[currentL - 1][currentC];
+			} else
+				throw new OutOfGridException();
 		case SOUTH:
 			if (currentL == size - 1) {
 				throw new OutOfGridException();
 			}
-			return this.grid[currentL + 1][currentC];
+			if (!(this.grid[currentL + 1][currentC] instanceof EmptyCell)) {
+				return this.grid[currentL + 1][currentC];
+			} else
+				throw new OutOfGridException();
 		case WEST:
 			if (currentC == 0) {
 				throw new OutOfGridException();
 			}
-			return this.grid[currentL][currentC - 1];
+			if (!(this.grid[currentL][currentC - 1] instanceof EmptyCell)) {
+				System.out.println("currentL : " + currentL + " " + "currentC - 1 : " + (currentC - 1));
+				return this.grid[currentL][currentC - 1];
+			} else {
+				throw new OutOfGridException();
+			}
 		case EAST:
 			if (currentC == size - 1) {
 				throw new OutOfGridException();
 			} else {
-				return this.grid[currentL][currentC + 1];
+				if (!(this.grid[currentL][currentC + 1] instanceof EmptyCell)) {
+					return this.grid[currentL][currentC + 1];
+				} else
+					throw new OutOfGridException();
 			}
 		default:
 			throw new OutOfGridException();

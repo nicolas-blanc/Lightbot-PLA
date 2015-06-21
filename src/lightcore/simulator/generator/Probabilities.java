@@ -175,7 +175,7 @@ public class Probabilities {
 	 */
 	@SuppressWarnings("unused")
 	private void printProba() {
-		System.out.println("Light : " + probaLight + " / Forward : " + probaForward  + " / Jump : " + probaJump  + " / Left : " + probaLeft + " / Right : " + probaRight);
+		//System.out.println("Light : " + probaLight + " / Forward : " + probaForward  + " / Jump : " + probaJump  + " / Left : " + probaLeft + " / Right : " + probaRight);
 	}
 	
 }

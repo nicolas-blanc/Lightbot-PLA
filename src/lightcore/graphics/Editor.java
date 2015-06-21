@@ -308,7 +308,7 @@ public class Editor implements DisplayMode{
 	 */
 	public void eventManager(Event event){
 		if(event.type == Event.Type.CLOSED){
-			System.out.println("The user pressed the close button!");
+			//System.out.println("The user pressed the close button!");
 			LightCore.window.close();
 		}
 		else if(event.type == Event.Type.MOUSE_BUTTON_PRESSED){
@@ -562,7 +562,7 @@ public class Editor implements DisplayMode{
 					  canva = new CanvaDisplay(toOpen.getSize(), originX, originY);
 					  initConstantDisplay();
 					  
-					  System.out.println(file.getAbsolutePath());
+					  //System.out.println(file.getAbsolutePath());
 					}
 					loadButton.changeTexture();
 					toDisplay.set(loadButton.getId(), loadButton.getSprite());

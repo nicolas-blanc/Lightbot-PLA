@@ -39,7 +39,7 @@ public class Clone extends _Action{
 		Position clonePosition = findClonePosition(grid, robot);
 		if(clonePosition == null)
 			throw new OutOfGridException();
-		System.out.println(clonePosition.getX() + " " + clonePosition.getY() + "Miamiam");
+		//System.out.println(clonePosition.getX() + " " + clonePosition.getY() + "Miamiam");
 		Robot.wheatleyClone.setPosition(clonePosition.getX(), clonePosition.getY());
 		Robot.wheatleyClone.setVisibility(true);
 		Robot.wheatleyClone.setDirection(Robot.wheatley.getDirection());
@@ -107,7 +107,7 @@ public class Clone extends _Action{
 										if(clonePos == null){
 											clonePos = secondCheckPosition(grid, posX, posY-1, level, true);
 											if(clonePos == null){
-												System.out.println("Oh God ! It's a trap !");
+												//System.out.println("Oh God ! It's a trap !");
 											}
 										}
 									}
@@ -136,7 +136,7 @@ public class Clone extends _Action{
 										if(clonePos == null){
 											clonePos = secondCheckPosition(grid, posX+1, posY, level, false);
 											if(clonePos == null){
-												System.out.println("Oh God ! It's a trap !");
+												//System.out.println("Oh God ! It's a trap !");
 											}
 										}
 									}
@@ -165,7 +165,7 @@ public class Clone extends _Action{
 										if(clonePos == null){
 											clonePos = secondCheckPosition(grid, posX-1, posY, level, true);
 											if(clonePos == null){
-												System.out.println("Oh God ! It's a trap !");
+												//System.out.println("Oh God ! It's a trap !");
 											}
 										}
 									}
@@ -195,7 +195,7 @@ public class Clone extends _Action{
 										if(clonePos == null){
 											clonePos = secondCheckPosition(grid, posX, posY+1, level, false);
 											if(clonePos == null){
-												System.out.println("Oh God ! It's a trap !");
+												//System.out.println("Oh God ! It's a trap !");
 											}
 										}
 									}

@@ -137,6 +137,6 @@ public class Pattern {
 		for (int i = 0; i < pattern.length; i++) {
 			System.out.print(pattern[i] + " - ");
 		}
-		System.out.println();
+		//System.out.println();
 	}
 }
