@@ -16,6 +16,9 @@ public class Textures {
 	public static final String EDITOR_PATH = RESSOURCE_PATH + "editor/";
 	public static final String CUBE_PATH = RESSOURCE_PATH + "cube/";
 	
+	// Seg Fault
+	public static Texture segFaultTexture;
+	
 	// Background
 	public static Texture backgroundTexture;
 	public static Texture backgroundGameTexture;	
@@ -161,6 +164,9 @@ public class Textures {
 	public static Texture level6H;
 	
 	public static void initTextures(){
+		
+		// Seg Fault
+		segFaultTexture = new Texture();
 		
 		// Background
 		backgroundTexture = new Texture();
@@ -308,6 +314,9 @@ public class Textures {
 			
 			/************************ Load the textures ************************/
 			
+			// Seg Fault
+			segFaultTexture.loadFromFile(Paths.get(RESSOURCE_PATH + "segFault.png"));
+			
 			// Background
 			backgroundTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"background.png"));
 			backgroundGameTexture.loadFromFile(Paths.get(RESSOURCE_PATH+"background_game.png"));
@@ -450,6 +459,9 @@ public class Textures {
 			
 			
 			/************************ Set smoothing ************************/
+			
+			// Seg Fault
+			segFaultTexture.setSmooth(true);
 			
 			// Background
 			backgroundTexture.setSmooth(true);
