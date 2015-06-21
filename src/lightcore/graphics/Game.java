@@ -110,6 +110,8 @@ public class Game implements DisplayMode {
 	public static boolean useProc1;
 	public static boolean useProc2;
 
+	private boolean cloneAlreadyUsed = false;
+
 	public boolean mainIsActive = true;
 	public boolean proc1IsActive = false;
 	public boolean proc2IsActive = false;
@@ -158,7 +160,7 @@ public class Game implements DisplayMode {
 		initialX = Robot.wheatley.getLine();
 		initialY = Robot.wheatley.getColumn();
 		initialDir = Robot.wheatley.getDirection();
-		
+
 		if (Robot.wheatleyClone.getVisibility())
 			Robot.wheatleyClone.setVisibility(false);
 	}
@@ -171,7 +173,7 @@ public class Game implements DisplayMode {
 	 * Initialize the constant display for a game
 	 */
 	public void initConstantDisplay() {
-		
+
 		Robot.wheatley.setColour(Colour.WHITE);
 		Robot.wheatleyClone.setColour(Colour.WHITE);
 
@@ -288,8 +290,8 @@ public class Game implements DisplayMode {
 		toDisplay.add(turnRightSprite);
 		toDisplay.add(homeSprite);
 		toDisplay.add(returnSprite);
-		
-		if(!LightCore.soundButton.getSprite().getPosition().equals(new Vector2f(15, 65))){
+
+		if (!LightCore.soundButton.getSprite().getPosition().equals(new Vector2f(15, 65))) {
 			Sprite soundSprite = LightCore.soundButton.getSprite();
 			soundSprite.setPosition(15, 65);
 			LightCore.soundButton.setSprite(soundSprite);
@@ -371,7 +373,7 @@ public class Game implements DisplayMode {
 			if (toDisplay.indexOf(proc2Sprite) == -1)
 				toDisplay.add(proc2Sprite);
 
-			for (int i = 0; i < proc1.getMaxNumOfActions(); i++) {
+			for (int i = 0; i < proc2.getMaxNumOfActions(); i++) {
 				RectangleShape actionSlot = new RectangleShape(new Vector2f(Textures.ACTION_TEXTURE_SIZE + 2,
 						Textures.ACTION_TEXTURE_SIZE + 2));
 				actionSlot.setOutlineColor(Color.BLACK);
@@ -442,21 +444,21 @@ public class Game implements DisplayMode {
 			if (mouse.button == Mouse.Button.LEFT) {
 
 				if (buttonPlay.isInside(mouse.position)) {
-					//System.out.println("MAIN SIZE: " + main.getSize());
+					// System.out.println("MAIN SIZE: " + main.getSize());
 					Scheduler sched = new Scheduler(main, proc1, proc2, level);
 					try {
 						sched.execute();
 
 					} catch (OutOfGridException oge) {
-				
+
 						// print the last action
 						for (Drawable s : toDisplay)
 							LightCore.window.draw(s);
 						display.print();
-						
+
 						boolean finished = false;
 						Sprite segFault = new Sprite(Textures.segFaultTexture);
-						
+
 						// take a screenshot of the last window and convert to
 						// sprite
 						Image levelEnd = LightCore.window.capture();
@@ -467,7 +469,7 @@ public class Game implements DisplayMode {
 							e1.printStackTrace();
 						}
 						Sprite lastDisplay = new Sprite(lastDisplaySprite);
-						
+
 						while (LightCore.window.isOpen() && !finished) {
 
 							LightCore.window.clear(Color.WHITE);
@@ -542,6 +544,7 @@ public class Game implements DisplayMode {
 					}
 				} else if (buttonReset.isInside(mouse.position)) {
 					resetLevel();
+					cloneAlreadyUsed = false;
 				} else if (turnLeftButton.isInside(mouse.position)) {
 					display.rotate(0);
 					int tmp = initialX;
@@ -580,7 +583,7 @@ public class Game implements DisplayMode {
 						if (i == pressedActionIndex) {
 							e = actionsL.get(i);
 							b = buttonsL.get(i);
-							//System.out.println(b.getColor());
+							// System.out.println(b.getColor());
 
 							if (e instanceof Procedure) {
 								Procedure p = (Procedure) e;
@@ -705,17 +708,17 @@ public class Game implements DisplayMode {
 						break;
 					}
 				}
-				
-				if(LightCore.soundButton.isInside(mouse.position)){
+
+				if (LightCore.soundButton.isInside(mouse.position)) {
 					int id = toDisplay.indexOf(LightCore.soundButton.getSprite());
-					if(LightCore.sound.getStatus() == SoundSource.Status.PLAYING)
+					if (LightCore.sound.getStatus() == SoundSource.Status.PLAYING)
 						LightCore.sound.pause();
 					else
 						LightCore.sound.play();
 					LightCore.soundButton.changeTexture();
 					toDisplay.set(id, LightCore.soundButton.getSprite());
 				}
-				
+
 			} else if (mouse.button == Mouse.Button.RIGHT) {
 				int index;
 				if (sl != null) {
@@ -761,8 +764,15 @@ public class Game implements DisplayMode {
 		if (useProc2 && proc2IsActive && proc2.getSize() == proc2.getMaxNumOfActions())
 			return;
 
-		//if (e instanceof Procedure)
-			//System.out.println(((Procedure) e).getName() + " " + ((Procedure) e).getSize());
+		
+
+		if (e instanceof Clone && cloneAlreadyUsed) {
+			return;
+		}
+
+		if (e instanceof Clone && !cloneAlreadyUsed) {
+			cloneAlreadyUsed = true;
+		}
 
 		if (mainIsActive) {
 
@@ -771,7 +781,7 @@ public class Game implements DisplayMode {
 
 			main.addAction(e);
 
-			//System.out.println(main.getSize());
+			// System.out.println(main.getSize());
 
 			Sprite s = new Sprite(b.getSprite().getTexture());
 			int spriteX = 730 + 10 + (whereToAdd % 4) * (50 + 10);
@@ -805,7 +815,7 @@ public class Game implements DisplayMode {
 
 			assert proc1.getSize() == proc1Buttons.size();
 
-			//System.out.println("proc1 size : " + proc1.getSize());
+			// System.out.println("proc1 size : " + proc1.getSize());
 		}
 
 		else if (proc2IsActive) {
@@ -1092,8 +1102,8 @@ public class Game implements DisplayMode {
 		}
 		return false;
 	}
-	
-	private void resetLevel(){
+
+	private void resetLevel() {
 		reset();
 		level = new Level(initialGrid, level.getListOfActions(), level.useProc1(), level.useProc2(),
 				level.getMainLimit(), level.getProc1Limit(), level.getProc2Limit());
