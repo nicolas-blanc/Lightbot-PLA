@@ -414,7 +414,8 @@ public class Animation {
 						else{
 							if(nextCellX > Robot.wheatleyClone.getLine()){
 								if((l == nextCellX && c > Robot.wheatleyClone.getColumn()) || l != nextCellX)
-									if(l != Robot.wheatley.getLine() || c != Robot.wheatley.getColumn())
+									if(!Robot.wheatley.getVisibility() 
+											|| (Robot.wheatley.getVisibility() && (l != Robot.wheatley.getLine() || c != Robot.wheatley.getColumn())))
 										printPillar(l, c);
 							}
 							else if(l != nextCellX || c != nextCellY){
@@ -448,7 +449,8 @@ public class Animation {
 						else{
 							if(nextCellX > Robot.wheatley.getLine()){
 								if((l == nextCellX && c > Robot.wheatley.getColumn()) || l != nextCellX)
-									if(l != Robot.wheatleyClone.getLine() || c != Robot.wheatleyClone.getColumn())
+									if(!Robot.wheatleyClone.getVisibility() 
+											|| (Robot.wheatleyClone.getVisibility() && (l != Robot.wheatleyClone.getLine() || c != Robot.wheatleyClone.getColumn())))
 										printPillar(l, c);
 							}
 							else if(l != nextCellX || c != nextCellY){
