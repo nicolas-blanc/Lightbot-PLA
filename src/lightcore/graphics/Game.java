@@ -157,6 +157,9 @@ public class Game implements DisplayMode {
 		initialX = Robot.wheatley.getLine();
 		initialY = Robot.wheatley.getColumn();
 		initialDir = Robot.wheatley.getDirection();
+		
+		if (Robot.wheatleyClone.getVisibility())
+			Robot.wheatleyClone.setVisibility(false);
 	}
 
 	/********************************************************************************************/
