@@ -56,7 +56,6 @@ public class Scheduler {
 	 */
 	public void execute() throws LevelEndException, OutOfGridException {
 		boolean notEnd = true;
-		boolean clone = false;
 
 		_Action action;
 
@@ -71,15 +70,9 @@ public class Scheduler {
 			executionClone.push(procP2.getAction(i));
 		}
 
-		while (notEnd && !level.isCompleted()) { // Changer pour une
-													// condition : tant que
-													// toutes les lumi�res
-													// ne sont pas allum�
+		while (notEnd && !level.isCompleted()) {
 			try {
 				action = nextAction();
-				if (action instanceof Clone) {
-					clone = true;
-				}
 			} catch (EmptyStackException e) {
 				action = null;
 				notEnd = false;
@@ -103,28 +96,30 @@ public class Scheduler {
 
 					throw new OutOfGridException();
 				}
-				robot = giveNextRobot(clone);
-				clone = false;
+				robot = giveNextRobot();
 			}
 		}
 	}
 
 	/**
 	 * Return the next robot who execute the next action
+<<<<<<< HEAD
+=======
 	 * 
 	 * @param clone
+>>>>>>> 4d39293eedf120ff4c706e46ca1e8d4a12c093cc
 	 * 
 	 * @return the next Robot
 	 */
-	private Robot giveNextRobot(boolean clone) {
+	private Robot giveNextRobot() {
 		Robot temp;
 		if (numberOfRobots == 2) {
 			if (currentRobot == 1) {
 				temp = Robot.wheatley;
-				System.out.println("Current robot : wheatley");
+//				System.out.println("Current robot : wheatley");
 			} else {
 				temp = Robot.wheatleyClone;
-				System.out.println("Current robot : wheatleyClone");
+//				System.out.println("Current robot : wheatleyClone");
 			}
 			currentRobot = ++currentRobot % numberOfRobots;
 		} else {
@@ -138,8 +133,6 @@ public class Scheduler {
 	 * The next action who is executed, if the next is a procedure, this
 	 * function return the first action of this procedure
 	 * 
-	 * @param robot
-	 *            The current robot who execute the action
 	 * @return The next action
 	 */
 	private _Action nextAction() {
@@ -151,8 +144,8 @@ public class Scheduler {
 				action = executionClone.pop();
 			}
 		} catch (EmptyStackException e) {
-			// System.out.println("Changed robot, exception");
-			robot = giveNextRobot(false);
+//			System.out.println("Changed robot, exception");
+			robot = giveNextRobot();
 			if (currentRobot == 0) {
 				action = executionMain.pop();
 			} else {
@@ -194,7 +187,7 @@ public class Scheduler {
 
 			}
 
-			return (_Action) action; // Cast ???
+			return (_Action) action;
 		}
 	}
 

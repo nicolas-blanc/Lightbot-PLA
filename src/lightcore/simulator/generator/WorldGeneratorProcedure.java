@@ -150,7 +150,7 @@ public class WorldGeneratorProcedure extends WorldGenerator{
 			break;
 		case 1:
 			try {
-				Cell emptyCell = grid.getNextCell(cell.getX(), cell.getY(), direction);
+				Cell emptyCell = grid.getNextCellGen(cell.getX(), cell.getY(), direction);
 //				System.out.println("Heigh cell : " + emptyCell.getHeight());
 				if (emptyCell.isEmptyCell()) {
 					grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), cell.getHeight()));
@@ -181,7 +181,7 @@ public class WorldGeneratorProcedure extends WorldGenerator{
 			break;
 		case 2:
 			try {
-				Cell emptyCell = grid.getNextCell(cell.getX(), cell.getY(), direction);
+				Cell emptyCell = grid.getNextCellGen(cell.getX(), cell.getY(), direction);
 //				System.out.println("Heigh cell : " + emptyCell.getHeight());
 				if (emptyCell.isEmptyCell()) {
 					if(cell.getHeight() == 0) {
@@ -257,7 +257,7 @@ public class WorldGeneratorProcedure extends WorldGenerator{
 					break;
 				case 1:
 					try {
-						Cell emptyCell = grid.getNextCell(cell.getX(), cell.getY(), direction);
+						Cell emptyCell = grid.getNextCellGen(cell.getX(), cell.getY(), direction);
 						if (emptyCell.isEmptyCell()) {
 							grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), cell.getHeight()));
 							cell = grid.getCell(emptyCell.getX(), emptyCell.getY());
@@ -276,7 +276,7 @@ public class WorldGeneratorProcedure extends WorldGenerator{
 					break;
 				case 2:
 					try {
-						Cell emptyCell = grid.getNextCell(cell.getX(), cell.getY(), direction);
+						Cell emptyCell = grid.getNextCellGen(cell.getX(), cell.getY(), direction);
 						if (emptyCell.isEmptyCell()) {
 							if(cell.getHeight() == 0) {
 								grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), 1));
@@ -336,10 +336,10 @@ public class WorldGeneratorProcedure extends WorldGenerator{
 			try {
 				switch (pattern.nextAction()) {
 				case 1:
-					cell = grid.getNextCell(cell.getX(), cell.getY(), dir);
+					cell = grid.getNextCellGen(cell.getX(), cell.getY(), dir);
 					break;
 				case 2:
-					cell = grid.getNextCell(cell.getX(), cell.getY(), dir);
+					cell = grid.getNextCellGen(cell.getX(), cell.getY(), dir);
 					break;
 				case 3:
 					dir = CardinalDirection.getRotationDirection(dir, RelativeDirection.RIGHT);
