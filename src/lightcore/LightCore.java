@@ -34,6 +34,7 @@ public class LightCore {
 	public static boolean firstPrintGame = true;
 	
 	public static String path = null;
+	public static String tutoPath = null;
 
 	public static void main(String[] args) {
 		

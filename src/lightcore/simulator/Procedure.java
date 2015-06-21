@@ -110,7 +110,6 @@ public class Procedure extends _Executable {
 
 			if (this.actions.get(i) instanceof Procedure) {
 				System.out.println("Found a procedure");
-				System.out.println(this.actions.get(i).getColour() == robot.getColour());
 				if (this.actions.get(i).getColour() == robot.getColour()) {
 					System.out.println("same color");
 					this.actions.get(i).execute(grid, robot);
