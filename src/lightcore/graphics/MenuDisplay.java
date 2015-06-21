@@ -236,6 +236,11 @@ public class MenuDisplay {
 
 				// Éditeur
 				if (buttonEditeur.isInside(mouse.position)) {
+					animClock = null;
+					animClockRoll = null;
+					elapsedTimeBlink = null;
+					elapsedTimeRoll = null;
+					
 					int sizeInt = -1;
 					String size = null;
 					do {
@@ -260,15 +265,15 @@ public class MenuDisplay {
 							}
 						}
 					} while ((sizeInt < 1 || sizeInt > 8) && size != null && !size.equals(""));
-					
-					animClock = null;
-					animClockRoll = null;
-					elapsedTimeBlink = null;
-					elapsedTimeRoll = null;
 				}
 
 				// Charger
 				if (buttonCharger.isInside(mouse.position)) {
+					animClock = null;
+					animClockRoll = null;
+					elapsedTimeBlink = null;
+					elapsedTimeRoll = null;
+					
 					JFileChooser dialog = new JFileChooser();
 
 					if (dialog.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
@@ -282,15 +287,15 @@ public class MenuDisplay {
 						//System.out.println(file.getAbsolutePath());
 						LightCore.firstPrintGame = true;
 					}
-					
-					animClock = null;
-					animClockRoll = null;
-					elapsedTimeBlink = null;
-					elapsedTimeRoll = null;
 				}
 
 				// Aleatoire
 				if (buttonAleatoire.isInside(mouse.position)) {
+					animClock = null;
+					animClockRoll = null;
+					elapsedTimeBlink = null;
+					elapsedTimeRoll = null;
+					
 					LightCore.menu = false;
 					LightCore.random = true;
 					WorldGenerator newWorld;
@@ -321,11 +326,6 @@ public class MenuDisplay {
 					Level lvl = new Level(grid, a, true, true, 12, 12, 12);
 					LightCore.display = new Game(lvl);
 					LightCore.firstPrintGame = true;
-					
-					animClock = null;
-					animClockRoll = null;
-					elapsedTimeBlink = null;
-					elapsedTimeRoll = null;
 				}
 				// Quitter
 				if (buttonQuitter.isInside(mouse.position)) {
