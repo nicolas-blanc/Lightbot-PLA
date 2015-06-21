@@ -371,7 +371,7 @@ public class Game implements DisplayMode {
 			if (toDisplay.indexOf(proc2Sprite) == -1)
 				toDisplay.add(proc2Sprite);
 
-			for (int i = 0; i < proc1.getMaxNumOfActions(); i++) {
+			for (int i = 0; i < proc2.getMaxNumOfActions(); i++) {
 				RectangleShape actionSlot = new RectangleShape(new Vector2f(Textures.ACTION_TEXTURE_SIZE + 2,
 						Textures.ACTION_TEXTURE_SIZE + 2));
 				actionSlot.setOutlineColor(Color.BLACK);
