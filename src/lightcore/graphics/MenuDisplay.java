@@ -46,6 +46,7 @@ public class MenuDisplay {
 	static Sprite menuBg;
 
 	static Sprite blink;
+	static Sprite roll;
 
 	static Button buttonLogo;
 	static Button buttonJouer;
@@ -56,10 +57,13 @@ public class MenuDisplay {
 
 	private int frame = 0;
 	private Clock animClock = null;
-	private Clock elapsedTime = null;
+	private Clock animClockRoll = null;
+	private Clock elapsedTimeBlink = null;
+	private Clock elapsedTimeRoll = null;
 
 	private Random rand = new Random();
 	private int newTime = 5;
+	private int newTimeRoll = 10;
 
 	public MenuDisplay() {
 		setButtons();
@@ -72,14 +76,49 @@ public class MenuDisplay {
 	 */
 	public void display() {
 		displayButtons();
-		if (elapsedTime == null)
-			elapsedTime = new Clock();
-		if (elapsedTime.getElapsedTime().asSeconds() >= newTime) {
-			elapsedTime.restart();
+		if (elapsedTimeBlink == null)
+			elapsedTimeBlink = new Clock();
+		if(elapsedTimeRoll == null)
+			elapsedTimeRoll = new Clock();
+		
+		if (elapsedTimeRoll.getElapsedTime().asSeconds() >= newTimeRoll) {
+			elapsedTimeRoll.restart();
+			animClockRoll = new Clock();
+			newTimeRoll = rand.nextInt((20 - 10) + 1) + 10;
+			
+			if(animClock != null)
+				animClock.restart();
+		}
+		
+		if (elapsedTimeBlink.getElapsedTime().asSeconds() >= newTime) {
+			elapsedTimeBlink.restart();
 			animClock = new Clock();
 			newTime = rand.nextInt((7 - 2) + 1) + 2;
 		}
 
+		if (animClockRoll != null && animClockRoll.getElapsedTime().asMilliseconds() >= 40) {
+			animClockRoll.restart();
+			
+			if(animClock != null)
+				animClock.restart();
+			
+			frame++;
+			if (frame > 14)
+				frame = 0;
+			
+			int frameRow = frame / 5;
+			int frameCol = frame % 5;
+			blink.setTexture(Textures.rollTexture);
+			blink.setTextureRect(new IntRect(frameCol * 269, frameRow * 310, 269, 310));
+			blink.setPosition(600, 200);
+			if (frame == 0){
+				blink.setTexture(Textures.blinkTexture);
+				blink.setTextureRect(new IntRect(frameCol * 269, frameRow * 310, 269, 310));
+				blink.setPosition(600, 200);
+				animClockRoll = null;
+			}
+		}
+		
 		if (animClock != null && animClock.getElapsedTime().asMilliseconds() >= 17) {
 			animClock.restart();
 
@@ -89,7 +128,9 @@ public class MenuDisplay {
 
 			int frameRow = frame / 5;
 			int frameCol = frame % 5;
+			blink.setTexture(Textures.blinkTexture);
 			blink.setTextureRect(new IntRect(frameCol * 269, frameRow * 310, 269, 310));
+			blink.setPosition(600, 200);
 			if (frame == 0)
 				animClock = null;
 		}
