@@ -23,33 +23,40 @@ import lightcore.world.cell.*;
 
 public class ParserJSON {
 
-	// TODO add the robot
 	public static Level deserialize(String filename) {
 		Level level = null;
 		Grid grid = null;
 		ArrayList<_Executable> listOfActions = new ArrayList<_Executable>();
+		
+		// Deserialization objects
 		InputStream inStream = null;
 		JSONParser parser = new JSONParser();
+		
 		try {
+			
+			// Get the file content in an input stream
 			inStream = new FileInputStream(new File(filename));
 
-			// Build the string read in the InputStream
+			// Build the content string from the input stream
 			StringBuilder build = new StringBuilder();
-			int ch;
-			while ((ch = inStream.read()) != -1)
-				build.append((char) ch);
+			int character;
+			while ((character = inStream.read()) != -1)
+				build.append((char) character);
 
 			String fileStringified = build.toString();
+			
+			// Create a JSONObject from the parsed string
 			JSONObject dataObject = (JSONObject) parser.parse(fileStringified);
 			JSONObject robot = (JSONObject) dataObject.get("robot");
 			
-			int initialX = (int) (long) robot.get("l");
-			int initialY = (int) (long) robot.get("c");
+			// Set robot's position
+			Robot.wheatley.setLine((int) (long) robot.get("l"));
+			Robot.wheatley.setColumn((int) (long) robot.get("c"));
 			
-			Robot.wheatley.setLine(initialX);
-			Robot.wheatley.setColumn(initialY);
+			// Set robot's direction
 			Robot.wheatley.setDirection(stringToCardinalDirection((String)robot.get("dir")));
 
+			// Get the list of available actions
 			JSONArray actions = (JSONArray) dataObject.get("actions");
 			for (Object o : actions) {
 				switch ((String) o) {
@@ -87,9 +94,11 @@ public class ParserJSON {
 				}
 			}
 
+			// Get the grid size
 			int size = (int) (long) dataObject.get("size");
 			grid = new Grid(size);
 
+			// Get the grid content
 			JSONArray gridArray = (JSONArray) dataObject.get("grid");
 			for (int l = 0; l < size; l++) {
 				JSONArray lines = (JSONArray) gridArray.get(l);
@@ -138,17 +147,16 @@ public class ParserJSON {
 			int p2Limit = 0;
 			boolean p1Active = Boolean.parseBoolean((String) procedures.get("P1"));
 			boolean p2Active = Boolean.parseBoolean((String) procedures.get("P2"));
-			// System.out.println("proc1: " + p1Active);
-			// System.out.println("proc2: " + p2Active);
 
 			if (p1Active)
 				p1Limit = (int) (long) procedures.get("p1_limit");
 			if (p2Active)
 				p2Limit = (int) (long) procedures.get("p2_limit");
 
+			// Create a level from all the previous collected informations
 			level = new Level(grid, listOfActions, p1Active, p2Active, mainLimit, p1Limit, p2Limit);
-			level.setRobotInitialX(initialX);
-			level.setRobotInitialY(initialY);
+			level.setRobotInitialX(Robot.wheatley.getLine());
+			level.setRobotInitialY(Robot.wheatley.getColumn());
 
 			inStream.close();
 		} catch (FileNotFoundException e) {
@@ -166,11 +174,13 @@ public class ParserJSON {
 	public static void serialize(String filename, Level level) {
 		OutputStream outStream = null;
 		try {
+			// Create a new output stream from the filename
 			outStream = new FileOutputStream(new File(filename));
 
 			JSONObject dataObject = new JSONObject();
 			JSONArray gridArray = new JSONArray();
 
+			// Create a JSONObject describing a grid
 			for (int l = 0; l < level.getGrid().getSize(); l++) {
 				JSONArray lines = new JSONArray();
 				for (int c = 0; c < level.getGrid().getSize(); c++) {
@@ -208,16 +218,18 @@ public class ParserJSON {
 			}
 
 			dataObject.put("grid", gridArray);
+			
+			// Add the grid's size to the object
 			dataObject.put("size", level.getGrid().getSize());
 
-			// Informations about the robot
+			// Add informations about the robot
 			JSONObject robot = new JSONObject();
 			robot.put("l", Robot.wheatley.getLine());
 			robot.put("c", Robot.wheatley.getColumn());
 			robot.put("dir", Robot.wheatley.getDirection().toString());
 			dataObject.put("robot", robot);
 
-			// Informations about the list of actions
+			// Add informations about the list of actions
 			JSONArray actions = new JSONArray();
 			for (_Executable e : level.getListOfActions()) {
 				String toAdd = getClassName(e);
@@ -228,7 +240,7 @@ public class ParserJSON {
 			}
 			dataObject.put("actions", actions);
 
-			// Informations about the procedures
+			// Add informations about the procedures
 			JSONObject procedures = new JSONObject();
 			procedures.put("P1", Boolean.toString(level.useProc1()));
 			if (level.useProc1())
@@ -240,7 +252,7 @@ public class ParserJSON {
 
 			dataObject.put("proc", procedures);
 
-			// writing process
+			// Write the serialized JSONObject into the output file
 			byte[] contentToWrite = dataObject.toJSONString().getBytes();
 			outStream.write(contentToWrite);
 
@@ -253,6 +265,11 @@ public class ParserJSON {
 		}
 	}
 
+	/**
+	 * Convert a string to a Colour
+	 * @param colourIn The string to convert into Colour
+	 * @return A Colour described by the input string
+	 */
 	private static Colour stringToColour(String colourIn) {
 		Colour colour = null;
 		switch (colourIn) {
@@ -284,6 +301,11 @@ public class ParserJSON {
 		return colour;
 	}
 
+	/**
+	 * Convert a string to a TeleportColour
+	 * @param colourIn The string to convert into TeleportColour
+	 * @return A TeleportColour described by the input string
+	 */
 	private static TeleportColour stringToTeleportColour(String colourIn) {
 		TeleportColour colour = null;
 		switch (colourIn) {
@@ -312,6 +334,11 @@ public class ParserJSON {
 		return colour;
 	}
 	
+	/**
+	 * Convert a string to a CardinalDirection
+	 * @param directionIn The string to convert into CardinalDirection
+	 * @return A CardinalDirection described by the input string
+	 */
 	private static CardinalDirection stringToCardinalDirection(String directionIn){
 		switch(directionIn){
 		case "EAST":
@@ -327,11 +354,21 @@ public class ParserJSON {
 		}
 	}
 
+	/**
+	 * Get the classname of a cell, deprived of the package name, and folder names
+	 * @param cell The cell to get the classname
+	 * @return A String corresponding to the cell classname
+	 */
 	public static String getClassName(Cell cell) {
 		String[] className = cell.getClass().getName().split("\\.");
 		return className[className.length - 1];
 	}
 
+	/**
+	 * Get the classname of a _Executable, deprived of the package name, and folder names
+	 * @param action The action to get the classname
+	 * @return A String corresponding to the action classname
+	 */
 	public static String getClassName(_Executable action) {
 		String[] className = action.getClass().getName().split("\\.");
 		return className[className.length - 1];
