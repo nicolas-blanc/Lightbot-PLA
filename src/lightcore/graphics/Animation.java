@@ -161,7 +161,7 @@ public class Animation {
 		    for(Event event : LightCore.window.pollEvents()) {
 		    	switch(event.type) {
 		    		case CLOSED:
-		    			System.out.println("The user pressed the close button!");
+		    			//System.out.println("The user pressed the close button!");
 		    			LightCore.window.close();
 		    			break;
 					default:
@@ -250,7 +250,7 @@ public class Animation {
 		    for(Event event : LightCore.window.pollEvents()) {
 		    	switch(event.type) {
 		    		case CLOSED:
-		    			System.out.println("The user pressed the close button!");
+		    			//System.out.println("The user pressed the close button!");
 		    			LightCore.window.close();
 		    			break;
 					default:
@@ -462,7 +462,7 @@ public class Animation {
 		    for(Event event : LightCore.window.pollEvents()) {
 		    	switch(event.type) {
 		    		case CLOSED:
-		    			System.out.println("The user pressed the close button!");
+		    			//System.out.println("The user pressed the close button!");
 		    			LightCore.window.close();
 		    			break;
 					default:
@@ -573,7 +573,7 @@ public class Animation {
 		    for(Event event : LightCore.window.pollEvents()) {
 		    	switch(event.type) {
 		    		case CLOSED:
-		    			System.out.println("The user pressed the close button!");
+		    			//System.out.println("The user pressed the close button!");
 		    			LightCore.window.close();
 		    			break;
 					default:

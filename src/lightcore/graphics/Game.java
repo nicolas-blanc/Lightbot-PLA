@@ -428,7 +428,7 @@ public class Game implements DisplayMode {
 			if (mouse.button == Mouse.Button.LEFT) {
 
 				if (buttonPlay.isInside(mouse.position)) {
-					System.out.println("MAIN SIZE: " + main.getSize());
+					//System.out.println("MAIN SIZE: " + main.getSize());
 					Scheduler sched = new Scheduler(main, proc1, proc2, level);
 					try {
 						sched.execute();
@@ -566,7 +566,7 @@ public class Game implements DisplayMode {
 						if (i == pressedActionIndex) {
 							e = actionsL.get(i);
 							b = buttonsL.get(i);
-							System.out.println(b.getColor());
+							//System.out.println(b.getColor());
 
 							if (e instanceof Procedure) {
 								Procedure p = (Procedure) e;
@@ -736,8 +736,8 @@ public class Game implements DisplayMode {
 		if (useProc2 && proc2IsActive && proc2.getSize() == proc2.getMaxNumOfActions())
 			return;
 
-		if (e instanceof Procedure)
-			System.out.println(((Procedure) e).getName() + " " + ((Procedure) e).getSize());
+		//if (e instanceof Procedure)
+			//System.out.println(((Procedure) e).getName() + " " + ((Procedure) e).getSize());
 
 		if (mainIsActive) {
 
@@ -746,7 +746,7 @@ public class Game implements DisplayMode {
 
 			main.addAction(e);
 
-			System.out.println(main.getSize());
+			//System.out.println(main.getSize());
 
 			Sprite s = new Sprite(b.getSprite().getTexture());
 			int spriteX = 730 + 10 + (whereToAdd % 4) * (50 + 10);
@@ -780,7 +780,7 @@ public class Game implements DisplayMode {
 
 			assert proc1.getSize() == proc1Buttons.size();
 
-			System.out.println("proc1 size : " + proc1.getSize());
+			//System.out.println("proc1 size : " + proc1.getSize());
 		}
 
 		else if (proc2IsActive) {
@@ -1079,6 +1079,8 @@ public class Game implements DisplayMode {
 		Robot.wheatley.setLine(initialX);
 		Robot.wheatley.setColumn(initialY);
 		Robot.wheatley.setDirection(initialDir);
+		Robot.wheatley.setColour(Colour.WHITE);
+		Robot.wheatleyClone.setColour(Colour.WHITE);
 		((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
 		((Game) LightCore.display).display.anim.updateSprite(
 				((Game) LightCore.display).display.gridDisplay.getGridSprites(),

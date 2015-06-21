@@ -148,7 +148,7 @@ public class Scheduler {
 				action = executionClone.pop();
 			}
 		} catch (EmptyStackException e) {
-			System.out.println("Changed robot, excetption");
+			//System.out.println("Changed robot, exception");
 			robot = giveNextRobot(false);
 			if (currentRobot == 0) {
 				action = executionMain.pop();
