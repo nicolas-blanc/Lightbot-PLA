@@ -982,7 +982,8 @@ public class Game implements DisplayMode {
 	}
 
 	private boolean isColorable(_Executable e) {
-		return !(e instanceof Wash) && !(e instanceof Light) && !(e instanceof Break) && !(e instanceof Clone);
+		//return !(e instanceof Wash) && !(e instanceof Light) && !(e instanceof Break) && !(e instanceof Clone);
+		return !(e instanceof Wash) && !(e instanceof Light) && !(e instanceof Clone);
 	}
 
 	private boolean hasSplash() {
