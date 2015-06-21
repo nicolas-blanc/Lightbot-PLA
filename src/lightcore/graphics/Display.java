@@ -180,8 +180,10 @@ public class Display {
 				turn.execute(null, Robot.wheatley);
 				robotDisplay.updateRobot(Robot.wheatley, robotTransparency);
 				
-				turn.execute(null, Robot.wheatleyClone);
-				cloneDisplay.updateRobot(Robot.wheatleyClone, cloneTransparency);
+				if(Robot.wheatleyClone.getVisibility()){
+					turn.execute(null, Robot.wheatleyClone);
+					cloneDisplay.updateRobot(Robot.wheatleyClone, cloneTransparency);
+				}
 			}
 		}
 		else{
@@ -199,13 +201,17 @@ public class Display {
 				Turn turn = new Turn(RelativeDirection.RIGHT, Colour.WHITE);
 				turn.execute(null, Robot.wheatley);
 				robotDisplay.updateRobot(Robot.wheatley, robotTransparency);
-				turn.execute(null, Robot.wheatleyClone);
-				cloneDisplay.updateRobot(Robot.wheatleyClone, cloneTransparency);
+				
+				if(Robot.wheatleyClone.getVisibility()){
+					turn.execute(null, Robot.wheatleyClone);
+					cloneDisplay.updateRobot(Robot.wheatleyClone, cloneTransparency);
+				}
 			}
 		}
 		if(robotIsDisplayed){
 			anim.updateSprite(gridDisplay.getGridSprites(), robotDisplay.getSprite());
-			anim.updateClone(cloneDisplay.getSprite());
+			if(Robot.wheatleyClone.getVisibility())
+				anim.updateClone(cloneDisplay.getSprite());
 		}
 		else
 			anim.updateSprite(gridDisplay.getGridSprites());
