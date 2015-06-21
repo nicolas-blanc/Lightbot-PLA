@@ -45,7 +45,7 @@ public class LightCore {
 	public static String tutoPath = null;
 	
 	public static SoundBuffer soundBuffer;
-	public static Sound sound;
+	public static Sound sound = null;
 	
 	public static Button soundButton;
 
@@ -72,20 +72,6 @@ public class LightCore {
 
 		// Limit the framerate
 		window.setFramerateLimit(60);
-		
-		soundBuffer = new SoundBuffer();
-		try {
-		    soundBuffer.loadFromFile(Paths.get("ressources/menu.flac"));
-		} catch(IOException ex) {
-		    System.err.println("Failed to load the sound:");
-		}
-		
-		//Create a sound and set its buffer
-		sound = new Sound();
-		sound.setBuffer(soundBuffer);
-		sound.setLoop(true);
-
-		sound.play();
 		
 		// Main loop
 		while (window.isOpen()) {
@@ -129,6 +115,22 @@ public class LightCore {
 			}
 			
 			window.display();
+			
+			if(sound == null){
+				soundBuffer = new SoundBuffer();
+				try {
+				    soundBuffer.loadFromFile(Paths.get("ressources/menu.flac"));
+				} catch(IOException ex) {
+				    System.err.println("Failed to load the sound:");
+				}
+				
+				//Create a sound and set its buffer
+				sound = new Sound();
+				sound.setBuffer(soundBuffer);
+				sound.setLoop(true);
+
+				sound.play();
+			}
 
 			// Handle events
 			for (Event event : window.pollEvents()) {
