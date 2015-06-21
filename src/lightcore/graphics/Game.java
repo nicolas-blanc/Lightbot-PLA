@@ -766,11 +766,11 @@ public class Game implements DisplayMode {
 
 		
 
-		if (cloneAlreadyUsed) {
+		if (e instanceof Clone && cloneAlreadyUsed) {
 			return;
 		}
 
-		if (e instanceof Clone) {
+		if (e instanceof Clone && !cloneAlreadyUsed) {
 			cloneAlreadyUsed = true;
 		}
 
