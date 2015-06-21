@@ -169,12 +169,14 @@ public class LevelDisplay {
 		LightCore.window.draw(levelBlock);
 		LightCore.window.draw(level1);
 		LightCore.window.draw(level2);
-		LightCore.window.draw(level3);
-		LightCore.window.draw(level4);
-		if(LightCore.bases || LightCore.procedures){
-			LightCore.window.draw(level5);
-			if(LightCore.procedures)
-				LightCore.window.draw(level6);	
+		if(!LightCore.breakaction){
+			LightCore.window.draw(level3);
+			LightCore.window.draw(level4);
+			if(LightCore.bases || LightCore.procedures){
+				LightCore.window.draw(level5);
+				if(LightCore.procedures)
+					LightCore.window.draw(level6);	
+			}
 		}
 	}
 
