@@ -434,7 +434,49 @@ public class Game implements DisplayMode {
 						sched.execute();
 
 					} catch (OutOfGridException oge) {
-						// handle segfault
+				
+						// print the last action
+						for (Drawable s : toDisplay)
+							LightCore.window.draw(s);
+						display.print();
+						
+						boolean finished = false;
+						Sprite segFault = new Sprite(Textures.segFaultTexture);
+						
+						// take a screenshot of the last window and convert to
+						// sprite
+						Image levelEnd = LightCore.window.capture();
+						Texture lastDisplaySprite = new Texture();
+						try {
+							lastDisplaySprite.loadFromImage(levelEnd);
+						} catch (TextureCreationException e1) {
+							e1.printStackTrace();
+						}
+						Sprite lastDisplay = new Sprite(lastDisplaySprite);
+						
+						while (LightCore.window.isOpen() && !finished) {
+
+							LightCore.window.clear(Color.WHITE);
+							LightCore.window.draw(lastDisplay);
+							LightCore.window.draw(segFault);
+							LightCore.window.display();
+
+							// event manager
+							for (Event e : LightCore.window.pollEvents()) {
+								switch (e.type) {
+								case CLOSED:
+									LightCore.window.close();
+									break;
+								case MOUSE_BUTTON_PRESSED:
+									finished = true;
+									resetLevel();
+									resetButtons();
+									break;
+								default:
+									break;
+								}
+							}
+						}
 					} catch (LevelEndException exception) {
 
 						// print the last action
@@ -485,25 +527,7 @@ public class Game implements DisplayMode {
 						}
 					}
 				} else if (buttonReset.isInside(mouse.position)) {
-
-					reset();
-					level = new Level(initialGrid, level.getListOfActions(), level.useProc1(), level.useProc2(),
-							level.getMainLimit(), level.getProc1Limit(), level.getProc2Limit());
-					initialGrid = new Grid(this.level.getGrid());
-					toDisplay = new ArrayList<Drawable>();
-
-					display = new Display(initialGrid, originX, originY);
-					Robot.wheatley.setLine(initialX);
-					Robot.wheatley.setColumn(initialY);
-					Robot.wheatley.setDirection(initialDir);
-					((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
-					((Game) LightCore.display).display.anim.updateSprite(
-							((Game) LightCore.display).display.gridDisplay.getGridSprites(),
-							((Game) LightCore.display).display.robotDisplay.getSprite());
-					if (Robot.wheatleyClone.getVisibility())
-						Robot.wheatleyClone.setVisibility(false);
-
-					initConstantDisplay();
+					resetLevel();
 				} else if (turnLeftButton.isInside(mouse.position)) {
 					display.rotate(0);
 					int tmp = initialX;
@@ -1042,5 +1066,26 @@ public class Game implements DisplayMode {
 				return true;
 		}
 		return false;
+	}
+	
+	private void resetLevel(){
+		reset();
+		level = new Level(initialGrid, level.getListOfActions(), level.useProc1(), level.useProc2(),
+				level.getMainLimit(), level.getProc1Limit(), level.getProc2Limit());
+		initialGrid = new Grid(this.level.getGrid());
+		toDisplay = new ArrayList<Drawable>();
+
+		display = new Display(initialGrid, originX, originY);
+		Robot.wheatley.setLine(initialX);
+		Robot.wheatley.setColumn(initialY);
+		Robot.wheatley.setDirection(initialDir);
+		((Game) LightCore.display).display.robotDisplay.updateRobot(Robot.wheatley, 255);
+		((Game) LightCore.display).display.anim.updateSprite(
+				((Game) LightCore.display).display.gridDisplay.getGridSprites(),
+				((Game) LightCore.display).display.robotDisplay.getSprite());
+		if (Robot.wheatleyClone.getVisibility())
+			Robot.wheatleyClone.setVisibility(false);
+
+		initConstantDisplay();
 	}
 }
