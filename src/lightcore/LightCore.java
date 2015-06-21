@@ -74,7 +74,7 @@ public class LightCore {
 		
 		soundBuffer = new SoundBuffer();
 		try {
-		    soundBuffer.loadFromFile(Paths.get("ressources/menu.wav"));
+		    soundBuffer.loadFromFile(Paths.get("ressources/menu.flac"));
 		    System.out.println("Sound duration: " + soundBuffer.getDuration().asSeconds() + " seconds");
 		} catch(IOException ex) {
 		    //Something went wrong
