@@ -584,9 +584,10 @@ public class Editor implements DisplayMode{
 					  initConstantDisplay();
 					  
 					  //System.out.println(file.getAbsolutePath());
+					}else{
+						loadButton.changeTexture();
+						toDisplay.set(loadButton.getId(), loadButton.getSprite());
 					}
-					loadButton.changeTexture();
-					toDisplay.set(loadButton.getId(), loadButton.getSprite());
 					break;
 					
 				case ROBOT:
