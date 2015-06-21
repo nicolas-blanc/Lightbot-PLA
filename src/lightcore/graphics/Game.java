@@ -23,6 +23,7 @@ import lightcore.world.OutOfGridException;
 import lightcore.world.RelativeDirection;
 import lightcore.world.Robot;
 
+import org.jsfml.audio.SoundSource;
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.Image;
@@ -284,6 +285,13 @@ public class Game implements DisplayMode {
 		toDisplay.add(turnRightSprite);
 		toDisplay.add(homeSprite);
 		toDisplay.add(returnSprite);
+		
+		if(!LightCore.soundButton.getSprite().getPosition().equals(new Vector2f(15, 65))){
+			Sprite soundSprite = LightCore.soundButton.getSprite();
+			soundSprite.setPosition(15, 65);
+			LightCore.soundButton.setSprite(soundSprite);
+		}
+		toDisplay.add(LightCore.soundButton.getSprite());
 
 		initProcedures();
 
@@ -694,6 +702,17 @@ public class Game implements DisplayMode {
 						break;
 					}
 				}
+				
+				if(LightCore.soundButton.isInside(mouse.position)){
+					int id = toDisplay.indexOf(LightCore.soundButton.getSprite());
+					if(LightCore.sound.getStatus() == SoundSource.Status.PLAYING)
+						LightCore.sound.pause();
+					else
+						LightCore.sound.play();
+					LightCore.soundButton.changeTexture();
+					toDisplay.set(id, LightCore.soundButton.getSprite());
+				}
+				
 			} else if (mouse.button == Mouse.Button.RIGHT) {
 				int index;
 				if (sl != null) {

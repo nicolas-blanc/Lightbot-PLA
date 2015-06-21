@@ -1,13 +1,20 @@
 package lightcore;
 
+import java.io.IOException;
+import java.nio.file.Paths;
+
+import lightcore.graphics.Button;
 import lightcore.graphics.DisplayMode;
 import lightcore.graphics.LevelDisplay;
 import lightcore.graphics.MenuDisplay;
 import lightcore.graphics.Textures;
 import lightcore.world.Robot;
 
+import org.jsfml.audio.Sound;
+import org.jsfml.audio.SoundBuffer;
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.RenderWindow;
+import org.jsfml.graphics.Sprite;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.event.Event;
 
@@ -35,6 +42,11 @@ public class LightCore {
 	
 	public static String path = null;
 	public static String tutoPath = null;
+	
+	public static SoundBuffer soundBuffer;
+	public static Sound sound;
+	
+	public static Button soundButton;
 
 	public static void main(String[] args) {
 		
@@ -43,6 +55,9 @@ public class LightCore {
 		/***********************************/
 		
 		Robot.wheatleyClone.setVisibility(false);
+		
+		Sprite soundTexture = new Sprite(Textures.soundTexture);
+		soundButton = new Button(soundTexture, Textures.muteTexture, Textures.soundTexture);
 		
 		boolean firstLaunch = true;
 		MenuDisplay menuD = new MenuDisplay();
@@ -56,7 +71,24 @@ public class LightCore {
 
 		// Limit the framerate
 		window.setFramerateLimit(60);
+		
+		soundBuffer = new SoundBuffer();
+		try {
+		    soundBuffer.loadFromFile(Paths.get("ressources/menu.wav"));
+		    System.out.println("Sound duration: " + soundBuffer.getDuration().asSeconds() + " seconds");
+		} catch(IOException ex) {
+		    //Something went wrong
+		    System.err.println("Failed to load the sound:");
+		    ex.printStackTrace();
+		}
+		
+		//Create a sound and set its buffer
+		sound = new Sound();
+		sound.setBuffer(soundBuffer);
+		sound.setLoop(true);
 
+		sound.play();
+		
 		// Main loop
 		while (window.isOpen()) {
 			if(firstLaunch) {

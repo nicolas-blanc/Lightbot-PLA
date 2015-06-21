@@ -16,6 +16,9 @@ public class Textures {
 	public static final String EDITOR_PATH = RESSOURCE_PATH + "editor/";
 	public static final String CUBE_PATH = RESSOURCE_PATH + "cube/";
 	
+	public static Texture soundTexture;
+	public static Texture muteTexture;
+	
 	// Seg Fault
 	public static Texture segFaultTexture;
 	
@@ -165,6 +168,9 @@ public class Textures {
 	
 	public static void initTextures(){
 		
+		soundTexture = new Texture();
+		muteTexture = new Texture();
+		
 		// Seg Fault
 		segFaultTexture = new Texture();
 		
@@ -313,6 +319,9 @@ public class Textures {
 		try {
 			
 			/************************ Load the textures ************************/
+			
+			soundTexture.loadFromFile(Paths.get(RESSOURCE_PATH + "sound.png"));
+			muteTexture.loadFromFile(Paths.get(RESSOURCE_PATH + "mute.png"));
 			
 			// Seg Fault
 			segFaultTexture.loadFromFile(Paths.get(RESSOURCE_PATH + "segFault.png"));

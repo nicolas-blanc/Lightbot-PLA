@@ -45,9 +45,11 @@ import lightcore.world.cell.LightableCell;
 import lightcore.world.cell.NormalCell;
 import lightcore.world.cell.TeleportCell;
 
+import org.jsfml.audio.SoundSource;
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.Drawable;
 import org.jsfml.graphics.Sprite;
+import org.jsfml.system.Vector2f;
 import org.jsfml.system.Vector2i;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
@@ -260,6 +262,14 @@ public class Editor implements DisplayMode{
 		
 		turnRobotLeft.setId(id+10);
 		turnRobotRight.setId(id+11);
+		
+		if(!LightCore.soundButton.getSprite().getPosition().equals(new Vector2f(15, 65))){
+			Sprite soundSprite = LightCore.soundButton.getSprite();
+			soundSprite.setPosition(15, 65);
+			LightCore.soundButton.setSprite(soundSprite);
+		}
+		toDisplay.add(LightCore.soundButton.getSprite());
+		LightCore.soundButton.setId(id+12);
 	}
 	
 	/**
@@ -317,6 +327,17 @@ public class Editor implements DisplayMode{
 			LoadSaveFilter filter;
 			MouseButtonEvent mouse = event.asMouseButtonEvent();
        	 	CellPosition pos = isInside(mouse.position);
+       	 	
+       	 	if(mouse.button == Mouse.Button.LEFT){
+	       	 	if(LightCore.soundButton.isInside(mouse.position)){
+					if(LightCore.sound.getStatus() == SoundSource.Status.PLAYING)
+						LightCore.sound.pause();
+					else
+						LightCore.sound.play();
+					LightCore.soundButton.changeTexture();
+					toDisplay.set(LightCore.soundButton.getId(), LightCore.soundButton.getSprite());
+				}
+       	 	}
        	 	
        	 	switch(getEvent(mouse)){
 				case GRID_ADD:
