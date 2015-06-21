@@ -16,6 +16,7 @@ import org.jsfml.graphics.Color;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.window.VideoMode;
+import org.jsfml.window.WindowStyle;
 import org.jsfml.window.event.Event;
 
 public class LightCore {
@@ -67,7 +68,7 @@ public class LightCore {
 		window = new RenderWindow();
 
 		// base 1280 * 960 for 1920*1080
-		window.create(new VideoMode(1000, 600), "LightCore");
+		window.create(new VideoMode(1000, 600), "LightCore", WindowStyle.CLOSE | WindowStyle.TITLEBAR);
 
 		// Limit the framerate
 		window.setFramerateLimit(60);
@@ -75,11 +76,8 @@ public class LightCore {
 		soundBuffer = new SoundBuffer();
 		try {
 		    soundBuffer.loadFromFile(Paths.get("ressources/menu.flac"));
-		    System.out.println("Sound duration: " + soundBuffer.getDuration().asSeconds() + " seconds");
 		} catch(IOException ex) {
-		    //Something went wrong
 		    System.err.println("Failed to load the sound:");
-		    ex.printStackTrace();
 		}
 		
 		//Create a sound and set its buffer
