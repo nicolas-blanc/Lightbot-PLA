@@ -129,7 +129,7 @@ public class WorldGeneratorBase extends WorldGenerator{
 			break;
 		case 1:
 			try {
-				Cell emptyCell = grid.getNextCell(cell.getX(), cell.getY(), direction);
+				Cell emptyCell = grid.getNextCellGen(cell.getX(), cell.getY(), direction);
 //				System.out.println("Heigh cell : " + emptyCell.getHeight());
 				if (emptyCell.isEmptyCell()) {
 					grid.setCell(new NormalCell(emptyCell.getX(), emptyCell.getY(), cell.getHeight()));
@@ -160,7 +160,7 @@ public class WorldGeneratorBase extends WorldGenerator{
 			break;
 		case 2:
 			try {
-				Cell emptyCell = grid.getNextCell(cell.getX(), cell.getY(), direction);
+				Cell emptyCell = grid.getNextCellGen(cell.getX(), cell.getY(), direction);
 //				System.out.println("Heigh cell : " + emptyCell.getHeight());
 				if (emptyCell.isEmptyCell()) {
 					if(cell.getHeight() == 0) {
