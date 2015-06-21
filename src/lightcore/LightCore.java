@@ -15,6 +15,7 @@ import org.jsfml.audio.SoundBuffer;
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.RenderWindow;
 import org.jsfml.graphics.Sprite;
+import org.jsfml.graphics.Texture;
 import org.jsfml.window.VideoMode;
 import org.jsfml.window.WindowStyle;
 import org.jsfml.window.event.Event;
@@ -51,6 +52,40 @@ public class LightCore {
 
 	public static void main(String[] args) {
 		
+		// Create the window
+		window = new RenderWindow();
+		window.create(new VideoMode(1000, 600), "LightCore", WindowStyle.CLOSE | WindowStyle.TITLEBAR);
+
+		// Limit the framerate
+		window.setFramerateLimit(60);
+		
+		Texture loading = new Texture();
+		Texture loading2 = new Texture();
+		try {
+			loading.loadFromFile(Paths.get("ressources/menu/loading.png"));
+			loading2.loadFromFile(Paths.get("ressources/menu/loading2.png"));
+		} catch (IOException e) {}
+		Sprite loadingSprite = new Sprite(loading);
+		window.clear(Color.WHITE);
+		window.draw(loadingSprite);
+		window.display();
+		
+		soundBuffer = new SoundBuffer();
+		try {
+		    soundBuffer.loadFromFile(Paths.get("ressources/menu.flac"));
+		    loadingSprite.setTexture(loading2);
+		    window.clear(Color.WHITE);
+		    window.draw(loadingSprite);
+		    window.display();
+		} catch(IOException ex) {
+		    System.err.println("Failed to load the sound:");
+		}
+		
+		//Create a sound and set its buffer
+		sound = new Sound();
+		sound.setBuffer(soundBuffer);
+		sound.setLoop(true);
+				
 		// always at the beginning of the main
 		Textures.initTextures();
 		/***********************************/
@@ -63,15 +98,8 @@ public class LightCore {
 		boolean firstLaunch = true;
 		MenuDisplay menuD = new MenuDisplay();
 		LevelDisplay levels = new LevelDisplay();
-
-		// Create the window
-		window = new RenderWindow();
-
-		// base 1280 * 960 for 1920*1080
-		window.create(new VideoMode(1000, 600), "LightCore", WindowStyle.CLOSE | WindowStyle.TITLEBAR);
-
-		// Limit the framerate
-		window.setFramerateLimit(60);
+		
+		sound.play();
 		
 		// Main loop
 		while (window.isOpen()) {
@@ -115,22 +143,6 @@ public class LightCore {
 			}
 			
 			window.display();
-			
-			if(sound == null){
-				soundBuffer = new SoundBuffer();
-				try {
-				    soundBuffer.loadFromFile(Paths.get("ressources/menu.flac"));
-				} catch(IOException ex) {
-				    System.err.println("Failed to load the sound:");
-				}
-				
-				//Create a sound and set its buffer
-				sound = new Sound();
-				sound.setBuffer(soundBuffer);
-				sound.setLoop(true);
-
-				sound.play();
-			}
 
 			// Handle events
 			for (Event event : window.pollEvents()) {
