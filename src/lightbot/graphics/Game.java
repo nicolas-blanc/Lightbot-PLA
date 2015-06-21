@@ -430,6 +430,7 @@ public class Game implements DisplayMode {
 									LightCore.game = false;
 									LightCore.random = false;
 									LightCore.worlds = true;
+									LightCore.firstPrintGame = true;
 									resetButtons();
 									break;
 								default:
@@ -981,7 +982,8 @@ public class Game implements DisplayMode {
 	}
 
 	private boolean isColorable(_Executable e) {
-		return !(e instanceof Wash) && !(e instanceof Light) && !(e instanceof Break) && !(e instanceof Clone);
+		//return !(e instanceof Wash) && !(e instanceof Light) && !(e instanceof Break) && !(e instanceof Clone);
+		return !(e instanceof Wash) && !(e instanceof Light) && !(e instanceof Clone);
 	}
 
 	private boolean hasSplash() {

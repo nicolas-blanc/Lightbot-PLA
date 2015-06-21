@@ -23,7 +23,7 @@ public class Break extends _Action {
 
 	@Override
 	public _Executable cloneWithNewColor(_Executable e, Colour newColor) {
-		return null;
+		return new Break(newColor);
 	}
 
 }
