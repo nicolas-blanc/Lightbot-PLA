@@ -46,7 +46,7 @@ public class Game implements DisplayMode {
 	private static Button homeButton;
 	private static Button returnButton;
 	private static Button buttonPlay;
-	private static Button buttonReset;
+	public static Button buttonReset;
 
 	private static Button noSplash;
 	private static Button blueSplash;
@@ -170,6 +170,9 @@ public class Game implements DisplayMode {
 	 * Initialize the constant display for a game
 	 */
 	public void initConstantDisplay() {
+		
+		Robot.wheatley.setColour(Colour.WHITE);
+		Robot.wheatleyClone.setColour(Colour.WHITE);
 
 		toDisplay.add(new Sprite(Textures.backgroundGameTexture));
 		mainIsActive = true;

@@ -58,7 +58,7 @@ public class Scheduler {
 		boolean notEnd = true;
 
 		_Action action;
-		
+
 		robot = Robot.wheatley;
 		currentRobot = 0;
 
@@ -70,7 +70,14 @@ public class Scheduler {
 			executionClone.push(procP2.getAction(i));
 		}
 
+<<<<<<< HEAD
 		while (notEnd && !level.isCompleted()) {
+=======
+		while (notEnd && !level.isCompleted()) { // Changer pour une
+													// condition : tant que
+													// toutes les lumi�res
+													// ne sont pas allum�
+>>>>>>> 4d39293eedf120ff4c706e46ca1e8d4a12c093cc
 			try {
 				action = nextAction();
 			} catch (EmptyStackException e) {
@@ -81,9 +88,11 @@ public class Scheduler {
 			if (notEnd) {
 				try {
 					if (robot == Robot.wheatley) {
-						System.out.println("Action effectuer : " + action.toString() + " // Robot : weathley -> " + currentRobot +" // number of robot : " + numberOfRobots);
+						System.out.println("Action effectuer : " + action.toString() + " // Robot : weathley -> "
+								+ currentRobot + " // number of robot : " + numberOfRobots);
 					} else {
-						System.out.println("Action effectuer : " + action.toString() + " // Robot : weathleyClone -> " + currentRobot +" // number of robot : " + numberOfRobots);
+						System.out.println("Action effectuer : " + action.toString() + " // Robot : weathleyClone -> "
+								+ currentRobot + " // number of robot : " + numberOfRobots);
 					}
 					action.execute(level.getGrid(), robot);
 					if (level.isCompleted()) {
@@ -91,7 +100,7 @@ public class Scheduler {
 						throw new LevelEndException();
 					}
 				} catch (OutOfGridException ge) {
-					
+
 					throw new OutOfGridException();
 				}
 				robot = giveNextRobot();
@@ -101,6 +110,11 @@ public class Scheduler {
 
 	/**
 	 * Return the next robot who execute the next action
+<<<<<<< HEAD
+=======
+	 * 
+	 * @param clone
+>>>>>>> 4d39293eedf120ff4c706e46ca1e8d4a12c093cc
 	 * 
 	 * @return the next Robot
 	 */
@@ -118,7 +132,7 @@ public class Scheduler {
 		} else {
 			temp = Robot.wheatley;
 		}
-		
+
 		return temp;
 	}
 
@@ -156,10 +170,12 @@ public class Scheduler {
 
 		if (action instanceof Break) {
 			if (currentRobot == 0) {
-				while (executionMain.pop() != null);
+				while (executionMain.pop() != null)
+					;
 				action = nextAction();
 			} else {
-				while (executionClone.pop() != null);
+				while (executionClone.pop() != null)
+					;
 				action = nextAction();
 			}
 		}
@@ -175,7 +191,7 @@ public class Scheduler {
 		} else {
 			if (action instanceof Clone) {
 				numberOfRobots++;
-				
+
 			}
 
 			return (_Action) action;
