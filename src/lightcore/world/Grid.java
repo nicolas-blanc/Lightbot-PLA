@@ -47,7 +47,7 @@ public class Grid {
 					this.grid[i][j] = new EmptyCell(i, j);
 				} else {
 					if (c instanceof EmptyCell) {
-						//System.out.println(c == null);
+						// System.out.println(c == null);
 						this.grid[i][j] = new EmptyCell(i, j);
 					}
 					if (c instanceof NormalCell) {
@@ -191,6 +191,7 @@ public class Grid {
 	 *         direction of the robot
 	 * @throws OutOfGridException
 	 */
+
 	public Cell getNextCell(int currentL, int currentC, CardinalDirection direction) throws OutOfGridException {
 
 		switch (direction) {
@@ -229,6 +230,39 @@ public class Grid {
 				} else
 					throw new OutOfGridException();
 			}
+		default:
+			throw new OutOfGridException();
+		}
+	}
+
+	public Cell getNextCellGen(int currentL, int currentC, CardinalDirection direction) throws OutOfGridException {
+
+		switch (direction) {
+		case NORTH:
+			if (currentL == 0) {
+				throw new OutOfGridException();
+			}
+			return this.grid[currentL - 1][currentC];
+
+		case SOUTH:
+			if (currentL == size - 1) {
+				throw new OutOfGridException();
+			}
+
+			return this.grid[currentL + 1][currentC];
+		case WEST:
+			if (currentC == 0) {
+				throw new OutOfGridException();
+			}
+			return this.grid[currentL][currentC - 1];
+
+		case EAST:
+			if (currentC == size - 1) {
+				throw new OutOfGridException();
+			}
+
+			return this.grid[currentL][currentC + 1];
+
 		default:
 			throw new OutOfGridException();
 		}
