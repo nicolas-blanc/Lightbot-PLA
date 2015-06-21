@@ -25,15 +25,13 @@ public class Scheduler {
 
 	/**
 	 * @param procMain
-	 *            The main procedure, generally, the procedure of the first
-	 *            Robot
+	 *            The main procedure executed by the first robot
 	 * @param procP1
-	 *            An others procedure, to represent fonction
+	 *            The first procedure that belongs to both robots
 	 * @param procP2
-	 *            The last procedure, a fonction or the procedure for the second
-	 *            Robot
+	 *            The second procedure executed by the second robot
 	 * @param grid
-	 *            The grid of the game
+	 *            A grid of cells
 	 */
 	public Scheduler(Procedure procMain, Procedure procP1, Procedure procP2, Level level) {
 		super();
@@ -49,10 +47,10 @@ public class Scheduler {
 	}
 
 	/**
-	 * Execute the action of Robots in parallele
+	 * Execute the action of Robots in parallel
 	 * 
 	 * @throws LevelEndException
-	 *             Exception if the level is finish
+	 *             Exception if the level is finished
 	 */
 	public void execute() throws LevelEndException, OutOfGridException {
 		boolean notEnd = true;
@@ -102,12 +100,7 @@ public class Scheduler {
 	}
 
 	/**
-	 * Return the next robot who execute the next action
-<<<<<<< HEAD
-=======
-	 * 
-	 * @param clone
->>>>>>> 4d39293eedf120ff4c706e46ca1e8d4a12c093cc
+	 * Return the next robot that must execute
 	 * 
 	 * @return the next Robot
 	 */
@@ -116,10 +109,8 @@ public class Scheduler {
 		if (numberOfRobots == 2) {
 			if (currentRobot == 1) {
 				temp = Robot.wheatley;
-//				System.out.println("Current robot : wheatley");
 			} else {
 				temp = Robot.wheatleyClone;
-//				System.out.println("Current robot : wheatleyClone");
 			}
 			currentRobot = ++currentRobot % numberOfRobots;
 		} else {
@@ -130,8 +121,7 @@ public class Scheduler {
 	}
 
 	/**
-	 * The next action who is executed, if the next is a procedure, this
-	 * function return the first action of this procedure
+	 * Returns the next action to be executed
 	 * 
 	 * @return The next action
 	 */
@@ -144,7 +134,7 @@ public class Scheduler {
 				action = executionClone.pop();
 			}
 		} catch (EmptyStackException e) {
-//			System.out.println("Changed robot, exception");
+			// System.out.println("Changed robot, exception");
 			robot = giveNextRobot();
 			if (currentRobot == 0) {
 				action = executionMain.pop();
@@ -175,9 +165,9 @@ public class Scheduler {
 
 		if (action instanceof Procedure) {
 			if (((Procedure) action).getName().equals(Procedure.PROCEDURE1_NAME)) {
-				pile(procP1);
+				stack(procP1);
 			} else {
-				pile(procP2);
+				stack(procP2);
 			}
 
 			return nextAction();
@@ -192,12 +182,12 @@ public class Scheduler {
 	}
 
 	/**
-	 * Stack on the pile the procedure give in parameters
+	 * Stack the procedure on the execution list
 	 * 
 	 * @param proc
-	 *            The procedure who add in the execution
+	 *            a procedure to execute
 	 */
-	private void pile(Procedure proc) {
+	private void stack(Procedure proc) {
 		if (currentRobot == 0) {
 			executionMain.push(null);
 			for (int i = proc.getSize() - 1; i >= 0; i--) {
