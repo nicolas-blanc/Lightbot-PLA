@@ -22,7 +22,7 @@ public class Animation {
 	private final float fallTime = 200;
 	
 	private final float robotArrivalTime = 500; 
-	private final float movementTime = 1000;
+	private float movementTime = 1000;
 	
 	private Sprite[][][] cubes;
 	
@@ -321,6 +321,9 @@ public class Animation {
 			nextCellY = Robot.wheatley.getColumn();
 		}
 		
+		if(upOrDown != 0)
+			movementTime = 500;
+		
 		if(upOrDown == 0){
 			switch(direction){
 				case EAST:
@@ -411,7 +414,9 @@ public class Animation {
 						else{
 							if(nextCellX > Robot.wheatleyClone.getLine()){
 								if((l == nextCellX && c > Robot.wheatleyClone.getColumn()) || l != nextCellX)
-									printPillar(l, c);
+									if(!Robot.wheatley.getVisibility() 
+											|| (Robot.wheatley.getVisibility() && (l != Robot.wheatley.getLine() || c != Robot.wheatley.getColumn())))
+										printPillar(l, c);
 							}
 							else if(l != nextCellX || c != nextCellY){
 								if(!Robot.wheatley.getVisibility() 
@@ -444,7 +449,9 @@ public class Animation {
 						else{
 							if(nextCellX > Robot.wheatley.getLine()){
 								if((l == nextCellX && c > Robot.wheatley.getColumn()) || l != nextCellX)
-									printPillar(l, c);
+									if(!Robot.wheatleyClone.getVisibility() 
+											|| (Robot.wheatleyClone.getVisibility() && (l != Robot.wheatleyClone.getLine() || c != Robot.wheatleyClone.getColumn())))
+										printPillar(l, c);
 							}
 							else if(l != nextCellX || c != nextCellY){
 								if(!Robot.wheatleyClone.getVisibility() 
@@ -509,6 +516,8 @@ public class Animation {
 			currentCellX = nextCellX;
 		    currentCellY = nextCellY;
 		}
+		if(upOrDown != 0)
+			movementTime = 1000;
 	}
 	
 	 /**

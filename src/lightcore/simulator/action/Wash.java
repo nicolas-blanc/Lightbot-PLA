@@ -20,6 +20,7 @@ public class Wash extends _Action {
 	public void execute(Grid grid, Robot robot){
 		robot.setColour(Colour.WHITE);
 		((Game)(LightCore.display)).display.anim.updateRobot(((Game)LightCore.display).display.robotDisplay.getSprite());
+		((Game)(LightCore.display)).display.anim.updateClone(((Game)LightCore.display).display.cloneDisplay.getSprite());
 	}
 
 	@Override

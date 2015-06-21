@@ -22,9 +22,11 @@ import lightcore.simulator.generator.WorldGeneratorProcedure;
 import lightcore.world.Grid;
 import lightcore.world.RelativeDirection;
 
+import org.jsfml.audio.SoundSource;
 import org.jsfml.graphics.IntRect;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.system.Clock;
+import org.jsfml.system.Vector2f;
 import org.jsfml.window.Mouse;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.MouseButtonEvent;
@@ -99,9 +101,6 @@ public class MenuDisplay {
 		if (animClockRoll != null && animClockRoll.getElapsedTime().asMilliseconds() >= 40) {
 			animClockRoll.restart();
 			
-			if(animClock != null)
-				animClock.restart();
-			
 			frame++;
 			if (frame > 14)
 				frame = 0;
@@ -117,6 +116,9 @@ public class MenuDisplay {
 				blink.setPosition(600, 200);
 				animClockRoll = null;
 			}
+			
+			if(animClock != null)
+				animClock.restart();
 		}
 		
 		if (animClock != null && animClock.getElapsedTime().asMilliseconds() >= 17) {
@@ -180,6 +182,14 @@ public class MenuDisplay {
 		LightCore.window.draw(menuCharger);
 		LightCore.window.draw(menuAleatoire);
 		LightCore.window.draw(menuQuitter);
+		
+		if(!LightCore.soundButton.getSprite().getPosition().equals(new Vector2f(935, 535))){
+			Sprite soundSprite = LightCore.soundButton.getSprite();
+			soundSprite.setPosition(935, 535);
+			LightCore.soundButton.setSprite(soundSprite);
+		}
+		
+		LightCore.window.draw(LightCore.soundButton.getSprite());
 
 		LightCore.window.draw(blink);
 	}
@@ -217,6 +227,11 @@ public class MenuDisplay {
 					LightCore.worlds = true;
 					LightCore.menu = false;
 					LightCore.firstPrintGame = true;
+					
+					animClock = null;
+					animClockRoll = null;
+					elapsedTimeBlink = null;
+					elapsedTimeRoll = null;
 				}
 
 				// Éditeur
@@ -245,6 +260,11 @@ public class MenuDisplay {
 							}
 						}
 					} while ((sizeInt < 1 || sizeInt > 8) && size != null && !size.equals(""));
+					
+					animClock = null;
+					animClockRoll = null;
+					elapsedTimeBlink = null;
+					elapsedTimeRoll = null;
 				}
 
 				// Charger
@@ -262,6 +282,11 @@ public class MenuDisplay {
 						//System.out.println(file.getAbsolutePath());
 						LightCore.firstPrintGame = true;
 					}
+					
+					animClock = null;
+					animClockRoll = null;
+					elapsedTimeBlink = null;
+					elapsedTimeRoll = null;
 				}
 
 				// Aleatoire
@@ -296,10 +321,23 @@ public class MenuDisplay {
 					Level lvl = new Level(grid, a, true, true, 12, 12, 12);
 					LightCore.display = new Game(lvl);
 					LightCore.firstPrintGame = true;
+					
+					animClock = null;
+					animClockRoll = null;
+					elapsedTimeBlink = null;
+					elapsedTimeRoll = null;
 				}
 				// Quitter
 				if (buttonQuitter.isInside(mouse.position)) {
 					LightCore.window.close();
+				}
+				
+				if(LightCore.soundButton.isInside(mouse.position)){
+					if(LightCore.sound.getStatus() == SoundSource.Status.PLAYING)
+						LightCore.sound.pause();
+					else
+						LightCore.sound.play();
+					LightCore.soundButton.changeTexture();
 				}
 
 			}

@@ -1,14 +1,22 @@
 package lightcore;
 
+import java.io.IOException;
+import java.nio.file.Paths;
+
+import lightcore.graphics.Button;
 import lightcore.graphics.DisplayMode;
 import lightcore.graphics.LevelDisplay;
 import lightcore.graphics.MenuDisplay;
 import lightcore.graphics.Textures;
 import lightcore.world.Robot;
 
+import org.jsfml.audio.Sound;
+import org.jsfml.audio.SoundBuffer;
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.RenderWindow;
+import org.jsfml.graphics.Sprite;
 import org.jsfml.window.VideoMode;
+import org.jsfml.window.WindowStyle;
 import org.jsfml.window.event.Event;
 
 public class LightCore {
@@ -35,6 +43,11 @@ public class LightCore {
 	
 	public static String path = null;
 	public static String tutoPath = null;
+	
+	public static SoundBuffer soundBuffer;
+	public static Sound sound;
+	
+	public static Button soundButton;
 
 	public static void main(String[] args) {
 		
@@ -44,6 +57,9 @@ public class LightCore {
 		
 		Robot.wheatleyClone.setVisibility(false);
 		
+		Sprite soundTexture = new Sprite(Textures.soundTexture);
+		soundButton = new Button(soundTexture, Textures.muteTexture, Textures.soundTexture);
+		
 		boolean firstLaunch = true;
 		MenuDisplay menuD = new MenuDisplay();
 		LevelDisplay levels = new LevelDisplay();
@@ -52,11 +68,25 @@ public class LightCore {
 		window = new RenderWindow();
 
 		// base 1280 * 960 for 1920*1080
-		window.create(new VideoMode(1000, 600), "LightCore");
+		window.create(new VideoMode(1000, 600), "LightCore", WindowStyle.CLOSE | WindowStyle.TITLEBAR);
 
 		// Limit the framerate
 		window.setFramerateLimit(60);
+		
+		soundBuffer = new SoundBuffer();
+		try {
+		    soundBuffer.loadFromFile(Paths.get("ressources/menu.flac"));
+		} catch(IOException ex) {
+		    System.err.println("Failed to load the sound:");
+		}
+		
+		//Create a sound and set its buffer
+		sound = new Sound();
+		sound.setBuffer(soundBuffer);
+		sound.setLoop(true);
 
+		sound.play();
+		
 		// Main loop
 		while (window.isOpen()) {
 			if(firstLaunch) {

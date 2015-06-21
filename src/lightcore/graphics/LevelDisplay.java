@@ -7,9 +7,11 @@ import lightcore.LightCore;
 import lightcore.simulator.Level;
 import lightcore.simulator.ParserJSON;
 
+import org.jsfml.audio.SoundSource;
 import org.jsfml.graphics.Color;
 import org.jsfml.graphics.Sprite;
 import org.jsfml.graphics.Texture;
+import org.jsfml.system.Vector2f;
 import org.jsfml.window.event.Event;
 import org.jsfml.window.event.MouseButtonEvent;
 import org.jsfml.window.event.MouseEvent;
@@ -68,7 +70,7 @@ public class LevelDisplay {
 	}
 
 	public void setButtons() {
-		Textures.initTextures();
+		//Textures.initTextures();
 
 		/*
 		 * Sprites for the "world page"
@@ -154,6 +156,13 @@ public class LevelDisplay {
 		LightCore.window.draw(levelFork);
 		LightCore.window.draw(levelPointeurs);
 		LightCore.window.draw(homeButton.getSprite());
+		
+		if(!LightCore.soundButton.getSprite().getPosition().equals(new Vector2f(15, 65))){
+			Sprite soundSprite = LightCore.soundButton.getSprite();
+			soundSprite.setPosition(15, 65);
+			LightCore.soundButton.setSprite(soundSprite);
+		}
+		LightCore.window.draw(LightCore.soundButton.getSprite());
 	}
 
 	public void displayLevelButtons() {
@@ -412,6 +421,13 @@ public class LevelDisplay {
 				buttonFork.reset();
 				buttonPointeurs.reset();
 				buttonIf.reset();
+			}
+			if(LightCore.soundButton.isInside(mouse.position)){
+				if(LightCore.sound.getStatus() == SoundSource.Status.PLAYING)
+					LightCore.sound.pause();
+				else
+					LightCore.sound.play();
+				LightCore.soundButton.changeTexture();
 			}
 		default:
 			break;

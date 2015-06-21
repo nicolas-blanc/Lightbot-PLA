@@ -106,4 +106,8 @@ public class Button {
 			}
 		}
 	}
+	
+	public void setSprite(Sprite sprite){
+		this.sprite = sprite;
+	}
 }
