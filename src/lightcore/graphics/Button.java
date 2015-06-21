@@ -27,7 +27,6 @@ public class Button {
 	}
 
 	public void changeTexture() {
-		System.out.println(pushed);
 		if (pushed) {
 			if (pushOff != null)
 				sprite.setTexture(pushOff);
