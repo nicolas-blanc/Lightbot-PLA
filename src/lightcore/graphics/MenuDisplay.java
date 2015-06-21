@@ -319,13 +319,15 @@ public class MenuDisplay {
 					a.add(new Turn(RelativeDirection.RIGHT));
 					a.add(new Light());
 					Level lvl = new Level(grid, a, true, true, 12, 12, 12);
+					lvl.setRobotInitialX(0);
+					lvl.setRobotInitialY(0);
 					LightCore.display = new Game(lvl);
 					LightCore.firstPrintGame = true;
 					
-					animClock = null;
+					/*animClock = null;
 					animClockRoll = null;
 					elapsedTimeBlink = null;
-					elapsedTimeRoll = null;
+					elapsedTimeRoll = null;*/
 				}
 				// Quitter
 				if (buttonQuitter.isInside(mouse.position)) {
