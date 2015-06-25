@@ -547,14 +547,14 @@ public class Game implements DisplayMode {
 					cloneAlreadyUsed = false;
 				} else if (turnLeftButton.isInside(mouse.position)) {
 					display.rotate(0);
-					int tmp = initialX;
-					initialX = level.getGrid().getSize() - initialX - 1;
-					initialY = tmp;
+					//int tmp = initialX;
+					//initialX = level.getGrid().getSize() - initialY - 1;
+					//initialY = tmp;
 				} else if (turnRightButton.isInside(mouse.position)) {
 					display.rotate(1);
-					int tmp = initialX;
-					initialX = initialY;
-					initialY = level.getGrid().getSize() - tmp - 1;
+					//int tmp = initialX;
+					//initialX = initialY;
+					//initialY = level.getGrid().getSize() - tmp - 1;
 				} else if (homeButton.isInside(mouse.position)) {
 					if (Robot.wheatleyClone.getVisibility())
 						Robot.wheatleyClone.setVisibility(false);

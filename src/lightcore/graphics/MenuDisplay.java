@@ -21,6 +21,7 @@ import lightcore.simulator.generator.WorldGeneratorITEPointers;
 import lightcore.simulator.generator.WorldGeneratorProcedure;
 import lightcore.world.Grid;
 import lightcore.world.RelativeDirection;
+import lightcore.world.Robot;
 
 import org.jsfml.audio.SoundSource;
 import org.jsfml.graphics.IntRect;
@@ -281,6 +282,8 @@ public class MenuDisplay {
 						Level lvl = ParserJSON.deserialize(file.getAbsolutePath());
 						//int x = (730 / 2) + 15;
 						//int y = (600 / 2 - 15 - (toOpen.getSize() * Textures.cellTexture.getSize().y) / 2);
+						Robot.wheatleyClone.setLine(0);
+						Robot.wheatleyClone.setColumn(0);
 						LightCore.display = new Game(lvl);
 						LightCore.menu = false;
 						LightCore.game = true;
@@ -299,6 +302,9 @@ public class MenuDisplay {
 					LightCore.menu = false;
 					LightCore.random = true;
 					WorldGenerator newWorld;
+					
+					Robot.wheatleyClone.setLine(0);
+					Robot.wheatleyClone.setColumn(0);
 
 					switch (rand.nextInt(3)) {
 					// switch (0) {

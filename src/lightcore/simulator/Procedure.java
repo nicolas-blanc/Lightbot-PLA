@@ -17,13 +17,12 @@ public class Procedure extends _Executable {
 	public static final String PROCEDURE1_NAME = "proc1";
 	public static final String PROCEDURE2_NAME = "proc2";
 
-	private int currentAction;
 
 	/*
 	 * Procedure name
 	 */
 	private String name;
-
+	
 	/*
 	 * Maximum number of actions that can be stored in the procedure
 	 */
@@ -38,10 +37,9 @@ public class Procedure extends _Executable {
 		super(colour);
 		this.name = name;
 		this.procSizeLimit = actionLimit;
-		this.currentAction = 0;
-
+		
 		actions = new ArrayList<_Executable>(this.procSizeLimit);
-
+		
 	}
 
 	/**
@@ -96,34 +94,17 @@ public class Procedure extends _Executable {
 	 */
 	@Override
 	public void execute(Grid grid, Robot robot) throws OutOfGridException {
-		System.out.println("This procedure's colour: " + this.getColour() + ", robot's colour: " + robot.getColour());
-		System.out.println(this.toString());
-		System.out.println(this.actions.size());
-
 		for (int i = 0; i < this.actions.size(); i++) {
-			System.out.println(this.actions.get(0).getClass());
 			if (this.actions.get(i) instanceof _Action) {
-				System.out.println("found an action");
-				System.out.println(this.actions.get(i).getClass());
 				this.actions.get(i).execute(grid, robot);
 			}
 
 			if (this.actions.get(i) instanceof Procedure) {
-				System.out.println("Found a procedure");
 				if (this.actions.get(i).getColour() == robot.getColour()) {
-					System.out.println("same color");
 					this.actions.get(i).execute(grid, robot);
 				}
 			}
 		}
-	}
-
-	public void executeOne(Grid grid, Robot robot) throws OutOfGridException {
-		if (actions.get(currentAction) instanceof _Action) {
-			actions.get(currentAction).execute(grid, robot);
-			currentAction++;
-		} else if (actions.get(currentAction) instanceof Procedure)
-			((Procedure) actions.get(currentAction)).executeOne(grid, robot);
 	}
 
 	public void reset() {

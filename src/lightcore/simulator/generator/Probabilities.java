@@ -135,7 +135,7 @@ public class Probabilities {
 	 * @param instruction The current instruction used to create the cell
 	 */
 	public void setUpProbalities(int instruction) {
-//		System.out.println("action in proba :" + instruction);
+		System.out.println("action in proba :" + instruction);
 		
 		switch(instruction){
 		case 0:
@@ -158,16 +158,16 @@ public class Probabilities {
 			probaLeft--;
 			break;
 		case 5:
-//			System.out.println("Utilisation d'un pattern");
+			System.out.println("Utilisation d'un pattern");
 			break;
 		case 6:
-//			System.out.println("Utilisation d'un pointers");
+			System.out.println("Utilisation d'un pointers");
 			break;
 		default:
-//			System.out.println("The instruction does not exist!");
+			System.out.println("The instruction does not exist!");
 		}
-		
-//		printProba();
+
+		printProba();
 	}
 	
 	/**
@@ -175,7 +175,7 @@ public class Probabilities {
 	 */
 	@SuppressWarnings("unused")
 	private void printProba() {
-		//System.out.println("Light : " + probaLight + " / Forward : " + probaForward  + " / Jump : " + probaJump  + " / Left : " + probaLeft + " / Right : " + probaRight);
+		System.out.println("Light : " + probaLight + " / Forward : " + probaForward  + " / Jump : " + probaJump  + " / Left : " + probaLeft + " / Right : " + probaRight);
 	}
 	
 }
